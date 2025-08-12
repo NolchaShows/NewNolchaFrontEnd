@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+/* globals.css */
+:root {
+  --surface-color: #E2E2E2;
+  --surface-color2:#F4F4F4;
+  --primary-color:#E7F0D3;
+  --tertiary-color:#FFFFFF;
+  --primary-text-color:#003233;
+  --secondary-text-color:#141414;
+  --brown2:#EBE2D7;
+}
