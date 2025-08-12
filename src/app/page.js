@@ -1,7 +1,13 @@
+import About from "@/components/landing/About";
+import Hero from "@/components/landing/Hero";
+
 export default function Home() {
   return (
-    <div className="flex items-center justify-center h-screen text-7xl font-bold">
-      Hello World
+    <div className="">
+     <div className="bg-[var(--surface-color2)]">
+          <Hero/>
+          <About/>
+     </div>
     </div>
   );
 }
