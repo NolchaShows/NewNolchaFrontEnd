@@ -4,7 +4,7 @@ import React from "react";
 function About() {
   return (
     <div className="md:py-[75px] md:px-[45px] py-[20px] px-[16px] flex md:flex-row flex-col gap-[20px] md:justify-between">
-      <div className="flex flex-col gap-[32px] text-[var(--secondary-text-color)]">
+      <div className="flex flex-col gap-[32px] text-[var(--secondary-text-color)] md:max-w-[562px]">
         <div className="flex flex-col md:gap-[20px] gap-[16px]">
           <h1 className="md:text-[48px] text-[24px] font-medium text-[var(--primary-text-color)]">
             WHAT WE DO
