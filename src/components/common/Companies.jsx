@@ -7,7 +7,7 @@ function Companies({ title, companies }) {
        {title}
       </div>
       <div className="pt-[40px] pb-[60px]">
-        <div className="flex lg:justify-between lg:max-w-[1100px] lg:flex-row flex-col gap-[24px] mx-auto items-center lg:items-start flex-wrap">
+        <div className="flex lg:justify-between lg:max-w-[1100px] lg:flex-row flex-col gap-[24px] mx-auto items-center  flex-wrap">
           {companies?.map((company, index) => (
             <img
               key={index}

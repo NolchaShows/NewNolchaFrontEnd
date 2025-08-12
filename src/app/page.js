@@ -1,6 +1,8 @@
+"use client";
 import Companies from "@/components/common/Companies";
 import About from "@/components/landing/About";
 import Hero from "@/components/landing/Hero";
+import RecentEvents from "@/components/landing/RecentEvents";
 
 export default function Home() {
     const companies = [
@@ -17,6 +19,9 @@ export default function Home() {
           <About/>
      </div>
      <Companies companies={companies} title={"Partners that trailblaze with us"}/>
+     <div className="bg-[var(--secondary-color)]">
+        <RecentEvents/>
+     </div>
     </div>
   );
 }
