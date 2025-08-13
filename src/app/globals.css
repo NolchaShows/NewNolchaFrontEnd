@@ -9,5 +9,14 @@
   --tertiary-color:#FFFFFF;
   --primary-text-color:#003233;
   --secondary-text-color:#141414;
+  --tertiary-text-color:#909090;
   --brown2:#EBE2D7;
+}
+/* In your global.css or index.css */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

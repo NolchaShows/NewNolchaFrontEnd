@@ -29,9 +29,9 @@ function RecentEvents() {
         src={events[currentIndex].image}
         alt={events[currentIndex].name}
         className="rounded-[17px] lg:max-w-[1360px] w-full lg:max-h-[726px] object-cover"
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.4 }}
       />
 
       <div className="flex gap-[15px] justify-center">
