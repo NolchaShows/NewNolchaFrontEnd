@@ -59,7 +59,7 @@ export default function Home() {
         <Testimonials/>
         <Speakers/>
      </div>
-     <Artists/>
+     <Artists textColor={"text-[var(--tertiary-text-color)]"}/>
      <div className="bg-[var(--surface-color2)]">
         <CustomerTestimonials/>
         <img

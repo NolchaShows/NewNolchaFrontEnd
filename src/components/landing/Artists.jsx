@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-export function Carousel() {
+export function Carousel({isFade=true,textColor,backgroundColor="white"}) {
   // Dynamic data
   const artists = [
     "FCKENDER",
@@ -20,15 +20,26 @@ export function Carousel() {
   }, []);
 
   return (
-    <div className="relative max-w-[1320px] w-full mx-auto overflow-hidden">
-      {/* Fade left */}
-      <div className="pointer-events-none absolute left-0 top-0 h-full w-[100px] bg-gradient-to-r from-white to-transparent z-10"></div>
-      {/* Fade right */}
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-[100px] bg-gradient-to-l from-white to-transparent z-10"></div>
-
+    <div className={`relative max-w-[1320px] w-full mx-auto overflow-hidden md:py-[40px] py-[20px] rounded-b-[8px] ${backgroundColor}`}
+  //   style={{
+  //   border: "1px solid",
+  //   borderImageSource:
+  //     "linear-gradient(90deg, #FFFFFF 0%, #A09C99 25%, #FFFFFF 35%, #A09C99 52%, #FFFFFF 62%, #A09C99 81%)",
+  //   borderImageSlice: 1,
+  // }}
+    >
+     {/* Conditionally render fade divs */}
+      {isFade && (
+        <>
+          {/* Fade left */}
+          <div className="pointer-events-none absolute left-0 top-0 h-full w-[100px] bg-gradient-to-r from-white to-transparent z-10"></div>
+          {/* Fade right */}
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-[100px] bg-gradient-to-l from-white to-transparent z-10"></div>
+        </>
+      )}
       <motion.div
         ref={marqueeRef}
-        className="flex whitespace-nowrap gap-[40px] py-[20px] lg:py-[0px] text-[var(--tertiary-text-color)] text-[32px] uppercase helvetica"
+        className={`flex whitespace-nowrap gap-[40px] py-[20px] lg:py-[0px] ${textColor} text-[32px] uppercase helvetica`}
         animate={{ x: [0, -width] }}
         transition={{
           ease: "linear",
@@ -47,7 +58,7 @@ export function Carousel() {
     </div>
   );
 }
-function Artists() {
+function Artists({textColor,backgroundColor,isFade}) {
   // Dynamic image data
   const artistImages = [
     "/landing/artists/1.png",
@@ -58,10 +69,13 @@ function Artists() {
     "/landing/artists/6.png",
   ];
   return (
-    <div className="lg:py-[64px] lg:px-[60px] py-[20px] px-[16px] max-w-[1440px] mx-auto flex flex-col gap-[40px]">
-      <Carousel />
+    <div className="lg:py-[64px] lg:px-[60px] py-[20px] px-[16px] max-w-[1440px] mx-auto flex flex-col">
+      <Carousel textColor={textColor}
+      backgroundColor={backgroundColor}
+      isFade={isFade}
+      />
       <div className="bg-[var(--secondary-color)] lg:p-[40px] py-[24px] px-[20px] rounded-[8px] flex flex-col gap-[30px]">
-        <div className="flex w-full justify-between md:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
+        <div className="flex w-full justify-between xl:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
           <div className="flex flex-col gap-[20px] font-medium">
             <h1 className=" text-[32px]  uppercase">and + 500 other artists</h1>
             <p className="text-[20px]">
@@ -77,7 +91,7 @@ function Artists() {
               <br /> ANT - YOUNG & SICK
             </p>
           </div>
-          <div className="w-full">
+          <div className="w-full xl:w-fit">
             <Link
               href={"#"}
               className="w-fit py-[12px] px-[24px] rounded-[4px] bg-transparent border-[1px] border-[#141414] h-fit float-right"
