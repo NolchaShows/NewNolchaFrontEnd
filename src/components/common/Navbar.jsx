@@ -7,7 +7,7 @@ function Navbar() {
     { label: "Charity Partners", href: "#" },
     { label: "Experiences", href: "#" },
     { label: "Speakers", href: "#" },
-    { label: "Artist", href: "#" },
+    { label: "Artist", href: "/artists" },
     { label: "Press", href: "/press" },
     { label: "Shop", href: "#" },
   ];
@@ -27,7 +27,9 @@ function Navbar() {
     <div className="py-[20px] md:px-[40px] px-[16px] max-w-[1440px] mx-auto flex justify-between items-center text-[var(--secondary-text-color)]">
       <div className="flex gap-[12px]">
         <img src="/navbar/dropdown.svg" className="lg:hidden cursor-pointer" />
+        <Link href={"/"}>
         <img src="/navbar/logo.svg" />
+        </Link>
       </div>
       <div className=" gap-[20px] hidden lg:flex">
         {menuItems.map((item, idx) => (
