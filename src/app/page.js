@@ -35,7 +35,16 @@ export default function Home() {
     <div className="">
      <div className="bg-[var(--surface-color2)]">
           <Hero/>
-          <About/>
+          <About title={"What we do"}
+          paragraphs={[
+            "Borem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per.",
+            "Our focus is on mastering the cryptocurrency market through rigorous analysis and advanced technological tools"
+          ]}
+          link={"#"}
+          linkText={"More about us"}
+          image={"/landing/about.jpg"}
+          imageStyle={"max-w-[667px]"}
+          />
      </div>
      <Companies companies={companies} title={"Partners that trailblaze with us"}/>
      <div className="bg-[var(--secondary-color)]">

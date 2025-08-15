@@ -8,7 +8,7 @@ function Navbar() {
     { label: "Experiences", href: "#" },
     { label: "Speakers", href: "#" },
     { label: "Artist", href: "#" },
-    { label: "Press", href: "#" },
+    { label: "Press", href: "/press" },
     { label: "Shop", href: "#" },
   ];
   const buttons = [
