@@ -1,13 +1,15 @@
 "use client";
 import Companies from "@/components/common/Companies";
 import About from "@/components/landing/About";
+import Artists from "@/components/landing/Artists";
+import CustomerTestimonials from "@/components/landing/CustomerTestimonials";
 import Hero from "@/components/landing/Hero";
 import RecentEvents from "@/components/landing/RecentEvents";
 import Slider from "@/components/landing/Slider";
 import Speakers from "@/components/landing/Speakers";
 import Testimonials from "@/components/landing/Testimonials";
 import UpcomingEvents from "@/components/landing/UpcomingEvents";
-
+import Form from "@/components/landing/Form";
 export default function Home() {
     const companies = [
     { name: "Coca Cola", logo: "/landing/coca-cola.svg" },
@@ -48,6 +50,15 @@ export default function Home() {
         <Testimonials/>
         <Speakers/>
      </div>
+     <Artists/>
+     <div className="bg-[var(--surface-color2)]">
+        <CustomerTestimonials/>
+        <img
+        src="/landing/background.png"
+        className="mx-auto"
+        />
+     </div>
+     <Form/>
     </div>
   );
 }
