@@ -6,7 +6,7 @@ function Navbar() {
     { label: "Upcoming", href: "#" },
     { label: "Charity Partners", href: "#" },
     { label: "Experiences", href: "#" },
-    { label: "Speakers", href: "#" },
+    { label: "Speakers", href: "/speakers" },
     { label: "Artist", href: "/artists" },
     { label: "Press", href: "/press" },
     { label: "Shop", href: "#" },
