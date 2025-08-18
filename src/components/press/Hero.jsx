@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-function Hero() {
-  const images = ["/press/hero.png", "/press/hero.png", "/press/hero.png"];
-
+function Hero({heading,images}) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -18,7 +16,7 @@ function Hero() {
     <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] max-w-[1440px] mx-auto">
       <div className="flex flex-col gap-[40px]">
         <h1 className="lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase">
-          Press
+         {heading}
         </h1>
 
         <div className="relative max-w-[1360px] overflow-hidden">
