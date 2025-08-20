@@ -1,4 +1,4 @@
-import { experienceData } from '@/app/data/experienceData'
+import { experienceData } from '@/data/experienceData'
 import Experience from '@/components/common/Experience'
 import React from 'react'
 
