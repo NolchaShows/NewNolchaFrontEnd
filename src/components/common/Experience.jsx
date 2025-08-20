@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ImageCarousel from '../experiences/ImageCarousel';
 import Gallery from '../experiences/Gallery';
 import MediaCarousel from '../experiences/MediaCarousel';
+import Hero from '../press/Hero';
 
 const Experience = ({
     mainHeading,
@@ -30,13 +31,7 @@ const Experience = ({
             </div>
 
             {/* Conference Image */}
-            <div className="w-full mb-8 px-4 md:px-8">
-                <img
-                    src={conferenceImage}
-                    alt="Bitcoin Conference"
-                    className="w-full object-cover rounded-xl"
-                />
-            </div>
+            <Hero images={conferenceImage}/>
 
             {/* Host Section */}
             <div className="px-4 md:px-8 mb-12">

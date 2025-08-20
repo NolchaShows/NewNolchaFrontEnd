@@ -4,12 +4,13 @@ import Link from "next/link";
 
 function Navbar() {
   const [isExperiencesOpen, setIsExperiencesOpen] = useState(false);
+  const [isCharityPartnersOpen, setIsCharityPartnersOpen] = useState(false);
 
   const menuItems = [
     { label: "BTC Vegas", href: "#" },
     { label: "Upcoming", href: "#" },
-    { label: "Charity Partners", href: "#" },
-    { label: "Experiences", href: "/experiences", hasDropdown: true },
+    { label: "Charity Partners", href: "#", hasDropdown: true, dropdownType: "charityPartners" },
+    { label: "Experiences", href: "/experiences", hasDropdown: true, dropdownType: "experiences" },
     { label: "Speakers", href: "/speakers" },
     { label: "Artist", href: "/artists" },
     { label: "Press", href: "/press" },
@@ -23,6 +24,39 @@ function Navbar() {
     { label: "CTRL ORDINALS COLLECTION LAUNCH", href: "/experiences/ctrl_ordinals_collection_launch" },
     { label: "NEW YORK FASHION WEEK", href: "/experiences/new_york_fashion_week" },
   ];
+  
+  const charityPartnersDropdown = [
+    { label: "CEREBRAL PALSY FOUNDATION", href: "/charity_partners/cerebral_palsy_foundation" },
+    { label: "MAKE-A-WISH", href: "/charity_partners/make_a_wish" },
+    { label: "ST.JUDE", href: "/charity_partners/st_jude" },
+  ];
+
+  const getDropdownState = (dropdownType) => {
+    switch (dropdownType) {
+      case "experiences": return isExperiencesOpen;
+      case "charityPartners": return isCharityPartnersOpen;
+      default: return false;
+    }
+  };
+
+  const setDropdownState = (dropdownType, value) => {
+    switch (dropdownType) {
+      case "experiences": 
+        setIsExperiencesOpen(value);
+        break;
+      case "charityPartners": 
+        setIsCharityPartnersOpen(value);
+        break;
+    }
+  };
+
+  const getDropdownItems = (dropdownType) => {
+    switch (dropdownType) {
+      case "experiences": return experiencesDropdown;
+      case "charityPartners": return charityPartnersDropdown;
+      default: return [];
+    }
+  };
 
   const buttons = [
     {
@@ -51,24 +85,24 @@ function Navbar() {
             {item.hasDropdown ? (
               <div
                 className="relative"
-                onMouseEnter={() => setIsExperiencesOpen(true)}
-                onMouseLeave={() => setIsExperiencesOpen(false)}
+                onMouseEnter={() => setDropdownState(item.dropdownType, true)}
+                onMouseLeave={() => setDropdownState(item.dropdownType, false)}
               >
                 <span className="hover:underline cursor-pointer">
                   {item.label}
                 </span>
                 
                 {/* Dropdown Menu */}
-                {isExperiencesOpen && (
+                {getDropdownState(item.dropdownType) && (
                   <div className="absolute top-full left-0 pt-2 w-80 z-50">
                     <div className="bg-white shadow-lg rounded-md border border-gray-200">
                       <div className="py-2">
-                        {experiencesDropdown.map((dropdownItem, dropdownIdx) => (
+                        {getDropdownItems(item.dropdownType).map((dropdownItem, dropdownIdx) => (
                           <Link
                             key={dropdownIdx}
                             href={dropdownItem.href}
                             className="block px-4 py-3 text-sm hover:bg-gray-100 transition-colors duration-200"
-                            onClick={() => setIsExperiencesOpen(false)}
+                            onClick={() => setDropdownState(item.dropdownType, false)}
                           >
                             {dropdownItem.label}
                           </Link>
