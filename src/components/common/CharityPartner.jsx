@@ -1,16 +1,20 @@
-import React from 'react'
-import Hero from '../landing/Hero'
+"use client"
+import React, { useState } from 'react'
+import Hero from '../press/Hero'
 import Gallery from '../experiences/Gallery'
 import TextHero from '../charity_partners/TextHero'
+import ContentCard from '../charity_partners/ContentCard'
+import ImageTextCard from '../charity_partners/ImageTextCard'
 
 const CharityPartner = ({
     mainHeading,
     subHeading,
     conferenceImages,
+    contentCard,
+    textCards,
     textImages,
     galleryImages
 }) => {
-    console.log(textImages)
     return (
         <div className="w-full bg-white">
             <div className="py-8 px-4 ml-5">
@@ -22,9 +26,13 @@ const CharityPartner = ({
                 </p>
             </div>
 
-            <Hero images={conferenceImages}/>
-            <TextHero images={textImages}/>
-            <Gallery images={galleryImages}/>
+            <Hero images={conferenceImages} />
+            <ContentCard {...contentCard} />
+            {textCards.map((card, index) => (
+                <ImageTextCard key={index} image={card.image} text={card.text} imagePosition={index % 2 === 0 ? "left" : "right"} />
+            ))}
+            <TextHero images={textImages} />
+            <Gallery images={galleryImages} />
         </div>
     )
 }
