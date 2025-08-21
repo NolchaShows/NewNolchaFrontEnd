@@ -10,6 +10,7 @@ function Navbar() {
 
   const menuItems = [
     { label: "BTC Vegas", href: "#" },
+    { label: "Designers", href: "/designers" },
     { label: "Upcoming", href: "#", isModal: true },
     { label: "Charity Partners", href: "#", hasDropdown: true, dropdownType: "charityPartners" },
     { label: "Experiences", href: "/experiences", hasDropdown: true, dropdownType: "experiences" },
