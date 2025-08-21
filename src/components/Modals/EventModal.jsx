@@ -1,0 +1,52 @@
+"use client"
+import React from 'react'
+import EventCard from '../upcoming/EventCard'
+import MediaCarousel from '../experiences/MediaCarousel'
+import ImageCarousel from '../experiences/ImageCarousel'
+import ImageStack from '../upcoming/ImageStack'
+
+const EventModal = ({ setIsUpcomingModalOpen }) => {
+    const posts = [
+        "/experiences/jack/posts/1.png",
+        "/experiences/jack/posts/2.png",
+        "/experiences/jack/posts/3.png",
+        "/experiences/jack/posts/4.png",
+        "/experiences/jack/posts/5.png"
+    ]
+    const media = [
+        "/experiences/jack/videos/2.mp4",
+    ]
+    const images = [
+        "/upcoming/4.png",
+        "/upcoming/5.png",
+        "/upcoming/6.png",
+        "/upcoming/7.png",
+    ]
+    return (
+        <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-4">
+            <div className="bg-[#EBE2D7] rounded-2xl max-w-4xl w-full max-h-[90vh] relative shadow-lg overflow-hidden flex flex-col">
+                <button
+                    onClick={() => setIsUpcomingModalOpen(false)}
+                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-xl font-bold z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
+                >
+                    ×
+                </button>
+
+                <div className="p-8 overflow-y-auto overflow-x-hidden flex-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                    <EventCard />
+                    <div className='py-8 mt-5 bg-white'>
+                        <MediaCarousel items={media} />
+                    </div>
+                    <div className='py-8 mt-5 bg-white'>
+                        <ImageCarousel posts={posts} />
+                    </div>
+                    <div className='py-8 mt-5 bg-white'>
+                        <ImageStack images={images} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default EventModal
