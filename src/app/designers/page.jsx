@@ -1,4 +1,4 @@
-import Designer from '@/components/common/Designer'
+import Designer from '@/components/common/Designers'
 import React from 'react'
 
 const Page = () => {

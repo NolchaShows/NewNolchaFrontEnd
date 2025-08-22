@@ -1,10 +1,10 @@
 import React from 'react';
 
 const ImageCard = ({
-    image, text
+    image, text, onClick = null
 }) => {
     return (
-        <div className="max-w-3xl mx-auto bg-[#F4F4F4] p-4 rounded-lg mt-10">
+        <div className="max-w-3xl mx-auto bg-[#F4F4F4] p-4 cursor-pointer rounded-lg mt-10" onClick={onClick}>
             <div className="space-y-4">
                 <div
                     className="relative overflow-hidden rounded-lg shadow-md"

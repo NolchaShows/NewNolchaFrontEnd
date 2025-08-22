@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from "react";
 
-function Hero({ heading="", images }) {
+function Hero({ heading="", images, headerStyling = "" }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Early return if no images are provided
@@ -34,7 +34,7 @@ function Hero({ heading="", images }) {
     <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] max-w-[1440px] mx-auto">
       <div className={`flex flex-col ${heading ? "gap-[40px]" : ""}`}>
         {heading && (
-          <h1 className="lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase">
+          <h1 className={headerStyling || "lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase"}>
             {heading}
           </h1>
         )}

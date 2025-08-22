@@ -1,6 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React from 'react';
 import ImageCarousel from '../experiences/ImageCarousel';
 import Gallery from '../experiences/Gallery';
 import MediaCarousel from '../experiences/MediaCarousel';
