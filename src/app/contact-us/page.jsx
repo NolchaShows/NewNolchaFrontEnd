@@ -1,0 +1,134 @@
+"use client"
+import React, { useState } from 'react';
+
+export default function ContactForm() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    // Handle form submission here
+  };
+
+
+
+  return (
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat relative"
+      style={{ 
+        backgroundImage: "url('/contact/bg.jpg')",
+        backgroundColor: '#1a1a1a' // Fallback dark color
+      }}
+    >
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/60"></div>
+      
+      <div className="relative z-10 min-h-screen flex flex-col lg:flex-row lg:items-center lg:justify-between px-6 lg:px-16 py-12">
+        {/* Top/Left Side - Title and Sponsors */}
+        <div className="flex-1 max-w-lg mb-8 lg:mb-0">
+          <h1 className="text-white font-bold leading-tight mb-8 lg:mb-12">
+            <div className="flex flex-wrap">
+              <span className="text-5xl mr-4 mt-3">TAKE</span>
+              <span className="text-6xl">THE FIRST</span>
+            </div>
+            <div className="flex flex-wrap">
+              <span className="text-6xl mr-4">STEP, LET'S</span>
+            </div>
+            <div>
+              <span className="text-6xl">TALK!</span>
+            </div>
+          </h1>
+          
+          {/* Sponsors Image */}
+          <div className="max-w-sm lg:max-w-md">
+            <img 
+              src="/contact/1.png" 
+              alt="Sponsors"
+              className="w-full h-auto filter brightness-0 invert opacity-80"
+            />
+          </div>
+        </div>
+        
+        {/* Bottom/Right Side - Contact Form */}
+        <div className="flex-1 max-w-lg lg:ml-8">
+          <div className="space-y-4">
+            {/* First Name and Last Name Row - Stack on mobile, side by side on desktop */}
+            <div className="flex flex-col sm:grid sm:grid-cols-2 sm:gap-4 space-y-4 sm:space-y-0">
+              <div>
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First name"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last name"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  required
+                />
+              </div>
+            </div>
+            
+            {/* Email Field */}
+            <div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50"
+                required
+              />
+            </div>
+            
+            {/* Message Field */}
+            <div>
+              <textarea
+                name="message"
+                placeholder="Message"
+                rows="6"
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50 resize-none"
+                required
+              ></textarea>
+            </div>
+            
+            {/* Submit Button */}
+            <div>
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="w-full py-3 bg-[#E7F0D3] hover:bg-[#C5B195] text-gray-800 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

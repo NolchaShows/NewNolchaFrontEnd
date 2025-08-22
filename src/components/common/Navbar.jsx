@@ -17,6 +17,7 @@ function Navbar() {
     { label: "Speakers", href: "/speakers" },
     { label: "Artist", href: "/artists" },
     { label: "Press", href: "/press" },
+    { label: "Contact", href: "/contact-us" },
     { label: "Shop", href: "#" },
   ];
 
