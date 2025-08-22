@@ -44,7 +44,7 @@ function Hero({ heading="", images, headerStyling = "" }) {
             key={currentIndex}
             src={images[currentIndex] || "/api/placeholder/800/400"}
             alt={`Slide ${currentIndex + 1}`}
-            className="w-full object-cover h-[250px] sm:h-[400px] rounded-[8px]"
+            className="w-full object-cover h-[250px] sm:h-[600px] rounded-[8px]"
             onError={(e) => {
               e.target.src = "/api/placeholder/800/400";
             }}
