@@ -1,16 +1,28 @@
 import React, { useState } from "react";
-function Hero() {
-  const images = ["/press/hero.png", "/press/hero.png", "/press/hero.png"];
 
+function Hero({ heading, images }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  if (!images || images.length === 0) {
+    return (
+      <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] max-w-[1440px] mx-auto">
+        <div className="flex flex-col gap-[40px]">
+          <h1 className="lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase">
+            {heading}
+          </h1>
+          <div className="w-full h-[250px] sm:h-[400px] bg-gray-200 rounded-[8px] flex items-center justify-center">
+            <p className="text-gray-500">No images available</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const handleNext = () => {
-    setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % images.length);
   };
 
   const handlePrev = () => {
-    setDirection(-1);
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
@@ -18,29 +30,51 @@ function Hero() {
     <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] max-w-[1440px] mx-auto">
       <div className="flex flex-col gap-[40px]">
         <h1 className="lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase">
-          Press
+          {heading}
         </h1>
 
         <div className="relative max-w-[1360px] overflow-hidden">
           <img
             key={currentIndex}
-            src={images[currentIndex]}
-            className="w-full object-cover h-[250px] sm:h-full rounded-[8px]"
+            src={images[currentIndex] || "/api/placeholder/800/400"}
+            alt={`Slide ${currentIndex + 1}`}
+            className="w-full object-cover h-[250px] sm:h-[400px] rounded-[8px]"
+            onError={(e) => {
+              e.target.src = "/api/placeholder/800/400";
+            }}
           />
 
-          {/* Left button */}
-          <img
-            src="/press/left.svg"
-            onClick={handlePrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer h-[48px] w-[48px] md:h-[64px] md:w-[64px]"
-          />
+          {/* Navigation buttons - only show if there are multiple images */}
+          {images.length > 1 && (
+            <>
+              {/* Left button */}
+              <button
+                onClick={handlePrev}
+                className="absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
+                aria-label="Previous image"
+              >
+                <img
+                  src="/press/left.svg"
+                  alt="Previous"
+                  className="h-[48px] w-[48px] md:h-[64px] md:w-[64px]"
+                />
+              </button>
 
-          {/* Right button */}
-          <img
-            src="/press/right.svg"
-            onClick={handleNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 h-[48px] w-[48px] md:h-[64px] md:w-[64px] cursor-pointer "
-          />
+              {/* Right button */}
+              <button
+                onClick={handleNext}
+                className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
+                aria-label="Next image"
+              >
+                <img
+                  src="/press/right.svg"
+                  alt="Next"
+                  className="h-[48px] w-[48px] md:h-[64px] md:w-[64px]"
+                />
+              </button>
+            </>
+          )}
+
         </div>
       </div>
     </div>

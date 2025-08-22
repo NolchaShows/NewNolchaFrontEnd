@@ -15,7 +15,7 @@ function page() {
   ];
   return (
     <div>
-      <Hero />
+      <Hero heading={"Press"} images={["/press/hero.png", "/press/hero.png", "/press/hero.png"]}/>
       <Companies companies={companies} />
       <div className="bg-[var(--secondary-color)]">
         <About

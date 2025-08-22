@@ -51,13 +51,13 @@ function ScrollCarousel() {
       {/* Slider scroller */}
       <div className="flex justify-center mt-4">
         <input
-  type="range"
-  min="0"
-  max={maxOffset}
-  value={sliderValue}
-  step="1"
-  onChange={(e) => setSliderValue(Number(e.target.value))}
-  className="
+          type="range"
+          min="0"
+          max={maxOffset}
+          value={sliderValue}
+          step="1"
+          onChange={(e) => setSliderValue(Number(e.target.value))}
+          className="
     w-2/3 h-2 appearance-none cursor-pointer rounded-lg
     bg-gradient-to-r from-[#909090] to-[#E2E2E2]
     [&::-webkit-slider-thumb]:appearance-none
@@ -73,12 +73,11 @@ function ScrollCarousel() {
     [&::-moz-range-thumb]:rounded-full
     [&::-moz-range-thumb]:bg-[#909090]
   "
-  style={{
-    background: `linear-gradient(to right, #909090 0%, #909090 ${
-      (sliderValue / maxOffset) * 100
-    }%, #E2E2E2 ${(sliderValue / maxOffset) * 100}%, #E2E2E2 100%)`,
-  }}
-/>
+          style={{
+            background: `linear-gradient(to right, #909090 0%, #909090 ${(sliderValue / maxOffset) * 100
+              }%, #E2E2E2 ${(sliderValue / maxOffset) * 100}%, #E2E2E2 100%)`,
+          }}
+        />
 
       </div>
     </div>
