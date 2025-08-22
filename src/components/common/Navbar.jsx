@@ -74,7 +74,7 @@ function Navbar() {
     },
     {
       label: "Membership",
-      href: "#",
+      href: "/membership",
       bg: "bg-[var(--tertiary-color)] border-[var(--secondary-text-color)] border-[1px]",
     },
   ];
