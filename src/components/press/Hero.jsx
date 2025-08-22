@@ -1,15 +1,18 @@
+"use client"
 import React, { useState } from "react";
 
-function Hero({ heading, images }) {
+function Hero({ heading="", images, headerStyling = "" }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!images || images.length === 0) {
     return (
       <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] max-w-[1440px] mx-auto">
-        <div className="flex flex-col gap-[40px]">
-          <h1 className="lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase">
-            {heading}
-          </h1>
+        <div className={`flex flex-col ${heading ? "gap-[40px]" : ""}`}>
+          {heading && (
+            <h1 className="lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase">
+              {heading}
+            </h1>
+          )}
           <div className="w-full h-[250px] sm:h-[400px] bg-gray-200 rounded-[8px] flex items-center justify-center">
             <p className="text-gray-500">No images available</p>
           </div>
@@ -28,17 +31,19 @@ function Hero({ heading, images }) {
 
   return (
     <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] max-w-[1440px] mx-auto">
-      <div className="flex flex-col gap-[40px]">
-        <h1 className="lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase">
-          {heading}
-        </h1>
+      <div className={`flex flex-col ${heading ? "gap-[40px]" : ""}`}>
+        {heading && (
+          <h1 className={headerStyling || "lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase"}>
+            {heading}
+          </h1>
+        )}
 
         <div className="relative max-w-[1360px] overflow-hidden">
           <img
             key={currentIndex}
             src={images[currentIndex] || "/api/placeholder/800/400"}
             alt={`Slide ${currentIndex + 1}`}
-            className="w-full object-cover h-[250px] sm:h-[400px] rounded-[8px]"
+            className="w-full object-cover h-[250px] sm:h-[600px] rounded-[8px]"
             onError={(e) => {
               e.target.src = "/api/placeholder/800/400";
             }}
