@@ -27,7 +27,7 @@ const EventModal = ({ setIsUpcomingModalOpen }) => {
             <div className="bg-[#EBE2D7] rounded-2xl max-w-4xl w-full max-h-[90vh] relative shadow-lg overflow-hidden flex flex-col">
                 <button
                     onClick={() => setIsUpcomingModalOpen(false)}
-                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-xl font-bold z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
+                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-xl font-bold z-10 bg-white bg-opacity-80 cursor-pointer hover:bg-opacity-100 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
                 >
                     ×
                 </button>
