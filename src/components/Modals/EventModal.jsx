@@ -4,6 +4,8 @@ import EventCard from '../upcoming/EventCard'
 import MediaCarousel from '../experiences/MediaCarousel'
 import ImageCarousel from '../experiences/ImageCarousel'
 import ImageStack from '../upcoming/ImageStack'
+import { RxCross2 } from "react-icons/rx";
+
 
 const EventModal = ({ setIsUpcomingModalOpen }) => {
     const posts = [
@@ -24,23 +26,24 @@ const EventModal = ({ setIsUpcomingModalOpen }) => {
     ]
     return (
         <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-4">
-            <div className="bg-[#EBE2D7] rounded-2xl max-w-4xl w-full max-h-[90vh] relative shadow-lg overflow-hidden flex flex-col">
+            <div className="bg-[#EBE2D7] rounded-2xl max-w-5xl w-full max-h-[90vh] relative shadow-lg overflow-hidden flex flex-col">
                 <button
                     onClick={() => setIsUpcomingModalOpen(false)}
-                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-xl font-bold z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
+                    className="absolute right-7 top-3 text-gray-600 hover:text-gray-800 text-xl z-10 bg-white bg-opacity-80 cursor-pointer hover:bg-opacity-100 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
+                    aria-label="Close modal"
                 >
-                    ×
+                    <RxCross2 />
                 </button>
 
                 <div className="p-8 overflow-y-auto overflow-x-hidden flex-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                    <EventCard />
-                    <div className='py-8 mt-5 bg-white'>
-                        <MediaCarousel items={media} />
+                    <div className='py-6'>
+                        <EventCard />
                     </div>
-                    <div className='py-8 mt-5 bg-white'>
+                    <MediaCarousel items={media} />
+                    <div className='py-8 mt-5 bg-[#F4F4F4] max-w-4xl mx-auto'>
                         <ImageCarousel posts={posts} />
                     </div>
-                    <div className='py-8 mt-5 bg-white'>
+                    <div className='py-8 mt-5 bg-white max-w-4xl mx-auto'>
                         <ImageStack images={images} />
                     </div>
                 </div>

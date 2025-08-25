@@ -2,16 +2,18 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import EventModal from "../Modals/EventModal";
+import InnerCircleModal from "../Modals/InnerCircleModal";
 
 function Navbar() {
   const [isExperiencesOpen, setIsExperiencesOpen] = useState(false);
   const [isCharityPartnersOpen, setIsCharityPartnersOpen] = useState(false);
   const [isUpcomingModalOpen, setIsUpcomingModalOpen] = useState(false);
+  const [isInnerCircleModalOpen, setIsInnerCircleModalOpen] = useState(false);
   const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
 
   const menuItems = [
     { label: "BTC Vegas", href: "#" },
-    { label: "Upcoming", href: "#", isModal: true },
+    { label: "Upcoming", href: "#", isModal: true, modalType: "upcoming" },
     { label: "Charity Partners", href: "#", hasDropdown: true, dropdownType: "charityPartners" },
     { label: "Experiences", href: "/experiences", hasDropdown: true, dropdownType: "experiences" },
     { label: "Speakers", href: "/speakers" },
@@ -21,9 +23,9 @@ function Navbar() {
     { label: "Contact", href: "/contact-us" },
     { label: "Designers", href: "/designers" },
     { label: "Gallery", href: "/gallery" },
+    { label: "Join the Inner Circle", href: "#", isModal: true, modalType: "innerCircle" },
   ];
 
-  // Split menu items: first 8 and remaining
   const mainMenuItems = menuItems.slice(0, 8);
   const moreMenuItems = menuItems.slice(8);
 
@@ -68,9 +70,13 @@ function Navbar() {
     }
   };
 
-  const handleUpcomingClick = (e) => {
+  const handleModalClick = (modalType) => (e) => {
     e.preventDefault();
-    setIsUpcomingModalOpen(true);
+    if (modalType === "upcoming") {
+      setIsUpcomingModalOpen(true);
+    } else if (modalType === "innerCircle") {
+      setIsInnerCircleModalOpen(true);
+    }
   };
 
   const renderMenuItem = (item, idx) => {
@@ -78,7 +84,7 @@ function Navbar() {
       return (
         <span
           className="hover:underline cursor-pointer"
-          onClick={handleUpcomingClick}
+          onClick={handleModalClick(item.modalType)}
         >
           {item.label}
         </span>
@@ -127,7 +133,7 @@ function Navbar() {
   const buttons = [
     {
       label: "Sign in",
-      href: "#",
+      href: "/sign-in",
       bg: "bg-[var(--primary-color)]",
     },
     {
@@ -180,7 +186,7 @@ function Navbar() {
                           {item.isModal ? (
                             <span
                               className="block px-4 py-3 text-sm hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
-                              onClick={handleUpcomingClick}
+                              onClick={handleModalClick(item.modalType)}
                             >
                               {item.label}
                             </span>
@@ -189,7 +195,6 @@ function Navbar() {
                               <span className="block px-4 py-3 text-sm hover:bg-gray-100 transition-colors duration-200 cursor-pointer">
                                 {item.label}
                               </span>
-                              {/* Nested dropdown would go here if needed */}
                             </div>
                           ) : (
                             <Link
@@ -225,6 +230,10 @@ function Navbar() {
 
       {isUpcomingModalOpen && (
         <EventModal setIsUpcomingModalOpen={setIsUpcomingModalOpen} />
+      )}
+
+      {isInnerCircleModalOpen && (
+        <InnerCircleModal setIsInnerCircleModalOpen={setIsInnerCircleModalOpen} />
       )}
     </>
   );
