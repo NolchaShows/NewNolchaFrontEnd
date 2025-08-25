@@ -133,7 +133,7 @@ function Navbar() {
   const buttons = [
     {
       label: "Sign in",
-      href: "#",
+      href: "/sign-in",
       bg: "bg-[var(--primary-color)]",
     },
     {
