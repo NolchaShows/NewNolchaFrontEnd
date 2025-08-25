@@ -5,7 +5,7 @@ import Footer from "@/components/common/Footer";
 
 export default function ConditionalLayout({ children }) {
   const pathname = usePathname();
-  const hideNavFooter = pathname === '/sign-in';
+  const hideNavFooter = pathname === '/sign-in' || pathname === '/dashboard';
 
   return (
     <>

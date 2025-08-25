@@ -51,14 +51,14 @@ const ImageCarousel = ({ posts }) => {
     };
 
     return (
-        <div className="px-4 md:px-8 mb-12 overflow-hidden">
+        <div className="px-4 md:px-8 mb-6 overflow-hidden">
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl md:text-2xl font-bold text-black">TRUSTED BY</h2>
                 <div className="flex gap-2">
                     <button
                         onClick={prevPost}
                         disabled={currentPostIndex === 0}
-                        className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-8 h-8 rounded-full border border-black flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         aria-label="Previous post"
                     >
                         <ChevronLeft size={16} className="text-gray-600" />
@@ -66,7 +66,7 @@ const ImageCarousel = ({ posts }) => {
                     <button
                         onClick={nextPost}
                         disabled={currentPostIndex + postsPerSlide >= posts.length}
-                        className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-8 h-8 rounded-full border border-black flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         aria-label="Next post"
                     >
                         <ChevronRight size={16} className="text-gray-600" />
@@ -74,7 +74,6 @@ const ImageCarousel = ({ posts }) => {
                 </div>
             </div>
 
-            {/* Slider wrapper */}
             <div className="relative overflow-hidden">
                 <div
                     className="flex transition-transform duration-500"
