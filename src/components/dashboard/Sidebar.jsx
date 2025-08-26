@@ -1,10 +1,8 @@
 "use client"
 import React, { useState } from 'react';
-import { Settings, HelpCircle, User } from 'lucide-react';
 import { AiOutlineLogout } from "react-icons/ai";
 
-const Sidebar = () => {
-  const [activeItem, setActiveItem] = useState('Home');
+export const Sidebar = ({ activeItem, setActiveItem }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const menuItems = [
@@ -34,6 +32,7 @@ const Sidebar = () => {
         </div>
       </button>
 
+      {/* Mobile backdrop */}
       {isMobileMenuOpen && (
         <div
           className="lg:hidden fixed inset-0 backdrop-blur-sm bg-white/30 z-40"
@@ -44,17 +43,17 @@ const Sidebar = () => {
       <div className={`
         fixed lg:static inset-y-0 left-0 z-40 w-64 border-r border-gray-200
         transform transition-transform duration-300 ease-in-out
-        ${isMobileMenuOpen ? 'translate-x-0 bg-white h-full' : '-translate-x-full lg:translate-x-0 bg-[#F4F4F4] md:mt-6 md:ml-4 h-[calc(100vh-3rem)] rounded-lg'}
+        ${isMobileMenuOpen ? 'translate-x-0 bg-white h-full' : '-translate-x-full lg:translate-x-0 bg-[#F4F4F4] md:mt-6 lg:ml-4 h-[calc(100vh-3rem)] rounded-lg'}
       `}>
         <div className="flex flex-col h-full">
           <div className="p-6">
             <div className="flex flex-col items-center space-y-3">
               <div className="w-20 h-20 bg-[#EBE2D7] rounded-full flex items-center justify-center">
-                <img size={24} src='/dashboard/profile.png' className="text-gray-600" />
+                <img height={'65px'} width={'65px'} src='/dashboard/profile.png' className="text-gray-600" />
               </div>
               <div className="text-center">
                 <p className="font-medium text-gray-800">Stacks</p>
-                <p className="text-sm text-gray-500 flex items-center justify-center">
+                <p className="text-sm text-gray-500 flex items-center justify-center cursor-pointer hover:text-gray-700">
                   Log out
                   <span className="ml-1"><AiOutlineLogout className='text-black' /></span>
                 </p>
@@ -62,6 +61,7 @@ const Sidebar = () => {
             </div>
           </div>
 
+          {/* Navigation */}
           <div className="flex-1 py-4">
             <nav className="px-3">
               {menuItems.map((item) => {
@@ -90,6 +90,7 @@ const Sidebar = () => {
             </nav>
           </div>
 
+          {/* Bottom icons */}
           <div className="p-6 mb-5">
             <div className="flex justify-center space-x-4">
               {bottomIcons.map((item) => {
@@ -110,5 +111,3 @@ const Sidebar = () => {
     </>
   );
 };
-
-export default Sidebar;
