@@ -1,11 +1,194 @@
-import React from 'react'
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const VipConcerige = () => {
+export default function VipConciergeTable() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const data = [
+    { id: 1, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Going" },
+    { id: 2, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Going" },
+    { id: 3, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Going" },
+    { id: 4, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Going" },
+    { id: 5, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Pending" },
+    { id: 6, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Pending" },
+    { id: 7, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Not going" },
+    { id: 8, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Not going" },
+    { id: 9, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Pending" },
+    { id: 10, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Not going" },
+    { id: 11, name: "Jack Smith", hotel: "Marriott New york", host: "Patrick Taylor", date: "24.05.2025, 17:12", status: "Not going" },
+  ];
+
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentData = data.slice(startIndex, startIndex + itemsPerPage);
+
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case "Going":
+        return "bg-green-100 text-green-700";
+      case "Pending":
+        return "bg-yellow-100 text-yellow-700";
+      case "Not going":
+        return "bg-gray-100 text-gray-600";
+      default:
+        return "bg-gray-100 text-gray-600";
+    }
+  };
+
+  const getAvatar = (name) => {
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=3b82f6&color=fff&size=32`;
+  };
+
   return (
-    <div className='p-6'>
-      VipConcerige
-    </div>
-  )
-}
+    <div className="w-full bg-[#F4F4F4]">
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 md:p-6 border-b md:border-b-0">
+        <h1 className="text-lg md:text-xl font-semibold text-gray-900">VIP CONCIERGE</h1>
+        <div className="md:hidden"></div>
+      </div>
 
-export default VipConcerige
+      <div className="p-4 md:p-6 md:pt-0">
+        {/* Table Container */}
+        <div className="overflow-x-auto custom-scrollbar">
+          <div className="min-w-[800px] md:min-w-0">
+            <style jsx>{`
+              .custom-scrollbar::-webkit-scrollbar {
+                height: 8px;
+              }
+              
+              .custom-scrollbar::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+              }
+              
+              .custom-scrollbar::-webkit-scrollbar-thumb {
+                background: #000000;
+                border-radius: 10px;
+              }
+              
+              .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background: #333333;
+              }
+              
+              /* For Firefox */
+              .custom-scrollbar {
+                scrollbar-width: thin;
+                scrollbar-color: #000000 #f1f1f1;
+              }
+            `}</style>
+            {/* Unified Table for Both Desktop and Mobile */}
+            <div className="overflow-hidden bg-white border border-gray-200 rounded-lg md:rounded-lg">
+              <table className="w-full">
+                <thead className="bg-[#E2E2E2]">
+                  <tr>
+                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[140px] md:min-w-0">
+                      VIP Guest
+                    </th>
+                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px] md:min-w-0">
+                      Hotel name
+                    </th>
+                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px] md:min-w-0">
+                      Assigned host
+                    </th>
+                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px] md:min-w-0">
+                      Flight date
+                    </th>
+                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px] md:min-w-0">
+                      Status
+                    </th>
+                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[80px] md:min-w-0">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {currentData.map((item) => (
+                    <tr key={item.id} className="hover:bg-gray-50">
+                      <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <img
+                            className="h-8 w-8 rounded-full flex-shrink-0"
+                            src={getAvatar(item.name)}
+                            alt={item.name}
+                          />
+                          <div className="ml-3 min-w-0">
+                            <div className="text-sm font-medium text-gray-900 md:truncate">{item.name}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900 md:truncate">
+                        {item.hotel}
+                      </td>
+                      <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900 md:truncate">
+                        {item.host}
+                      </td>
+                      <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.date}
+                      </td>
+                      <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-md ${getStatusStyle(item.status)}`}>
+                          {item.status}
+                        </span>
+                      </td>
+                      <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <button className="p-1 px-6 hover:bg-gray-100 rounded">
+                          <img src="/dashboard/msg.png" className="w-4 h-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between mt-6">
+          <div className="hidden md:block text-sm text-gray-700">
+            Showing {startIndex + 1}-{Math.min(startIndex + itemsPerPage, data.length)} from {data.length}
+          </div>
+          <div className="md:hidden"></div>
+
+          <div className="w-full lg:w-auto flex items-center justify-center lg:justify-start gap-2">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              className="p-2 border border-black rounded-full hover:bg-gray-100 disabled:opacity-50 transition-colors"
+              disabled={currentPage === 1}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+
+            {[...Array(Math.min(5, totalPages))].map((_, i) => {
+              const pageNum = i + 1;
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => setCurrentPage(pageNum)}
+                  className={`w-8 h-8 rounded-full text-sm font-medium transition-colors ${currentPage === pageNum
+                    ? 'bg-black text-white'
+                    : 'border border-gray-300 hover:bg-gray-50'
+                    }`}
+                >
+                  {pageNum}
+                </button>
+              );
+            })}
+
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              className="p-2 rounded-full hover:bg-gray-100 border border-black disabled:opacity-50 transition-colors"
+              disabled={currentPage === totalPages}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

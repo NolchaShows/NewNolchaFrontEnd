@@ -124,7 +124,6 @@ const EventDetails = () => {
         <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">EVENTS</h1>
       </div>
 
-      {/* Desktop & Tablet Layout - Responsive Grid */}
       <div className="hidden md:block">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {currentEvents.map((event, index) => (
@@ -136,7 +135,6 @@ const EventDetails = () => {
           ))}
         </div>
 
-        {/* Desktop & Tablet Pagination */}
         <div className="flex items-center justify-between mt-6">
           <p className="text-sm text-gray-600">
             Showing {showingStart}-{showingEnd} from {totalEvents}
