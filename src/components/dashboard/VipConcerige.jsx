@@ -42,14 +42,12 @@ export default function VipConciergeTable() {
 
   return (
     <div className="w-full bg-[#F4F4F4]">
-      {/* Header */}
       <div className="flex items-center justify-between p-4 md:p-6 border-b md:border-b-0">
         <h1 className="text-lg md:text-xl font-semibold text-gray-900">VIP CONCIERGE</h1>
         <div className="md:hidden"></div>
       </div>
 
       <div className="p-4 md:p-6 md:pt-0">
-        {/* Table Container */}
         <div className="overflow-x-auto custom-scrollbar">
           <div className="min-w-[800px] md:min-w-0">
             <style jsx>{`

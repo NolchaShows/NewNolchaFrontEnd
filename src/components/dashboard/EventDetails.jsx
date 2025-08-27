@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { DeckCard } from './Home/Card';
+import Event from './Event';
 
 const EventDetails = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [screenSize, setScreenSize] = useState('large');
+  const [currentEvent, setCurrentEvent] = useState('');
 
   const events = [
     { title: "Latest deck", image: "/dashboard/events/1.png" },
     { title: "Latest deck", image: "/dashboard/events/2.png" },
     { title: "Latest deck", image: "/dashboard/events/3.png" },
-    { title: "Latest deck", image: "/dashboard/events/4.png" },
+    { title: "New deck", image: "/dashboard/events/4.png" },
     { title: "Latest deck", image: "/dashboard/events/5.png" },
     { title: "Latest deck", image: "/dashboard/events/6.png" },
     { title: "Latest deck", image: "/dashboard/events/7.png" },
@@ -73,6 +75,10 @@ const EventDetails = () => {
     }
   };
 
+  const handleClick = (title) => {
+    setCurrentEvent(title)
+  };
+
   const renderPagination = () => {
     if (totalPages <= 1) return null;
 
@@ -117,7 +123,17 @@ const EventDetails = () => {
     );
   };
 
+  if (currentEvent) {
+    return (
+      <div className="mt-4 lg:mt-3 lg:mx-6 rounded-2xl flex-1 md:bg-[#F4F4F4] overflow-auto">
+        <Event title={currentEvent} />;
+      </div>
+    )
+  }
+
+
   return (
+
     <div className="p-4 lg:p-6 min-h-screen md:bg-[#F4F4F4]">
       {/* Header */}
       <div className="mb-6">
@@ -131,6 +147,7 @@ const EventDetails = () => {
               key={startIndex + index}
               title={event.title}
               image={event.image}
+              onAction={handleClick}
             />
           ))}
         </div>
@@ -149,6 +166,7 @@ const EventDetails = () => {
             key={startIndex + index}
             title={event.title}
             image={event.image}
+            onAction={handleClick}
           />
         ))}
 
