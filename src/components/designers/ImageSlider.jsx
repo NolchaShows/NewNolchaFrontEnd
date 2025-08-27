@@ -25,10 +25,9 @@ export function ImageSlider({ images, className = "" }) {
   if (!images || images.length === 0) return null
 
   return (
-    <div className={`w-full max-w-2xl mx-auto ${className}`}>
-      {/* Main Image */}
+    <div className={`w-full max-w-4xl mx-auto`}>
       <div className="relative mb-4">
-        <div className="aspect-square rounded-2xl overflow-hidden bg-gray-200">
+        <div className={`${className} aspect-square rounded-2xl overflow-hidden bg-gray-200`}>
           <img
             src={images[currentIndex] || "/placeholder.svg"}
             alt={`Slide ${currentIndex + 1}`}
@@ -37,7 +36,6 @@ export function ImageSlider({ images, className = "" }) {
         </div>
       </div>
 
-      {/* Thumbnail Navigation */}
       <div className="flex items-center justify-center gap-4">
         {/* Left Button */}
         <button
@@ -49,7 +47,6 @@ export function ImageSlider({ images, className = "" }) {
           <ChevronLeft className="h-4 w-4" />
         </button>
 
-        {/* Thumbnails */}
         <div className="flex gap-2 overflow-x-auto max-w-xs">
           {images.map((image, index) => (
             <button
@@ -70,7 +67,6 @@ export function ImageSlider({ images, className = "" }) {
           ))}
         </div>
 
-        {/* Right Button */}
         <button
           onClick={goToNext}
           className="h-8 w-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 disabled:opacity-50"

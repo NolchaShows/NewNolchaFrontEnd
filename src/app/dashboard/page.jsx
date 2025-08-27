@@ -5,10 +5,10 @@ import MarketingAssets from "@/components/dashboard/MarketingAssets";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import SponsorshipDecks from "@/components/dashboard/SponsorshipDecks";
 import VipConcerige from "@/components/dashboard/VipConcerige";
-import React from "react";
+import React, { useState } from "react";
 
 const Page = () => {
-  const [activeItem, setActiveItem] = React.useState('Home');
+  const [activeItem, setActiveItem] = useState('Home');
 
   const renderContent = () => {
     switch (activeItem) {
