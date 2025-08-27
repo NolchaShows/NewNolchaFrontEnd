@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { DeckCard } from './Home/Card';
 import { ImageSlider } from '../designers/ImageSlider';
+import SponsorshipModal from '../Modals/SponsorshipModal';
 
 const SponsorshipDecks = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [screenSize, setScreenSize] = useState('large');
-  // <ImageSlider images={images} />
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  
   const events = [
     { title: "Latest deck", image: "/dashboard/events/1.png", date: "Last updated: 15.05.2025, 15:37" },
     { title: "Latest deck", image: "/dashboard/events/2.png", date: "Last updated: 15.05.2025, 15:37" },
@@ -50,13 +52,9 @@ const SponsorshipDecks = () => {
   }, [screenSize]);
 
   const handleClick = (title) => {
-    // A modal opens making the background blurry, will include a cross button to cross it
-
-    // will contain a title and small image in one line, title at the start and image at the end
-
-    // Then this component remains as it is
-    <ImageSlider />
-  }
+    setModalTitle(title);
+    setIsModalOpen(true);
+  };
 
   const getItemsPerPage = () => {
     switch (screenSize) {
@@ -142,6 +140,7 @@ const SponsorshipDecks = () => {
               date={event.date}
               title={event.title}
               image={event.image}
+              onAction={handleClick}
             />
           ))}
         </div>
@@ -161,6 +160,7 @@ const SponsorshipDecks = () => {
             date={event.date}
             title={event.title}
             image={event.image}
+            onAction={handleClick}
           />
         ))}
 
@@ -171,6 +171,12 @@ const SponsorshipDecks = () => {
           {renderPagination()}
         </div>
       </div>
+      <SponsorshipModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={modalTitle}
+      />
+
     </div>
   );
 }
