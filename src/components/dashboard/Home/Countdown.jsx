@@ -55,7 +55,7 @@ const Countdown = ({ isButton }) => {
                 }}
             >
                 <div className="absolute inset-0 bg-opacity-40"></div>
-                <div className="relative z-10 flex flex-col items-center justify-center h-full text-white p-4 min-h-[300px]">
+                <div className="relative z-10 flex flex-col items-center justify-center h-full text-white p-4 min-h-[300px] lg:h-[400px] 2xl:h-[600px]">
                     <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 text-center">EVENT COUNTDOWN</h2>
                     <p className="text-xs sm:text-sm md:text-base mb-6 text-center max-w-xs sm:max-w-sm md:max-w-md">
                         Don't miss out — the countdown is on!<br />

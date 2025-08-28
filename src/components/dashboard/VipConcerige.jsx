@@ -26,13 +26,13 @@ export default function VipConciergeTable() {
   const getStatusStyle = (status) => {
     switch (status) {
       case "Going":
-        return "bg-green-100 text-green-700";
+        return "bg-green-100 text-green-700 2xl:bg-green-200 2xl:text-green-800";
       case "Pending":
-        return "bg-yellow-100 text-yellow-700";
+        return "bg-yellow-100 text-yellow-700 2xl:bg-yellow-200 2xl:text-yellow-800";
       case "Not going":
-        return "bg-gray-100 text-gray-600";
+        return "bg-gray-100 text-gray-600 2xl:bg-gray-200 2xl:text-gray-700";
       default:
-        return "bg-gray-100 text-gray-600";
+        return "bg-gray-100 text-gray-600 2xl:bg-gray-200 2xl:text-gray-700";
     }
   };
 
@@ -42,12 +42,12 @@ export default function VipConciergeTable() {
 
   return (
     <div className="w-full bg-[#F4F4F4]">
-      <div className="flex items-center justify-between p-4 md:p-6 border-b md:border-b-0">
-        <h1 className="text-lg md:text-xl font-semibold text-gray-900">VIP CONCIERGE</h1>
+      <div className="flex items-center justify-between p-4 md:p-6 2xl:p-8 border-b md:border-b-0">
+        <h1 className="text-lg md:text-xl 2xl:text-2xl font-semibold text-gray-900">VIP CONCIERGE</h1>
         <div className="md:hidden"></div>
       </div>
 
-      <div className="p-4 md:p-6 md:pt-0">
+      <div className="p-4 md:p-6 2xl:p-8 md:pt-0 2xl:pt-0">
         <div className="overflow-x-auto custom-scrollbar">
           <div className="min-w-[800px] md:min-w-0">
             <style jsx>{`
@@ -74,64 +74,71 @@ export default function VipConciergeTable() {
                 scrollbar-width: thin;
                 scrollbar-color: #000000 #f1f1f1;
               }
+              
+              /* 2xl specific scrollbar */
+              @media (min-width: 1536px) {
+                .custom-scrollbar::-webkit-scrollbar {
+                  height: 12px;
+                }
+              }
             `}</style>
             {/* Unified Table for Both Desktop and Mobile */}
-            <div className="overflow-hidden bg-white border border-gray-200 rounded-lg md:rounded-lg">
+            <div className="overflow-hidden bg-white border border-gray-200 rounded-lg md:rounded-lg 2xl:rounded-xl shadow-sm 2xl:shadow-md">
               <table className="w-full">
                 <thead className="bg-[#E2E2E2]">
                   <tr>
-                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[140px] md:min-w-0">
+                    <th className="px-4 md:px-6 2xl:px-8 py-3 2xl:py-6 text-left text-xs 2xl:text-sm font-medium text-gray-500 uppercase tracking-wider min-w-[140px] md:min-w-0">
                       VIP Guest
                     </th>
-                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px] md:min-w-0">
+                    <th className="px-4 md:px-6 2xl:px-8 py-3 2xl:py-6 text-left text-xs 2xl:text-sm font-medium text-gray-500 uppercase tracking-wider min-w-[120px] md:min-w-0">
                       Hotel name
                     </th>
-                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px] md:min-w-0">
+                    <th className="px-4 md:px-6 2xl:px-8 py-3 2xl:py-6 text-left text-xs 2xl:text-sm font-medium text-gray-500 uppercase tracking-wider min-w-[120px] md:min-w-0">
                       Assigned host
                     </th>
-                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px] md:min-w-0">
+                    <th className="px-4 md:px-6 2xl:px-8 py-3 2xl:py-6 text-left text-xs 2xl:text-sm font-medium text-gray-500 uppercase tracking-wider min-w-[120px] md:min-w-0">
                       Flight date
                     </th>
-                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px] md:min-w-0">
+                    <th className="px-4 md:px-6 2xl:px-8 py-3 2xl:py-6 text-left text-xs 2xl:text-sm font-medium text-gray-500 uppercase tracking-wider min-w-[100px] md:min-w-0">
                       Status
                     </th>
-                    <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[80px] md:min-w-0">
+                    <th className="px-4 md:px-6 2xl:px-8 py-3 2xl:py-6 text-left text-xs 2xl:text-sm font-medium text-gray-500 uppercase tracking-wider min-w-[80px] md:min-w-0">
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {currentData.map((item) => (
-                    <tr key={item.id} className="hover:bg-gray-50">
-                      <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+                    <tr key={item.id} className="hover:bg-gray-50 2xl:hover:bg-gray-100/50 transition-colors duration-150">
+                      <td className="px-4 md:px-6 2xl:px-8 py-4 2xl:py-8 whitespace-nowrap">
                         <div className="flex items-center">
                           <img
-                            className="h-8 w-8 rounded-full flex-shrink-0"
+                            className="h-8 w-8 2xl:h-10 2xl:w-10 rounded-full flex-shrink-0 ring-2 ring-offset-2 ring-offset-white ring-blue-100 2xl:ring-blue-200"
                             src={getAvatar(item.name)}
                             alt={item.name}
                           />
-                          <div className="ml-3 min-w-0">
-                            <div className="text-sm font-medium text-gray-900 md:truncate">{item.name}</div>
+                          <div className="ml-3 2xl:ml-4 min-w-0">
+                            <div className="text-sm 2xl:text-base font-medium text-gray-900 md:truncate">{item.name}</div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900 md:truncate">
+                      <td className="px-4 md:px-6 2xl:px-8 py-4 2xl:py-8 whitespace-nowrap text-sm 2xl:text-base text-gray-900 md:truncate">
                         {item.hotel}
                       </td>
-                      <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900 md:truncate">
+                      <td className="px-4 md:px-6 2xl:px-8 py-4 2xl:py-8 whitespace-nowrap text-sm 2xl:text-base text-gray-900 md:truncate">
                         {item.host}
                       </td>
-                      <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-4 md:px-6 2xl:px-8 py-4 2xl:py-8 whitespace-nowrap text-sm 2xl:text-base text-gray-900">
                         {item.date}
                       </td>
-                      <td className="px-4 md:px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-md ${getStatusStyle(item.status)}`}>
+                      <td className="px-4 md:px-6 2xl:px-8 py-4 2xl:py-8 whitespace-nowrap">
+                        <span className={`inline-flex px-2 2xl:px-3 py-1 2xl:py-1.5 text-xs 2xl:text-sm font-medium rounded-md 2xl:rounded-lg ${getStatusStyle(item.status)}`}>
                           {item.status}
                         </span>
                       </td>
-                      <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <button className="p-1 px-6 hover:bg-gray-100 rounded">
-                          <img src="/dashboard/msg.png" className="w-4 h-4" />
+                      <td className="px-4 md:px-6 2xl:px-8 py-4 2xl:py-8 whitespace-nowrap text-sm text-gray-500">
+                        <button className="p-1 2xl:p-2 px-6 2xl:px-8 hover:bg-gray-100 2xl:hover:bg-gray-200 rounded 2xl:rounded-lg transition-colors duration-150 2xl:hover:scale-105">
+                          <img src="/dashboard/msg.png" className="w-4 h-4 2xl:w-5 2xl:h-5" />
                         </button>
                       </td>
                     </tr>
@@ -142,19 +149,19 @@ export default function VipConciergeTable() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6">
-          <div className="hidden md:block text-sm text-gray-700">
+        <div className="flex items-center justify-between mt-6 2xl:mt-8">
+          <div className="hidden md:block text-sm 2xl:text-base text-gray-700">
             Showing {startIndex + 1}-{Math.min(startIndex + itemsPerPage, data.length)} from {data.length}
           </div>
           <div className="md:hidden"></div>
 
-          <div className="w-full lg:w-auto flex items-center justify-center lg:justify-start gap-2">
+          <div className="w-full lg:w-auto flex items-center justify-center lg:justify-start gap-2 2xl:gap-3">
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-              className="p-2 border border-black rounded-full hover:bg-gray-100 disabled:opacity-50 transition-colors"
+              className="p-2 2xl:p-3 border border-black rounded-full hover:bg-gray-100 2xl:hover:bg-gray-200 disabled:opacity-50 transition-all duration-150 2xl:hover:scale-105"
               disabled={currentPage === 1}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="2xl:w-5 2xl:h-5">
                 <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
@@ -165,9 +172,9 @@ export default function VipConciergeTable() {
                 <button
                   key={pageNum}
                   onClick={() => setCurrentPage(pageNum)}
-                  className={`w-8 h-8 rounded-full text-sm font-medium transition-colors ${currentPage === pageNum
-                    ? 'bg-black text-white'
-                    : 'border border-gray-300 hover:bg-gray-50'
+                  className={`w-8 h-8 2xl:w-10 2xl:h-10 rounded-full text-sm 2xl:text-base font-medium transition-all duration-150 2xl:hover:scale-105 ${currentPage === pageNum
+                    ? 'bg-black text-white shadow-md 2xl:shadow-lg'
+                    : 'border border-gray-300 hover:bg-gray-50 2xl:hover:bg-gray-100'
                     }`}
                 >
                   {pageNum}
@@ -177,10 +184,10 @@ export default function VipConciergeTable() {
 
             <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-              className="p-2 rounded-full hover:bg-gray-100 border border-black disabled:opacity-50 transition-colors"
+              className="p-2 2xl:p-3 rounded-full hover:bg-gray-100 2xl:hover:bg-gray-200 border border-black disabled:opacity-50 transition-all duration-150 2xl:hover:scale-105"
               disabled={currentPage === totalPages}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="2xl:w-5 2xl:h-5">
                 <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>

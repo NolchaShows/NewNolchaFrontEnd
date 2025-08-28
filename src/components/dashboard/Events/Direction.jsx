@@ -95,15 +95,15 @@ const Direction = () => {
   }, []);
 
   return (
-    <div className="max-w-lg mx-auto bg-white border border-gray-300 rounded-lg p-6 relative">
+    <div className="max-w-none w-full 2xl:min-h-[400px] mx-auto bg-white border border-gray-300 rounded-lg p-6 relative">
 
       <div className="flex justify-between items-start mb-6">
-        <h1 className="text-xl font-bold text-gray-800">BTC CONFERENCE</h1>
-        <button className="w-8 h-8 rounded flex items-center justify-center transition-colors">
+        <h1 className="text-xl font-bold 2xl:text-2xl text-gray-800">BTC CONFERENCE</h1>
+        <button className="w-8 h-8 2xl:w-16 2xl:h-16 rounded flex items-center justify-center transition-colors">
           <img
             src="/dashboard/download.png"
             alt="Download"
-            className="w-8 h-8"
+            className="w-8 h-8 2xl:w-12 2xl:h-12"
           />
         </button>
       </div>
@@ -116,8 +116,8 @@ const Direction = () => {
             className="w-5 h-5"
           />
           <div>
-            <span className="text-sm font-semibold text-gray-700">Date</span>
-            <span className="text-sm text-gray-600 ml-2">September 22, 2025</span>
+            <span className="text-sm font-semibold 2xl:text-xl text-gray-700">Date</span>
+            <span className="text-sm text-gray-600 2xl:text-xl ml-2">September 22, 2025</span>
           </div>
         </div>
 
@@ -128,8 +128,8 @@ const Direction = () => {
             className="w-5 h-5"
           />
           <div>
-            <span className="text-sm font-semibold text-gray-700">Time</span>
-            <span className="text-sm text-gray-600 ml-2">10:00 AM - 5:00 PM</span>
+            <span className="text-sm font-semibold 2xl:text-xl text-gray-700">Time</span>
+            <span className="text-sm text-gray-600 2xl:text-xl ml-2">10:00 AM - 5:00 PM</span>
           </div>
         </div>
 
@@ -140,14 +140,14 @@ const Direction = () => {
             className="w-5 h-5"
           />
           <div>
-            <span className="text-sm font-semibold text-gray-700">Location</span>
-            <span className="text-sm text-gray-600 ml-2">Silicon Valley Expo Center</span>
+            <span className="text-sm font-semibold 2xl:text-xl text-gray-700">Location</span>
+            <span className="text-sm text-gray-600 2xl:text-xl ml-2">Silicon Valley Expo Center</span>
           </div>
         </div>
       </div>
 
       {/* Google Map Container */}
-      <div className="bg-gray-100 rounded-lg h-40 mb-4 relative overflow-hidden">
+      <div className="bg-gray-100 rounded-lg h-40 2xl:h-70 mb-4 relative overflow-hidden">
         <div
           ref={mapRef}
           className="w-full h-full"
