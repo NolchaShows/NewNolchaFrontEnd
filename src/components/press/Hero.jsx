@@ -33,7 +33,7 @@ function Hero({ heading = "", images, headerStyling = "" }) {
           </h1>
         )}
 
-        <div className="relative w-full px-2 sm:px-2">
+        <div className="relative w-full">
           <img
             key={currentIndex}
             src={images[currentIndex] || "/api/placeholder/800/400"}
@@ -48,7 +48,7 @@ function Hero({ heading = "", images, headerStyling = "" }) {
             <>
               <button
                 onClick={handlePrev}
-                className="absolute left-8 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
+                className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
                 aria-label="Previous image"
               >
                 <img
@@ -59,7 +59,7 @@ function Hero({ heading = "", images, headerStyling = "" }) {
               </button>
               <button
                 onClick={handleNext}
-                className="absolute right-8 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
+                className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
                 aria-label="Next image"
               >
                 <img

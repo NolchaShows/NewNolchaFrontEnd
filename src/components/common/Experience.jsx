@@ -64,9 +64,7 @@ const Experience = ({
       <ImageCarousel posts={posts} />
 
       {/* Gallery Section */}
-      <div className="mb-10">
         <Gallery images={galleryImages} />
-      </div>
     </div>
   );
 };
