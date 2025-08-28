@@ -75,36 +75,36 @@ const ArtistGallery = () => {
         {/* Featured Artists Header */}
         <div className="text-center mb-12">
           <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-32 xl:mx-60 flex flex-wrap justify-center items-center gap-2 sm:gap-4 mb-8">
-            <span className="text-[#141414] text-lg sm:text-xl">✦</span>
+            <span className="text-[#141414] text-lg sm:text-xl 2xl:text-2xl">✦</span>
             {featuredArtists.map((artist, index) => (
               <React.Fragment key={artist}>
-                <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-[#141414] tracking-wide text-center">
+                <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold 2xl:text-2xl text-[#141414] tracking-wide text-center">
                   {artist}
                 </span>
                 {index < featuredArtists.length - 1 && (
-                  <span className="text-[#141414] text-lg sm:text-xl">✦</span>
+                  <span className="text-[#141414] text-lg sm:text-xl 2xl:text-2xl">✦</span>
                 )}
               </React.Fragment>
             ))}
-            <span className="text-[#141414] text-lg sm:text-xl">✦</span>
+            <span className="text-[#141414] text-lg sm:text-xl 2xl:text-2xl">✦</span>
           </div>
 
           {/* All Artists List */}
           <div className="max-w-5xl mx-auto px-4">
-            <p className="text-sm md:text-base text-[#141414] leading-relaxed font-medium">
+            <p className="text-sm md:text-base 2xl:text-xl text-[#141414] leading-relaxed font-medium">
               {allArtists.join(" - ")}
             </p>
           </div>
         </div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-30">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 2xl:gap-20 mt-30">
           {galleryImages.map((image, index) => (
             <div
               key={image.id}
               className={`${image.className
                 } overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 
-      ${index % 2 === 0 ? "-mt-4 md:-mt-8" : "mt-4 md:mt-8"}`} // stagger effect
+      ${index % 2 === 0 ? "-mt-4 md:-mt-8" : "mt-4 md:mt-8"}`}
             >
               <img
                 src={image.src}

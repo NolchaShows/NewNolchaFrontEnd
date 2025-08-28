@@ -7,16 +7,13 @@ export default function ImageWithQuote({
 }) {
   return (
     <div className="mt-8 mb-8 max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-8xl mx-auto flex flex-col md:flex-row items-center gap-8 lg:gap-12 xl:gap-16 2xl:gap-20 p-4 lg:p-6 xl:p-8 2xl:p-10">
-      {/* Left Image */}
       <div className="w-full md:w-1/2 lg:w-2/5 xl:w-1/2 2xl:w-3/5 rounded-xl overflow-hidden shadow">
         <img src={imageUrl} alt="visual" className="w-full h-64 md:h-80 lg:h-96 xl:h-[32rem] 2xl:h-[40rem] object-cover" />
       </div>
 
-      {/* Right Text Section */}
       <div className="w-full md:w-1/2 lg:w-3/5 xl:w-3/5 2xl:w-3/5 relative">
-        {/* Background image positioned behind the title */}
         <div
-          className="absolute top-0 left-0 w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 xl:w-56 xl:h-56 2xl:w-64 2xl:h-64 bg-no-repeat bg-contain opacity-10 -ml-4 -mt-4 z-1"
+          className="absolute top-0 left-0 w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 xl:w-56 xl:h-56 2xl:w-80 2xl:h-80 bg-no-repeat bg-contain opacity-10 -ml-4 -mt-4 z-1"
           style={{ backgroundImage: "url('/membership/4.png')" }}
         ></div>
         

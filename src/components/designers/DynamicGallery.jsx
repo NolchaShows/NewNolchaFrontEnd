@@ -16,7 +16,7 @@ const DynamicGallery = ({ imagesGallery }) => {
     const [leftColumn, middleColumn, rightColumn] = divideIntoColumns(imagesGallery);
 
     return (
-        <div className="max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen">
+        <div className="max-w-6xl 2xl:max-w-7xl mx-auto p-6 bg-gray-50 min-h-screen">
             <div className="hidden md:grid md:grid-cols-3 gap-6">
                 <div className="flex flex-col">
                     {leftColumn.map((item, index) => (

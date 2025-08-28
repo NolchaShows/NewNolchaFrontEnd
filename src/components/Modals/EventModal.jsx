@@ -26,7 +26,7 @@ const EventModal = ({ setIsUpcomingModalOpen }) => {
     ]
     return (
         <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-4">
-            <div className="bg-[#EBE2D7] rounded-2xl max-w-5xl w-full max-h-[90vh] relative shadow-lg overflow-hidden flex flex-col">
+            <div className="bg-[#EBE2D7] rounded-2xl w-full max-w-none max-h-[90vh] m-10 relative shadow-lg overflow-hidden flex flex-col">
                 <button
                     onClick={() => setIsUpcomingModalOpen(false)}
                     className="absolute right-7 top-3 text-gray-600 hover:text-gray-800 text-xl z-10 bg-white bg-opacity-80 cursor-pointer hover:bg-opacity-100 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
@@ -40,7 +40,7 @@ const EventModal = ({ setIsUpcomingModalOpen }) => {
                         <EventCard />
                     </div>
                     <MediaCarousel items={media} />
-                    <div className='py-8 mt-5 bg-[#F4F4F4] max-w-4xl mx-auto'>
+                    <div className='py-8 mt-5 bg-[#F4F4F4] mx-auto'>
                         <ImageCarousel posts={posts} />
                     </div>
                     <div className='py-8 mt-5 bg-white max-w-4xl mx-auto'>

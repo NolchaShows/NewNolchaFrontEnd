@@ -34,7 +34,7 @@ const Designer = () => {
         <div className="w-full lg:w-1/2">
           <MagazineCard {...magazine} />
           <div className='mt-10'>
-              <PressHero images={social} heading='INSTAGRAM' headerStyling='text-lg text-[#003233] font-semibold' />
+              <PressHero images={social} heading='INSTAGRAM'/>
           </div>
           <div className='ml-9 mr-9 mb-9'>
             <ImageSlider images={images} />
