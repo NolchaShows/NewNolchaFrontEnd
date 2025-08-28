@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react'
+import { RxCross2 } from "react-icons/rx";
 
 const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
     const [formData, setFormData] = useState({
@@ -28,17 +29,18 @@ const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
 
     return (
         <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-4">
-            <div className="bg-[#EBE2D7] rounded-2xl max-w-6xl w-full max-h-[90vh] relative shadow-lg overflow-hidden flex flex-col">
+            <div className="bg-[#EBE2D7] rounded-2xl max-w-none w-full max-h-[90vh] relative shadow-lg overflow-hidden flex flex-col">
                 <button
                     onClick={() => setIsInnerCircleModalOpen(false)}
-                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-xl font-bold z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-8 h-8 flex items-center cursor-pointer justify-center transition-all duration-200"
+                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-xl font-bold z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-8 h-8 2xl:w-12 2xl:h-12 2xl:text-2xl flex items-center cursor-pointer justify-center transition-all duration-200"
                 >
-                    ×
+                                        <RxCross2 />
+                    
                 </button>
 
                 <div className="p-8 overflow-y-auto overflow-x-hidden flex-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                     {/* Header */}
-                    <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
+                    <h2 className="text-2xl md:text-3xl 2xl:text-5xl font-bold text-gray-800 mb-8 text-center">
                         JOIN THE INNER CIRCLE
                     </h2>
 
@@ -61,7 +63,7 @@ const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     {/* Full Name */}
                                     <div>
-                                        <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label htmlFor="fullName" className="block text-sm 2xl:text-2xl font-medium text-gray-700 mb-2">
                                             Full name
                                         </label>
                                         <input
@@ -71,14 +73,14 @@ const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
                                             value={formData.fullName}
                                             onChange={handleInputChange}
                                             placeholder="Enter your full name"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white"
+                                            className="w-full px-4 py-3 2xl:py-5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white"
                                             required
                                         />
                                     </div>
 
                                     {/* LinkedIn or Website */}
                                     <div>
-                                        <label htmlFor="linkedinOrWebsite" className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label htmlFor="linkedinOrWebsite" className="block text-sm 2xl:text-2xl font-medium text-gray-700 mb-2">
                                             Linkedin or website
                                         </label>
                                         <input
@@ -88,13 +90,13 @@ const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
                                             value={formData.linkedinOrWebsite}
                                             onChange={handleInputChange}
                                             placeholder="www.linkedin.com"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white"
+                                            className="w-full px-4 py-3 2xl:py-5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white"
                                         />
                                     </div>
 
                                     {/* Email */}
                                     <div>
-                                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label htmlFor="email" className="block text-sm 2xl:text-2xl  font-medium text-gray-700 mb-2">
                                             Your email
                                         </label>
                                         <input
@@ -104,14 +106,14 @@ const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
                                             value={formData.email}
                                             onChange={handleInputChange}
                                             placeholder="example@gmail.com"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white"
+                                            className="w-full px-4 py-3 2xl:py-5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white"
                                             required
                                         />
                                     </div>
 
                                     {/* Message */}
                                     <div>
-                                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label htmlFor="message" className="block text-sm 2xl:text-2xl  font-medium text-gray-700 mb-2">
                                             Tell us why you'd like to join
                                         </label>
                                         <textarea
@@ -121,7 +123,7 @@ const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
                                             onChange={handleInputChange}
                                             placeholder="Tell us why you'd like to join"
                                             rows={4}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 resize-vertical bg-white"
+                                            className="w-full px-4 py-3 2xl:py-5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 resize-vertical bg-white"
                                             required
                                         />
                                     </div>
@@ -129,7 +131,7 @@ const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
                                     {/* Submit Button */}
                                     <button
                                         type="submit"
-                                        className="w-full bg-[#E7F0D3] hover:bg-green-300 text-gray-800 font-medium py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-green-400 focus:outline-none"
+                                        className="w-full bg-[#E7F0D3] hover:bg-green-300 text-gray-800 2xl:text-2xl  font-medium py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-green-400 focus:outline-none"
                                     >
                                         Submit application
                                     </button>
@@ -152,11 +154,11 @@ const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
 
                             {/* Success Message Section */}
                             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center text-center min-h-[400px] lg:min-h-auto">
-                                <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
+                                <h3 className="text-2xl md:text-3xl 2xl:text-4xl font-bold text-gray-800 mb-6">
                                     THANK YOU FOR<br />YOUR INTEREST!
                                 </h3>
                                 
-                                <p className="text-gray-600 mb-8 max-w-md leading-relaxed">
+                                <p className="text-gray-600 mb-8 2xl:text-2xl max-w-md leading-relaxed">
                                     We've received your application. Our team reviews each one personally, and we'll be in touch soon if it's a fit.<br />
                                     <strong>Stay tuned!</strong>
                                 </p>
@@ -166,22 +168,22 @@ const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
                                     <img 
                                         src="/join/1.png" 
                                         alt="Magazine 1" 
-                                        className="w-16 h-20 md:w-20 md:h-24 object-cover rounded-lg shadow-md"
+                                        className="w-16 h-20 md:w-20 md:h-24 2xl:w-30 2xl:h-34 object-cover rounded-lg shadow-md"
                                     />
                                     <img 
                                         src="/join/2.png" 
                                         alt="Magazine 2" 
-                                        className="w-16 h-20 md:w-20 md:h-24 object-cover rounded-lg shadow-md"
+                                        className="w-16 h-20 md:w-20 md:h-24 2xl:w-30 2xl:h-34 object-cover rounded-lg shadow-md"
                                     />
                                     <img 
                                         src="/join/3.png" 
                                         alt="Magazine 3" 
-                                        className="w-16 h-20 md:w-20 md:h-24 object-cover rounded-lg shadow-md"
+                                        className="w-16 h-20 md:w-20 md:h-24 2xl:w-30 2xl:h-34 object-cover rounded-lg shadow-md"
                                     />
                                     <img 
                                         src="/join/4.png" 
                                         alt="Magazine 4" 
-                                        className="w-16 h-20 md:w-20 md:h-24 object-cover rounded-lg shadow-md"
+                                        className="w-16 h-20 md:w-20 md:h-24 2xl:w-30 2xl:h-34 object-cover rounded-lg shadow-md"
                                     />
                                 </div>
                             </div>
