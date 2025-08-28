@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Plus_Jakarta_Sans } from 'next/font/google'
-import ConditionalLayout from "./conditionalLayout";
+import ConditionalLayout from "./ConditionalLayout";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],

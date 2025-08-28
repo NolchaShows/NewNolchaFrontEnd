@@ -3,12 +3,12 @@ import Link from "next/link";
 function Footer() {
   const footerLinks = [
     { label: "NoichaBTC", href: "#" },
-    { label: "Charity Partners", href: "#" },
-    { label: "Experiences", href: "#" },
-    { label: "Artists", href: "#" },
-    { label: "Press", href: "#" },
-    { label: "Gallery", href: "#" },
-    { label: "Contact us", href: "#" },
+    { label: "Charity Partners", href: "/charity_partners" },
+    { label: "Experiences", href: "/experiences" },
+    { label: "Artists", href: "/artists" },
+    { label: "Press", href: "/press" },
+    { label: "Gallery", href: "/gallery" },
+    { label: "Contact us", href: "/contact-us" },
     { label: "Shop", href: "#" },
   ];
 

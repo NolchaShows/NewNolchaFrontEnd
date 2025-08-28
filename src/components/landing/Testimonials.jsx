@@ -51,7 +51,7 @@ function Testimonials() {
             onClick={handlePrev}
           />
           <img
-            src="/landing/roundedright.svg "
+            src="/landing/roundedRight.svg"
             className="cursor-pointer h-[40px] w-[40px] lg:h-full lg:w-full"
             onClick={handleNext}
           />
