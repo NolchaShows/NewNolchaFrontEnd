@@ -17,7 +17,7 @@ const Gallery = () => {
             <div className="w-full px-4 mt-10">
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                     {/* Search Box */}
-                    <div className="flex items-center border border-gray-300 ml-0 md:ml-10 px-3 py-2 bg-white w-full md:flex-[1.5]">
+                    <div className="flex items-center border border-gray-300 ml-0 md:ml-10 px-3 py-2 2xl:px-6 2xl:py-4 2xl:text-xl bg-white w-full md:flex-[1.5]">
                         <input
                             type="text"
                             placeholder="Search"
@@ -26,7 +26,7 @@ const Gallery = () => {
                         <span className="text-gray-500">🔍</span>
                     </div>
                     {/* Year Dropdown */}
-                    <select className="border border-gray-300 px-3 py-2 bg-gray-100 flex-[0.7]">
+                    <select className="border border-gray-300 px-3 py-2 2xl:px-6 2xl:py-4 2xl:text-xl bg-gray-100 flex-[0.7]">
                         <option>Year</option>
                         <option>2025</option>
                         <option>2024</option>
@@ -34,7 +34,7 @@ const Gallery = () => {
                     </select>
 
                     {/* Event Type Dropdown */}
-                    <select className="border border-gray-300 px-3 py-2 bg-gray-100 flex-[0.7]">
+                    <select className="border border-gray-300 px-3 py-2 2xl:px-6 2xl:py-4 2xl:text-xl bg-gray-100 flex-[0.7]">
                         <option>Event type</option>
                         <option>Conference</option>
                         <option>Workshop</option>
@@ -42,7 +42,7 @@ const Gallery = () => {
                     </select>
 
                     {/* Location Dropdown */}
-                    <select className="border border-gray-300 px-3 py-2 bg-gray-100 flex-[0.7]">
+                    <select className="border border-gray-300 px-3 py-2 2xl:px-6 2xl:py-4 2xl:text-xl bg-gray-100 flex-[0.7]">
                         <option>Location</option>
                         <option>USA</option>
                         <option>Europe</option>
@@ -50,7 +50,7 @@ const Gallery = () => {
                     </select>
 
                     {/* Clear All */}
-                    <button className="text-gray-500 hover:text-black text-sm md:ml-2">
+                    <button className="text-gray-500 hover:text-black text-sm 2xl:text-xl md:ml-2">
                         Clear all
                     </button>
                 </div>
