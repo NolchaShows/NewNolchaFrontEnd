@@ -20,7 +20,7 @@ function Navbar() {
     { label: "Speakers", href: "/speakers" },
     { label: "Artist", href: "/artists" },
     { label: "Press", href: "/press" },
-    { label: "Shop", href: "#" },
+    { label: "Shop", href: "/shop" },
     { label: "Contact", href: "/contact-us" },
     { label: "Designers", href: "/designers" },
     { label: "Gallery", href: "/gallery" },

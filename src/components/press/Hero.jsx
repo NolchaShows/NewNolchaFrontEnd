@@ -36,12 +36,9 @@ function Hero({ heading = "", images, headerStyling = "" }) {
         <div className="relative w-full">
           <img
             key={currentIndex}
-            src={images[currentIndex] || "/api/placeholder/800/400"}
+            src={images[currentIndex]}
             alt={`Slide ${currentIndex + 1}`}
             className="w-full object-cover h-[450px] sm:h-[600px] 2xl:h-[800px] rounded-[12px]"
-            onError={(e) => {
-              e.target.src = "/api/placeholder/800/400";
-            }}
           />
 
           {images.length > 1 && (
