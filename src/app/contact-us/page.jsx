@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 
-export default function ContactForm() {
+export default function ContactForm({bg}) {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -26,7 +26,7 @@ export default function ContactForm() {
     <div 
       className="min-h-screen bg-cover bg-center bg-no-repeat relative"
       style={{ 
-        backgroundImage: "url('/contact/bg.jpg')",
+        backgroundImage: `url(${bg || '/contact/bg.jpg'})`,
         backgroundColor: '#1a1a1a' // Fallback dark color
       }}
     >
@@ -50,7 +50,7 @@ export default function ContactForm() {
           </h1>
           
           {/* Sponsors Image */}
-          <div className="max-w-sm lg:max-w-md 2xl:max-w-lg">
+          <div className="max-w-sm lg:max-w-md 2xl:max-w-3xl">
             <img 
               src="/contact/1.png" 
               alt="Sponsors"
@@ -71,7 +71,7 @@ export default function ContactForm() {
                   placeholder="First name"
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 2xl:px-6 2xl:py-5 2xl:text-lg bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="w-full px-4 py-3 2xl:px-6 2xl:py-5 2xl:text-lg placeholder:2xl:text-2xl bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50"
                   required
                 />
               </div>
@@ -82,7 +82,7 @@ export default function ContactForm() {
                   placeholder="Last name"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 2xl:px-6 2xl:py-5 2xl:text-lg bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="w-full px-4 py-3 2xl:px-6 2xl:py-5 2xl:text-lg placeholder:2xl:text-2xl bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50"
                   required
                 />
               </div>
@@ -96,7 +96,7 @@ export default function ContactForm() {
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 2xl:px-6 2xl:py-5 2xl:text-lg bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="w-full px-4 py-3 2xl:px-6 2xl:py-5 2xl:text-lg placeholder:2xl:text-2xl bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50"
                 required
               />
             </div>
@@ -109,7 +109,7 @@ export default function ContactForm() {
                 rows="6"
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-4 py-3 2xl:px-6 2xl:py-5 2xl:text-lg bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50 resize-none 2xl:min-h-[200px]"
+                className="w-full px-4 py-3 2xl:px-6 2xl:py-5 2xl:text-lg placeholder:2xl:text-2xl bg-white/90 backdrop-blur-sm border-none rounded-none text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white/50 resize-none 2xl:min-h-[200px]"
                 required
               ></textarea>
             </div>
@@ -119,7 +119,7 @@ export default function ContactForm() {
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="w-full py-3 2xl:py-5 2xl:text-lg bg-[#E7F0D3] hover:bg-[#C5B195] text-gray-800 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="w-full py-3 2xl:py-5 2xl:text-2xl bg-[#E7F0D3] hover:bg-[#C5B195] text-gray-800 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               >
                 Submit
               </button>

@@ -58,7 +58,7 @@ function Footer() {
           {columns.map((col, colIdx) => (
             <div key={colIdx} className="flex flex-col gap-[20px]">
               {col.map((link, linkIdx) => (
-                <Link key={linkIdx} href={link.href}>
+                <Link key={linkIdx} href={link.href} className="2xl:text-3xl">
                   {link.label}
                 </Link>
               ))}
@@ -66,7 +66,7 @@ function Footer() {
           ))}
           <div className="border-l border-l-[#D5D5D5] h-fit py-[10px] pl-[30px] flex flex-col gap-[10px]">
             {socialLinks.map((social, idx) => (
-              <Link key={idx} href={social.href} className="h-[56px] w-[56px]">
+              <Link key={idx} href={social.href} className="h-[56px] w-[56px] 2xl:h-[70px] 2xl:w-[70px]">
                 <img src={social.icon} alt={social.alt} />
               </Link>
             ))}
@@ -77,12 +77,12 @@ function Footer() {
         <div className="flex flex-col gap-[19px] text-[16px] items-center lg:items-start ">
           <img src="/footer/logo.svg" className="w-[104px] h-[30.33px]" />
           <div className="flex gap-[10px] flex-col">
-            <p className="text-center lg:text-left">1345 Ave of the Americas, 2nd floor, New York, NY 10105</p>
-            <p className="text-center lg:text-left">Pr@nolcha.com</p>
-            <p className="text-center lg:text-left">© Copyright Rudy 2024</p>
+            <p className="text-center lg:text-left 2xl:text-2xl">1345 Ave of the Americas, 2nd floor, New York, NY 10105</p>
+            <p className="text-center lg:text-left 2xl:text-2xl">Pr@nolcha.com</p>
+            <p className="text-center lg:text-left 2xl:text-2xl">© Copyright Rudy 2024</p>
           </div>
         </div>
-        <div className="flex lg:gap-[45px] justify-between text-[20px] pt-[32px] lg:pt-[0px]">
+        <div className="flex lg:gap-[45px] justify-between text-[20px] pt-[32px] lg:pt-[0px] 2xl:text-2xl">
           {legalLinks.map((link, idx) => (
             <Link key={idx} href={link.href}>
               {link.label}

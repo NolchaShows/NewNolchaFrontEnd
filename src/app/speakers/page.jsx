@@ -1,4 +1,5 @@
 "use client";
+import Gallery from "@/components/experiences/Gallery";
 import Hero from "@/components/press/Hero";
 import ScrollCarousel from "@/components/speakers/ScrollCarousel";
 import Stack from "@/components/speakers/Stack";
@@ -16,6 +17,19 @@ function page() {
     { url: "/landing/2.png", css: " w-full lg:w-[432px]" },
     { url: "/landing/2.png", css: " w-full lg:w-[432px]" },
   ];
+  const galleryImages = [
+      "/experiences/jack/galleryImages/1.png",
+      "/experiences/jack/galleryImages/2.png",
+      "/experiences/jack/galleryImages/3.png",
+      "/experiences/jack/galleryImages/4.png",
+      "/experiences/jack/galleryImages/5.png",
+      "/experiences/jack/galleryImages/6.png",
+      "/experiences/jack/galleryImages/7.png",
+      "/experiences/jack/galleryImages/8.png",
+      "/experiences/jack/galleryImages/2.png",
+      "/experiences/jack/galleryImages/2.png",
+      "/experiences/jack/galleryImages/8.png",
+    ]
   return (
     <div className="bg-[var(--surface-color2)]">
       <Hero
@@ -33,23 +47,7 @@ function page() {
       <ScrollCarousel/>
       <ScrollCarousel/>
       
-      <div className="bg-[var(--tertiary-color)] ">
-        <div className="max-w-[1440px] mx-auto flex lg:gap-[32px] flex-wrap lg:py-[64px] lg:px-[40px] py-[24px] px-[16px] gap-[24px] items-center justify-center">
-          {images.map((image, index) => (
-            <img
-              key={index}
-              src={image.url}
-              className={`${image.css} lg:max-h-[480px] max-h-[398px] object-cover rounded-[8px]`}
-            />
-          ))}
-          <Link
-            href={"#"}
-            className="py-[12px] text-center px-[24px] md:w-fit w-full rounded-[4px] bg-[var(--primary-color)]"
-          >
-            View more
-          </Link>
-        </div>
-      </div>
+      <Gallery images={galleryImages}/>
     </div>
   );
 }

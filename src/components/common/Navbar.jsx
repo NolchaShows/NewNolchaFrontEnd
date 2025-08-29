@@ -10,6 +10,7 @@ function Navbar() {
   const [isUpcomingModalOpen, setIsUpcomingModalOpen] = useState(false);
   const [isInnerCircleModalOpen, setIsInnerCircleModalOpen] = useState(false);
   const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const menuItems = [
     { label: "BTC Vegas", href: "#" },
@@ -77,39 +78,47 @@ function Navbar() {
     } else if (modalType === "innerCircle") {
       setIsInnerCircleModalOpen(true);
     }
+    setIsMobileMenuOpen(false); // Close mobile menu when modal opens
   };
 
-  const renderMenuItem = (item, idx) => {
+  const renderMenuItem = (item, idx, isMobile = false) => {
     if (item.isModal) {
       return (
         <span
-          className="hover:underline cursor-pointer"
+          className={`hover:underline cursor-pointer 2xl:text-2xl ${isMobile ? 'block py-2' : ''}`}
           onClick={handleModalClick(item.modalType)}
         >
           {item.label}
         </span>
       );
-    } else if (item.hasDropdown) {
+    } else if (item.hasDropdown && !isMobile) {
       return (
         <div
           className="relative"
           onMouseEnter={() => setDropdownState(item.dropdownType, true)}
           onMouseLeave={() => setDropdownState(item.dropdownType, false)}
         >
-          <span className="hover:underline cursor-pointer">
+          <span className="hover:underline  2xl:text-2xl cursor-pointer">
             {item.label}
           </span>
 
-          {/* Dropdown Menu */}
+          {/* Desktop Dropdown Menu */}
           {getDropdownState(item.dropdownType) && (
-            <div className="absolute top-full left-0 pt-2 w-80 z-50">
+            <div className="absolute top-full left-0 pt-2 z-50"
+                 style={{
+                   width: 'clamp(280px, 20vw, 400px)'
+                 }}>
               <div className="bg-white shadow-lg rounded-md border border-gray-200">
                 <div className="py-2">
                   {getDropdownItems(item.dropdownType).map((dropdownItem, dropdownIdx) => (
                     <Link
                       key={dropdownIdx}
                       href={dropdownItem.href}
-                      className="block px-4 py-3 text-sm hover:bg-gray-100 transition-colors duration-200"
+                      className="block hover:bg-gray-100 transition-colors duration-200"
+                      style={{
+                        padding: 'clamp(8px, 1vw, 16px) clamp(12px, 1.2vw, 20px)',
+                        fontSize: 'cal(clamp(12px, 1vw, 16px))'
+                      }}
                       onClick={() => setDropdownState(item.dropdownType, false)}
                     >
                       {dropdownItem.label}
@@ -123,7 +132,11 @@ function Navbar() {
       );
     } else {
       return (
-        <Link href={item.href} className="hover:underline">
+        <Link 
+          href={item.href} 
+          className={`hover:underline  2xl:text-2xl ${isMobile ? 'block py-2' : ''}`}
+          onClick={() => isMobile && setIsMobileMenuOpen(false)}
+        >
           {item.label}
         </Link>
       );
@@ -145,23 +158,44 @@ function Navbar() {
 
   return (
     <>
-      <div className="py-[20px] md:px-[40px] px-[16px] max-w-[1440px] mx-auto flex justify-between items-center text-[var(--secondary-text-color)]">
-        <div className="flex gap-[12px]">
-          <img src="/navbar/dropdown.svg" className="lg:hidden cursor-pointer" />
+      <div className="w-full max-w-none mx-auto flex justify-between items-center text-[var(--secondary-text-color)]"
+           style={{
+             padding: 'clamp(16px, 1.5vw, 32px) clamp(16px, 2.5vw, 40px)'
+           }}>
+        <div className="flex items-center"
+             style={{
+               gap: 'clamp(10px, 1vw, 20px)'
+             }}>
+          <img 
+            src="/navbar/dropdown.svg" 
+            className="lg:hidden cursor-pointer" 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            style={{
+              width: 'clamp(20px, 2vw, 28px)',
+              height: 'clamp(20px, 2vw, 28px)'
+            }}
+          />
           <Link href={"/"}>
-            <img src="/navbar/logo.svg" />
+            <img 
+              src="/navbar/logo.svg" 
+              style={{
+                height: 'clamp(24px, 2.5vw, 48px)'
+              }}
+            />
           </Link>
         </div>
 
-        <div className="gap-[20px] hidden lg:flex">
-          {/* First 8 menu items */}
+        <div className="hidden lg:flex"
+             style={{
+               gap: 'clamp(16px, 1.5vw, 32px)',
+               fontSize: 'clamp(14px, 1.1vw, 18px)'
+             }}>
           {mainMenuItems.map((item, idx) => (
             <div key={idx} className="relative">
               {renderMenuItem(item, idx)}
             </div>
           ))}
 
-          {/* More dropdown for remaining items */}
           {moreMenuItems.length > 0 && (
             <div
               className="relative"
@@ -169,37 +203,44 @@ function Navbar() {
               onMouseLeave={() => setIsMoreDropdownOpen(false)}
             >
               <div className="flex items-center gap-1 hover:underline cursor-pointer">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                     style={{
+                       width: 'clamp(20px, 1.5vw, 28px)',
+                       height: 'clamp(20px, 1.5vw, 28px)'
+                     }}>
                   <path d="M7 10h10l-5 6-5-6z" />
                 </svg>
-
               </div>
 
               {/* More Dropdown Menu */}
               {isMoreDropdownOpen && (
-                <div className="absolute top-full  pt-2 w-60 z-50">
+                <div className="absolute top-full pt-2 z-50"
+                     style={{
+                       width: 'clamp(220px, 18vw, 320px)'
+                     }}>
                   <div className="bg-white shadow-lg rounded-md border border-gray-200">
                     <div className="py-2">
                       {moreMenuItems.map((item, idx) => (
                         <div key={idx} className="relative">
                           {item.isModal ? (
                             <span
-                              className="block px-4 py-3 text-sm hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+                              className="block hover:bg-gray-100  2xl:text-2xl  transition-colors duration-200 cursor-pointer"
+                              style={{
+                                padding: 'clamp(8px, 1vw, 16px) clamp(12px, 1.2vw, 20px)',
+                                fontSize: 'cal(clamp(12px, 1vw, 16px))+20px'
+                              }}
                               onClick={handleModalClick(item.modalType)}
                             >
                               {item.label}
                             </span>
-                          ) : item.hasDropdown ? (
-                            <div className="group relative">
-                              <span className="block px-4 py-3 text-sm hover:bg-gray-100 transition-colors duration-200 cursor-pointer">
-                                {item.label}
-                              </span>
-                            </div>
                           ) : (
                             <Link
                               href={item.href}
-                              className="block px-4 py-3 text-sm hover:bg-gray-100 transition-colors duration-200"
+                              className="block hover:bg-gray-100 2xl:text-2xl transition-colors duration-200"
+                              style={{
+                                padding: 'clamp(8px, 1vw, 16px) clamp(12px, 1.2vw, 20px)',
+                              }}
                               onClick={() => setIsMoreDropdownOpen(false)}
                             >
                               {item.label}
@@ -215,18 +256,82 @@ function Navbar() {
           )}
         </div>
 
-        <div className="flex md:gap-[10px] gap-[8px]">
+        <div className="flex"
+             style={{
+               gap: 'clamp(8px, 0.8vw, 16px)'
+             }}>
           {buttons.map((btn, idx) => (
             <Link
               key={idx}
               href={btn.href}
-              className={`${btn.bg} md:py-[12px] md:px-[24px] py-[6px] px-[14px] rounded-[4px]`}
+              className={`${btn.bg} rounded-[4px] transition-all duration-200 hover:opacity-90`}
+              style={{
+                padding: 'clamp(8px, 1vw, 16px) clamp(16px, 1.5vw, 32px)',
+                fontSize: 'clamp(12px, 1vw, 18px)'
+              }}
             >
               {btn.label}
             </Link>
           ))}
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 bg-opacity-50 z-50">
+          <div className="bg-white w-80 h-full shadow-lg overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <img src="/navbar/logo.svg" alt="Logo" className="h-8" />
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-2xl font-bold text-gray-600 hover:text-gray-800"
+                >
+                  ×
+                </button>
+              </div>
+              
+              <nav className="flex flex-col gap-4">
+                {menuItems.map((item, idx) => (
+                  <div key={idx}>
+                    {renderMenuItem(item, idx, true)}
+                    
+                    {/* Mobile Dropdown Items */}
+                    {item.hasDropdown && (
+                      <div className="pl-4 mt-2 space-y-2">
+                        {getDropdownItems(item.dropdownType).map((dropdownItem, dropdownIdx) => (
+                          <Link
+                            key={dropdownIdx}
+                            href={dropdownItem.href}
+                            className="block text-sm text-gray-600 hover:text-gray-800 py-1"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {dropdownItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </nav>
+
+              {/* Mobile Buttons */}
+              <div className="mt-8 space-y-3">
+                {buttons.map((btn, idx) => (
+                  <Link
+                    key={idx}
+                    href={btn.href}
+                    className={`${btn.bg} block text-center py-3 px-6 rounded-[4px] transition-all duration-200 hover:opacity-90`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {btn.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isUpcomingModalOpen && (
         <EventModal setIsUpcomingModalOpen={setIsUpcomingModalOpen} />

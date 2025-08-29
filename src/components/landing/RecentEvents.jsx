@@ -19,7 +19,7 @@ function RecentEvents() {
   };
 
   return (
-    <div className="md:py-[64px] md:px-[40px] py-[20px] px-[16px] max-w-[1440px] mx-auto flex flex-col md:gap-[40px] gap-[20px]">
+    <div className="md:py-[64px] md:px-[40px] py-[20px] px-[16px] max-w-none w-full mx-auto flex flex-col md:gap-[40px] gap-[20px]">
       <h1 className="text-[var(--primary-text-color)] text-center md:text-[48px] text-[24px] font-medium uppercase">
         Recent Events: {events[currentIndex].name}
       </h1>
@@ -28,7 +28,7 @@ function RecentEvents() {
         key={events[currentIndex].id}
         src={events[currentIndex].image}
         alt={events[currentIndex].name}
-        className="rounded-[17px] lg:max-w-[1360px] w-full lg:max-h-[726px] object-cover"
+        className="rounded-[17px] lg:max-w-[1360px] 2xl:max-w-none w-full lg:max-h-[726px] 2xl:max-h-[1000px] object-cover"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
@@ -37,13 +37,13 @@ function RecentEvents() {
       <div className="flex gap-[15px] justify-center">
         <motion.img
           src="/landing/left.svg"
-          className="cursor-pointer"
+          className="cursor-pointer 2xl:h-[70px] 2xl:w-[70px]"
           whileTap={{ scale: 0.9 }}
           onClick={handlePrev}
         />
         <motion.img
           src="/landing/right.svg"
-          className="cursor-pointer"
+          className="cursor-pointer 2xl:h-[70px] 2xl:w-[70px]"
           whileTap={{ scale: 0.9 }}
           onClick={handleNext}
         />

@@ -10,6 +10,10 @@ export function Carousel({isFade=true,textColor,backgroundColor="white"}) {
     "BEEPLE",
     "DEGODS",
     "MADE BY OONA",
+    "ONCHAINMONKEY",
+    "WORLD OF WOMEN",
+    "RON ENGLISH",
+    "JEREMY COWART"
   ];
   const marqueeRef = useRef(null);
   const [width, setWidth] = useState(0);
@@ -20,7 +24,7 @@ export function Carousel({isFade=true,textColor,backgroundColor="white"}) {
   }, []);
 
   return (
-    <div className={`relative max-w-[1320px] w-full mx-auto overflow-hidden md:py-[40px] py-[20px] rounded-b-[8px] ${backgroundColor}`}
+    <div className={`relative max-w-none w-full mx-auto overflow-hidden md:py-[40px] py-[20px] rounded-b-[8px] ${backgroundColor}`}
   //   style={{
   //   border: "1px solid",
   //   borderImageSource:
@@ -69,20 +73,20 @@ function Artists({textColor,backgroundColor,isFade}) {
     "/landing/artists/6.png",
   ];
   return (
-    <div className="lg:py-[64px] lg:px-[60px] py-[20px] px-[16px] max-w-[1440px] mx-auto flex flex-col">
+    <div className="lg:py-[64px] lg:px-[60px] py-[20px] px-[16px] mx-auto flex flex-col">
       <Carousel textColor={textColor}
       backgroundColor={backgroundColor}
       isFade={isFade}
       />
       <div className="bg-[var(--secondary-color)] lg:p-[40px] py-[24px] px-[20px] rounded-[8px] flex flex-col gap-[30px]">
         <div className="flex w-full justify-between xl:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
-          <div className="flex flex-col gap-[20px] font-medium">
-            <h1 className=" text-[32px]  uppercase">and + 500 other artists</h1>
-            <p className="text-[20px]">
+          <div className="flex flex-col gap-[20px] 2xl:gap-[30px] font-medium">
+            <h1 className=" text-[32px] 2xl:text-4xl uppercase">and + 500 other artists</h1>
+            <p className="text-lg 2xl:text-2xl">
               ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY
               <br /> COWART - LINDSAY KOKOSKA - NODEMONKES - KIRA BURSKY -
               VINCENT
-              <br /> D’ONOFRIO - LATASHÁ - VAKSEEN - TALIA ZOREF - ROB PRIOR -
+              <br /> D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA ZOREF - ROB PRIOR -
               <br /> LAURENCE FULLER - JANEDAO - IZZY WEISSGERBER - GRETTA
               KRUESI -<br /> JANEDAO -YIYANG LU - SKYE NICOLAS - AEFORIA - ARNO
               CARSTENS -<br /> MOHSEN
@@ -94,14 +98,14 @@ function Artists({textColor,backgroundColor,isFade}) {
           <div className="w-full xl:w-fit">
             <Link
               href={"#"}
-              className="w-fit py-[12px] px-[24px] rounded-[4px] bg-transparent border-[1px] border-[#141414] h-fit float-right"
+              className="w-fit py-[12px] px-[24px] 2xl:text-2xl rounded-[4px] bg-transparent border-[1px] border-[#141414] h-fit float-right"
             >
               View all artists
             </Link>
           </div>
         </div>
       {/* Dynamic image rendering */}
-      <div className="flex gap-[16px] flex-wrap items-center justify-center">
+      <div className="flex gap-[16px] 2xl:gap-[30px] flex-wrap items-center justify-center">
         {artistImages.map((src, index) => (
           <div
             key={index}
@@ -110,7 +114,7 @@ function Artists({textColor,backgroundColor,isFade}) {
             <img
               src={src}
               alt={`Artist ${index + 1}`}
-              className="md:w-[380px] xl:w-[390px] md:h-[253px] w-[350px] h-[198px] object-cover rounded-[4px]"
+              className="md:w-[380px] xl:w-[390px] md:h-[253px] lg:w-[350px] lg:h-[198px] 2xl:w-[735px] 2xl:h-[550px] object-cover rounded-[4px]"
             />
           </div>
         ))}

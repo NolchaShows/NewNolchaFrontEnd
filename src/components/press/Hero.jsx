@@ -38,7 +38,7 @@ function Hero({ heading = "", images, headerStyling = "" }) {
             key={currentIndex}
             src={images[currentIndex] || "/api/placeholder/800/400"}
             alt={`Slide ${currentIndex + 1}`}
-            className="w-full object-cover h-[450px] sm:h-[600px] rounded-[12px]"
+            className="w-full object-cover h-[450px] sm:h-[600px] 2xl:h-[800px] rounded-[12px]"
             onError={(e) => {
               e.target.src = "/api/placeholder/800/400";
             }}
@@ -65,7 +65,7 @@ function Hero({ heading = "", images, headerStyling = "" }) {
                 <img
                   src="/press/right.svg"
                   alt="Next"
-                  className="h-[48px] w-[48px] md:h-[64px] md:w-[64px]"
+                  className="h-[48px] w-[48px] md:h-[64px] md:w-[64px] "
                 />
               </button>
             </>
