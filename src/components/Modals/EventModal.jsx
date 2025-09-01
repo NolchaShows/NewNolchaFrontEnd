@@ -29,7 +29,7 @@ const EventModal = ({ setIsUpcomingModalOpen }) => {
             <div className="bg-[#EBE2D7] rounded-2xl w-full max-w-none max-h-[90vh] m-10 relative shadow-lg overflow-hidden flex flex-col">
                 <button
                     onClick={() => setIsUpcomingModalOpen(false)}
-                    className="absolute right-7 top-3 text-gray-600 hover:text-gray-800 text-xl z-10 bg-white bg-opacity-80 cursor-pointer hover:bg-opacity-100 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
+                    className="absolute right-7 top-3 text-gray-600 hover:text-gray-800 text-xl z-10 bg-white bg-opacity-80 cursor-pointer hover:bg-opacity-100 rounded-full w-8 h-8 2xl:w-12 2xl:h-12 flex items-center justify-center transition-all duration-200"
                     aria-label="Close modal"
                 >
                     <RxCross2 />
