@@ -24,6 +24,7 @@ function Navbar() {
     { label: "Contact", href: "/contact-us" },
     { label: "Designers", href: "/designers" },
     { label: "Gallery", href: "/gallery" },
+    { label: "Services", href: "/services" },
     { label: "Join the Inner Circle", href: "#", isModal: true, modalType: "innerCircle" },
   ];
 

@@ -28,7 +28,6 @@ const Page = () => {
           </div>
         </div>
       </div>
-      {/* <div className="absolute bg-black rounded-3xl w-full max-w-4xl h-96 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0"></div> */}
       {/* Cards container */}
       <div className="relative z-10 ml-5 mr-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center w-full max-w-none">
         <NolchaCard
