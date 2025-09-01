@@ -7,10 +7,10 @@ const Page = () => {
     return (
         <div className="w-full bg-white">
             <div className="py-8 px-4 ml-5">
-                <h1 className="text-2xl md:text-3xl font-medium text-[#003233] mb-2 tracking-wide">
+                <h1 className="text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-medium text-[#003233] mb-2 tracking-wide">
                     NOLCHA INNER CIRCLE
                 </h1>
-                <p className="text-[#003233] text-sm md:text-base font-medium">
+                <p className="text-[#003233] text-sm xl:text-lg 2xl:text-xl md:text-base font-medium">
                     WHERE INFLUENCE BECOME LEGACY
                 </p>
             </div>

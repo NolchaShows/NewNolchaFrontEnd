@@ -14,7 +14,7 @@ function TextHero({ images }) {
   const currentImage = images[currentIndex];
 
   return (
-    <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] max-w-[1440px] mx-auto">
+    <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] w-full max-w-none mx-auto">
       <div className="flex flex-col gap-[40px]">
         <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
           {images.length > 1 && (
@@ -33,7 +33,7 @@ function TextHero({ images }) {
             </>
           )}
 
-          <div className="flex-1 lg:max-w-[600px]">
+          <div className="flex-1 lg:max-w-[600px] 2xl:max-w-[1300px]">
             <img
               key={currentIndex}
               src={currentImage?.image || "/api/placeholder/600/400"}
@@ -45,7 +45,7 @@ function TextHero({ images }) {
             />
           </div>
 
-          <div className="flex-1 lg:max-w-[500px] text-center lg:text-left">
+          <div className="flex-1 w-full text-center lg:text-left">
             <div className="mb-6">
               <h2 className="text-4xl lg:text-5xl font-bold text-black">
                 {currentImage?.title || "Forbes"}

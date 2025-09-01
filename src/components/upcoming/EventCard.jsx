@@ -13,53 +13,52 @@ const EventCard = ({
 }) => {
   return (
     <>
-      <div className="relative max-w-4xl mx-auto bg-white border border-gray-200 rounded-lg shadow-sm">
+      <div className="relative w-full max-w-none mx-auto bg-white border border-gray-200 rounded-lg shadow-sm">
         <div>
           <div className="absolute -top-3 left-8 px-3 z-20">
-            <button className="bg-[#E7F0D3] text-[#0d3d2d] px-6 py-2 text-sm font-medium rounded-md w-full md:w-fit">
+            <button className="bg-[#E7F0D3] text-[#0d3d2d] px-6 py-2 2xl:px-12 2xl:py-4 2xl:text-xl text-sm font-medium rounded-md w-full md:w-fit">
               {name}
             </button>
           </div>
 
           <div className="absolute top-2 right-3 z-10 flex gap-2">
             <button className="h-8 w-8 bg-[#E7F0D3] hover:bg-gray-50 rounded-full shadow-sm flex items-center justify-center border border-gray-300">
-              <Share2 className="h-4 w-4 text-gray-600"/>
+              <Share2 className="h-4 w-4 2xl:h-6 2xl:w-6 text-gray-600"/>
             </button>
           </div>
 
-          {/* Desktop Layout */}
           <div className="hidden md:flex h-[480px]">
             <div className="flex-1 p-8 pr-4 flex flex-col pt-16">
               <div className="space-y-4 mb-6">
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">DATES</h3>
-                  <p className="text-gray-900">{date}</p>
+                  <h3 className="text-sm 2xl:text-xl font-semibold text-gray-500 uppercase tracking-wide mb-1">DATES</h3>
+                  <p className="text-gray-900 2xl:text-lg">{date}</p>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">VENUE</h3>
-                  <p className="text-gray-900 text-sm leading-relaxed">{venue}</p>
+                  <h3 className="text-sm 2xl:text-xl font-semibold text-gray-500 uppercase tracking-wide mb-1">VENUE</h3>
+                  <p className="text-gray-900 2xl:text-lg text-sm leading-relaxed">{venue}</p>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">WHAT TO EXPECT</h3>
-                  <p className="text-gray-900 text-sm leading-relaxed">{whatToExpected}</p>
+                  <h3 className="text-sm 2xl:text-xl font-semibold text-gray-500 uppercase tracking-wide mb-1">WHAT TO EXPECT</h3>
+                  <p className="text-gray-900 2xl:text-lg text-sm leading-relaxed">{whatToExpected}</p>
                 </div>
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <div className="w-1 h-1 bg-gray-900 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-900">Get Tickets</span>
+                  <span className="text-sm font-medium 2xl:text-lg text-gray-900">Get Tickets</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-1 h-1 bg-gray-900 rounded-full"></div>
-                  <span className="text-sm text-blue-600 hover:underline cursor-pointer">
+                  <span className="text-sm 2xl:text-lg text-blue-600 hover:underline cursor-pointer">
                     Interested in Co-hosting learn more here
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="bg-[#E7F0D3] text-[#0d3d2d] px-6 py-2 text-sm font-medium rounded-md w-full md:w-fit">
+                  <button className="bg-[#E7F0D3] 2xl:text-lg text-[#0d3d2d] px-6 py-2 text-sm font-medium rounded-md w-full md:w-fit">
                     Request Prospectus
                   </button>
                 </div>
@@ -127,7 +126,7 @@ const EventCard = ({
         </div>
 
         {/* Desktop Bottom Images */}
-        <div className="hidden md:flex gap-4 h-80 p-3">
+        <div className="hidden md:flex gap-4 h-80 2xl:h-120 p-3">
           <div className="flex-1 relative rounded-lg overflow-hidden">
             <img src={images[1] || "/placeholder.svg"} alt="Event scene 1" className="w-full h-full object-cover" />
           </div>

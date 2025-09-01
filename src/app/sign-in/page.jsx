@@ -32,17 +32,17 @@ const SignInPage = () => {
 
     return (
         <div className="min-h-screen bg-white flex items-center justify-center p-4">
-            <div className="bg-[#F8F8F8] rounded-xl shadow-lg overflow-hidden max-w-6xl w-full flex max-h-[700px]">
+            <div className="bg-[#F8F8F8] rounded-xl shadow-lg overflow-hidden max-w-none w-full flex">
                 <div className="w-full md:mr-10 md:ml-10 lg:w-1/2 p-8 lg:p-12">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">Log In</h1>
-                        <p className="text-gray-600">Please enter your details</p>
+                        <h1 className="text-3xl 2xl:text-5xl font-bold text-gray-900 mb-2">Log In</h1>
+                        <p className="text-gray-600 2xl:text-3xl">Please enter your details</p>
                         <div className="hidden lg:block w-full h-px bg-gray-300 mt-6"></div>
                     </div>
 
                     <div className="space-y-6">
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="email" className="block text-sm 2xl:text-xl font-medium text-gray-700 mb-2">
                                 Your email
                             </label>
                             <input
@@ -52,13 +52,13 @@ const SignInPage = () => {
                                 value={formData.email}
                                 onChange={handleInputChange}
                                 placeholder="example@gmail.com"
-                                className="w-full px-4 py-3 border bg-white border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
+                                className="w-full px-4 py-3 border bg-white border-gray-300 rounded-lg focus:ring-2 2xl:placeholder:text-lg focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="password" className="block text-sm 2xl:text-xl font-medium text-gray-700 mb-2">
                                 Your Password
                             </label>
                             <div className="relative">
@@ -69,7 +69,7 @@ const SignInPage = () => {
                                     value={formData.password}
                                     onChange={handleInputChange}
                                     placeholder="••••••••••"
-                                    className="w-full px-4 py-3 border bg-white border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 pr-12"
+                                    className="w-full px-4 py-3 border bg-white 2xl:placeholder:text-lg border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 pr-12"
                                     required
                                 />
                                 <button
@@ -112,9 +112,9 @@ const SignInPage = () => {
                                     onChange={(e) => setRememberMe(e.target.checked)}
                                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                                 />
-                                <span className="ml-2 text-sm text-gray-700">Remember for 30 days</span>
+                                <span className="ml-2 text-sm  2xl:text-xl text-gray-700">Remember for 30 days</span>
                             </label>
-                            <a href="#" className="text-sm text-gray-900 underline hover:no-underline">
+                            <a href="#" className="text-sm 2xl:text-xl text-gray-900 underline hover:no-underline">
                                 Forgot Password?
                             </a>
                         </div>
@@ -122,7 +122,7 @@ const SignInPage = () => {
                         <button
                             type="submit"
                             onClick={handleSubmit}
-                            className="w-full bg-[#E7F0D3] cursor-pointer hover:bg-[#d9eab5] text-gray-800 font-medium py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-green-400 focus:outline-none"
+                            className="w-full bg-[#E7F0D3] cursor-pointer hover:bg-[#d9eab5] text-gray-800 font-medium py-3 px-6  2xl:text-xl rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-green-400 focus:outline-none"
                         >
                             Sign in
                         </button>
@@ -143,7 +143,7 @@ const SignInPage = () => {
                                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                                 </svg>
-                                <span className="text-gray-700 font-medium">Log in with Google</span>
+                                <span className="text-gray-700  2xl:text-xl font-medium">Log in with Google</span>
                             </button>
 
                             <button
@@ -154,7 +154,7 @@ const SignInPage = () => {
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2">
                                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                                 </svg>
-                                <span className="text-gray-700 font-medium">Log in with Facebook</span>
+                                <span className="text-gray-700 2xl:text-xl font-medium">Log in with Facebook</span>
                             </button>
                         </div>
                     </div>

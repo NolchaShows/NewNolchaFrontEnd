@@ -3,7 +3,7 @@ import React from "react";
 
 function ContentCard({ title, description, image }) {
   return (
-    <div className="max-w-[1440px] mx-auto p-4 md:p-8">
+    <div className="w-full max-w-none mx-auto p-4 md:p-8">
       <div className="hidden md:block bg-[#f0ede6] rounded-lg overflow-hidden">
         <div className="flex">
           <div className="w-1/2 p-8 lg:p-12">
@@ -13,7 +13,7 @@ function ContentCard({ title, description, image }) {
           </div>
           
           <div className="w-1/2 p-8 lg:p-12 flex items-center">
-            <p className="text-[#2d4a3e] text-sm lg:text-base leading-relaxed">
+            <p className="text-[#2d4a3e] text-sm lg:text-xl leading-relaxed">
               {description}
             </p>
           </div>
@@ -36,7 +36,7 @@ function ContentCard({ title, description, image }) {
           {title}
         </h1>
         
-        <p className="text-[#2d4a3e] text-sm leading-relaxed mb-6">
+        <p className="text-[#2d4a3e] text-base lg:text-lg 2xl:text-3xl leading-relaxed mb-6">
           {description}
         </p>
         

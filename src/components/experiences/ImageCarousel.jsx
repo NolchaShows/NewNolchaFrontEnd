@@ -53,23 +53,48 @@ const ImageCarousel = ({ posts }) => {
     return (
         <div className="px-4 md:px-8 mb-6 overflow-hidden">
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl md:text-2xl font-bold text-black">TRUSTED BY</h2>
+                <h2 className="text-xl md:text-2xl font-bold text-black"
+                    style={{
+                        fontSize: 'clamp(18px, 1.8vw, 36px)'
+                    }}>
+                    TRUSTED BY
+                </h2>
                 <div className="flex gap-2">
                     <button
                         onClick={prevPost}
                         disabled={currentPostIndex === 0}
-                        className="w-8 h-8 rounded-full border border-black flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="rounded-full border border-black cursor-pointer flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        style={{
+                            width: 'clamp(36px, 3.2vw, 72px)',
+                            height: 'clamp(36px, 3.2vw, 72px)'
+                        }}
                         aria-label="Previous post"
                     >
-                        <ChevronLeft size={16} className="text-gray-600" />
+                        <ChevronLeft 
+                            className="text-gray-600" 
+                            style={{
+                                width: 'clamp(16px, 1.6vw, 32px)',
+                                height: 'clamp(16px, 1.6vw, 32px)'
+                            }}
+                        />
                     </button>
                     <button
                         onClick={nextPost}
                         disabled={currentPostIndex + postsPerSlide >= posts.length}
-                        className="w-8 h-8 rounded-full border border-black flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="rounded-full border border-black cursor-pointer flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        style={{
+                            width: 'clamp(36px, 3.2vw, 72px)',
+                            height: 'clamp(36px, 3.2vw, 72px)'
+                        }}
                         aria-label="Next post"
                     >
-                        <ChevronRight size={16} className="text-gray-600" />
+                        <ChevronRight 
+                            className="text-gray-600"
+                            style={{
+                                width: 'clamp(16px, 1.6vw, 32px)',
+                                height: 'clamp(16px, 1.6vw, 32px)'
+                            }}
+                        />
                     </button>
                 </div>
             </div>

@@ -9,12 +9,13 @@ function Companies({ title, companies }) {
         </div>
       )}
       <div className="pt-[40px] pb-[60px]">
-        <div className="flex lg:justify-between lg:max-w-[1100px] lg:flex-row flex-col gap-[24px] mx-auto items-center  flex-wrap">
+        <div className="flex lg:justify-between lg:max-w-[1100px] 2xl:max-w-[1400px] lg:flex-row flex-col gap-[24px] mx-auto items-center  flex-wrap">
           {companies?.map((company, index) => (
             <img
               key={index}
               src={company.logo}
               alt={`Company ${index + 1}`}
+              className="2xl:h-[200px]"
             />
           ))}
         </div>

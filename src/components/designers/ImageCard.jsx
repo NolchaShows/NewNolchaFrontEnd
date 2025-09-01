@@ -12,10 +12,10 @@ const ImageCard = ({
                     <img
                         src={image}
                         alt={`Image`}
-                        className="w-full h-80 object-cover"
+                        className="w-full h-80 2xl:h-100 object-cover"
                     />
                 </div>
-                <h2 className='text-center text-black font-semibold'>{text}</h2>
+                <h2 className='text-center text-black 2xl:text-lg font-semibold'>{text}</h2>
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from "react";
 
-function Hero({ heading="", images, headerStyling = "" }) {
+function Hero({ heading = "", images, headerStyling = "" }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!images || images.length === 0) {
@@ -9,7 +9,7 @@ function Hero({ heading="", images, headerStyling = "" }) {
       <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] max-w-[1440px] mx-auto">
         <div className={`flex flex-col ${heading ? "gap-[40px]" : ""}`}>
           {heading && (
-            <h1 className="lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase">
+            <h1 className="text-[24px] lg:text-[48px] 2xl:text-2xl text-[var(--primary-text-color)] uppercase">
               {heading}
             </h1>
           )}
@@ -21,41 +21,34 @@ function Hero({ heading="", images, headerStyling = "" }) {
     );
   }
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
+  const handleNext = () => setCurrentIndex((prev) => (prev + 1) % images.length);
+  const handlePrev = () => setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
 
   return (
-    <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] max-w-[1440px] mx-auto">
+    <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px]">
       <div className={`flex flex-col ${heading ? "gap-[40px]" : ""}`}>
         {heading && (
-          <h1 className={headerStyling || "lg:text-[48px] text-[24px] text-[var(--primary-text-color)] uppercase"}>
+          <div className={"text-[24px] lg:text-[48px] 2xl:text-5xl text-[var(--primary-text-color)] uppercase"}>
             {heading}
-          </h1>
+          </div>
         )}
 
-        <div className="relative max-w-[1360px] overflow-hidden">
+        <div className="relative w-full">
           <img
             key={currentIndex}
             src={images[currentIndex] || "/api/placeholder/800/400"}
             alt={`Slide ${currentIndex + 1}`}
-            className="w-full object-cover h-[250px] sm:h-[600px] rounded-[8px]"
+            className="w-full object-cover h-[450px] sm:h-[600px] rounded-[12px]"
             onError={(e) => {
               e.target.src = "/api/placeholder/800/400";
             }}
           />
 
-          {/* Navigation buttons - only show if there are multiple images */}
           {images.length > 1 && (
             <>
-              {/* Left button */}
               <button
                 onClick={handlePrev}
-                className="absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
+                className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
                 aria-label="Previous image"
               >
                 <img
@@ -64,11 +57,9 @@ function Hero({ heading="", images, headerStyling = "" }) {
                   className="h-[48px] w-[48px] md:h-[64px] md:w-[64px]"
                 />
               </button>
-
-              {/* Right button */}
               <button
                 onClick={handleNext}
-                className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
+                className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
                 aria-label="Next image"
               >
                 <img
@@ -79,7 +70,6 @@ function Hero({ heading="", images, headerStyling = "" }) {
               </button>
             </>
           )}
-
         </div>
       </div>
     </div>

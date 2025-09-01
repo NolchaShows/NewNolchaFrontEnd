@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const EventSlider = ({ eventName = "CONCENSUS 2025", images = [] }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -32,7 +31,7 @@ const EventSlider = ({ eventName = "CONCENSUS 2025", images = [] }) => {
                         >
                             {Array.from({ length: Math.ceil(eventImages.length / 5) }).map((_, slideIndex) => (
                                 <div key={slideIndex} className="w-full flex-shrink-0" style={{ float: 'left', width: '100%' }}>
-                                    <div className="flex justify-center gap-6 mb-6">
+                                    <div className="flex justify-center gap-6 mb-6 2xl:gap-20">
                                         {eventImages.slice(slideIndex * 5, slideIndex * 5 + 3).map((image, index) => (
                                             <div key={slideIndex * 5 + index} className="flex-shrink-0 w-64 md:w-72 lg:w-80 xl:w-96">
                                                 <div className="relative">
@@ -42,7 +41,7 @@ const EventSlider = ({ eventName = "CONCENSUS 2025", images = [] }) => {
                                                         className="w-full h-100 object-cover rounded-lg shadow-lg"
                                                     />
                                                 </div>
-                                                <p className="text-sm font-semibold text-gray-700 mt-3 text-center">
+                                                <p className="text-sm 2xl:text-xl font-semibold text-gray-700 mt-3 text-center">
                                                     {eventName}
                                                 </p>
                                             </div>
@@ -50,7 +49,7 @@ const EventSlider = ({ eventName = "CONCENSUS 2025", images = [] }) => {
                                     </div>
 
                                     {eventImages.slice(slideIndex * 5 + 3, slideIndex * 5 + 5).length > 0 && (
-                                        <div className="flex justify-center gap-6">
+                                        <div className="flex justify-center gap-6 2xl:gap-20">
                                             {eventImages.slice(slideIndex * 5 + 3, slideIndex * 5 + 5).map((image, index) => (
                                                 <div key={slideIndex * 5 + 3 + index} className="flex-shrink-0 w-64 md:w-72 lg:w-80 xl:w-96">
                                                     <div className="relative">
@@ -60,7 +59,7 @@ const EventSlider = ({ eventName = "CONCENSUS 2025", images = [] }) => {
                                                             className="w-full h-100 object-cover rounded-lg shadow-lg"
                                                         />
                                                     </div>
-                                                    <p className="text-sm font-semibold text-gray-700 mt-3 text-center">
+                                                    <p className="text-sm 2xl:text-xl font-semibold text-gray-700 mt-3 text-center">
                                                         {eventName}
                                                     </p>
                                                 </div>
@@ -128,7 +127,7 @@ const EventSlider = ({ eventName = "CONCENSUS 2025", images = [] }) => {
                             className='cursor-pointer z-10 hover:opacity-80 transition-opacity'
                         >
                             <img
-                                src="/press/left.svg"
+                                src="/gallery/left.svg"
                                 alt="Previous"
                                 className="h-[48px] w-[48px] md:h-[64px] md:w-[64px]"
                             />
@@ -139,7 +138,7 @@ const EventSlider = ({ eventName = "CONCENSUS 2025", images = [] }) => {
                             className='cursor-pointer z-10 hover:opacity-80 transition-opacity'
                         >
                             <img
-                                src="/press/right.svg"
+                                src="/gallery/right.svg"
                                 alt="Next"
                                 className="h-[48px] w-[48px] md:h-[64px] md:w-[64px]"
                             />
