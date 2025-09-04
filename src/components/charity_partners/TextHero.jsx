@@ -38,7 +38,7 @@ function TextHero({ images }) {
               key={currentIndex}
               src={currentImage?.image || "/api/placeholder/600/400"}
               alt={currentImage?.title || `Slide ${currentIndex + 1}`}
-              className="w-full object-cover h-[300px] lg:h-[400px] rounded-[16px]"
+              className="w-full object-cover h-[300px] lg:h-[400px] 2xl:h-[600px] rounded-[16px]"
               onError={(e) => {
                 e.target.src = "/api/placeholder/600/400";
               }}
@@ -52,7 +52,7 @@ function TextHero({ images }) {
               </h2>
             </div>
 
-            <div className="text-gray-700 text-lg lg:text-xl leading-relaxed">
+            <div className="text-gray-700 text-lg lg:text-xl 2xl:text-2xl leading-relaxed">
               <p className="italic">
                 "{currentImage?.description || "Default description text"}"
               </p>

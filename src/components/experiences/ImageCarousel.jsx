@@ -53,7 +53,7 @@ const ImageCarousel = ({ posts }) => {
     return (
         <div className="px-4 md:px-8 mb-6 overflow-hidden">
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl md:text-2xl font-bold text-black"
+                <h2 className="text-xl md:text-2xl font-bold text-black mt-10"
                     style={{
                         fontSize: 'clamp(18px, 1.8vw, 36px)'
                     }}>

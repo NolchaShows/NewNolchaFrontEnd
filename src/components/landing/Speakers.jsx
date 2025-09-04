@@ -22,7 +22,7 @@ function Speakers() {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] overflow-hidden">
+    <div className="max-w-none w-full mx-auto lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] overflow-hidden">
       <div className="flex flex-col p-[10px] gap-[40px]">
         <h1 className="lg:text-[48px] text-[24px] font-medium uppercase text-[var(--primary-text-color)]">
           Featured Speakers
@@ -37,7 +37,7 @@ function Speakers() {
               />
             ))}
           </div>
-        <div className="relative max-w-[1290px] overflow-hidden hidden xl:block">
+        <div className="relative overflow-hidden hidden xl:block">
           <motion.div
             className="md:flex gap-[43px] hidden "
             animate={{ x: `-${index * (400 + 43)}px` }} // 400px width + 43px gap
@@ -47,7 +47,7 @@ function Speakers() {
               <img
                 key={i}
                 src={src}
-                className="max-w-[400px] rounded-[8px] flex-shrink-0 object-cover"
+                className="max-w-[400px] 2xl:max-w-[580px] rounded-[8px] flex-shrink-0 object-cover"
               />
             ))}
           </motion.div>

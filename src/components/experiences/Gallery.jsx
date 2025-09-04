@@ -18,7 +18,6 @@ const Gallery = ({ images }) => {
 
   return (
     <>
-
       {images && images.length > 0 && (
         <div className="bg-gray-100 border border-gray-200 rounded-2xl mb-10">
 
@@ -40,14 +39,14 @@ const Gallery = ({ images }) => {
                 {hasMoreImages ? (
                   <button
                     onClick={showMoreImages}
-                    className="bg-[#e0ebd2] text-[#0d3d2d] px-8 py-3 font-medium cursor-pointer rounded-lg hover:bg-[#c5e6c5] transition-colors duration-200 w-full md:w-fit"
+                    className="bg-[#e0ebd2] text-[#0d3d2d] px-8 py-3 font-medium cursor-pointer rounded-lg hover:bg-[#c5e6c5] transition-colors 2xl:text-2xl duration-200 w-full md:w-fit"
                   >
                     View more
                   </button>
                 ) : (
                   <button
                     onClick={showLessImages}
-                    className="bg-[#e0ebd2] text-[#0d3d2d] px-8 py-3 font-medium cursor-pointer rounded-lg hover:bg-[#c5e6c5] transition-colors duration-200 w-full md:w-fit"
+                    className="bg-[#e0ebd2] text-[#0d3d2d] px-8 py-3 font-medium cursor-pointer rounded-lg hover:bg-[#c5e6c5] transition-colors 2xl:text-2xl duration-200 w-full md:w-fit"
                   >
                     View less
                   </button>

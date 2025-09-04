@@ -23,32 +23,32 @@ function Stack() {
   return (
     <div className="max-w-[1440px] mx-auto lg:py-[64px] lg:px-[40px] py-[24px] px-[16px] flex flex-col gap-[40px] items-center">
       <div className="flex justify-between w-full">
-        <div className="md:flex flex-col gap-[20px] pt-[30px] hidden ">
+        <div className="md:flex flex-col gap-[20px] 2xl:gap-[50px] pt-[30px] hidden ">
           {images1.map((image, index) => (
             <img
               key={index}
               src={image.url}
-              className={`${image.css} w-[92px] h-[132px] rounded-[8px] object-cover`}
+              className={`${image.css} w-[92px] h-[132px] 2xl:w-[175px] 2xl:h-[300px] rounded-[8px] object-cover`}
             />
           ))}
         </div>
 
-        <div className="flex flex-col lg:gap-[80px] gap-[20px] items-center md:justify-center max-w-[900px]">
+        <div className="flex flex-col lg:gap-[80px] gap-[20px] items-center md:justify-center max-w-[900px] ">
           <h1 className="md:text-[32px] text-[24px] text-center font-medium text-[var(--primary-text-color)] uppercase">
             Featuring speakers who are shaping the future of Bitcoin, art, film,
             fashion, AI, and blockchain.
           </h1>
           <img
             src={images[currentIndex]}
-            className="md:max-w-[671px] max-h-[600px] max-w-[400px] object-cover"
+            className="md:max-w-[671px] max-h-[600px] max-w-[400px] 2xl:max-h-[800px] 2xl:max-w-[600px] object-cover"
           />
         </div>
-        <div className="md:flex flex-col gap-[20px] pt-[30px] hidden ">
+        <div className="md:flex flex-col gap-[20px] 2xl:gap-[30px] pt-[30px] hidden ">
           {images2.map((image, index) => (
             <img
               key={index}
               src={image.url}
-              className={`${image.css} w-[92px] h-[132px] rounded-[8px] object-cover`}
+              className={`${image.css} w-[92px] h-[132px] 2xl:w-[175px] 2xl:h-[300px] rounded-[8px] object-cover`}
             />
           ))}
         </div>

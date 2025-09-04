@@ -29,7 +29,7 @@ function page() {
           imageStyle={"max-w-[772px]"}
         />
       </div>
-      <div className="flex lg:flex-wrap gap-[24px] lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] flex-col lg:flex-row lg:gap-[40px] max-w-[1440px] mx-auto">
+      <div className="flex lg:flex-wrap gap-[24px] lg:gap-[40px] xl:gap-[60px] 2xl:gap-[80px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] lg:px-[40px] xl:px-[60px] 2xl:px-[80px] py-[20px] px-[16px] flex-col lg:flex-row max-w-none mx-auto">
         <Card
           newsPaper={"/press/forbes.svg"}
           image={"/press/image1.jpg"}

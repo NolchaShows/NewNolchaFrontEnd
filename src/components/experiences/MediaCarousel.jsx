@@ -28,7 +28,7 @@ const MediaCarousel = ({ items }) => {
     }
     
     return (
-        <div className="px-4 md:px-8 mb-12 overflow-hidden">
+        <div className="px-2 mb-12 overflow-hidden">
             <div className="relative overflow-hidden">
                 <div className="w-full">
                     {isVideo(items[currentItemIndex]) ? (
