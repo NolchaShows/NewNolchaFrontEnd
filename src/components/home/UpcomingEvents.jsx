@@ -65,17 +65,19 @@ const UpcomingEvents = () => {
         </div>
 
         {/* Events Cards Grid */}
-        <div className="flex flex-col lg:ml-10 md:mr-10 lg:flex-row lg:justify-between lg:mr-20">
+        <div className="flex flex-col lg:ml-10 md:mr-5 lg:flex-row lg:justify-between lg:mr-20 lg:gap-12">
           {events.map((event) => (
             <div
               key={event.id}
               className="
                 bg-black rounded-[17px] p-[14px] sm:p-3 flex flex-col
-                lg:w-[391px] lg:h-[476px] 2xl:h-[600px] 2xl:w-[500px] w-full h-auto
+                lg:w-[391px] lg:h-[476px] 2xl:h-[700px] 2xl:w-[580px] w-full h-auto
                 shadow-[0_0.8px_32px_0_rgba(227,222,255,0.05)_inset,0_3.19px_14.37px_0_rgba(154,146,210,0.05)_inset,0_78.26px_78.26px_-38.33px_rgba(202,172,255,0.05)_inset,0_-65.48px_54.3px_-51.11px_rgba(96,68,144,0.05)_inset,0_5.59px_8.78px_-3.25px_rgba(255,255,255,0.07)_inset,0_32px_40px_-2px_rgba(255,255,255,0.02)_inset,0_0.5px_10px_-6px_rgba(0,0,0,0.10),0_20px_26px_-5px_rgba(0,0,0,0.40)]
                 backdrop-blur-[4px]
                 transition-all duration-300 ease-in-out cursor-pointer
-                md:hover:scale-100 lg:hover:scale-120 2xl:hover:scale-140 hover:z-10
+                transform-gpu origin-top
+                md:hover:scale-100 lg:hover:scale-x-110 lg:hover:scale-y-120 2xl:hover:scale-x-115 2xl:hover:scale-y-140 hover:z-10
+                mb-6 lg:mb-0
               "
             >
               {/* Card Image */}
@@ -89,7 +91,7 @@ const UpcomingEvents = () => {
 
               {/* Card Content */}
               <div className="px-5 pb-5 sm:px-4 sm:pb-4">
-                <h3 className="text-white text-[26px] lg:text-[22px] md:text-[20px] sm:text-[18px] font-bold leading-[120%] tracking-[-0.78px] lg:tracking-[-0.78px] md:tracking-[-0.72px] sm:tracking-[-0.6px] capitalize font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] mb-[10px] sm:mb-2">
+                <h3 className="text-white text-[26px] lg:text-[22px] md:text-[20px] sm:text-[18px] 2xl:text-[28px] font-bold leading-[120%] tracking-[-0.78px] lg:tracking-[-0.78px] md:tracking-[-0.72px] sm:tracking-[-0.6px] capitalize font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] mb-[10px] sm:mb-2">
                   {event.title}
                 </h3>
 
@@ -97,7 +99,7 @@ const UpcomingEvents = () => {
                 <div className="flex items-center gap-[14px] flex-grow">
                   {event.tags.map((tag, index) => (
                     <React.Fragment key={index}>
-                      <span className="text-white text-[16px] lg:text-[16px] md:text-[14px] sm:text-[12px] font-normal leading-[140%] tracking-[-0.48px] lg:tracking-[-0.48px] md:tracking-[-0.42px] sm:tracking-[-0.36px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif]">
+                      <span className="text-white text-[16px] lg:text-[16px] md:text-[14px] sm:text-[12px] 2xl:text-[20px] font-normal leading-[140%] tracking-[-0.48px] lg:tracking-[-0.48px] md:tracking-[-0.42px] sm:tracking-[-0.36px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif]">
                         {tag}
                       </span>
                       {index < event.tags.length - 1 && (
