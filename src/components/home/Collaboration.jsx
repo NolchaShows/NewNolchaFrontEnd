@@ -26,9 +26,9 @@ const NolchaExperience = () => {
   ];
 
   return (
-    <div className="bg-white">
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+    <div className="bg-[#F4F4F4]">
+      <div className="max-w-7xl 2xl:max-w-none mx-auto 2xl:mx-10 py-16">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left side - Image */}
           <div className="relative">
             <img 
@@ -44,7 +44,7 @@ const NolchaExperience = () => {
           {/* Right side - Content */}
           <div className="space-y-8">
             {/* Main heading */}
-            <div>
+            <div className='border-b-1 border-[#000000B2]'>
               <h1 className="text-3xl lg:text-4xl font-bold text-black leading-tight mb-8">
                 Nolcha Shows Experiences Are The Destination For Brands And Organizations To Continue To Build, Engage And Connect.
               </h1>
@@ -53,13 +53,13 @@ const NolchaExperience = () => {
             {/* Expandable sections */}
             <div className="space-y-4">
               {sections.map((section) => (
-                <div key={section.id} className="border-b border-gray-200">
+                <div key={section.id} className="border-b-1 border-[#000000B2]">
                   {/* Section header */}
                   <button
                     onClick={() => toggleSection(section.id)}
                     className="w-full flex justify-between items-center py-6 text-left hover:bg-gray-50 transition-colors duration-200"
                   >
-                    <h2 className="text-xl lg:text-2xl font-semibold text-black">
+                    <h2 className="text-xl lg:text-2xl 2xl:text-3xl font-semibold text-black">
                       {section.title}
                     </h2>
                     <div className="ml-4 flex-shrink-0">
@@ -91,7 +91,7 @@ const NolchaExperience = () => {
                   <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
                     expandedSection === section.id ? 'max-h-96 pb-6' : 'max-h-0'
                   }`}>
-                    <div className="text-gray-700 text-base lg:text-lg leading-relaxed pr-8">
+                    <div className="text-gray-700 text-base lg:text-lg 2xl:text-xl leading-relaxed pr-8">
                       {section.content}
                     </div>
                   </div>

@@ -58,14 +58,11 @@ const ImageCarousel = ({ posts }) => {
     <div className="px-4 md:px-8 mb-6 overflow-hidden">
       <div className="flex items-center justify-between mb-6">
         <h2
-          className="text-xl md:text-2xl font-bold text-black mt-10"
-          style={{
-            fontSize: "clamp(18px, 1.8vw, 36px)",
-          }}
+          className="text-3xl md:text-4xl 2xl:text-6xl font-neue font-bold text-black mt-10"
         >
           WE ARE TRUSTED BY
         </h2>
-        <div className="flex gap-[15px]">
+        <div className="flex gap-[15px] mt-6">
           <button
             onClick={prevPost}
             disabled={currentPostIndex === 0}

@@ -37,15 +37,15 @@ export default function ContactForm({bg}) {
         {/* Top/Left Side - Title and Sponsors */}
         <div className="flex-1 max-w-lg 2xl:max-w-2xl mb-8 lg:mb-0 2xl:mb-0">
           <h1 className="text-white font-bold leading-tight mb-8 lg:mb-12 2xl:mb-16">
-            <div className="flex flex-wrap">
+            {/* <div className="flex flex-wrap">
               <span className="text-5xl 2xl:text-6xl mr-4 mt-3">TAKE</span>
               <span className="text-6xl 2xl:text-7xl">THE FIRST</span>
             </div>
             <div className="flex flex-wrap">
               <span className="text-6xl 2xl:text-7xl mr-4">STEP, LET'S</span>
-            </div>
+            </div> */}
             <div>
-              <span className="text-6xl 2xl:text-7xl">TALK!</span>
+              <span className="text-6xl 2xl:text-7xl">LET'S TALK!</span>
             </div>
           </h1>
           

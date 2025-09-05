@@ -34,6 +34,14 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Neue Haas Grotesk Text Pro";
+  src: url("/fonts/NeueHaas/NeueHaasGroteskTextPro.woff2") format("woff2"),
+       url("/fonts/NeueHaas/NeueHaasGroteskTextPro.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap');
 /* Reusable class */
 .helvetica {

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 const Services = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -107,8 +108,8 @@ const Services = () => {
             </div>
             {/* Description aligned with title */}
             <div className="ml-[67px] mb-8">
-              <p className="text-base font-normal leading-[22px] -tracking-[0.48px] text-black">
-                {service.description}
+              <p className="text-base 2xl:text-xl font-normal leading-[22px] -tracking-[0.48px] text-black">
+                {service.description} 
               </p>
             </div>
           </>
@@ -138,7 +139,7 @@ const Services = () => {
                 </h3>
               </div>
               <div className="flex-1">
-                <p className="text-base font-normal leading-[22px] -tracking-[0.48px] text-black">
+                <p className="text-base 2xl:text-xl font-normal leading-[22px] -tracking-[0.48px] text-black">
                   {service.description}
                 </p>
               </div>
@@ -213,7 +214,7 @@ const Services = () => {
 
   return (
     <section className="bg-white py-16 lg:py-24 px-4 lg:px-10">
-      <div className="max-w-[1362px] mx-auto">
+      <div className="max-w-none mx-auto">
         {/* Title */}
         <h2 className="text-center text-4xl lg:text-[52px] font-bold leading-tight -tracking-[1.56px] text-black mb-12 lg:mb-[50px]">
           Explore our services
@@ -252,49 +253,21 @@ const Services = () => {
           </div>
 
           {/* Navigation Buttons */}
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <button
-              onClick={prevSlide}
-              className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
-              aria-label="Previous slide"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10 12L6 8L10 4"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+          <div className="flex items-center justify-center gap-4 mt-2">
+            <button onClick={prevSlide} aria-label="Previous slide">
+              <motion.img
+                src="/landing/left.svg"
+                className="cursor-pointer 2xl:h-[70px] 2xl:w-[70px]"
+                whileTap={{ scale: 0.9 }}
+              />
             </button>
 
-            <button
-              onClick={nextSlide}
-              className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
-              aria-label="Next slide"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6 12L10 8L6 4"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+            <button onClick={nextSlide} aria-label="Next slide">
+              <motion.img
+                src="/landing/right.svg"
+                className="cursor-pointer 2xl:h-[70px] 2xl:w-[70px]"
+                whileTap={{ scale: 0.9 }}
+              />
             </button>
           </div>
         </div>

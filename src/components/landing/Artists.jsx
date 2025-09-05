@@ -6,24 +6,45 @@ function VideoGrid({ videos }) {
   return (
     <div className="w-full flex justify-center">
       {/* Desktop grid (zig-zag pattern - all 4 videos in one row) */}
-      <div className="hidden lg:flex lg:justify-center lg:gap-6 lg:h-[600px] lg:items-end">
-        {videos.map((src, i) => (
-          <div
-            key={i}
-            className={`flex ${i % 2 === 0 ? "items-start" : "items-end"}`}
-            style={{ height: "600px" }}
-          >
-            <video
-              src={src}
-              className="w-[250px] h-[450px] object-cover border-4 border-black rounded-[20px] shadow-xl"
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-          </div>
-        ))}
-      </div>
+      {videos && videos.length > 0 ? (
+        <div className="hidden lg:flex lg:justify-center lg:gap-6 2xl:gap-12 lg:h-[600px] 2xl:h-[700px] lg:items-end">
+          {videos.map((src, i) => (
+            <div
+              key={i}
+              className={`flex ${i % 2 === 0 ? "items-start" : "items-end"}`}
+              style={{ height: "600px" }}
+            >
+              <video
+                src={src}
+                className="w-[250px] h-[450px] 2xl:w-[300px] 2xl:h-[520px] object-cover border-4 border-black rounded-[16px]"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="hidden lg:flex lg:justify-center lg:gap-6 2xl:gap-12 lg:h-[600px] 2xl:h-[700px] lg:items-end">
+          {Array.from({ length: 4 }).map(
+            (
+              _,
+              i // show 3 empty cards
+            ) => (
+              <div
+                key={i}
+                className={`flex ${i % 2 === 0 ? "items-start" : "items-end"}`}
+                style={{ height: "600px" }}
+              >
+                <div className="w-[250px] h-[450px] 2xl:w-[300px] 2xl:h-[520px] border-4 border-black rounded-[16px] flex items-center justify-center text-gray-400 text-lg">
+                  Empty
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      )}
 
       {/* Mobile + Tablet grid (2 columns zig-zag) */}
       <div className="flex justify-center gap-4 lg:hidden">
@@ -153,13 +174,13 @@ function Artists({ textColor, backgroundColor, isFade, videos }) {
         backgroundColor={backgroundColor}
         isFade={isFade}
       />
-      <div className="bg-[var(--secondary-color)] lg:p-[40px] py-[24px] px-[20px] rounded-[8px] flex flex-col gap-[30px]">
+      <div className="bg-[var(--secondary-color)] font-neue lg:p-[40px] py-[24px] px-[20px] rounded-[8px] flex flex-col gap-[30px]">
         <div className="flex w-full justify-center xl:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
           <div className="flex flex-col gap-[20px] 2xl:gap-[30px] font-medium items-center text-center">
-            <h1 className="text-[32px] 2xl:text-4xl uppercase">
+            <h1 className="text-[36px] font-bold 2xl:text-5xl uppercase">
               and + 500 other artists
             </h1>
-            <p className="text-lg 2xl:text-2xl">
+            <p className="text-lg 2xl:text-3xl">
               ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY COWART -
               LINDSAY <br /> KOKOSKA - NODEMONKES - KIRA BURSKY - VINCENT
               D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA <br /> ZOREF - ROB PRIOR -

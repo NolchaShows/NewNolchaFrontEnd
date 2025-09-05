@@ -6,19 +6,19 @@ const UpcomingEvents = () => {
     {
       id: 1,
       title: "After party Sept 16 2025 NYC",
-      image: "https://api.builder.io/api/v1/image/assets/TEMP/afc65fa13ac41afc49eac35c45087e173fed6ab6?width=1002",
+      image: "/home/upcoming/1.png",
       tags: ["Concensus 2025", "Sept 16, 2025 NYC"]
     },
     {
       id: 2,
       title: "Nolcha X Art Basel",
-      image: "https://api.builder.io/api/v1/image/assets/TEMP/6d096bb62f0c4ca6752ac8eaf6c7332b5520b152?width=726",
+      image: "home/upcoming/2.png",
       tags: ["Concensus 2025", "Dec 4 2025 Miami"]
     },
     {
       id: 3,
       title: "Dec 4 2025 Miami",
-      image: "https://api.builder.io/api/v1/image/assets/TEMP/30a24b1ca517ec1cef4956114eb65126cb336367?width=722",
+      image: "home/upcoming/3.png",
       tags: ["Concensus 2025", "Dec 4 2025 Miami"]
     }
   ];
@@ -51,7 +51,7 @@ const UpcomingEvents = () => {
 
   return (
     <section className="bg-white w-full py-[100px] lg:py-[100px] sm:py-[60px] px-8 lg:px-8 sm:px-4">
-      <div className="max-w-[1375px] mx-auto w-full">
+      <div className="max-w-none mx-auto w-full">
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-[50px] lg:mb-[50px] sm:mb-8 gap-6 lg:gap-0">
           <h2 className="text-black text-[52px] lg:text-[52px] md:text-[40px] sm:text-[32px] font-bold leading-[120%] tracking-[-1.56px] lg:tracking-[-1.56px] md:tracking-[-1.2px] sm:tracking-[-0.96px] capitalize font-['Neue_Haas_Grotesk_Text_Pro',sans-serif]">
@@ -65,17 +65,17 @@ const UpcomingEvents = () => {
         </div>
 
         {/* Events Cards Grid */}
-        <div className="flex flex-col lg:ml-10 md:mr-10 lg:flex-row gap-[20px] lg:gap-[50px] w-full">
+        <div className="flex flex-col lg:ml-10 md:mr-10 lg:flex-row lg:justify-between lg:mr-20">
           {events.map((event) => (
             <div
               key={event.id}
               className="
                 bg-black rounded-[17px] p-[14px] sm:p-3 flex flex-col
-                lg:w-[391px] lg:h-[476px] w-full h-auto
+                lg:w-[391px] lg:h-[476px] 2xl:h-[600px] 2xl:w-[500px] w-full h-auto
                 shadow-[0_0.8px_32px_0_rgba(227,222,255,0.05)_inset,0_3.19px_14.37px_0_rgba(154,146,210,0.05)_inset,0_78.26px_78.26px_-38.33px_rgba(202,172,255,0.05)_inset,0_-65.48px_54.3px_-51.11px_rgba(96,68,144,0.05)_inset,0_5.59px_8.78px_-3.25px_rgba(255,255,255,0.07)_inset,0_32px_40px_-2px_rgba(255,255,255,0.02)_inset,0_0.5px_10px_-6px_rgba(0,0,0,0.10),0_20px_26px_-5px_rgba(0,0,0,0.40)]
                 backdrop-blur-[4px]
                 transition-all duration-300 ease-in-out cursor-pointer
-                lg:hover:scale-120 md:hover:scale-100 hover:z-10
+                md:hover:scale-100 lg:hover:scale-120 2xl:hover:scale-140 hover:z-10
               "
             >
               {/* Card Image */}
