@@ -1,124 +1,118 @@
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 const useScreenSize = () => {
-    const [screenSize, setScreenSize] = useState('lg');
+  const [screenSize, setScreenSize] = useState("lg");
 
-    useEffect(() => {
-        const checkScreenSize = () => {
-            if (window.innerWidth < 640) {
-                setScreenSize('sm');
-            } else if (window.innerWidth < 1024) {
-                setScreenSize('md');
-            } else {
-                setScreenSize('lg'); 
-            }
-        };
+  useEffect(() => {
+    const checkScreenSize = () => {
+      if (window.innerWidth < 640) {
+        setScreenSize("sm");
+      } else if (window.innerWidth < 1024) {
+        setScreenSize("md");
+      } else {
+        setScreenSize("lg");
+      }
+    };
 
-        checkScreenSize();
-        window.addEventListener('resize', checkScreenSize);
-        return () => window.removeEventListener('resize', checkScreenSize);
-    }, []);
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
-    return screenSize;
+  return screenSize;
 };
 
 const ImageCarousel = ({ posts }) => {
-    const [currentPostIndex, setCurrentPostIndex] = useState(0);
-    const screenSize = useScreenSize();
+  const [currentPostIndex, setCurrentPostIndex] = useState(0);
+  const screenSize = useScreenSize();
 
-    const getPostsPerSlide = () => {
-        switch (screenSize) {
-            case 'sm': return 1;
-            case 'md': return 2;
-            case 'lg': return 3;
-            default: return 3;
-        }
-    };
+  const getPostsPerSlide = () => {
+    switch (screenSize) {
+      case "sm":
+        return 1;
+      case "md":
+        return 2;
+      case "lg":
+        return 3;
+      default:
+        return 3;
+    }
+  };
 
-    const postsPerSlide = getPostsPerSlide();
+  const postsPerSlide = getPostsPerSlide();
 
-    const nextPost = () => {
-        if (currentPostIndex + postsPerSlide < posts.length) {
-            setCurrentPostIndex((prev) => prev + postsPerSlide);
-        }
-    };
+  const nextPost = () => {
+    if (currentPostIndex + postsPerSlide < posts.length) {
+      setCurrentPostIndex((prev) => prev + postsPerSlide);
+    }
+  };
 
-    const prevPost = () => {
-        if (currentPostIndex - postsPerSlide >= 0) {
-            setCurrentPostIndex((prev) => prev - postsPerSlide);
-        }
-    };
+  const prevPost = () => {
+    if (currentPostIndex - postsPerSlide >= 0) {
+      setCurrentPostIndex((prev) => prev - postsPerSlide);
+    }
+  };
 
-    return (
-        <div className="px-4 md:px-8 mb-6 overflow-hidden">
-            <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl md:text-2xl font-bold text-black mt-10"
-                    style={{
-                        fontSize: 'clamp(18px, 1.8vw, 36px)'
-                    }}>
-                    TRUSTED BY
-                </h2>
-                <div className="flex gap-2">
-                    <button
-                        onClick={prevPost}
-                        disabled={currentPostIndex === 0}
-                        className="rounded-full border border-black cursor-pointer flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                        style={{
-                            width: 'clamp(36px, 3.2vw, 72px)',
-                            height: 'clamp(36px, 3.2vw, 72px)'
-                        }}
-                        aria-label="Previous post"
-                    >
-                        <ChevronLeft 
-                            className="text-gray-600" 
-                            style={{
-                                width: 'clamp(16px, 1.6vw, 32px)',
-                                height: 'clamp(16px, 1.6vw, 32px)'
-                            }}
-                        />
-                    </button>
-                    <button
-                        onClick={nextPost}
-                        disabled={currentPostIndex + postsPerSlide >= posts.length}
-                        className="rounded-full border border-black cursor-pointer flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                        style={{
-                            width: 'clamp(36px, 3.2vw, 72px)',
-                            height: 'clamp(36px, 3.2vw, 72px)'
-                        }}
-                        aria-label="Next post"
-                    >
-                        <ChevronRight 
-                            className="text-gray-600"
-                            style={{
-                                width: 'clamp(16px, 1.6vw, 32px)',
-                                height: 'clamp(16px, 1.6vw, 32px)'
-                            }}
-                        />
-                    </button>
-                </div>
-            </div>
-
-            <div className="relative overflow-hidden">
-                <div
-                    className="flex transition-transform duration-500"
-                    style={{
-                        transform: `translateX(-${(currentPostIndex / postsPerSlide) * 100}%)`,
-                    }}
-                >
-                    {posts.map((post, idx) => (
-                        <div key={idx} className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 p-2">
-                            <img
-                                src={post}
-                                alt={`Post ${idx + 1}`}
-                                className="w-full h-auto object-cover rounded-lg shadow-md"
-                            />
-                        </div>
-                    ))}
-                </div>
-            </div>
+  return (
+    <div className="px-4 md:px-8 mb-6 overflow-hidden">
+      <div className="flex items-center justify-between mb-6">
+        <h2
+          className="text-3xl md:text-4xl 2xl:text-6xl font-neue font-bold text-black mt-10"
+        >
+          WE ARE TRUSTED BY
+        </h2>
+        <div className="flex gap-[15px] mt-6">
+          <button
+            onClick={prevPost}
+            disabled={currentPostIndex === 0}
+            aria-label="Previous post"
+          >
+            <motion.img
+              src="/landing/left.svg"
+              className="cursor-pointer 2xl:h-[70px] 2xl:w-[70px]"
+              whileTap={{ scale: 0.9 }}
+            />
+          </button>
+          <button
+            onClick={nextPost}
+            disabled={currentPostIndex + postsPerSlide >= posts.length}
+            aria-label="Next post"
+          >
+            <motion.img
+              src="/landing/right.svg"
+              className="cursor-pointer 2xl:h-[70px] 2xl:w-[70px]"
+              whileTap={{ scale: 0.9 }}
+            />
+          </button>
         </div>
-    );
+      </div>
+
+      <div className="relative overflow-hidden">
+        <div
+          className="flex transition-transform duration-500"
+          style={{
+            transform: `translateX(-${
+              (currentPostIndex / postsPerSlide) * 100
+            }%)`,
+          }}
+        >
+          {posts.map((post, idx) => (
+            <div
+              key={idx}
+              className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 p-2"
+            >
+              <img
+                src={post}
+                alt={`Post ${idx + 1}`}
+                className="w-full h-auto object-cover rounded-lg shadow-md"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ImageCarousel;

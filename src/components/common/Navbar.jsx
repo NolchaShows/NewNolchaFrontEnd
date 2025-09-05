@@ -191,8 +191,8 @@ function Navbar() {
           className="text-center cursor-pointer hover:opacity-80 transition-opacity"
           onClick={handleModalClick(item.modalType)}
         >
-          <div className="font-bold text-black mb-1">{item.label} ▾</div>
-          <div className="text-xs text-gray-500">{item.subtitle}</div>
+          <div className="font-bold text-black mb-1 2xl:text-2xl">{item.label} ▾</div>
+          <div className="text-xs text-gray-500 2xl:text-xl">{item.subtitle}</div>
         </div>
       );
     } else if (item.hasDropdown) {
@@ -202,8 +202,8 @@ function Navbar() {
           onMouseEnter={() => setDropdownState(item.dropdownType, true)}
           onMouseLeave={() => setDropdownState(item.dropdownType, false)}
         >
-          <div className="font-bold text-black mb-1">{item.label} ▾</div>
-          <div className="text-xs text-gray-500">{item.subtitle}</div>
+          <div className="font-bold text-black mb-1 2xl:text-2xl">{item.label} ▾</div>
+          <div className="text-xs text-gray-500 2xl:text-xl">{item.subtitle}</div>
 
           {getDropdownState(item.dropdownType) && (
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 pt-2 z-50 w-64">
@@ -235,8 +235,8 @@ function Navbar() {
           href={item.href}
           className="text-center hover:opacity-80 transition-opacity"
         >
-          <div className="font-bold text-black mb-1">{item.label} ▾</div>
-          <div className="text-xs text-gray-500">{item.subtitle}</div>
+          <div className="font-bold text-black mb-1 2xl:text-2xl">{item.label} ▾</div>
+          <div className="text-xs text-gray-500 2xl:text-xl">{item.subtitle}</div>
         </Link>
       );
     }
@@ -331,7 +331,7 @@ function Navbar() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <img src="/navbar/logo.svg" className="h-12" alt="NOLCHA" />
+              <img src="/navbar/logo.svg" className="h-12 2xl:h-20" alt="NOLCHA" />
             </Link>
           </div>
 
@@ -340,7 +340,7 @@ function Navbar() {
             {/* Desktop buttons - hidden on mobile */}
             <div className="hidden lg:flex items-center gap-3">
               <svg
-                className="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-800"
+                className="w-5 h-5 2xl:w-10 2xl:h-10 text-gray-600 cursor-pointer hover:text-gray-800"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -355,14 +355,14 @@ function Navbar() {
 
               <Link
                 href="/lets-talk"
-                className="px-6 py-2 border border-black rounded-xl text-sm hover:bg-gray-50 transition-colors"
+                className="px-6 py-2 border 2xl:text-2xl border-black rounded-xl text-sm hover:bg-gray-50 transition-colors"
               >
                 Lets Talk
               </Link>
 
               <Link
                 href="/membership"
-                className="px-6 py-2 bg-[#E7F0D3] border border-[#B5BF9E] rounded-xl text-sm hover:bg-[#a4af8d] transition-colors"
+                className="px-6 py-2 bg-[#E7F0D3] 2xl:text-2xl border border-[#B5BF9E] rounded-xl text-sm hover:bg-[#a4af8d] transition-colors"
               >
                 Membership
               </Link>
@@ -393,8 +393,9 @@ function Navbar() {
                 onMouseEnter={() => setIsMoreDropdownOpen(true)}
                 onMouseLeave={() => setIsMoreDropdownOpen(false)}
               >
-                <div className="font-bold text-black mb-1">More</div>
-                <div className="text-xs text-gray-500">Options</div>
+
+                <div className="font-bold text-black mb-1  2xl:text-2xl">More</div>
+                <div className="text-xs text-gray-500 2xl:text-xl">Options</div>
 
                 {isMoreDropdownOpen && (
                   <div className="absolute top-full left-1/2 transform -translate-x-[70%] pt-2 z-50 w-64">
