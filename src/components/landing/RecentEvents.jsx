@@ -3,9 +3,8 @@ import { motion } from "framer-motion";
 
 function RecentEvents() {
   const events = [
-    { id: 1, name: "Bitcoin Nashville 2024", image: "/landing/video.png" },
-    { id: 2, name: "Crypto Summit Dubai 2024", image: "/landing/video.png" },
-    { id: 3, name: "Blockchain Expo 2024", image: "/landing/video.png" },
+    { id: 1, name: "Crypto Summit Dubai 2024", video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" },
+    { id: 2, name: "Blockchain Expo 2024", video: "/video.mp4" },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,14 +23,18 @@ function RecentEvents() {
         Recent Events: {events[currentIndex].name}
       </h1>
 
-      <motion.img
+      <motion.video
         key={events[currentIndex].id}
-        src={events[currentIndex].image}
-        alt={events[currentIndex].name}
+        src={events[currentIndex].video}
         className="rounded-[17px] lg:max-w-[1360px] 2xl:max-w-none w-full lg:max-h-[726px] 2xl:max-h-[1000px] object-cover"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
+        autoPlay
+        loop
+        muted
+        playsInline
+        controls
       />
 
       <div className="flex gap-[15px] justify-center">

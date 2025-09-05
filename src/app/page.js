@@ -3,7 +3,6 @@ import Companies from "@/components/common/Companies";
 import About from "@/components/landing/About";
 import Artists from "@/components/landing/Artists";
 import CustomerTestimonials from "@/components/landing/CustomerTestimonials";
-import Hero from "@/components/landing/Hero";
 import RecentEvents from "@/components/landing/RecentEvents";
 import Slider from "@/components/landing/Slider";
 import Speakers from "@/components/landing/Speakers";
@@ -13,6 +12,9 @@ import Form from "@/components/landing/Form";
 import TextHero from "@/components/charity_partners/TextHero";
 import ImageCarousel from "@/components/experiences/ImageCarousel";
 import ContactForm from "./contact-us/page";
+import Hero from "@/components/home/Hero";
+import LogoSlider from "@/components/home/TextSlider";
+import Services from "@/components/home/Services";
 export default function Home() {
   const companies = [
     { name: "Coca Cola", logo: "/landing/coca-cola.svg" },
@@ -41,26 +43,30 @@ export default function Home() {
     "/experiences/jack/posts/4.png",
     "/experiences/jack/posts/5.png",
   ];
+  const logos = [
+    { name: "AdAge", url: "/home/slider1.png" },
+    { name: "VOGUE", url: "/home/slider2.png" },
+    { name: "Forbes", url: "/home/slider3.png" },
+  ];
   return (
     <div className="">
       <div className="bg-[var(--surface-color2)]">
         <Hero />
+        <LogoSlider
+          logos={logos}
+        />
         <About
-          title={"What we do"}
+          title={"About Nolcha"}
           paragraphs={[
-            "Borem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per.",
-            "Our focus is on mastering the cryptocurrency market through rigorous analysis and advanced technological tools",
+            "Partnering with leading brands and global blockchain, AI, and crypto conferences, Nolcha has 15+ years of shaping culture, tech, and community through high-impact experiential events"
           ]}
           link={"#"}
-          linkText={"More about us"}
-          image={"/landing/about.jpg"}
+          linkText={"Learn More"}
+          image={"/home/about.png"}
           imageStyle={"max-w-[667px]"}
         />
       </div>
-      <Companies
-        companies={companies}
-        title={"Partners that trailblaze with us"}
-      />
+      <Services />
       <div className="bg-[var(--secondary-color)]">
         <RecentEvents />
       </div>
