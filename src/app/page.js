@@ -1,14 +1,8 @@
 "use client";
-import Companies from "@/components/common/Companies";
 import About from "@/components/landing/About";
 import Artists from "@/components/landing/Artists";
-import CustomerTestimonials from "@/components/landing/CustomerTestimonials";
 import RecentEvents from "@/components/landing/RecentEvents";
-import Slider from "@/components/landing/Slider";
 import Speakers from "@/components/landing/Speakers";
-import Testimonials from "@/components/landing/Testimonials";
-import UpcomingEvents from "@/components/landing/UpcomingEvents";
-import Form from "@/components/landing/Form";
 import TextHero from "@/components/charity_partners/TextHero";
 import ImageCarousel from "@/components/experiences/ImageCarousel";
 import ContactForm from "./contact-us/page";
@@ -16,6 +10,7 @@ import Hero from "@/components/home/Hero";
 import LogoSlider from "@/components/home/TextSlider";
 import Services from "@/components/home/Services";
 import NolchaExperience from "@/components/home/Collaboration";
+import UpcomingEvents from "@/components/home/UpcomingEvents";
 export default function Home() {
   const companies = [
     { name: "Coca Cola", logo: "/landing/coca-cola.svg" },
@@ -75,9 +70,9 @@ export default function Home() {
       <div className="bg-[var(--secondary-color)]">
         <RecentEvents />
       </div>
+      <UpcomingEvents />
       <Speakers />
       <NolchaExperience />
-      {/* // Upcoming Events Section here */}
 
       <TextHero images={slideData} />
       <img src="/home/AboveArtist.png"/>
