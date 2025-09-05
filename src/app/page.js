@@ -15,6 +15,7 @@ import ContactForm from "./contact-us/page";
 import Hero from "@/components/home/Hero";
 import LogoSlider from "@/components/home/TextSlider";
 import Services from "@/components/home/Services";
+import NolchaExperience from "@/components/home/Collaboration";
 export default function Home() {
   const companies = [
     { name: "Coca Cola", logo: "/landing/coca-cola.svg" },
@@ -25,14 +26,14 @@ export default function Home() {
   ];
   const slideData = [
     {
-      image: "/charity_partners/cerebral/forbes.png",
-      title: "FORBES",
+      video: "/video.mp4",
+      title: "/home/forbes.png",
       description:
         "“Nolcha Shows Returns To Art Basel Miami Beach Featuring Leading Web3 Brands.”",
     },
     {
-      image: "/experiences/jack/galleryImages/1.png",
-      title: "lorem",
+      video: "/video.mp4",
+      title: "home/forbes.png",
       description: "lorem ipsum",
     },
   ];
@@ -48,17 +49,21 @@ export default function Home() {
     { name: "VOGUE", url: "/home/slider2.png" },
     { name: "Forbes", url: "/home/slider3.png" },
   ];
+  const videos = [
+    "/video.mp4",
+    "/video.mp4",
+    "/video.mp4",
+    "/video.mp4",
+  ]
   return (
     <div className="">
       <div className="bg-[var(--surface-color2)]">
         <Hero />
-        <LogoSlider
-          logos={logos}
-        />
+        <LogoSlider logos={logos} />
         <About
           title={"About Nolcha"}
           paragraphs={[
-            "Partnering with leading brands and global blockchain, AI, and crypto conferences, Nolcha has 15+ years of shaping culture, tech, and community through high-impact experiential events"
+            "Partnering with leading brands and global blockchain, AI, and crypto conferences, Nolcha has 15+ years of shaping culture, tech, and community through high-impact experiential events",
           ]}
           link={"#"}
           linkText={"Learn More"}
@@ -70,20 +75,18 @@ export default function Home() {
       <div className="bg-[var(--secondary-color)]">
         <RecentEvents />
       </div>
-      <UpcomingEvents />
-      <div className="bg-[var(--surface-color2)]">
-        <Companies companies={companies} title={"Press & Media Recognation"} />
-      </div>
-      <TextHero images={slideData} />
+      <Speakers />
+      <NolchaExperience />
+      {/* // Upcoming Events Section here */}
 
+      <TextHero images={slideData} />
+      <img src="/home/AboveArtist.png"/>
+      <Artists textColor={"text-[var(--tertiary-text-color)]"} videos={videos} />
       <div className="bg-[var(--surface-color2)]">
-        <ImageCarousel posts={posts} />
-        <Speakers />
-      </div>
-      <Artists textColor={"text-[var(--tertiary-text-color)]"} />
-      <div className="bg-[var(--surface-color2)]">
-        <CustomerTestimonials />
         <img src="/landing/background.png" className="mx-auto w-full" />
+        <div className="bg-[var(--surface-color2)]">
+          <ImageCarousel posts={posts} />
+        </div>
         <div className="mt-10 mb-10">
           <ContactForm bg={"/landing/background2.jpg"} />
         </div>

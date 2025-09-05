@@ -1,20 +1,8 @@
 import React from 'react';
 
 export default function LogoSlider({ logos = [] }) {
-  // Default logos if none provided
-  const defaultLogos = [
-    { name: 'AdAge', url: 'https://via.placeholder.com/200x100/333/fff?text=AdAge' },
-    { name: 'Vogue', url: 'https://via.placeholder.com/200x100/333/fff?text=VOGUE' },
-    { name: 'Forbes', url: 'https://via.placeholder.com/200x100/333/fff?text=Forbes' },
-    { name: 'TechCrunch', url: 'https://via.placeholder.com/200x100/333/fff?text=TechCrunch' },
-    { name: 'Wired', url: 'https://via.placeholder.com/200x100/333/fff?text=WIRED' },
-    { name: 'Mashable', url: 'https://via.placeholder.com/200x100/333/fff?text=Mashable' }
-  ];
-
-  const logoList = logos.length > 0 ? logos : defaultLogos;
-  
   // Duplicate logos for seamless loop
-  const duplicatedLogos = [...logoList, ...logoList, ...logoList];
+  const duplicatedLogos = [...logos, ...logos, ...logos];
 
   return (
     <div className="w-full bg-white border-t border-gray-200 overflow-hidden">
@@ -64,7 +52,7 @@ export default function LogoSlider({ logos = [] }) {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-${logoList.length * 192}px);
+            transform: translateX(-${logos.length * 192}px);
           }
         }
       `}</style>

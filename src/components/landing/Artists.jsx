@@ -2,7 +2,80 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-export function Carousel({isFade=true,textColor,backgroundColor="white"}) {
+function VideoGrid({ videos }) {
+  return (
+    <div className="w-full flex justify-center">
+      {/* Desktop grid (zig-zag pattern - all 4 videos in one row) */}
+      <div className="hidden lg:flex lg:justify-center lg:gap-6 lg:h-[600px] lg:items-end">
+        {videos.map((src, i) => (
+          <div
+            key={i}
+            className={`flex ${i % 2 === 0 ? "items-start" : "items-end"}`}
+            style={{ height: "600px" }}
+          >
+            <video
+              src={src}
+              className="w-[250px] h-[450px] object-cover border-4 border-black rounded-[20px] shadow-xl"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile + Tablet grid (2 columns zig-zag) */}
+      <div className="flex justify-center gap-4 lg:hidden">
+        {/* Left Column - Higher position */}
+        <div className="flex flex-col gap-6 ">
+          <video
+            src={videos[0]}
+            className="w-[200px] h-[280px] object-cover rounded-[12px] shadow-md"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          <video
+            src={videos[2]}
+            className="w-[200px] h-[280px] object-cover rounded-[12px] shadow-md"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        </div>
+
+        {/* Right Column - Lower position (with top margin for offset) */}
+        <div className="flex flex-col gap-6 mt-15">
+          <video
+            src={videos[1]}
+            className="w-[200px] h-[280px] object-cover rounded-[12px] shadow-md"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          <video
+            src={videos[3]}
+            className="w-[200px] h-[280px] object-cover rounded-[12px] shadow-md"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Carousel({
+  isFade = true,
+  textColor,
+  backgroundColor = "white",
+}) {
   // Dynamic data
   const artists = [
     "FCKENDER",
@@ -13,7 +86,7 @@ export function Carousel({isFade=true,textColor,backgroundColor="white"}) {
     "ONCHAINMONKEY",
     "WORLD OF WOMEN",
     "RON ENGLISH",
-    "JEREMY COWART"
+    "JEREMY COWART",
   ];
   const marqueeRef = useRef(null);
   const [width, setWidth] = useState(0);
@@ -24,15 +97,16 @@ export function Carousel({isFade=true,textColor,backgroundColor="white"}) {
   }, []);
 
   return (
-    <div className={`relative max-w-none w-full mx-auto overflow-hidden md:py-[40px] py-[20px] rounded-b-[8px] ${backgroundColor}`}
-  //   style={{
-  //   border: "1px solid",
-  //   borderImageSource:
-  //     "linear-gradient(90deg, #FFFFFF 0%, #A09C99 25%, #FFFFFF 35%, #A09C99 52%, #FFFFFF 62%, #A09C99 81%)",
-  //   borderImageSlice: 1,
-  // }}
+    <div
+      className={`relative max-w-none w-full mx-auto overflow-hidden md:py-[40px] py-[20px] rounded-b-[8px] ${backgroundColor}`}
+      //   style={{
+      //   border: "1px solid",
+      //   borderImageSource:
+      //     "linear-gradient(90deg, #FFFFFF 0%, #A09C99 25%, #FFFFFF 35%, #A09C99 52%, #FFFFFF 62%, #A09C99 81%)",
+      //   borderImageSlice: 1,
+      // }}
     >
-     {/* Conditionally render fade divs */}
+      {/* Conditionally render fade divs */}
       {isFade && (
         <>
           {/* Fade left */}
@@ -62,7 +136,7 @@ export function Carousel({isFade=true,textColor,backgroundColor="white"}) {
     </div>
   );
 }
-function Artists({textColor,backgroundColor,isFade}) {
+function Artists({ textColor, backgroundColor, isFade, videos }) {
   // Dynamic image data
   const artistImages = [
     "/landing/artists/1.png",
@@ -73,54 +147,33 @@ function Artists({textColor,backgroundColor,isFade}) {
     "/landing/artists/6.png",
   ];
   return (
-    <div className="lg:py-[64px] lg:px-[60px] py-[20px] px-[16px] mx-auto flex flex-col">
-      <Carousel textColor={textColor}
-      backgroundColor={backgroundColor}
-      isFade={isFade}
+    <div className="lg:py-[64px] py-[20px] flex flex-col">
+      <Carousel
+        textColor={textColor}
+        backgroundColor={backgroundColor}
+        isFade={isFade}
       />
       <div className="bg-[var(--secondary-color)] lg:p-[40px] py-[24px] px-[20px] rounded-[8px] flex flex-col gap-[30px]">
-        <div className="flex w-full justify-between xl:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
-          <div className="flex flex-col gap-[20px] 2xl:gap-[30px] font-medium">
-            <h1 className=" text-[32px] 2xl:text-4xl uppercase">and + 500 other artists</h1>
+        <div className="flex w-full justify-center xl:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
+          <div className="flex flex-col gap-[20px] 2xl:gap-[30px] font-medium items-center text-center">
+            <h1 className="text-[32px] 2xl:text-4xl uppercase">
+              and + 500 other artists
+            </h1>
             <p className="text-lg 2xl:text-2xl">
-              ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY
-              <br /> COWART - LINDSAY KOKOSKA - NODEMONKES - KIRA BURSKY -
-              VINCENT
-              <br /> D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA ZOREF - ROB PRIOR -
-              <br /> LAURENCE FULLER - JANEDAO - IZZY WEISSGERBER - GRETTA
-              KRUESI -<br /> JANEDAO -YIYANG LU - SKYE NICOLAS - AEFORIA - ARNO
-              CARSTENS -<br /> MOHSEN
-              <br /> HAZRATI - RAGZY X - MUSKETON - TILLAVISION - MADE BY OONA -
-              STACIE
+              ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY COWART -
+              LINDSAY <br /> KOKOSKA - NODEMONKES - KIRA BURSKY - VINCENT
+              D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA <br /> ZOREF - ROB PRIOR -
+              LAURENCE FULLER - JANEDAO - IZZY WEISSGERBER - GRETTA KRUESI -
+              <br />
+              JANEDAO -YIYANG LU - SKYE NICOLAS - AEFORIA - ARNO CARSTENS -
+              MOHSEN HAZRATI <br /> - RAGZY X - MUSKETON - TILLAVISION - MADE BY
+              OONA - STACIE
               <br /> ANT - YOUNG & SICK
             </p>
           </div>
-          <div className="w-full xl:w-fit">
-            <Link
-              href={"#"}
-              className="w-fit py-[12px] px-[24px] 2xl:text-2xl rounded-[4px] bg-transparent border-[1px] border-[#141414] h-fit float-right"
-            >
-              View all artists
-            </Link>
-          </div>
         </div>
-      {/* Dynamic image rendering */}
-      <div className="flex gap-[16px] 2xl:gap-[30px] flex-wrap items-center justify-center">
-        {artistImages.map((src, index) => (
-          <div
-            key={index}
-            className=" py-[4px] px-[4px] border-[1px] border-[#141414] rounded-[4px]"
-          >
-            <img
-              src={src}
-              alt={`Artist ${index + 1}`}
-              className="md:w-[380px] xl:w-[390px] md:h-[253px] lg:w-[350px] lg:h-[198px] 2xl:w-[735px] 2xl:h-[550px] object-cover rounded-[4px]"
-            />
-          </div>
-        ))}
+        <VideoGrid videos={videos} />
       </div>
-      </div>
-
     </div>
   );
 }
