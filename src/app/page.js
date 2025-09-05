@@ -338,10 +338,16 @@ export default function Home() {
         partners={partners}
       />
       <UpcomingEvents />
-      <Speakers />
+      <div className="mt-5">
+        <Speakers />
+      </div>
       <TextHero images={slideData} />
       <NolchaExperience />
-      <Partners title={"Press and Media Recognition"} partners={press} bg={"bg-white"} />
+      <Partners
+        title={"Press and Media Recognition"}
+        partners={press}
+        bg={"bg-white"}
+      />
 
       <img src="/home/AboveArtist.png" />
       <Artists
