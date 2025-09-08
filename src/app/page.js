@@ -360,7 +360,7 @@ export default function Home() {
           <ImageCarousel posts={posts} />
         </div>
         <div className="mt-10 mb-10">
-          <ContactForm bg={"/landing/background2.jpg"} />
+          <ContactForm bg={"/landing/background2.jpg"} heading={"LET'S TALK!"}/>
         </div>
       </div>
     </div>

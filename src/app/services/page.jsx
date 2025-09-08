@@ -1,13 +1,35 @@
+"use client";
+import Services from "@/components/home/Services";
+import LogoSlider from "@/components/home/TextSlider";
 import Hero from "@/components/press/Hero";
 import ServicesSection from "@/components/services/Explore";
 import ImageGallery from "@/components/services/ImageGallery";
 import NolchaCard from "@/components/services/NolchaCard";
+import VideoSlider from "@/components/services/VideoSlider";
+import Header from "@/components/services/Header";
 import React from "react";
 
 const Page = () => {
+  const logos = [
+    { name: "AdAge", url: "/home/slider1.png" },
+    { name: "VOGUE", url: "/home/slider2.png" },
+    { name: "Forbes", url: "/home/slider3.png" },
+  ];
+  const videos = [
+    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+  ];
   return (
     <div>
-      <Hero heading="SERVICES" images={["/experiences/bitcoin/conf.png"]} />
+      <VideoSlider videos={videos}/>
+      <LogoSlider logos={logos} />
+      <Header />
+      <div className="bg-[#F4F4F4]">
+        <Services />
+      </div>
+      <ImageGallery />
+      {/* <Hero heading="SERVICES" images={["/experiences/bitcoin/conf.png"]} />
       <div className="px-4 md:px-8 mb-12">
         <div className="relative flex flex-col md:flex-row bg-[#f6f1ea] rounded-2xl overflow-visible">
           <div className="w-full md:w-2/3 p-6 md:p-20 lg:p-30 order-1 md:order-2">
@@ -20,24 +42,24 @@ const Page = () => {
           </div>
 
           {/* Placeholder div to maintain layout space */}
-          <div className="w-full md:w-1/3 order-2 md:order-1 md:opacity-0"></div>
+      {/* <div className="w-full md:w-1/3 order-2 md:order-1 md:opacity-0"></div> */}
 
-          {/* Floating image positioned absolutely */}
-          <div className="w-full md:w-1/3 lg:w-1/3 xl:w-1/3 order-2 md:order-1 md:absolute md:left-0 md:top-6 lg:top-8 xl:top-10 md:ml-8 lg:ml-12 xl:ml-15">
+      {/* Floating image positioned absolutely */}
+      {/* <div className="w-full md:w-1/3 lg:w-1/3 xl:w-1/3 order-2 md:order-1 md:absolute md:left-0 md:top-6 lg:top-8 xl:top-10 md:ml-8 lg:ml-12 xl:ml-15">
             <img
               src={"/services/1.png"}
               alt="Host"
               className="w-full h-full object-cover md:rounded-xl md:shadow-lg"
             />
           </div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
       {/* Cards container */}
-      <div className="relative z-10 ml-5 mt-10 md:mt-[calc(2.5rem+2.5rem)] lg:mt-[calc(3rem+3.5rem)] xl:mt-[calc(5.5rem+5.5rem)] 2xl:mt-120 mr-5">
-        {/* Background layer */}
-        <div className="absolute inset-0 bg-[#EBE2D7] h-auto sm:h-[1450px] md:h-[400px] 2xl:h-[550px] mt-20 2xl:mt-28 rounded-2xl -z-10"></div>
-        {/* Cards grid */}
-        <div className="relative z-10 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center w-full max-w-none">
+      {/* <div className="relative z-10 ml-5 mt-10 md:mt-[calc(2.5rem+2.5rem)] lg:mt-[calc(3rem+3.5rem)] xl:mt-[calc(5.5rem+5.5rem)] 2xl:mt-120 mr-5"> */}
+      {/* Background layer */}
+      {/* <div className="absolute inset-0 bg-[#EBE2D7] h-auto sm:h-[1450px] md:h-[400px] 2xl:h-[550px] mt-20 2xl:mt-28 rounded-2xl -z-10"></div> */}
+      {/* Cards grid */}
+      {/* <div className="relative z-10 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center w-full max-w-none">
           <NolchaCard
             image="/services/2.png"
             description="From vision to execution, we create cultural"
@@ -50,10 +72,9 @@ const Page = () => {
             image="/services/4.png"
             description="From vision to execution, we create cultural"
           />
-        </div>
-      </div>
-      <ServicesSection />
-      <ImageGallery />
+        </div> */}
+      {/* </div> */}
+      {/* <ServicesSection /> */}
     </div>
   );
 };
