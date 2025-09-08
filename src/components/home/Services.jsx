@@ -108,7 +108,7 @@ const Services = () => {
             </div>
             {/* Description aligned with title */}
             <div className="ml-[67px] mb-8">
-              <p className="text-base 2xl:text-xl font-normal leading-[22px] -tracking-[0.48px] text-black">
+              <p className="text-base 2xl:text-2xl font-normal text-black">
                 {service.description} 
               </p>
             </div>
@@ -139,7 +139,7 @@ const Services = () => {
                 </h3>
               </div>
               <div className="flex-1">
-                <p className="text-base 2xl:text-xl font-normal leading-[22px] -tracking-[0.48px] text-black">
+                <p className="text-base 2xl:text-2xl text-black">
                   {service.description}
                 </p>
               </div>
