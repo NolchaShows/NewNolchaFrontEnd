@@ -22,8 +22,9 @@ function Stack() {
   ];
   return (
     <div className="max-w-[1440px] mx-auto lg:py-[64px] lg:px-[40px] py-[24px] px-[16px] flex flex-col gap-[40px] items-center">
-      <div className="flex justify-between w-full">
-        <div className="md:flex flex-col gap-[20px] 2xl:gap-[50px] pt-[30px] hidden ">
+      <div className="flex justify-center w-full">
+        {/* Left side images */}
+        <div className="md:flex flex-col gap-[20px] 2xl:gap-[50px] hidden mr-[40px] lg:mr-[80px] mt-[120px] lg:mt-[150px]">
           {images1.map((image, index) => (
             <img
               key={index}
@@ -33,7 +34,8 @@ function Stack() {
           ))}
         </div>
 
-        <div className="flex flex-col lg:gap-[80px] gap-[20px] items-center md:justify-center max-w-[900px] ">
+        {/* Central content */}
+        <div className="flex flex-col lg:gap-[80px] gap-[20px] items-center md:justify-center max-w-[900px]">
           <h1 className="md:text-[32px] text-[24px] text-center font-medium text-[var(--primary-text-color)] uppercase">
             Featuring speakers who are shaping the future of Bitcoin, art, film,
             fashion, AI, and blockchain.
@@ -43,7 +45,9 @@ function Stack() {
             className="md:max-w-[671px] max-h-[600px] max-w-[400px] 2xl:max-h-[800px] 2xl:max-w-[600px] object-cover"
           />
         </div>
-        <div className="md:flex flex-col gap-[20px] 2xl:gap-[30px] pt-[30px] hidden ">
+
+        {/* Right side images */}
+        <div className="md:flex flex-col gap-[20px] 2xl:gap-[30px] hidden ml-[40px] lg:ml-[80px] mt-[120px] lg:mt-[150px]">
           {images2.map((image, index) => (
             <img
               key={index}

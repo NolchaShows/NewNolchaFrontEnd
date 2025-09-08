@@ -1,49 +1,109 @@
-import React from 'react'
-import Hero from './Hero'
-import { default as PressHero } from '../press/Hero'
-import MagazineCard from './MagazineCard'
-import { ImageSlider } from './ImageSlider'
+"use client"
+import React from "react";
+import Hero from "./Hero";
+import { default as PressHero } from "../press/Hero";
+import MagazineCard from "./MagazineCard";
+import { ImageSlider } from "./ImageSlider";
+import HeadingSlider from "./HeadingSlider";
 
 const Designer = () => {
-  const designerImages = [
-    "/designers/jeremy/1.png",
-  ]
-  const magazine = {
-    image: "/designers/jeremy/2.png",
-    title: "JEREMY COWART'S CAREER HAS OFTEN BEEN CALLED A FORREST GUMP ART CAREER.",
-    description: "\"He just chases ideas in whichever direction they lead him, finding himself in the most random new situations, moments of success and failure - all while dealing with his own little reputation ruining it all.\" Serendipity never really appeals to me unless the artist engages, reasons. From having met the internet's most influential artist when an MPEG1 video chain-blurring a worldwide type-back initiative or being followed at an art auction site despite not having a background lived... It's always something wildly surprising, even for Cowart himself. \"I don't tell quick or late photos and money never motivates me.\"\n\nIt's always about the idea, always has been and always will be. Some of the ideas fail miserably but the lessons learned are invaluable and immediately no chase the next one. I've done it for 20 years and I'll do it for the rest of my life. My hope is that the public sees my love for art and love for people through all of it.\""
-  }
-  const social = [
-    "/designers/jeremy/3.png"
-  ]
+  const magazines = [
+    {
+      title: "Portraits / Celebrities ",
+      image: "/designers/jeremy/8.png",
+      description:
+        "Emma Stone, Taylor Swift, The Killers, Gwyneth Paltrow, Barack Obama, The Kardashians, Chris Stapleton, Britney Spears, Maggie Gyllenhaal, Sting, Ryan Seacrest, Zachary Levi, Garth Brooks, Hayden Panettiere, Miley Cyrus, Minnie Driver, Courtney Cox, Carrie Underwood, Taylor Swift, Tyler Perry, Denise Richards, Dolly Parton, Jewel, Luke Combs, Blake Shelton, Joel McHale, Nathan Fillion, Chelsea Handler, Brad Paisley, Hank Williams Jr., One Republic, Dierks Bentley, George Strait, Miranda Lambert, Switchfoot, Imogen Heap, Iron and Wine, Feist, Holly Williams, Brandi Carlile, Christopher Guest, Eugene Levy.",
+    },
+    {
+      title: "Clients",
+      image: "/designers/jeremy/9.png",
+      description:
+        "Nike, Sports Illustrated, GAP, ABC, FOX, F/X, A&E, Discovery Channel, The Style Network, E!, CNN, The Travel Channel, CMT, MTV, ESPN, NFL, People Magazine, US Weekly, VIBE Magazine, Fortune Magazine, Fast Company, Paste Magazine, Relevant Magazine, CBS Records, EMI, Word Records, Warner Brothers Records, Universal Records, Interscope Records, Blue Note Records, Sony Music",
+    },
+  ];
+  const social = ["/designers/jeremy/2.png"];
 
   const images = [
     "/designers/jeremy/4.png",
     "/designers/jeremy/5.png",
     "/designers/jeremy/6.png",
-    "/designers/jeremy/7.png"
+    "/designers/jeremy/7.png",
+  ];
 
-  ]
+  const sampleData = {
+    heading:
+      "Jeremy Cowart's Career Has Often Been Called A Forrest Gump Art Career.",
+    paragraphs: [
+      "He Just Chases Ideas In Whichever Direction They Lead Him, Finding Himself In The Most Random Of New Situations, Moments Of Success And Failure All While Dealing With His Own Life's Hardships (Raising 4 Kids - One With Special Needs - And Managing His Own Neurological Disease).",
+      "From Being Named The Internet's Most Influential Photographer At One Point To Speaking In Stadiums To Kickstarting A Hotel Chain To Launching A Worldwide Give-Back Initiative To Being Featured At An Art Auction Alongside The Greatest Artists That Have Ever Lived... It's Always Something Wildly Surprising, Even For Cowart Himself.",
+      "\"I Don't Set Goals Or Plan Ahead And Money Never Motivates Me. It's Always About The Idea, Always Has Been And Always Will Be. Some Of The Ideas Fail Miserably But The Lessons Learned Are Invaluable So I Immediately Go Chase The Next One. I've Done It For 20 Years And I'll Do It For The Rest Of My Life. My Hope Is That The Public Sees My Love For Art And Love For People Throughout All Of It.\"",
+    ],
+    image: "/designers/jeremy/1.png",
+    source: "Instagram",
+  };
+    const headings = [
+      "Jeremy Cowart",
+      "Sarah Johnson", 
+      "Michael Chen",
+      "Emily Rodriguez",
+      "David Thompson"
+    ];
   return (
     <div>
-      <div className="flex flex-col lg:flex-row">
-        <div className="w-full lg:w-1/2">
-          <Hero heading="JEREMY COWART" images={designerImages} />
+      <HeadingSlider headings={headings}/>
+      {/* Mobile Layout */}
+      <div className="flex flex-col lg:hidden">
+        <div className="mt-10 mx-6">
+          <ImageSlider images={images} />
         </div>
-
-        <div className="w-full lg:w-1/2">
-          <MagazineCard {...magazine} />
-          <div className='mt-10'>
-              <PressHero images={social} heading='INSTAGRAM'/>
+        <div>
+          <Hero
+            heading={sampleData.heading}
+            paragraphs={sampleData.paragraphs}
+            image={sampleData.image}
+            source={sampleData.source}
+          />
+        </div>
+        <div>
+          <PressHero images={social} />
+          <div className="mx-6">
+            <MagazineCard {...magazines[0]} />
           </div>
-          <div className='ml-9 mr-9 mb-9'>
-            <ImageSlider images={images} />
+          <div className="mx-6 my-10">
+            <MagazineCard {...magazines[1]} />
           </div>
         </div>
       </div>
 
+      {/* Desktop Layout */}
+      <div className="hidden lg:flex lg:flex-row">
+        {/* Hero */}
+        <div className="w-full lg:w-1/2">
+          <Hero
+            heading={sampleData.heading}
+            paragraphs={sampleData.paragraphs}
+            image={sampleData.image}
+            source={sampleData.source}
+          />
+        </div>
+        {/* Right Section */}
+        <div className="w-full lg:w-1/2 flex flex-col">
+          <div className="mt-10 mx-6">
+            <ImageSlider images={images} />
+          </div>
+          <div>
+            <PressHero images={social} />
+            <div className="mx-6">
+              <MagazineCard {...magazines[0]} />
+            </div>
+            <div className="mx-6 my-10">
+              <MagazineCard {...magazines[1]} />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Designer
+export default Designer;

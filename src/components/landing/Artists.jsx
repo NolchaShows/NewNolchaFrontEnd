@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-function VideoGrid({ videos }) {
+function VideoGridZigZag({ videos }) {
   return (
     <div className="w-full flex justify-center">
       {/* Desktop grid (zig-zag pattern - all 4 videos in one row) */}
@@ -87,6 +87,42 @@ function VideoGrid({ videos }) {
             playsInline
           />
         </div>
+      </div>
+    </div>
+  );
+}
+
+function VideoGrid({ videos }) {
+  if (!videos || videos.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <p className="text-gray-500">No videos available</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full mx-auto lg:py-[64px] lg:px-[40px] py-[24px] px-[16px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {videos.map((video, index) => (
+          <div
+            key={index}
+            className="w-full aspect-video border-4 border-black rounded-[16px] overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow duration-300"
+          >
+            <video
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            >
+              <source src={video} type="video/mp4" />
+              <source src={video} type="video/webm" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -193,7 +229,11 @@ function Artists({ textColor, backgroundColor, isFade, videos }) {
             </p>
           </div>
         </div>
-        <VideoGrid videos={videos} />
+        {videos.length === 4 ? (
+          <VideoGridZigZag videos={videos} />
+        ) : (
+          <VideoGrid videos={videos} />
+        )}
       </div>
     </div>
   );

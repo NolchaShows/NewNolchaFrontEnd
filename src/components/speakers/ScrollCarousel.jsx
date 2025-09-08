@@ -16,18 +16,18 @@ function ScrollCarousel() {
     "/speakers/11.png",
   ];
 
-  // Responsive item width and gap
+  // Responsive item width and gap - reduced sizes
   const getItemDimensions = () => {
     if (typeof window !== 'undefined') {
       if (window.innerWidth >= 1536) { // 2xl
-        return { itemWidth: 600, gap: 60 };
+        return { itemWidth: 500, gap: 50 }; // reduced from 600, 60
       } else if (window.innerWidth >= 1280) { // xl
-        return { itemWidth: 500, gap: 50 };
+        return { itemWidth: 420, gap: 42 }; // reduced from 500, 50
       } else if (window.innerWidth >= 1024) { // lg
-        return { itemWidth: 400, gap: 43 };
+        return { itemWidth: 350, gap: 35 }; // reduced from 400, 43
       }
     }
-    return { itemWidth: 400, gap: 43 }; // default
+    return { itemWidth: 350, gap: 35 }; // default reduced
   };
 
   useLayoutEffect(() => {
@@ -63,7 +63,7 @@ function ScrollCarousel() {
       {/* Desktop carousel */}
       <div ref={containerRef} className="max-w-[1290px] xl:max-w-[1500px] 2xl:max-w-none overflow-hidden">
         <motion.div
-          className="flex gap-[43px] xl:gap-[50px] 2xl:gap-[60px]"
+          className="flex gap-[35px] xl:gap-[42px] 2xl:gap-[50px]"
           animate={{ x: -sliderValue }}
           transition={{ type: "tween", ease: "linear", duration: 0.1 }}
         >
@@ -71,7 +71,7 @@ function ScrollCarousel() {
             <img
               key={i}
               src={src}
-              className=" max-w-[340px] md:max-w-[400px] xl:max-w-[600px] 2xl:max-w-[700px] 2xl:max-h-[650px] rounded-[8px] xl:rounded-[10px] 2xl:rounded-[12px] flex-shrink-0 object-cover"
+              className="max-w-[300px] md:max-w-[350px] xl:max-w-[420px] 2xl:max-w-[500px] 2xl:max-h-[550px] rounded-[8px] xl:rounded-[10px] 2xl:rounded-[12px] flex-shrink-0 object-cover"
             />
           ))}
         </motion.div>
