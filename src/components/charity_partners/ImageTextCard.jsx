@@ -9,16 +9,16 @@ function ImageTextCard({ image, text, imagePosition = "left", className = "py-8 
         >
           <div className="w-1/2 flex-shrink-0">
             <img
-              src={image || "/placeholder.svg?height=400&width=500"}
+              src={image}
               alt="Card image"
               className="w-full h-auto object-cover rounded-3xl shadow-lg"
             />
           </div>
 
           <div className="pl-10 pr-10 w-1/2 flex-shrink-0">
-            <div className="text-gray-700 text-base lg:text-lg 2xl:text-3xl leading-relaxed">
+            <div className="text-[#000000] text-base lg:text-lg 2xl:text-3xl">
               {text.split("\n\n").map((paragraph, index) => (
-                <p key={index} className="mb-4 last:mb-0">
+                <p key={index} className={`mb-6 2xl:mb-10 last:mb-0 ${index === 0 && "font-bold text-2xl 2xl:text-4xl"}`}>
                   {paragraph}
                 </p>
               ))}
@@ -29,16 +29,16 @@ function ImageTextCard({ image, text, imagePosition = "left", className = "py-8 
         <div className="md:hidden flex flex-col gap-6">
           <div className="w-full">
             <img
-              src={image || "/placeholder.svg?height=300&width=400"}
+              src={image}
               alt="Card image"
               className="w-full h-auto object-cover rounded-3xl shadow-lg"
             />
           </div>
 
           <div className="w-full">
-            <div className={`text-gray-700 text-sm leading-relaxed`}>
+            <div className={`text-[#000000] text-base leading-relaxed`}>
               {text.split("\n\n").map((paragraph, index) => (
-                <p key={index} className={` mb-4 last:mb-0`}>
+                <p key={index} className={`mb-4 last:mb-0 ${index === 0 && "font-bold text-xl"}`}>
                   {paragraph}
                 </p>
               ))}

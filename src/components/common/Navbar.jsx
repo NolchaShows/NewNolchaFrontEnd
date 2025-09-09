@@ -54,20 +54,20 @@ function Navbar() {
       subtitle: "Plan + Go",
     },
     {
-      label: "Designers",
-      href: "/designers",
-      subtitle: "Plan + Go",
-    },
-  ];
-
-  const moreMenuItems = [
-    {
       label: "Experiences",
       href: "/experiences",
       hasDropdown: true,
       dropdownType: "experiences",
       subtitle: "Look + Do",
       key: "experiences",
+    },
+  ];
+
+  const moreMenuItems = [
+    {
+      label: "Designers",
+      href: "/designers",
+      subtitle: "Plan + Go",
     },
     {
       label: "Speakers",
@@ -191,8 +191,12 @@ function Navbar() {
           className="text-center cursor-pointer hover:opacity-80 transition-opacity"
           onClick={handleModalClick(item.modalType)}
         >
-          <div className="font-bold text-black mb-1 2xl:text-2xl">{item.label} ▾</div>
-          <div className="text-xs text-gray-500 2xl:text-xl">{item.subtitle}</div>
+          <div className="font-bold text-black mb-1 2xl:text-2xl">
+            {item.label} ▾
+          </div>
+          <div className="text-xs text-gray-500 2xl:text-xl">
+            {item.subtitle}
+          </div>
         </div>
       );
     } else if (item.hasDropdown) {
@@ -202,8 +206,12 @@ function Navbar() {
           onMouseEnter={() => setDropdownState(item.dropdownType, true)}
           onMouseLeave={() => setDropdownState(item.dropdownType, false)}
         >
-          <div className="font-bold text-black mb-1 2xl:text-2xl">{item.label} ▾</div>
-          <div className="text-xs text-gray-500 2xl:text-xl">{item.subtitle}</div>
+          <div className="font-bold text-black mb-1 2xl:text-2xl">
+            {item.label} ▾
+          </div>
+          <div className="text-xs text-gray-500 2xl:text-xl">
+            {item.subtitle}
+          </div>
 
           {getDropdownState(item.dropdownType) && (
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 pt-2 z-50 w-64">
@@ -235,8 +243,12 @@ function Navbar() {
           href={item.href}
           className="text-center hover:opacity-80 transition-opacity"
         >
-          <div className="font-bold text-black mb-1 2xl:text-2xl">{item.label} ▾</div>
-          <div className="text-xs text-gray-500 2xl:text-xl">{item.subtitle}</div>
+          <div className="font-bold text-black mb-1 2xl:text-2xl">
+            {item.label} ▾
+          </div>
+          <div className="text-xs text-gray-500 2xl:text-xl">
+            {item.subtitle}
+          </div>
         </Link>
       );
     }
@@ -331,7 +343,11 @@ function Navbar() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <img src="/navbar/logo.svg" className="h-12 2xl:h-20" alt="NOLCHA" />
+              <img
+                src="/navbar/logo.svg"
+                className="h-12 2xl:h-20"
+                alt="NOLCHA"
+              />
             </Link>
           </div>
 
@@ -393,8 +409,9 @@ function Navbar() {
                 onMouseEnter={() => setIsMoreDropdownOpen(true)}
                 onMouseLeave={() => setIsMoreDropdownOpen(false)}
               >
-
-                <div className="font-bold text-black mb-1  2xl:text-2xl">More</div>
+                <div className="font-bold text-black mb-1  2xl:text-2xl">
+                  More
+                </div>
                 <div className="text-xs text-gray-500 2xl:text-xl">Options</div>
 
                 {isMoreDropdownOpen && (
