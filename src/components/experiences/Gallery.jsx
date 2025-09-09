@@ -19,7 +19,7 @@ const Gallery = ({ images }) => {
   return (
     <>
       {images && images.length > 0 && (
-        <div className="bg-gray-100 border border-gray-200 rounded-2xl mb-10">
+        <div className="rounded-2xl mb-10">
 
           <div className="px-4 py-10 md:px-8 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

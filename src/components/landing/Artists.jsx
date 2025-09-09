@@ -26,7 +26,7 @@ function VideoGridZigZag({ videos }) {
           ))}
         </div>
       ) : (
-        <div className="hidden lg:flex lg:justify-center lg:gap-6 2xl:gap-12 lg:h-[600px] 2xl:h-[700px] lg:items-end">
+        <div className="hidden lg:flex lg:justify-center lg:gap-6 2xl:gap-20 lg:h-[600px] 2xl:h-[700px] lg:items-end">
           {Array.from({ length: 4 }).map(
             (
               _,
@@ -37,7 +37,7 @@ function VideoGridZigZag({ videos }) {
                 className={`flex ${i % 2 === 0 ? "items-start" : "items-end"}`}
                 style={{ height: "600px" }}
               >
-                <div className="w-[250px] h-[450px] 2xl:w-[300px] 2xl:h-[520px] border-4 border-black rounded-[16px] flex items-center justify-center text-gray-400 text-lg">
+                <div className="w-[250px] h-[450px] 2xl:w-[390px] 2xl:h-[520px] border-6 2xl:border-8 border-black rounded-[16px] flex items-center justify-center text-gray-400  text-lg 2xl:text-xl">
                   Empty
                 </div>
               </div>
@@ -52,7 +52,7 @@ function VideoGridZigZag({ videos }) {
         <div className="flex flex-col gap-6 ">
           <video
             src={videos[0]}
-            className="w-[200px] h-[280px] object-cover rounded-[12px] shadow-md"
+            className="w-[200px] h-[280px] border-6 border-black  object-cover rounded-[12px] shadow-md"
             autoPlay
             muted
             loop
@@ -60,7 +60,7 @@ function VideoGridZigZag({ videos }) {
           />
           <video
             src={videos[2]}
-            className="w-[200px] h-[280px] object-cover rounded-[12px] shadow-md"
+            className="w-[200px] h-[280px] border-6 border-black  object-cover rounded-[12px] shadow-md"
             autoPlay
             muted
             loop
@@ -72,7 +72,7 @@ function VideoGridZigZag({ videos }) {
         <div className="flex flex-col gap-6 mt-15">
           <video
             src={videos[1]}
-            className="w-[200px] h-[280px] object-cover rounded-[12px] shadow-md"
+            className="w-[200px] h-[280px] border-6 border-black  object-cover rounded-[12px] shadow-md"
             autoPlay
             muted
             loop
@@ -80,7 +80,7 @@ function VideoGridZigZag({ videos }) {
           />
           <video
             src={videos[3]}
-            className="w-[200px] h-[280px] object-cover rounded-[12px] shadow-md"
+            className="w-[200px] h-[280px] border-6 border-black  object-cover rounded-[12px] shadow-md"
             autoPlay
             muted
             loop
@@ -193,7 +193,7 @@ export function Carousel({
     </div>
   );
 }
-function Artists({ textColor, backgroundColor, isFade, videos }) {
+function Artists({ textColor, backgroundColor, isFade, videos, isSlider }) {
   // Dynamic image data
   const artistImages = [
     "/landing/artists/1.png",
@@ -204,19 +204,21 @@ function Artists({ textColor, backgroundColor, isFade, videos }) {
     "/landing/artists/6.png",
   ];
   return (
-    <div className="lg:py-[64px] py-[20px] flex flex-col">
-      <Carousel
-        textColor={textColor}
-        backgroundColor={backgroundColor}
-        isFade={isFade}
-      />
-      <div className="bg-[var(--secondary-color)] font-neue lg:p-[40px] py-[24px] px-[20px] rounded-[8px] flex flex-col gap-[30px]">
+    <div className="lg:py-[64px]flex flex-col">
+      {isSlider && 
+        <Carousel
+          textColor={textColor}
+          backgroundColor={backgroundColor}
+          isFade={isFade}
+        />
+      }
+      <div className="bg-[var(--secondary-color)] font-neue lg:p-[60px] 2xl:p-[100px] py-[24px] px-[20px] rounded-[8px] flex flex-col gap-[30px]">
         <div className="flex w-full justify-center xl:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
           <div className="flex flex-col gap-[20px] 2xl:gap-[30px] font-medium items-center text-center">
-            <h1 className="text-[36px] font-bold 2xl:text-5xl uppercase">
-              and + 500 other artists
+            <h1 className="font-neue text-[52px] font-bold 2xl:text-[80px] ">
+              And + 500 Other Artists
             </h1>
-            <p className="text-lg 2xl:text-3xl">
+            <p className="text-lg 2xl:text-4xl">
               ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY COWART -
               LINDSAY <br /> KOKOSKA - NODEMONKES - KIRA BURSKY - VINCENT
               D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA <br /> ZOREF - ROB PRIOR -
@@ -229,7 +231,7 @@ function Artists({ textColor, backgroundColor, isFade, videos }) {
             </p>
           </div>
         </div>
-        {videos.length === 4 ? (
+        {videos.length === 0 ? (
           <VideoGridZigZag videos={videos} />
         ) : (
           <VideoGrid videos={videos} />

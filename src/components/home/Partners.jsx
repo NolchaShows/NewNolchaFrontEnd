@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-const Partners = ({ title, description, partners, bg }) => {
+const Partners = ({ title, description, partners, bg, logo }) => {
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
@@ -13,24 +13,28 @@ const Partners = ({ title, description, partners, bg }) => {
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Dynamic column calculation based on screen size and partner count
   const getOptimalColumns = () => {
     if (!partners || partners.length === 0) return 1;
-    
+
     const partnerCount = partners.length;
-    
+
     // Define breakpoints and max columns for each
-    if (windowWidth >= 1280) { // xl and above
+    if (windowWidth >= 1280) {
+      // xl and above
       return Math.min(Math.max(Math.ceil(partnerCount / 3), 3), 7);
-    } else if (windowWidth >= 1024) { // lg to xl
+    } else if (windowWidth >= 1024) {
+      // lg to xl
       return Math.min(Math.max(Math.ceil(partnerCount / 4), 3), 5);
-    } else if (windowWidth >= 768) { // md to lg
+    } else if (windowWidth >= 768) {
+      // md to lg
       return Math.min(Math.max(Math.ceil(partnerCount / 5), 2), 4);
-    } else { // sm and below
+    } else {
+      // sm and below
       return Math.min(Math.max(Math.ceil(partnerCount / 7), 2), 3);
     }
   };
@@ -79,39 +83,43 @@ const Partners = ({ title, description, partners, bg }) => {
   // Distribute partners evenly across columns
   const getColumnPartners = (columnIndex) => {
     if (!partners || partners.length === 0) return [];
-    
+
     return partners.filter((_, index) => index % columnsCount === columnIndex);
   };
 
   // Get responsive gap and container classes
   const getResponsiveClasses = () => {
-    if (windowWidth >= 1280) { // xl
+    if (windowWidth >= 1280) {
+      // xl
       return {
-        gap: 'gap-3',
-        containerPadding: 'px-[177px] 2xl:px-32 xl:px-16',
-        maxColumnWidth: 'max-w-[145px]',
-        minHeight: 'min-h-[400px]'
+        gap: "gap-3",
+        containerPadding: "px-[177px] 2xl:px-32 xl:px-16",
+        maxColumnWidth: "max-w-[145px]",
+        minHeight: "min-h-[400px]",
       };
-    } else if (windowWidth >= 1024) { // lg
+    } else if (windowWidth >= 1024) {
+      // lg
       return {
-        gap: 'gap-3',
-        containerPadding: 'lg:px-10',
-        maxColumnWidth: 'max-w-[180px]',
-        minHeight: 'min-h-[350px]'
+        gap: "gap-3",
+        containerPadding: "lg:px-10",
+        maxColumnWidth: "max-w-[180px]",
+        minHeight: "min-h-[350px]",
       };
-    } else if (windowWidth >= 768) { // md
+    } else if (windowWidth >= 768) {
+      // md
       return {
-        gap: 'gap-2.5',
-        containerPadding: 'md:px-6',
-        maxColumnWidth: 'max-w-[200px]',
-        minHeight: 'min-h-[300px]'
+        gap: "gap-2.5",
+        containerPadding: "md:px-6",
+        maxColumnWidth: "max-w-[200px]",
+        minHeight: "min-h-[300px]",
       };
-    } else { // sm and below
+    } else {
+      // sm and below
       return {
-        gap: 'gap-1.5 sm:gap-2',
-        containerPadding: 'sm:px-4',
-        maxColumnWidth: 'max-w-[30%]',
-        minHeight: 'min-h-[250px]'
+        gap: "gap-1.5 sm:gap-2",
+        containerPadding: "sm:px-4",
+        maxColumnWidth: "max-w-[30%]",
+        minHeight: "min-h-[250px]",
       };
     }
   };
@@ -121,14 +129,14 @@ const Partners = ({ title, description, partners, bg }) => {
   // Generate staggered margin tops for zigzag effect
   const getColumnMarginTop = (columnIndex) => {
     const patterns = {
-      2: ['mt-2', 'mt-6'],
-      3: ['mt-2', 'mt-6', 'mt-2'],
-      4: ['mt-2', 'mt-6', 'mt-2', 'mt-6'],
-      5: ['mt-2.5', 'mt-8', 'mt-2.5', 'mt-8', 'mt-2.5'],
-      6: ['mt-2.5', 'mt-10', 'mt-2.5', 'mt-10', 'mt-2.5', 'mt-10'],
-      7: ['mt-2.5', 'mt-12', 'mt-2.5', 'mt-12', 'mt-2.5', 'mt-12', 'mt-2.5']
+      2: ["mt-2", "mt-6"],
+      3: ["mt-2", "mt-6", "mt-2"],
+      4: ["mt-2", "mt-6", "mt-2", "mt-6"],
+      5: ["mt-2.5", "mt-8", "mt-2.5", "mt-8", "mt-2.5"],
+      6: ["mt-2.5", "mt-10", "mt-2.5", "mt-10", "mt-2.5", "mt-10"],
+      7: ["mt-2.5", "mt-12", "mt-2.5", "mt-12", "mt-2.5", "mt-12", "mt-2.5"],
     };
-    
+
     const pattern = patterns[columnsCount] || patterns[3];
     return pattern[columnIndex % pattern.length];
   };
@@ -139,16 +147,28 @@ const Partners = ({ title, description, partners, bg }) => {
   }
 
   return (
-    <section className={`w-full ${bg ? bg : "bg-[var(--surface-color2)]"} py-[100px] xl:py-20 lg:py-16 md:py-12 sm:py-10 ${responsiveClasses.containerPadding} overflow-hidden`}>
+    <section
+      className={`w-full ${
+        bg ? bg : "bg-[var(--surface-color2)]"
+      } py-[100px] xl:py-20 lg:py-16 md:py-12 sm:py-10 ${
+        responsiveClasses.containerPadding
+      } overflow-hidden`}
+    >
       <div className="max-w-[1076px] mx-auto flex flex-col items-center gap-[50px] xl:gap-10 lg:gap-8">
         {/* Header Section */}
         <div className="flex flex-col items-center gap-2.5">
-          <h2
-            className="text-black text-center font-bold text-[52px] xl:text-[42px] lg:text-[36px] md:text-[32px] sm:text-[28px] leading-[120%] -tracking-[1.56px] xl:-tracking-[1.26px] lg:-tracking-[1.08px] md:-tracking-[0.96px] sm:-tracking-[0.84px] capitalize"
-            style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
-          >
-            {title}
-          </h2>
+          {title ? (
+            <h2
+              className="text-black text-center font-bold text-[52px] xl:text-[42px] lg:text-[36px] md:text-[32px] sm:text-[28px] leading-[120%] -tracking-[1.56px] xl:-tracking-[1.26px] lg:-tracking-[1.08px] md:-tracking-[0.96px] sm:-tracking-[0.84px] capitalize"
+              style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
+            >
+              {title}
+            </h2>
+          ) : (
+            <div >
+              <img src={logo} alt="LOGO" className="h-20 2xl:h-30"/>
+            </div>
+          )}
           {description && (
             <p
               className="text-black text-center font-normal text-xl 2xl:text-2xl xl:text-lg lg:text-base md:text-base sm:text-sm leading-[140%] -tracking-[0.6px] 2xl:-tracking-[0.72px] xl:-tracking-[0.54px] lg:-tracking-[0.48px]"
@@ -161,11 +181,17 @@ const Partners = ({ title, description, partners, bg }) => {
 
         {/* Dynamic Partners Grid */}
         <div className="w-full">
-          <div className={`flex justify-center items-start ${responsiveClasses.gap} 2xl:gap-15 w-full ${responsiveClasses.minHeight}`}>
+          <div
+            className={`flex justify-center items-start ${responsiveClasses.gap} 2xl:gap-15 w-full ${responsiveClasses.minHeight}`}
+          >
             {Array.from({ length: columnsCount }, (_, columnIndex) => (
               <div
                 key={columnIndex}
-                className={`flex flex-col items-center ${responsiveClasses.gap} flex-1 ${responsiveClasses.maxColumnWidth} ${getColumnMarginTop(columnIndex)}`}
+                className={`flex flex-col items-center ${
+                  responsiveClasses.gap
+                } flex-1 ${
+                  responsiveClasses.maxColumnWidth
+                } ${getColumnMarginTop(columnIndex)}`}
               >
                 {getColumnPartners(columnIndex).map((partner) => (
                   <PartnerCard key={partner.id} partner={partner} />
@@ -174,7 +200,6 @@ const Partners = ({ title, description, partners, bg }) => {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );

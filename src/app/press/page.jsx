@@ -3,6 +3,7 @@ import Companies from "@/components/common/Companies";
 import LogoSlider from "@/components/home/TextSlider";
 import About from "@/components/landing/About";
 import Card from "@/components/press/Card";
+import CardSlider from "@/components/press/CardSlider";
 import Hero from "@/components/press/Hero";
 import React from "react";
 
@@ -18,6 +19,73 @@ function page() {
     { name: "AdAge", url: "/home/slider1.png" },
     { name: "VOGUE", url: "/home/slider2.png" },
     { name: "Forbes", url: "/home/slider3.png" },
+  ];
+
+  const cards = [
+    {
+      id: 1,
+      newsPaper: "/press/card/1n.png",
+      image: "/press/card/1.png",
+      title:
+        "Bitcoin Ordinals Take Center Stage With Nolcha Shows, Miami Art Week",
+      link: "#",
+    },
+    {
+      id: 2,
+      newsPaper: "/press/card/2n.png",
+      image: "/press/card/2.png",
+      title: "Another Article Title Here",
+      link: "#",
+    },
+    {
+      id: 3,
+      newsPaper: "/press/card/3n.png",
+      image: "/press/card/3.png",
+      title: "Another Article Title Here",
+      link: "#",
+    },
+    {
+      id: 4,
+      newsPaper: "/press/card/4n.png",
+      image: "/press/card/4.png",
+      title: "Another Article Title Here",
+      link: "#",
+    },
+    {
+      id: 5,
+      newsPaper: "/press/card/5n.png",
+      image: "/press/card/5.png",
+      title: "Another Article Title Here",
+      link: "#",
+    },
+    {
+      id: 6,
+      newsPaper: "/press/card/6n.png",
+      image: "/press/card/6.png",
+      title: "Another Article Title Here",
+      link: "#",
+    },
+    {
+      id: 7,
+      newsPaper: "/press/card/7n.png",
+      image: "/press/card/7.png",
+      title: "Another Article Title Here",
+      link: "#",
+    },
+    {
+      id: 8,
+      newsPaper: "/press/card/8n.png",
+      image: "/press/card/8.png",
+      title: "Another Article Title Here",
+      link: "#",
+    },
+    {
+      id: 9,
+      newsPaper: "/press/card/9n.png",
+      image: "/press/card/9.png",
+      title: "Another Article Title Here",
+      link: "#",
+    },
   ];
   return (
     <div>
@@ -80,18 +148,8 @@ function page() {
           imageStyle={"max-w-[772px]"}
         />
       </div> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px] lg:gap-[40px] xl:gap-[60px] 2xl:gap-[80px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] lg:px-[40px] xl:px-[60px] 2xl:px-[80px] py-[20px] px-[16px] max-w-none mx-auto">
-        {Array.from({ length: 9 }, (_, index) => (
-          <Card
-            key={index + 1}
-            newsPaper={`/press/card/${index + 1}n.png`}
-            image={`/press/card/${index + 1}.png`}
-            title={
-              "“Bitcoin Ordinals Take Center Stage With Nolcha Shows, Miami Art Week”"
-            }
-            link={"#"}
-          />
-        ))}
+      <div className="m-10">
+        <CardSlider cards={cards} />
       </div>
     </div>
   );

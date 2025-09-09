@@ -1,5 +1,6 @@
 export const experienceData = [
   {
+    "id": 1,
     "mainHeading": "VV RACHING WITH JACK BUTCHER ",
     "subHeading": "BITCOIN CONFERENCE NASHVILLE 2024 ",
     "hostImage": "/experiences/jack/host.png",
@@ -33,6 +34,7 @@ export const experienceData = [
     ]
   },
   {
+    "id": 2,
     "mainHeading": "Bitcoin Conferance",
     "subHeading": "INSCRIBING NASHVILLE x NOLCHA SHOWS x GAMMA ",
     "hostImage": "/experiences/bitcoin/host.png",
@@ -63,6 +65,7 @@ export const experienceData = [
     ]
   },
   {
+    "id": 3,
     "mainHeading": "OPENING NIGHT CONSENSUS",
     "subHeading": "2024",
     "hostImage": "/experiences/opening/host.png",
@@ -93,6 +96,7 @@ export const experienceData = [
     ]
   },
   {
+    "id": 4,
     "mainHeading": "CTRL Ordinals Collection Launch",
     "subHeading": "BITCOIN CONFERENCE",
     "hostImage": "/experiences/ctrl/host.png",
@@ -123,6 +127,7 @@ export const experienceData = [
     ]
   },
   {
+    "id": 5,
     "mainHeading": "NEW YORK FASHION WEEK",
     "subHeading": "World Trade Center 69th Floor",
     "hostImage": "/experiences/newyork/host.png",

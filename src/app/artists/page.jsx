@@ -63,6 +63,7 @@ function page() {
         isFade={false}
         backgroundColor={"bg-[var(--surface-color)]"}
         videos={videos}
+        isSlider={true}
       />
       <div className="flex lg:flex-wrap gap-[24px] lg:gap-[40px] xl:gap-[50px] 2xl:gap-[60px] lg:py-[18px] xl:py-[20px] 2xl:py-[60px] lg:px-[40px] xl:px-[60px] 2xl:px-[80px] py-[20px] px-[16px] flex-col lg:flex-row max-w-[1440px] xl:max-w-[1600px] 2xl:max-w-none mx-auto">
         {cardData.map((card, index) => (
