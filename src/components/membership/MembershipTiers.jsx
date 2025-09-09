@@ -38,7 +38,11 @@ function MembershipTiers() {
   };
 
   const Card = ({ card }) => (
-    <div className="flex flex-col p-4 sm:p-6 lg:p-8 rounded-2xl bg-zinc-100 min-w-0 w-full">
+    <div
+      className="flex flex-col p-4 sm:p-6 lg:p-8 rounded-2xl bg-zinc-100 min-w-0 w-full 
+    shadow-sm hover:shadow-xl transform transition-all duration-500 hover:-translate-y-4 
+    animate-fadeIn"
+    >
       <div className="flex flex-col justify-center w-full">
         <div className="w-full">
           <div className="text-lg sm:text-xl lg:text-2xl 2xl:text-4xl font-bold tracking-tighter leading-tight text-center sm:text-left">
@@ -49,15 +53,22 @@ function MembershipTiers() {
           </div>
         </div>
         <div className="flex justify-center sm:justify-start mt-4">
-          <div className="flex gap-2 justify-center items-center px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm 2xl:text-lg font-medium leading-none bg-lime-100 rounded-xl border border-solid border-stone-400 hover:bg-lime-200 transition-colors cursor-pointer">
+          <div
+            className="flex gap-2 justify-center items-center px-4 sm:px-6 py-2 sm:py-3 
+          text-xs sm:text-sm 2xl:text-lg font-medium leading-none bg-lime-100 
+          rounded-xl border border-stone-400 cursor-pointer 
+          hover:bg-lime-200 hover:scale-105 active:scale-95 
+          transition-all duration-300"
+          >
             <div className="my-auto whitespace-nowrap">Learn More</div>
           </div>
         </div>
       </div>
-      <div className="mt-4 sm:mt-6 lg:mt-8 w-full">
+      <div className="mt-4 sm:mt-6 lg:mt-8 w-full overflow-hidden rounded-2xl">
         <img
           src={card.image}
-          className="object-cover w-full rounded-2xl aspect-[1.39] max-h-64 sm:max-h-72 lg:max-h-80 2xl:max-h-120"
+          className="object-cover w-full aspect-[1.39] max-h-64 sm:max-h-72 lg:max-h-80 2xl:max-h-120 
+        transition-transform duration-700 hover:scale-110"
           alt={card.alt}
         />
       </div>
