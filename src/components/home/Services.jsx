@@ -224,7 +224,7 @@ const Services = () => {
 
   return (
     <section className="bg-white py-16 lg:py-24 px-4 lg:px-10">
-      <div className="max-w-none mx-auto">
+      <div className="max-w-[1440px] mx-auto">
         <h2 className="text-center text-4xl lg:text-[52px] font-bold leading-tight -tracking-[1.56px] text-black mb-12 lg:mb-[50px]">
           Explore our services
         </h2>

@@ -24,7 +24,7 @@ export default function ContactForm({ bg, heading, desc, isButton }) {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat relative flex justify-center"
+      className="min-h-max bg-cover bg-center bg-no-repeat relative flex justify-center"
       style={{
         backgroundImage: `url(${bg || "/contact/bg.jpg"})`,
         backgroundColor: "#1a1a1a", // Fallback dark color
@@ -33,7 +33,7 @@ export default function ContactForm({ bg, heading, desc, isButton }) {
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/60"></div>
 
-      <div className="relative z-10 min-h-screen w-full flex flex-col lg:flex-row lg:items-center px-6 md:px-12 lg:px-0 py-12 md:py-16 2xl:py-16">
+      <div className="relative z-10 h-max w-full flex flex-col lg:flex-row lg:items-center px-6 md:px-12 lg:px-0 py-12 md:py-16 2xl:py-16 max-w-[1440px] mx-auto">
         {/* Left Side - Title and Sponsors - 50% width on large screens */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center px-0 lg:px-16 2xl:px-24 mb-8 md:mb-12 lg:mb-0 text-center lg:text-left">
           <h1

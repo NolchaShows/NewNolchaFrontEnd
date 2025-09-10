@@ -3,7 +3,12 @@ import { motion } from "framer-motion";
 
 function RecentEvents() {
   const events = [
-    { id: 1, name: "Crypto Summit Dubai 2024", video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" },
+    {
+      id: 1,
+      name: "Crypto Summit Dubai 2024",
+      video:
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    },
     { id: 2, name: "Blockchain Expo 2024", video: "/video.mp4" },
   ];
 
@@ -37,11 +42,10 @@ function RecentEvents() {
         Recent Events: {events[currentIndex].name}
       </h1>
 
-
       <motion.video
         key={events[currentIndex].id}
         src={events[currentIndex].video}
-        className="rounded-[17px] lg:max-w-[1360px] 2xl:max-w-none w-full lg:max-h-[726px] 2xl:max-h-[1000px] object-cover"
+        className="rounded-[17px] w-full lg:max-h-[726px] 2xl:max-h-[1000px] object-cover max-w-[1440px] mx-auto"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
@@ -52,7 +56,7 @@ function RecentEvents() {
         controls
       />
 
-      <div className="flex gap-[15px] justify-center">
+      <div className="flex gap-[15px] justify-center ">
         <motion.img
           src="/landing/left.svg"
           className="cursor-pointer 2xl:h-[70px] 2xl:w-[70px]"

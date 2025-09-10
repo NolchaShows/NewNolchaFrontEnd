@@ -14,7 +14,7 @@ function TextHero({ images }) {
   const currentImage = images[currentIndex];
 
   return (
-    <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] w-full max-w-none mx-auto">
+    <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] w-full max-w-[1440px] mx-auto">
       <div className="flex flex-col gap-[40px]">
         <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
           {/* Left button (desktop only) */}

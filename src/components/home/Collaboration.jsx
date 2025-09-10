@@ -27,7 +27,7 @@ const NolchaExperience = () => {
 
   return (
     <div className="bg-[#F4F4F4]">
-      <div className="max-w-7xl 2xl:max-w-none mx-auto 2xl:mx-10 py-16">
+      <div className="max-w-[1440px] mx-auto py-16">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left side - Image */}
           <div className="relative">

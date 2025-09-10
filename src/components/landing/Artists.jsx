@@ -204,21 +204,21 @@ function Artists({ textColor, backgroundColor, isFade, videos, isSlider }) {
     "/landing/artists/6.png",
   ];
   return (
-    <div className="lg:py-[64px]flex flex-col">
-      {isSlider && 
+    <div className=" flex flex-col items-center justify-center bg-[var(--secondary-color)]">
+      {isSlider && (
         <Carousel
           textColor={textColor}
           backgroundColor={backgroundColor}
           isFade={isFade}
         />
-      }
+      )}
       <div className="bg-[var(--secondary-color)] font-neue lg:p-[60px] 2xl:p-[100px] py-[24px] px-[20px] rounded-[8px] flex flex-col gap-[30px]">
         <div className="flex w-full justify-center xl:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
-          <div className="flex flex-col gap-[20px] 2xl:gap-[30px] font-medium items-center text-center">
+          <div className="flex flex-col gap-[20px] 2xl:gap-[30px] font-medium items-center text-center max-w-[1440px] mx-auto">
             <h1 className="font-neue text-[52px] font-bold 2xl:text-[80px] ">
               And + 500 Other Artists
             </h1>
-            <p className="text-lg 2xl:text-4xl">
+            <p className="text-lg 2xl:text-2xl">
               ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY COWART -
               LINDSAY <br /> KOKOSKA - NODEMONKES - KIRA BURSKY - VINCENT
               D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA <br /> ZOREF - ROB PRIOR -

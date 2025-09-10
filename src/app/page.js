@@ -359,7 +359,7 @@ export default function Home() {
         <div className="bg-[var(--surface-color2)] mt-5">
           <ImageCarousel posts={posts} />
         </div>
-        <div className="mt-10 mb-10">
+        <div className="mt-10">
           <ContactForm bg={"/landing/background2.jpg"} heading={"lets Talk"}/>
         </div>
       </div>

@@ -30,11 +30,11 @@ function Footer() {
 
   const columns = chunkArray(footerLinks, 4);
   return (
-    <div className="md:py-[64px] py-[40px] px-[16px] 2xl:px-[30px] max-w-none mx-auto flex flex-col gap-[10px]">
-      <div className="flex lg:gap-[121px] gap-[24px] flex-col lg:flex-row">
+    <div className="md:py-[64px] py-[40px] px-[16px] 2xl:px-[30px] max-w-[1440px] mx-auto flex flex-col gap-[10px]">
+      <div className="flex gap-[24px] lg:gap-[120px] flex-col lg:flex-row w-full">
         {/*NewsLetter Subscription */}
-        <div className=" bg-[var(--tertiary-color)] px-[32px] pt-[19px] pb-[35px] rounded-[8px]">
-          <div className="flex flex-col gap-[80px] lg:max-w-[420px] 2xl:min-w-[700px] 2xl:min-h-[200px]">
+        <div className=" bg-[var(--tertiary-color)] px-[32px] pt-[19px] pb-[35px] rounded-[8px] w-full">
+          <div className="flex flex-col gap-[80px] 2xl:min-h-[200px] w-full">
             <h1 className="text-[var(--primary-text-color)]  md:text-center lg:text-left font-medium sm:text-[32px] text-[26px] uppercase">
               Subscribe to our newsletter
             </h1>
@@ -54,7 +54,7 @@ function Footer() {
           </div>
         </div>
         {/*Links */}
-        <div className="flex justify-between w-full text-[var(--secondary-text-color)] text-[20px]">
+        <div className="flex justify-between text-[var(--secondary-text-color)] text-[20px] w-full">
           {columns.map((col, colIdx) => (
             <div key={colIdx} className="flex flex-col gap-[20px]">
               {col.map((link, linkIdx) => (

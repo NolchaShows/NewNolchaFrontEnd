@@ -7,20 +7,20 @@ const UpcomingEvents = () => {
       id: 1,
       title: "After party Sept 16 2025 NYC",
       image: "/home/upcoming/1.png",
-      tags: ["Concensus 2025", "Sept 16, 2025 NYC"]
+      tags: ["Concensus 2025", "Sept 16, 2025 NYC"],
     },
     {
       id: 2,
       title: "Nolcha X Art Basel",
       image: "home/upcoming/2.png",
-      tags: ["Concensus 2025", "Dec 4 2025 Miami"]
+      tags: ["Concensus 2025", "Dec 4 2025 Miami"],
     },
     {
       id: 3,
       title: "Dec 4 2025 Miami",
       image: "home/upcoming/3.png",
-      tags: ["Concensus 2025", "Dec 4 2025 Miami"]
-    }
+      tags: ["Concensus 2025", "Dec 4 2025 Miami"],
+    },
   ];
 
   const ViewMoreButton = () => (
@@ -37,13 +37,34 @@ const UpcomingEvents = () => {
           xmlns="http://www.w3.org/2000/svg"
           className="w-12 h-12"
         >
-          <path d="M23.9922 19.5L26.9922 19.5L26.9922 22.5L23.9922 22.5L23.9922 19.5Z" fill="black" />
-          <path d="M23.9922 25.5L26.9922 25.5L26.9922 28.5L23.9922 28.5L23.9922 25.5Z" fill="black" />
-          <path d="M20.9922 16.5L23.9922 16.5L23.9922 19.5L20.9922 19.5L20.9922 16.5Z" fill="black" />
-          <path d="M20.9922 28.5L23.9922 28.5L23.9922 31.5L20.9922 31.5L20.9922 28.5Z" fill="black" />
-          <path d="M17.9922 31.5L20.9922 31.5L20.9922 34.5L17.9922 34.5L17.9922 31.5Z" fill="black" />
-          <path d="M17.9922 13.5L20.9922 13.5L20.9922 16.5L17.9922 16.5L17.9922 13.5Z" fill="black" />
-          <path d="M26.9922 22.5L29.9922 22.5L29.9922 25.5L26.9922 25.5L26.9922 22.5Z" fill="black" />
+          <path
+            d="M23.9922 19.5L26.9922 19.5L26.9922 22.5L23.9922 22.5L23.9922 19.5Z"
+            fill="black"
+          />
+          <path
+            d="M23.9922 25.5L26.9922 25.5L26.9922 28.5L23.9922 28.5L23.9922 25.5Z"
+            fill="black"
+          />
+          <path
+            d="M20.9922 16.5L23.9922 16.5L23.9922 19.5L20.9922 19.5L20.9922 16.5Z"
+            fill="black"
+          />
+          <path
+            d="M20.9922 28.5L23.9922 28.5L23.9922 31.5L20.9922 31.5L20.9922 28.5Z"
+            fill="black"
+          />
+          <path
+            d="M17.9922 31.5L20.9922 31.5L20.9922 34.5L17.9922 34.5L17.9922 31.5Z"
+            fill="black"
+          />
+          <path
+            d="M17.9922 13.5L20.9922 13.5L20.9922 16.5L17.9922 16.5L17.9922 13.5Z"
+            fill="black"
+          />
+          <path
+            d="M26.9922 22.5L29.9922 22.5L29.9922 25.5L26.9922 25.5L26.9922 22.5Z"
+            fill="black"
+          />
         </svg>
       </div>
     </div>
@@ -51,13 +72,13 @@ const UpcomingEvents = () => {
 
   return (
     <section className="bg-white w-full py-[100px] lg:py-[100px] sm:py-[60px] px-8 lg:px-8 sm:px-4">
-      <div className="max-w-none mx-auto w-full">
+      <div className="max-w-[1440px] mx-auto w-full">
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-[50px] lg:mb-[50px] sm:mb-8 gap-6 lg:gap-0">
           <h2 className="text-black text-[52px] lg:text-[52px] md:text-[40px] sm:text-[32px] font-bold leading-[120%] tracking-[-1.56px] lg:tracking-[-1.56px] md:tracking-[-1.2px] sm:tracking-[-0.96px] capitalize font-['Neue_Haas_Grotesk_Text_Pro',sans-serif]">
             Upcoming Events
           </h2>
-          
+
           {/* View More Button - Hidden on small screens, shown on lg+ */}
           <div className="hidden lg:flex">
             <ViewMoreButton />
@@ -65,7 +86,7 @@ const UpcomingEvents = () => {
         </div>
 
         {/* Events Cards Grid */}
-        <div className="flex flex-col lg:ml-10 md:mr-5 lg:flex-row lg:justify-between lg:mr-20 lg:gap-12">
+        <div className="flex flex-col md:mr-5 lg:flex-row lg:justify-between lg:gap-12">
           {events.map((event) => (
             <div
               key={event.id}

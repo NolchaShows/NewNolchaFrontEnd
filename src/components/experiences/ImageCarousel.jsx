@@ -55,7 +55,7 @@ const ImageCarousel = ({ posts }) => {
   };
 
   return (
-    <div className="px-4 md:px-8 mb-6 overflow-hidden">
+    <div className="px-4 md:px-8 mb-6 overflow-hidden max-w-[1440px] mx-auto w-full">
       <div className="flex items-center justify-between mb-6">
         <h2
           className="text-3xl md:text-4xl 2xl:text-6xl font-neue font-bold text-black mt-10"

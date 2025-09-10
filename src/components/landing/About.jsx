@@ -3,19 +3,20 @@ import React from "react";
 
 function About({ title, paragraphs = [], image, link, linkText, imageStyle }) {
   return (
-    <div className="
+    <div
+      className="
   font-neue 
   py-[20px] px-[16px] sm:py-[40px] sm:px-[24px] md:py-[60px] md:px-[35px] 
   lg:py-[75px] lg:px-[45px] xl:py-[80px] xl:px-[50px] 2xl:py-[100px] 2xl:px-[60px] 
-  w-full max-w-none mx-auto 
   flex md:flex-row flex-col gap-[20px] sm:gap-[30px] md:gap-[40px] lg:gap-[50px] xl:gap-[120px] 2xl:gap-[160px] 
-  md:justify-between md:items-center
-">
-
+  md:justify-between md:items-center w-full max-w-[1440px] mx-auto
+"
+    >
       {/* Text Section */}
-      <div className="flex flex-col gap-[32px] sm:gap-[36px] md:gap-[40px] lg:gap-[48px] xl:gap-[32px] 2xl:gap-[64px] 
-  text-[#000000] mt-8 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-20 2xl:mt-30 flex-1 md:max-w-[50%]">
-
+      <div
+        className="flex flex-col gap-[32px] sm:gap-[36px] md:gap-[40px] lg:gap-[48px] xl:gap-[32px] 2xl:gap-[64px] 
+  text-[#000000] mt-8 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-20 2xl:mt-30 flex-1 md:max-w-[50%]"
+      >
         {/* Title */}
         {title && (
           <h1
@@ -27,7 +28,7 @@ function About({ title, paragraphs = [], image, link, linkText, imageStyle }) {
         capitalize 
         text-black
       "
-            style={{ fontFamily: 'Neue Haas Grotesk Text Pro, sans-serif' }}
+            style={{ fontFamily: "Neue Haas Grotesk Text Pro, sans-serif" }}
           >
             {title}
           </h1>
@@ -39,7 +40,7 @@ function About({ title, paragraphs = [], image, link, linkText, imageStyle }) {
             <p
               key={i}
               className="text-[20px] leading-[150%] tracking-[-0.03em] text-black font-normal"
-              style={{ fontFamily: 'Neue Haas Grotesk Text Pro, sans-serif' }}
+              style={{ fontFamily: "Neue Haas Grotesk Text Pro, sans-serif" }}
             >
               {text}
             </p>
@@ -74,7 +75,6 @@ function About({ title, paragraphs = [], image, link, linkText, imageStyle }) {
         )}
       </div>
 
-
       {/* Image */}
       {image && (
         <div className="flex-shrink-0 lg:flex-1 mx-auto lg:mx-0">
@@ -85,8 +85,6 @@ function About({ title, paragraphs = [], image, link, linkText, imageStyle }) {
           />
         </div>
       )}
-
-
 
       {/* Mobile Button */}
       {link && (
