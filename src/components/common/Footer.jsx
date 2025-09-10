@@ -30,7 +30,7 @@ function Footer() {
 
   const columns = chunkArray(footerLinks, 4);
   return (
-    <div className="md:py-[64px] py-[40px] px-[16px] max-w-none mx-auto flex flex-col gap-[10px]">
+    <div className="md:py-[64px] py-[40px] px-[16px] 2xl:px-[30px] max-w-none mx-auto flex flex-col gap-[10px]">
       <div className="flex lg:gap-[121px] gap-[24px] flex-col lg:flex-row">
         {/*NewsLetter Subscription */}
         <div className="bg-[var(--tertiary-color)] px-[32px] pt-[19px] pb-[35px] rounded-[8px]">
