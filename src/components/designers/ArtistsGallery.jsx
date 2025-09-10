@@ -72,7 +72,6 @@ const ArtistGallery = () => {
   return (
     <section className="ml-6 mr-8 bg-[#F4F4F4] py-16 rounded-xl px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Featured Artists Header */}
         <div className="text-center mb-12">
           <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-32 xl:mx-60 flex flex-wrap justify-center items-center gap-2 sm:gap-4 mb-8">
             <span className="text-[#141414] text-lg sm:text-xl 2xl:text-2xl">✦</span>
@@ -89,7 +88,6 @@ const ArtistGallery = () => {
             <span className="text-[#141414] text-lg sm:text-xl 2xl:text-2xl">✦</span>
           </div>
 
-          {/* All Artists List */}
           <div className="max-w-5xl mx-auto px-4">
             <p className="text-sm md:text-base 2xl:text-xl text-[#141414] leading-relaxed font-medium">
               {allArtists.join(" - ")}
@@ -97,7 +95,6 @@ const ArtistGallery = () => {
           </div>
         </div>
 
-        {/* Gallery Grid */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 2xl:gap-20 mt-30">
           {galleryImages.map((image, index) => (
             <div
