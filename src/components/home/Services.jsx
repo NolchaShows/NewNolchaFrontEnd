@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 const Services = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % services.length);
@@ -33,6 +34,7 @@ const Services = () => {
       description:
         "We harness the latest in AR, VR, mixed reality, and interactive installations to turn ideas into next-level audience engagement.",
       backgroundColor: "bg-[var(--surface-color2)]",
+      hoverBackgroundColor: "bg-[var(--primary-color)]",
       images: ["/home/services/2.png", "/home/services/3.png"],
       layout: "double",
     },
@@ -68,14 +70,22 @@ const Services = () => {
   const ServiceCard = ({ service }) => {
     const isFirstCard = service.id === "01";
     const isSecondCard = service.id === "02";
+    
+    // Determine background color based on hover state
+    const getBackgroundColor = () => {
+      if (hoveredCard === service.id && service.hoverBackgroundColor) {
+        return service.hoverBackgroundColor;
+      }
+      return service.backgroundColor;
+    };
 
     return (
       <div
-        className={`${
-          service.backgroundColor
-        } rounded-2xl p-6 lg:p-8 flex flex-col ${
+        className={`${getBackgroundColor()} rounded-2xl p-6 lg:p-8 flex flex-col ${
           isFirstCard || isSecondCard ? "min-h-full" : ""
-        }`}
+        } transition-colors duration-300`}
+        onMouseEnter={() => setHoveredCard(service.id)}
+        onMouseLeave={() => setHoveredCard(null)}
       >
         {service.id === "03" || service.id === "04" || service.id === "05" ? (
           <>
@@ -215,7 +225,6 @@ const Services = () => {
   return (
     <section className="bg-white py-16 lg:py-24 px-4 lg:px-10">
       <div className="max-w-none mx-auto">
-        {/* Title */}
         <h2 className="text-center text-4xl lg:text-[52px] font-bold leading-tight -tracking-[1.56px] text-black mb-12 lg:mb-[50px]">
           Explore our services
         </h2>

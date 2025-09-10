@@ -8,7 +8,7 @@ export default function ConditionalLayout({ children }) {
   const hideNavFooter = pathname === '/sign-in' || pathname === '/dashboard' || pathname === "/gmail/template/1" || pathname === "/gmail/template/2";
 
   return (
-    <>
+    <div >
       {!hideNavFooter && (
         <div className="bg-[var(--surface-color)]">
           <Navbar/>
@@ -20,6 +20,6 @@ export default function ConditionalLayout({ children }) {
           <Footer/>
         </div>
       )}
-    </>
+    </div>
   );
 }

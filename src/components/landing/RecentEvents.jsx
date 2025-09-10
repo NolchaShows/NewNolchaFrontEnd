@@ -19,9 +19,24 @@ function RecentEvents() {
 
   return (
     <div className="md:py-[64px] md:px-[40px] py-[20px] px-[16px] max-w-none w-full mx-auto flex flex-col md:gap-[40px] gap-[20px]">
-      <h1 className="text-[var(--primary-text-color)] text-center md:text-[48px] text-[24px] font-medium uppercase">
+      <h1
+        className="
+    text-[52px] 
+    leading-[120%] 
+    tracking-[-0.03em] 
+    font-bold 
+    capitalize 
+    text-black 
+    text-center
+  "
+        style={{
+          fontFamily: "Neue Haas Grotesk Text Pro, sans-serif",
+          fontWeight: 700,
+        }}
+      >
         Recent Events: {events[currentIndex].name}
       </h1>
+
 
       <motion.video
         key={events[currentIndex].id}

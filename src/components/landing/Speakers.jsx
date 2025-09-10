@@ -95,9 +95,8 @@ function Speakers() {
       >
         {/* Front of card - Image */}
         <div
-          className={`inset-0 w-full h-full transition-opacity duration-300 ${
-            isHovered ? "opacity-0" : "opacity-100"
-          }`}
+          className={`inset-0 w-full h-full transition-opacity duration-300 ${isHovered ? "opacity-0" : "opacity-100"
+            }`}
         >
           <img
             src={src}
@@ -108,9 +107,8 @@ function Speakers() {
 
         {/* Back of card - Details */}
         <div
-          className={`absolute inset-0 w-full h-full rounded-[8px] p-6 flex flex-col justify-start items-start text-left transition-opacity duration-300 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          }`}
+          className={`absolute inset-0 w-full h-full rounded-[8px] p-6 flex flex-col justify-start items-start text-left transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"
+            }`}
           style={{
             background: "linear-gradient(135deg, #7FFFD4 0%, #40E0D0 100%)",
           }}
@@ -143,9 +141,20 @@ function Speakers() {
       <div className="flex flex-col p-[10px] gap-[40px]">
         {/* Heading + arrows (desktop only) */}
         <div className="flex items-center justify-between">
-          <h1 className="lg:text-[48px] text-[24px] font-medium uppercase text-[var(--primary-text-color)]">
+          <h1
+            className="
+    font-neue
+    font-[700] 
+    text-[52px] 
+    leading-[120%] 
+    tracking-[-3%] 
+    capitalize 
+    text-black
+  "
+          >
             Featured Speakers
           </h1>
+
 
           {/* Arrows - only visible on xl and up */}
           <div className="hidden xl:flex gap-3">

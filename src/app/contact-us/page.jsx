@@ -36,9 +36,20 @@ export default function ContactForm({ bg, heading, desc, isButton }) {
       <div className="relative z-10 min-h-screen w-full flex flex-col lg:flex-row lg:items-center px-6 md:px-12 lg:px-0 py-12 md:py-16 2xl:py-16">
         {/* Left Side - Title and Sponsors - 50% width on large screens */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center px-0 lg:px-16 2xl:px-24 mb-8 md:mb-12 lg:mb-0 text-center lg:text-left">
-          <h1 className="text-white font-bold leading-tight mb-6 md:mb-8 lg:mb-12 2xl:mb-16">
+          <h1
+            className="
+    font-neue
+    font-[700]
+    text-[64px]
+    leading-[120%]
+    tracking-[-0.03em]
+    capitalize
+    text-white
+    mb-6 md:mb-8 lg:mb-12 2xl:mb-16
+  "
+          >
             <div>
-              <span className="text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl">{heading}</span>
+              <span>{heading}</span>
             </div>
           </h1>
 
