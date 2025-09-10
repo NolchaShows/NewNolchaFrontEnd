@@ -115,10 +115,10 @@ function Speakers() {
             background: "linear-gradient(135deg, #7FFFD4 0%, #40E0D0 100%)",
           }}
         >
-          <h3 className="text-xl md:text-2xl font-bold text-black mb-4 uppercase tracking-wide">
+          <h3 className="text-xl md:text-2xl font-bold 2xl:text-3xl text-black mb-4 uppercase tracking-wide">
             {detail.name}
           </h3>
-          <p className="text-black text-xs md:text-sm leading-relaxed px-2">
+          <p className="text-black text-xs md:text-sm 2xl:text-xl leading-relaxed px-2">
             {detail.description}
           </p>
 

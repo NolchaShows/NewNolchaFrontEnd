@@ -7,7 +7,7 @@ export const experienceData = [
     "conferenceImage": ["/experiences/jack/conf.png", "/experiences/jack/galleryImages/1.png"],
     "hostName": "HOSTED BY JACK BUTCHER",
     "hostDescription": "During the Bitcoin Conference 2024, we held a vibrant gathering of founders and leaders from the BTC, Web3, and crypto ecosystems, providing a unique opportunity to network and connect.",
-    "buttonText": "PARTNER WITH US",
+    "buttonText": "Learn More",
     "videos": [
       "/experiences/jack/videos/1.png",
       "/experiences/jack/videos/2.mp4",
@@ -41,7 +41,7 @@ export const experienceData = [
     "conferenceImage": ["/experiences/bitcoin/conf.png"],
     "hostName": "Inscribing Nashville",
     "hostDescription": "Trailblazers, creators, and visionaries united for an extraordinary event featuring insightful panel discussions and capped off by an unforgettable after-party. \n The night showcased captivating digital art on one of the world's largest immersive LED screens—a remarkable 120-foot-wide display boasting an impressive resolution of 12,600 x 2,016 pixels.",
-    "buttonText": "PARTNER WITH US",
+    "buttonText": "Learn More",
     "videos": [
       "/experiences/bitcoin/videos/1.png",
       "/experiences/bitcoin/videos/2.png"
@@ -72,7 +72,7 @@ export const experienceData = [
     "conferenceImage": ["/experiences/opening/conf.png"],
     "hostName": "Opening Night of Consensus ",
     "hostDescription": "The event began with a dynamic conference focused on the latest innovations in AI x Blockchain. Followed by an unforgettable afterparty featuring world renowned DJs Meduza attracting over 2,000 guests from leading blockchain companies, projects, and protocols. It was a night of cutting-edge insights and vibrant celebration.",
-    "buttonText": "PARTNER WITH US",
+    "buttonText": "Learn More",
     "videos": [
       "/experiences/opening/videos/1.png",
       "/experiences/opening/videos/2.png"
@@ -103,7 +103,7 @@ export const experienceData = [
     "conferenceImage": ["/experiences/ctrl/conf.png"],
     "hostName": "CTRL Ordinals Collection Launch",
     "hostDescription": "Vision Accomplish \n Create a unique and fun experience for sponsors to connect in depth with our network of founders and leaders within BTC space.",
-    "buttonText": "PARTNER WITH US",
+    "buttonText": "Learn More",
     "videos": [
       "/experiences/ctrl/videos/1.png",
       "/experiences/ctrl/videos/2.png"
@@ -134,7 +134,7 @@ export const experienceData = [
     "conferenceImage": ["/experiences/newyork/conf.png"],
     "hostName": "New York Fashion Week",
     "hostDescription": "The future of fashion is now at NYFW — A Web3 experience. \n \n Held at the iconic World Trade Center 69th floor, this event garnered attention from major outlets like AdAge, Forbes, and Coindesk.  It showcased engaging panels, dynamic runway shows, & innovative AI/VR activations.",
-    "buttonText": "PARTNER WITH US",
+    "buttonText": "Learn More",
     "videos": [
       "/experiences/newyork/videos/1.png",
       "/experiences/newyork/videos/2.png"

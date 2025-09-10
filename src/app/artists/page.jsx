@@ -55,13 +55,13 @@ function page() {
   ];
   return (
     <div className=" max-w-[1440px] 2xl:max-w-none mx-auto ">
-      <h1 className="p-5 font-neue font-bold text-[24px] lg:text-[48px] 2xl:text-2xl text-[#000000]">
+      <h1 className="p-5 2xl:p-10 font-neue font-bold text-[24px] lg:text-[48px] 2xl:text-6xl text-[#000000]">
         Featured Artists
       </h1>
       <Artists
-        textColor={"text-[var(--primary-text-color)]"}
+        textColor={"text-[#000000]"}
         isFade={false}
-        backgroundColor={"bg-[var(--surface-color)]"}
+        backgroundColor={"bg-[#F4F4F4]"}
         videos={videos}
         isSlider={true}
       />

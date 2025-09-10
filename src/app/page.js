@@ -338,7 +338,7 @@ export default function Home() {
         partners={partners}
       />
       <UpcomingEvents />
-      <div className="mt-5">
+      <div className="mt-5 2xl:mt-15">
         <Speakers />
       </div>
       <TextHero images={slideData} />

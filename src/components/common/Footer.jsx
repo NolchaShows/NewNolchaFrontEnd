@@ -5,11 +5,11 @@ function Footer() {
     { label: "NoichaBTC", href: "#" },
     { label: "Charity Partners", href: "#" },
     { label: "Experiences", href: "#" },
-    { label: "Artists", href: "#" },
-    { label: "Press", href: "#" },
-    { label: "Gallery", href: "#" },
-    { label: "Contact us", href: "#" },
-    { label: "Shop", href: "#" },
+    { label: "Artists", href: "/artists" },
+    { label: "Press", href: "/press" },
+    { label: "Gallery", href: "/gallery" },
+    { label: "Contact us", href: "/contact-us" },
+    { label: "Shop", href: "/shop" },
   ];
 
   const socialLinks = [
@@ -30,11 +30,11 @@ function Footer() {
 
   const columns = chunkArray(footerLinks, 4);
   return (
-    <div className="md:py-[64px] md:px-[60px] py-[40px] px-[16px] max-w-[1440px] mx-auto flex flex-col gap-[10px]">
+    <div className="md:py-[64px] py-[40px] px-[16px] max-w-none mx-auto flex flex-col gap-[10px]">
       <div className="flex lg:gap-[121px] gap-[24px] flex-col lg:flex-row">
         {/*NewsLetter Subscription */}
         <div className="bg-[var(--tertiary-color)] px-[32px] pt-[19px] pb-[35px] rounded-[8px]">
-          <div className="flex flex-col gap-[80px] lg:max-w-[420px] ">
+          <div className="flex flex-col gap-[80px] lg:max-w-[420px] 2xl:min-w-[700px] 2xl:min-h-[200px]">
             <h1 className="text-[var(--primary-text-color)]  md:text-center lg:text-left font-medium sm:text-[32px] text-[26px] uppercase">
               Subscribe to our newsletter
             </h1>
@@ -44,9 +44,9 @@ function Footer() {
                   type="email"
                   required
                   placeholder="Email"
-                  className="bg-transparent text-[var(--secondary-text-color)] placeholder-[var(--secondary-text-color)] border-none outline-none focus:outline-none focus:border-none w-full px-[5px]"
+                  className="bg-transparent 2xl:placeholder:text-2xl text-[var(--secondary-text-color)] placeholder-[var(--secondary-text-color)] border-none outline-none focus:outline-none focus:border-none w-full px-[5px]"
                 />
-                <button className=" py-[10px] px-[20px] bg-[var(--secondary-text-color)] text-[var(--primary-color)] rounded-[8px] cursor-pointer">
+                <button className=" py-[10px] px-[20px] 2xl:text-xl bg-[var(--secondary-text-color)] text-[var(--primary-color)] rounded-[8px] cursor-pointer">
                   Send
                 </button>
               </div>
@@ -54,7 +54,7 @@ function Footer() {
           </div>
         </div>
         {/*Links */}
-        <div className="flex justify-between w-full  text-[var(--secondary-text-color)] text-[20px]">
+        <div className="flex justify-between w-full text-[var(--secondary-text-color)] text-[20px]">
           {columns.map((col, colIdx) => (
             <div key={colIdx} className="flex flex-col gap-[20px]">
               {col.map((link, linkIdx) => (
@@ -64,7 +64,7 @@ function Footer() {
               ))}
             </div>
           ))}
-          <div className="border-l border-l-[#D5D5D5] h-fit py-[10px] pl-[30px] flex flex-col gap-[10px]">
+          <div className="border-l border-l-[#D5D5D5] h-fit py-[10px] pl-[30px] flex flex-col gap-[10px] 2xl:mr-20">
             {socialLinks.map((social, idx) => (
               <Link key={idx} href={social.href} className="h-[56px] w-[56px] 2xl:h-[70px] 2xl:w-[70px]">
                 <img src={social.icon} alt={social.alt} />
@@ -75,14 +75,14 @@ function Footer() {
       </div>
       <div className="pt-[30px] flex lg:flex-row flex-col justify-between   text-[var(--secondary-text-color)] font-medium">
         <div className="flex flex-col gap-[19px] text-[16px] items-center lg:items-start ">
-          <img src="/footer/logo.svg" className="w-[104px] h-[30.33px]" />
+          <img src="/footer/logo.svg" className="w-[104px] h-[30.33px] 2xl:w-[150px] 2xl:h-[70px]" />
           <div className="flex gap-[10px] flex-col">
-            <p className="text-center lg:text-left 2xl:text-2xl">1345 Ave of the Americas, 2nd floor, New York, NY 10105</p>
-            <p className="text-center lg:text-left 2xl:text-2xl">Pr@nolcha.com</p>
-            <p className="text-center lg:text-left 2xl:text-2xl">© Copyright Rudy 2024</p>
+            <p className="text-center lg:text-left 2xl:text-3xl">1345 Ave of the Americas, 2nd floor, New York, NY 10105</p>
+            <p className="text-center lg:text-left 2xl:text-3xl">Pr@nolcha.com</p>
+            <p className="text-center lg:text-left 2xl:text-3xl">© Copyright Rudy 2024</p>
           </div>
         </div>
-        <div className="flex lg:gap-[45px] justify-between text-[20px] pt-[32px] lg:pt-[0px] 2xl:text-2xl">
+        <div className="flex lg:gap-[45px] justify-between text-[20px] pt-[32px] lg:pt-[0px] 2xl:text-3xl 2xl:mr-20">
           {legalLinks.map((link, idx) => (
             <Link key={idx} href={link.href}>
               {link.label}
