@@ -71,12 +71,12 @@ const UpcomingEvents = () => {
               key={event.id}
               className="
                 bg-black rounded-[17px] p-[14px] sm:p-3 flex flex-col
-                lg:w-[391px] lg:h-[476px] 2xl:h-[700px] 2xl:w-[580px] w-full h-auto
+                lg:w-[391px] lg:h-[476px] 2xl:h-[700px] 2xl:w-[600px] w-full h-auto
                 shadow-[0_0.8px_32px_0_rgba(227,222,255,0.05)_inset,0_3.19px_14.37px_0_rgba(154,146,210,0.05)_inset,0_78.26px_78.26px_-38.33px_rgba(202,172,255,0.05)_inset,0_-65.48px_54.3px_-51.11px_rgba(96,68,144,0.05)_inset,0_5.59px_8.78px_-3.25px_rgba(255,255,255,0.07)_inset,0_32px_40px_-2px_rgba(255,255,255,0.02)_inset,0_0.5px_10px_-6px_rgba(0,0,0,0.10),0_20px_26px_-5px_rgba(0,0,0,0.40)]
                 backdrop-blur-[4px]
                 transition-all duration-300 ease-in-out cursor-pointer
                 transform-gpu origin-top
-                md:hover:scale-100 lg:hover:scale-x-110 lg:hover:scale-y-120 2xl:hover:scale-x-115 2xl:hover:scale-y-140 hover:z-10
+                md:hover:scale-100 lg:hover:scale-x-110 lg:hover:scale-y-120 2xl:hover:scale-x-115 hover:z-10
                 mb-6 lg:mb-0
               "
             >

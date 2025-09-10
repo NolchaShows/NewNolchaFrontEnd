@@ -155,7 +155,7 @@ export function Carousel({
 
   return (
     <div
-      className={`relative max-w-none w-full mx-auto overflow-hidden md:py-[40px] py-[20px] rounded-b-[8px] ${backgroundColor}`}
+      className={`relative max-w-none w-full mx-auto overflow-hidden py-[10px] lg:py-[20px]  rounded-b-[8px] ${backgroundColor}`}
       //   style={{
       //   border: "1px solid",
       //   borderImageSource:
@@ -174,7 +174,7 @@ export function Carousel({
       )}
       <motion.div
         ref={marqueeRef}
-        className={`flex whitespace-nowrap gap-[40px] py-[20px] lg:py-[0px] ${textColor} text-[32px] uppercase helvetica`}
+        className={`flex whitespace-nowrap font-medium gap-[80px] 2xl:gap-[200px] py-[20px] lg:py-[0px] ${textColor} text-[26px] 2xl:text-[44px] uppercase helvetica`}
         animate={{ x: [0, -width] }}
         transition={{
           ease: "linear",
