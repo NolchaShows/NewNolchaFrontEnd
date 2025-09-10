@@ -137,10 +137,10 @@ const Experience = ({
     <div className="w-full bg-white">
       {/* Header Section */}
       <div className="py-8 px-4 ml-5">
-        <h1 className="text-2xl md:text-3xl font-bold text-black mb-2 tracking-wide">
+        <h1 className="text-[48px] 2xl:text-[64px] font-bold text-[#000000] mb-2">
           {mainHeading}
         </h1>
-        <p className="text-gray-600 text-sm md:text-base font-medium">
+        <p className="text-[#000000] text-sm md:text-xl 2xl:text-2xl ">
           {subHeading}
         </p>
       </div>
@@ -154,7 +154,7 @@ const Experience = ({
         hostName={hostName}
         buttonText={buttonText}
       />
-      
+
       {/* Host Section */}
       {/* <div className="mt-10">
         <FloatingHost

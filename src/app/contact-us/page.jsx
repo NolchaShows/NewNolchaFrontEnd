@@ -26,7 +26,7 @@ export default function ContactForm({ bg, heading, desc, isButton }) {
     <div
       className="min-h-screen bg-cover bg-center bg-no-repeat relative flex justify-center"
       style={{
-        backgroundImage: `url(${bg || "/contact/bg.jpg"})`,
+        backgroundImage: `url("/landing/background2.jpg")`,
         backgroundColor: "#1a1a1a", // Fallback dark color
       }}
     >
@@ -38,7 +38,7 @@ export default function ContactForm({ bg, heading, desc, isButton }) {
         <div className="w-full lg:w-1/2 flex flex-col justify-center px-0 lg:px-16 2xl:px-24 mb-8 md:mb-12 lg:mb-0 text-center lg:text-left">
           <h1 className="text-white font-bold leading-tight mb-6 md:mb-8 lg:mb-12 2xl:mb-16">
             <div>
-              <span className="text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl">{heading}</span>
+              <span className="text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl">{heading || "Lets Talk"}</span>
             </div>
           </h1>
 

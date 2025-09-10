@@ -10,7 +10,7 @@ function About({ title, paragraphs = [], image, link, linkText, imageStyle }) {
         
         <div className="flex flex-col gap-[16px] sm:gap-[18px] md:gap-[20px] lg:gap-[28px] xl:gap-[36px] 2xl:gap-[48px]">
           {title && (
-            <h1 className="text-[24px] sm:text-[24px] md:text-[32px] lg:text-[36px] xl:text-[42px] 2xl:text-[60px] uppercase font-bold text-[var(--primary-text-color)] leading-tight">
+            <h1 className="text-[24px] sm:text-[24px] md:text-[32px] lg:text-[36px] xl:text-[42px] 2xl:text-[60px] font-bold leading-tight">
               {title}
             </h1>
           )}

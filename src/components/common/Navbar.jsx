@@ -7,7 +7,6 @@ import InnerCircleModal from "../Modals/InnerCircleModal";
 function Navbar() {
   const [isExperiencesOpen, setIsExperiencesOpen] = useState(false);
   const [isCharityPartnersOpen, setIsCharityPartnersOpen] = useState(false);
-  const [isUpcomingModalOpen, setIsUpcomingModalOpen] = useState(false);
   const [isInnerCircleModalOpen, setIsInnerCircleModalOpen] = useState(false);
   const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,9 +28,7 @@ function Navbar() {
     },
     {
       label: "Upcoming",
-      href: "#",
-      isModal: true,
-      modalType: "upcoming",
+      href: "/upcoming",
       subtitle: "Plan + Go",
       key: "upcoming",
     },
@@ -169,9 +166,7 @@ function Navbar() {
 
   const handleModalClick = (modalType) => (e) => {
     e.preventDefault();
-    if (modalType === "upcoming") {
-      setIsUpcomingModalOpen(true);
-    } else if (modalType === "innerCircle") {
+    if (modalType === "innerCircle") {
       setIsInnerCircleModalOpen(true);
     }
     setIsMobileMenuOpen(false);
@@ -516,11 +511,6 @@ function Navbar() {
             </div>
           </div>
         </div>
-      )}
-
-      {/* Modals */}
-      {isUpcomingModalOpen && (
-        <EventModal setIsUpcomingModalOpen={setIsUpcomingModalOpen} />
       )}
 
       {isInnerCircleModalOpen && (
