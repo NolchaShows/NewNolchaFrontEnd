@@ -8,9 +8,9 @@ function Footer() {
       className="overflow-hidden px-16 py-16 bg-zinc-100 max-md:px-5"
       data-name="Footer"
     >
-      <div className="flex flex-wrap gap-[121px] 2xl:gap-[250px] items-start w-full">
+      <div className="flex gap-[121px] 2xl:gap-[250px] items-start w-full">
         <div
-          className="flex flex-col grow shrink justify-center p-8 bg-white rounded-lg min-w-60 w-full xl:max-w-[500px] 2xl:max-w-[900px] max-md:px-5"
+          className="flex flex-col shrink justify-center p-8 bg-white rounded-lg min-w-60 w-full md:w-1/3 max-md:px-5"
           data-name="Background"
         >
           <div className="w-full">
@@ -26,7 +26,7 @@ function Footer() {
               className="flex flex-col justify-center px-6 py-3 mt-10 w-full text-base rounded-lg bg-[#EBE2D7] max-md:px-5"
               data-name="Background"
             >
-              <div className="flex gap-10 justify-between items-center w-full">
+              <div className="flex gap-10 justify-between items-center">
                 <input
                   type="email"
                   placeholder="Enter your email address"
@@ -37,7 +37,7 @@ function Footer() {
                   data-name="Button"
                 >
                   <div
-                    className="self-stretch my-auto"
+                    className="my-auto"
                     data-name="Button label"
                   >
                     Send
@@ -48,7 +48,7 @@ function Footer() {
           </div>
         </div>
         {/* Mobile: Two column layout, Desktop: Original layout */}
-        <div className="flex flex-wrap items-start min-w-60">
+        <div className="flex flex-wrap items-start min-w-60 w-full md:w-2/3">
           {/* Mobile: Two column grid */}
           <div className="grid grid-cols-2 gap-x-8 gap-y-6 w-full md:hidden">
             <Link href="/upcoming" className="flex flex-col" data-name="Item → Button">
@@ -107,7 +107,7 @@ function Footer() {
           </div>
 
           {/* Desktop: Original layout */}
-          <div className="hidden md:flex md:flex-wrap md:items-start md:min-w-60 ">
+          <div className="hidden md:flex md:items-start md:min-w-60 ">
             <div className="flex flex-col items-start leading-none min-w-60 w-[296px] 2xl:w-[500px]">
               <Link href="/upcoming" className="" data-name="Item → Button">
                 <div className="flex gap-2 items-center w-full text-[18px] 2xl:text-[30px] font-bold text-neutral-900">
@@ -264,7 +264,7 @@ function Footer() {
                 className="self-stretch my-auto text-neutral-900  text-[20px] 2xl:text-[30px]"
                 data-name="cookies"
               >
-                Cookies
+                cookies
               </Link>
             </div>
           </div>
