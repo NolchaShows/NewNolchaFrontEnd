@@ -23,7 +23,6 @@ const Services = () => {
       title: "Strategy & Event Production",
       description:
         "We harness the latest in AR, VR, mixed reality, and interactive installations to turn ideas into next-level audience engagement.",
-      backgroundColor: "bg-[var(--primary-color)]",
       images: ["/home/services/1.png"],
       layout: "single",
     },
@@ -32,7 +31,6 @@ const Services = () => {
       title: "Creative & Immersive",
       description:
         "We harness the latest in AR, VR, mixed reality, and interactive installations to turn ideas into next-level audience engagement.",
-      backgroundColor: "bg-[var(--surface-color2)]",
       images: ["/home/services/2.png", "/home/services/3.png"],
       layout: "double",
     },
@@ -41,7 +39,6 @@ const Services = () => {
       title: "Sponsorship Sales and Partner",
       description:
         "We connect innovative brands with the world's most influential events - from blockchain summits",
-      backgroundColor: "bg-[var(--surface-color2)]",
       images: ["/home/services/4.png", "/home/services/5.png"],
       layout: "stacked",
     },
@@ -50,7 +47,6 @@ const Services = () => {
       title: "Experience Technology",
       description:
         "From large-scale projection mapping to fully immersive real-world environments, we bring ideas to life with",
-      backgroundColor: "bg-[var(--surface-color2)]",
       images: ["/home/services/6.png", "/home/services/7.png"],
       layout: "stacked",
     },
@@ -59,7 +55,6 @@ const Services = () => {
       title: "Sponsorship Sales and Partner",
       description:
         "We connect innovative brands with the world's most influential events — from blockchain summits and tech conferences",
-      backgroundColor: "bg-[var(--surface-color2)]",
       images: ["/home/services/8.png", "/home/services/9.png"],
       layout: "stacked",
     },
@@ -71,9 +66,7 @@ const Services = () => {
 
     return (
       <div
-        className={`${
-          service.backgroundColor
-        } rounded-2xl p-6 lg:p-8 flex flex-col ${
+        className={`bg-[#F4F4F4] hover:bg-[#E5ECD6] transition-colors duration-300 rounded-2xl p-6 lg:p-8 flex flex-col ${
           isFirstCard || isSecondCard ? "min-h-full" : ""
         }`}
       >
@@ -109,7 +102,7 @@ const Services = () => {
             {/* Description aligned with title */}
             <div className="ml-[67px] mb-8">
               <p className="text-base 2xl:text-2xl font-normal text-black">
-                {service.description} 
+                {service.description}
               </p>
             </div>
           </>

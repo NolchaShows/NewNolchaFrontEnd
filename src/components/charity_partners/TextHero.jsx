@@ -25,14 +25,14 @@ function TextHero({ images }) {
               aria-label="Previous image"
             >
               <img
-                src="/press/left.svg"
+                src="/left_dark.png"
                 alt="Previous"
                 className="h-[48px] w-[48px] md:h-[64px] md:w-[64px]"
               />
             </button>
           )}
 
-          <div className="flex-1 lg:max-w-[600px] 2xl:max-w-[1300px]">
+          <div className="flex-1 w-full lg:max-w-[600px] 2xl:max-w-[1300px]">
             <video
               key={currentIndex}
               src={currentImage?.video || "/api/placeholder/600/400"}
@@ -44,15 +44,25 @@ function TextHero({ images }) {
             />
           </div>
 
-          <div className="flex-1 w-full text-center mr-12 lg:text-left">
-            <div className="mb-6">
-              <img src={currentImage?.title} alt="Forbes" className="h-[119px] w-[337px] left-[878px]"/>
+          <div className="flex-1 w-full mr-12 lg:text-left">
+            <div className="mb-6 ml-16 mt-3 lg:mt-0 lg:ml-0 2xl:ml-10 relative">
+              {/* Quotation mark */}
+              <img
+                src="/home/quote.png"
+                alt="Quote"
+                className="absolute -left-[35px] bottom-[10px] w-[192px] h-[150px] 2xl:w-[200px] 2xl:h-[160px] z-0"
+              />
+
+              {/* Forbes logo */}
+              <img
+                src={currentImage?.title}
+                alt="Forbes"
+                className="relative h-[119px] w-[337px] z-10"
+              />
             </div>
 
-            <div className="text-gray-700 text-lg lg:text-xl 2xl:text-2xl leading-relaxed">
-              <p className="italic">
-                "{currentImage?.description || "Default description text"}"
-              </p>
+            <div className="text-gray-700 text-[20px] ml-4 lg:ml-0  lg:text-[20px] 2xl:text-[36px] font-semibold leading-relaxed">
+              {currentImage?.description || "Default description text"}
             </div>
           </div>
 
@@ -64,7 +74,7 @@ function TextHero({ images }) {
               aria-label="Next image"
             >
               <img
-                src="/press/right.svg"
+                src="/right_dark.png"
                 alt="Next"
                 className="h-[48px] w-[48px] md:h-[64px] md:w-[64px]"
               />
@@ -81,7 +91,7 @@ function TextHero({ images }) {
               className="cursor-pointer hover:opacity-80 transition-opacity"
             >
               <img
-                src="/press/left.svg"
+                src="/left_dark.png"
                 alt="Previous"
                 className="h-[40px] w-[40px] md:h-[48px] md:w-[48px]"
               />
@@ -92,7 +102,7 @@ function TextHero({ images }) {
               className="cursor-pointer hover:opacity-80 transition-opacity"
             >
               <img
-                src="/press/right.svg"
+                src="/right_dark.png"
                 alt="Next"
                 className="h-[40px] w-[40px] md:h-[48px] md:w-[48px]"
               />

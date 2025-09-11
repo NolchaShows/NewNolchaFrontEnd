@@ -45,7 +45,12 @@ export default function Home() {
     { name: "VOGUE", url: "/home/slider2.png" },
     { name: "Forbes", url: "/home/slider3.png" },
   ];
-  const videos = [];
+  const videos = [
+    "/home/artists/1.png",
+    "/home/artists/2.png",
+    "/home/artists/3.png",
+    "/home/artists/4.png",
+  ];
 
   const partners = [
     {
@@ -318,12 +323,16 @@ export default function Home() {
         <About
           title={"About Nolcha"}
           paragraphs={[
-            "Partnering with leading brands and global blockchain, AI, and crypto conferences, Nolcha has 15+ years of shaping culture, tech, and community through high-impact experiential events",
+            <>
+              Partnering with leading brands and global blockchain, AI, and
+              crypto conferences, Nolcha has{" "}
+              <span className="font-bold">15+ years</span> of shaping culture,
+              tech, and community through high-impact experiential events
+            </>,
           ]}
           link={"#"}
           linkText={"Learn More"}
           image={"/home/about.png"}
-          imageStyle={"max-w-[667px]"}
         />
       </div>
       <div className="bg-[var(--secondary-color)]">
@@ -360,7 +369,10 @@ export default function Home() {
           <ImageCarousel posts={posts} />
         </div>
         <div className="mt-10 mb-10">
-          <ContactForm bg={"/landing/background2.jpg"} heading={"LET'S TALK!"}/>
+          <ContactForm
+            bg={"/landing/background2.jpg"}
+            heading={"Lets Talk"}
+          />
         </div>
       </div>
     </div>

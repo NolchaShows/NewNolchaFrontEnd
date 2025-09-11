@@ -22,14 +22,14 @@ export default function Hero() {
 
       {/* Content Overlay */}
       <div className="relative z-10 flex items-center justify-center h-full px-6">
-        <div className="text-center text-white max-w-4xl">
+        <div className="text-center text-white max-w-5xl 2xl:max-w-7xl">
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
+          <h1 className="text-[32px] lg:text-[64px] 2xl:text-[80px] font-bold mb-8 leading-tight">
             Curated connections for leaders in AI, Web3 & Crypto.
           </h1>
           
           {/* Description */}
-          <p className="text-lg md:text-xl lg:text-2xl font-light opacity-90 leading-relaxed">
+          <p className="text-[16px] md:text-[24px] 2xl:text-3xl font-light opacity-90 leading-relaxed">
             We are the destination for innovation & culture for over 15 years.
           </p>
         </div>
