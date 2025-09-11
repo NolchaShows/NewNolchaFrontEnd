@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const NolchaExperience = () => {
-  const [expandedSection, setExpandedSection] = useState('connect'); // First section expanded by default
+  const [expandedSection, setExpandedSection] = useState('connect');
 
   const toggleSection = (section) => {
     setExpandedSection(expandedSection === section ? null : section);
