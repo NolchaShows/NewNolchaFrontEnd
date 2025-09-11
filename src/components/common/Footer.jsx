@@ -22,7 +22,7 @@ function Footer() {
           {/* Left section - Newsletter signup (1/3 width) */}
           <div className="w-3/7 pr-8 p-8 bg-white rounded-lg">
             <div className="w-full">
-              <div className="text-3xl font-bold leading-10 text-neutral-900">
+              <div className="text-[32px] 2xl:text-[44px] font-bold leading-10 text-neutral-900">
                 Subscribe
                 <br />
                 to our newsletter
@@ -34,7 +34,7 @@ function Footer() {
                     placeholder="Enter your email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 min-w-0 font-medium text-neutral-900 bg-transparent border-none outline-none focus:outline-none placeholder:text-neutral-600"
+                    className="flex-1 min-w-0 rounded-[10px] placeholder:text-[16px] 2xl:placeholder:text-[24px] font-medium text-neutral-900 bg-transparent border-none outline-none focus:outline-none placeholder:text-[#141414]"
                   />
                   <button
                     onClick={handleSubmit}
@@ -51,39 +51,102 @@ function Footer() {
           <div className="w-2/3 flex justify-between">
             <div className="flex flex-col space-y-8">
               <div>
-                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">BTC Vegas ▼</h3>
-                <p className="text-[14px] 2xl:text-[24px] text-[[#141414]]">Plan + Go</p>
-              </div>
-              <div>
-                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">Upcoming ▼</h3>
-                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">Plan + Go</p>
-              </div>
-              <div>
-                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">
-                  Charity Partners ▼
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">
+                  BTC Vegas
+                  <img
+                    src="/arrow.svg"
+                    alt="arrow"
+                    className="ml-2 w-[9.33px] h-[8px] opacity-100 rotate-0"
+                  />
                 </h3>
-                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">Plan + Go</p>
+                <p className="text-[14px] 2xl:text-[24px] text-[[#141414]]">
+                  Plan + Go
+                </p>
+              </div>
+              <div>
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">
+                  Upcoming
+                  <img
+                    src="/arrow.svg"
+                    alt="arrow"
+                    className="ml-2 w-[9.33px] h-[8px] opacity-100 rotate-0"
+                  />
+                </h3>
+
+                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">
+                  Plan + Go
+                </p>
+              </div>
+              <div>
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">
+                  Charity Partners
+                  <img
+                    src="/arrow.svg"
+                    alt="arrow"
+                    className="ml-2 w-[9.33px] h-[8px] opacity-100 rotate-0"
+                  />
+                </h3>
+
+                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">
+                  Plan + Go
+                </p>
               </div>
             </div>
 
             <div className="flex flex-col space-y-8">
               <div>
-                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">Artist ▼</h3>
-                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">Plan + Go</p>
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">
+                  Artist
+                  <img
+                    src="/arrow.svg"
+                    alt="arrow"
+                    className="ml-2 w-[9.33px] h-[8px] opacity-100 rotate-0"
+                  />
+                </h3>
+
+                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">
+                  Plan + Go
+                </p>
               </div>
               <div>
-                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">Press ▼</h3>
-                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">Plan + Go</p>
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">
+                  Press
+                  <img
+                    src="/arrow.svg"
+                    alt="arrow"
+                    className="ml-2 w-[9.33px] h-[8px] opacity-100 rotate-0"
+                  />
+                </h3>
+
+                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">
+                  Plan + Go
+                </p>
               </div>
               <div>
-                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">Designers ▼</h3>
-                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">Plan + Go</p>
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">
+                  Designers
+                  <img
+                    src="/arrow.svg"
+                    alt="arrow"
+                    className="ml-2 w-[9.33px] h-[8px] opacity-100 rotate-0"
+                  />
+                </h3>
+
+                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">
+                  Plan + Go
+                </p>
               </div>
             </div>
 
             <div className="flex flex-col space-y-4 border-l-1 px-4 2xl:px-10 border-[#D5D5D5]">
-              <Youtube className="w-8 2xl:w-16 h-8 2xl:h-16 text-[#141414]" />
-              <Linkedin className="w-8 2xl:w-16 h-8 2xl:h-16 text-[#141414]" />
+              <img
+                src="/footer/yt.svg"
+                className="w-12 2xl:w-20 h-12 2xl:h-20 text-[#141414]"
+              />
+              <img
+                src="/footer/linkedin.svg"
+                className="w-12 2xl:w-20 h-12 2xl:h-20 text-[#141414]"
+              />
             </div>
           </div>
         </div>
@@ -135,8 +198,11 @@ function Footer() {
                 <div className="font-medium text-[#141414]">Shop</div>
               </div>
               <div className="flex flex-col space-y-4 border-l-1 px-4 border-[#D5D5D5]">
-                <Youtube className="w-6 h-6 text-[#141414]" />
-                <Linkedin className="w-6 h-6 text-[#141414]" />
+                <img src="/footer/yt.svg" className="w-6 h-6 text-[#141414]" />
+                <img
+                  src="/footer/linkedin.svg"
+                  className="w-6 h-6 text-[#141414]"
+                />
               </div>
             </div>
           </div>
