@@ -1,215 +1,143 @@
 "use client";
-import * as React from "react";
 import Link from "next/link";
+import React, { useState } from "react";
+import { Youtube, Linkedin } from "lucide-react";
 
 function Footer() {
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = () => {
+    // Handle newsletter subscription
+    console.log("Newsletter subscription:", email);
+    setEmail("");
+  };
   return (
     <div
-      className="overflow-hidden px-16 py-16 bg-zinc-100 max-md:px-5"
+      className="overflow-hidden px-10 py-16 bg-zinc-100 max-md:px-5"
       data-name="Footer"
     >
-      <div className="flex gap-[121px] 2xl:gap-[250px] items-start w-full">
-        <div
-          className="flex flex-col shrink justify-center p-8 bg-white rounded-lg min-w-60 w-full md:w-1/3 max-md:px-5"
-          data-name="Background"
-        >
-          <div className="w-full">
-            <div
-              className="text-3xl font-bold leading-10 text-neutral-900"
-              data-name="Subscribe to our newsletter"
-            >
-              Subscribe
-              <br />
-              to our newsletter
-            </div>
-            <div
-              className="flex flex-col justify-center px-6 py-3 mt-10 w-full text-base rounded-lg bg-[#EBE2D7] max-md:px-5"
-              data-name="Background"
-            >
-              <div className="flex gap-10 justify-between items-center">
-                <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="self-stretch my-auto font-medium text-neutral-900 bg-transparent border-none outline-none focus:outline-none flex-1"
-                />
-                <button
-                  className="flex gap-2 justify-center items-center self-stretch px-6 py-3 my-auto leading-none text-black whitespace-nowrap bg-[#E7F0D3] rounded-xl border border-black border-solid max-md:px-5"
-                  data-name="Button"
-                >
-                  <div
-                    className="my-auto"
-                    data-name="Button label"
+      <div className="w-full bg-gray-100 p-8 sm:p-0">
+        {/* Large screen layout */}
+        <div className="hidden lg:flex w-full max-w-none gap-[70px] xl:gap-[100px] 2xl:gap-[150px] mx-auto">
+          {/* Left section - Newsletter signup (1/3 width) */}
+          <div className="w-3/7 pr-8 p-8 bg-white rounded-lg">
+            <div className="w-full">
+              <div className="text-3xl font-bold leading-10 text-neutral-900">
+                Subscribe
+                <br />
+                to our newsletter
+              </div>
+              <div className="flex justify-center items-center px-6 py-3 mt-10 xl:mt-20 2xl:mt-30 w-full text-base rounded-lg bg-[#EBE2D7]">
+                <div className="flex gap-3 justify-between items-center w-full">
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 min-w-0 font-medium text-neutral-900 bg-transparent border-none outline-none focus:outline-none placeholder:text-neutral-600"
+                  />
+                  <button
+                    onClick={handleSubmit}
+                    className="flex-shrink-0 px-4 py-2 leading-none text-black whitespace-nowrap bg-[#E7F0D3] rounded-xl border border-black border-solid hover:bg-[#dde7c7] transition-colors"
                   >
                     Send
-                  </div>
-                </button>
+                  </button>
+                </div>
               </div>
+            </div>
+          </div>
+
+          {/* Right section - Navigation links (2/3 width) */}
+          <div className="w-2/3 flex justify-between">
+            <div className="flex flex-col space-y-8">
+              <div>
+                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">BTC Vegas ▼</h3>
+                <p className="text-[14px] 2xl:text-[24px] text-[[#141414]]">Plan + Go</p>
+              </div>
+              <div>
+                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">Upcoming ▼</h3>
+                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">Plan + Go</p>
+              </div>
+              <div>
+                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">
+                  Charity Partners ▼
+                </h3>
+                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">Plan + Go</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col space-y-8">
+              <div>
+                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">Artist ▼</h3>
+                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">Plan + Go</p>
+              </div>
+              <div>
+                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">Press ▼</h3>
+                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">Plan + Go</p>
+              </div>
+              <div>
+                <h3 className="text-[18px] 2xl:text-[30px] font-bold text-[#141414] mb-2">Designers ▼</h3>
+                <p className="text-[14px] 2xl:text-[24px] text-[#141414]">Plan + Go</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col space-y-4 border-l-1 px-4 2xl:px-10 border-[#D5D5D5]">
+              <Youtube className="w-8 2xl:w-16 h-8 2xl:h-16 text-[#141414]" />
+              <Linkedin className="w-8 2xl:w-16 h-8 2xl:h-16 text-[#141414]" />
             </div>
           </div>
         </div>
-        {/* Mobile: Two column layout, Desktop: Original layout */}
-        <div className="flex flex-wrap items-start min-w-60 w-full md:w-2/3">
-          {/* Mobile: Two column grid */}
-          <div className="grid grid-cols-2 gap-x-8 gap-y-6 w-full md:hidden">
-            <Link href="/upcoming" className="flex flex-col" data-name="Item → Button">
-              <div className="flex gap-2 items-center text-[18px] font-bold text-neutral-900">
-                <div data-name="BTC Vegas">BTC Vegas ▾</div>
+
+        {/* Mobile/smaller screen layout */}
+        <div className="lg:hidden w-full mx-auto">
+          <div className="bg-white p-8 rounded-lg shadow-sm mb-8">
+            <div className="w-full">
+              <div className="text-3xl font-bold leading-10 text-neutral-900 text-center">
+                SUBSCRIBE
+                <br />
+                TO OUR NEWSLETTER
               </div>
-              <div className="text-sm text-neutral-900 mt-1 " data-name="Plan + Go">
-                Plan + Go
+              <div className="flex justify-center items-center px-6 py-3 mt-10 w-full text-base rounded-lg bg-[#EBE2D7]">
+                <div className="flex gap-3 justify-between items-center w-full">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 min-w-0 font-medium text-neutral-900 bg-transparent border-none outline-none focus:outline-none placeholder:text-neutral-600"
+                  />
+                  <button
+                    onClick={handleSubmit}
+                    className="flex-shrink-0 px-4 py-2 leading-none text-black whitespace-nowrap bg-[#E7F0D3] rounded-xl border border-black border-solid hover:bg-[#dde7c7] transition-colors"
+                  >
+                    Send
+                  </button>
+                </div>
               </div>
-            </Link>
-            
-            <Link href="/artists" className="flex flex-col" data-name="Item → Button">
-              <div className="flex gap-2 items-center  text-[18px] font-bold text-neutral-900">
-                <div data-name="BTC Vegas">Artist ▾</div>
-              </div>
-              <div className="text-sm text-neutral-900 mt-1 " data-name="Plan + Go">
-                Plan + Go
-              </div>
-            </Link>
-            
-            <Link href="/upcoming" className="flex flex-col" data-name="Item → Button">
-              <div className="flex gap-2 items-center text-[18px] font-bold text-neutral-900">
-                <div data-name="BTC Vegas">Upcoming ▾</div>
-              </div>
-              <div className="text-sm text-neutral-900 mt-1 " data-name="Plan + Go">
-                Plan + Go
-              </div>
-            </Link>
-            
-            <Link href="/press" className="flex flex-col" data-name="Item → Button">
-              <div className="flex gap-2 items-center  text-[18px] font-bold text-neutral-900">
-                <div data-name="BTC Vegas">Press ▾</div>
-              </div>
-              <div className="text-sm text-neutral-900 mt-1 " data-name="Plan + Go">
-                Plan + Go
-              </div>
-            </Link>
-            
-            <Link href="/charity_partners" className="flex flex-col" data-name="Item → Button">
-              <div className="flex gap-2 items-center text-[18px] font-bold text-neutral-900">
-                <div data-name="BTC Vegas">Charity Partners ▾</div>
-              </div>
-              <div className="text-sm text-neutral-900 mt-1 " data-name="Plan + Go">
-                Plan + Go
-              </div>
-            </Link>
-            
-            <Link href="/designers" className="flex flex-col" data-name="Item → Button">
-              <div className="flex gap-2 items-center  text-[18px] font-bold text-neutral-900">
-                <div data-name="BTC Vegas">Designers ▾</div>
-              </div>
-              <div className="text-sm text-neutral-900 mt-1 " data-name="Plan + Go">
-                Plan + Go
-              </div>
-            </Link>
+            </div>
           </div>
 
-          {/* Desktop: Original layout */}
-          <div className="hidden md:flex md:items-start md:min-w-60 ">
-            <div className="flex flex-col items-start leading-none min-w-60 w-[296px] 2xl:w-[500px]">
-              <Link href="/upcoming" className="" data-name="Item → Button">
-                <div className="flex gap-2 items-center w-full text-[18px] 2xl:text-[30px] font-bold text-neutral-900">
-                  <div className="self-stretch my-auto" data-name="BTC Vegas">
-                    BTC Vegas ▾
-                  </div>
+          {/* Mobile navigation grid */}
+          <div className="p-6 ">
+            <div className="grid grid-cols-3 gap-20">
+              <div className="space-y-4">
+                <div className="font-medium text-[#141414]">NolchaBTC</div>
+                <div className="font-medium text-[#141414]">
+                  Charity Partners
                 </div>
-                <div className="text-[14px] 2xl:text-[24px] mt-1 2xl:mt-2 text-neutral-900" data-name="Plan + Go">
-                  Plan + Go
-                </div>
-              </Link>
-              <Link
-                href="/upcoming"
-                className="mt-5"
-                data-name="Item → Button"
-              >
-                <div className="flex gap-2 items-center w-full text-[18px] 2xl:text-[30px] font-bold whitespace-nowrap text-neutral-900">
-                  <div className="self-stretch my-auto" data-name="BTC Vegas">
-                    Upcoming ▾
-                  </div>
-                </div>
-                <div className="text-[14px] 2xl:text-[24px] mt-1  2xl:mt-2 text-neutral-900" data-name="Plan + Go">
-                  Plan + Go
-                </div>
-              </Link>
-              <Link
-                href="/charity_partners"
-                className="mt-5"
-                data-name="Item → Button"
-              >
-                <div className="flex gap-2 items-center w-full text-[18px] 2xl:text-[30px] font-bold text-neutral-900">
-                  <div className="self-stretch my-auto" data-name="BTC Vegas">
-                    Charity Partners ▾
-                  </div>
-                </div>
-                <div className="text-[14px] 2xl:text-[24px] mt-1  2xl:mt-2 text-neutral-900" data-name="Plan + Go">
-                  Plan + Go
-                </div>
-              </Link>
-            </div>
-            <div className="flex flex-col items-start leading-none min-w-60 w-[296px] 2xl:w-[400px]">
-              <Link href="/artists" data-name="Item → Button">
-                <div className="flex gap-2 items-center w-full text-[18px] 2xl:text-[30px] font-bold whitespace-nowrap text-neutral-900">
-                  <div className="self-stretch my-auto" data-name="BTC Vegas">
-                    Artist ▾
-                  </div>
-                </div>
-                <div className="text-[14px] 2xl:text-[24px] mt-1  2xl:mt-2 text-neutral-900" data-name="Plan + Go">
-                  Plan + Go
-                </div>
-              </Link>
-              <Link href="/press" className="mt-5" data-name="Item → Button">
-                <div className="flex gap-2 items-center w-full text-[18px] 2xl:text-[30px] font-bold whitespace-nowrap text-neutral-900">
-                  <div className="self-stretch my-auto" data-name="BTC Vegas">
-                    Press ▾
-                  </div>
-                </div>
-                <div className="text-[14px] 2xl:text-[24px] mt-1  2xl:mt-2 text-neutral-900" data-name="Plan + Go">
-                  Plan + Go
-                </div>
-              </Link>
-              <Link
-                href="/designers"
-                className="mt-5"
-                data-name="Item → Button"
-              >
-                <div className="flex gap-2 items-center w-full text-[18px] 2xl:text-[30px] font-bold whitespace-nowrap text-neutral-900">
-                  <div className="self-stretch my-auto" data-name="BTC Vegas">
-                    Designers ▾
-                  </div>
-                </div>
-                <div className="text-[14px] 2xl:text-[24px] mt-1  2xl:mt-2 text-neutral-900" data-name="Plan + Go">
-                  Plan + Go
-                </div>
-              </Link>
-            </div>
-            <div
-              className="px-4 py-2 border-l border-solid 2xl:ml-100 border-l-neutral-300 w-[86px]"
-              data-name="VerticalBorder"
-            >
-              <a
-                href="#"
-                className="flex gap-2.5 items-center p-3.5 w-14 h-14 2xl:w-22 2xl:h-22 bg-white rounded-xl"
-                data-name="Background"
-              >
-                <img
-                  src="/footer/yt.svg"
-                  className="object-contain flex-1 shrink self-stretch my-auto w-7 aspect-square basis-0"
-                  alt="YouTube"
-                />
-              </a>
-              <a
-                href="#"
-                className="flex gap-2.5 items-center p-3.5 mt-2 2xl:mt-6 w-14 h-14 2xl:w-22 2xl:h-22 bg-white rounded-xl"
-                data-name="Background"
-              >
-                <img
-                  src="/footer/linkedin.svg"
-                  className="object-contain flex-1 shrink self-stretch my-auto w-7 aspect-square basis-0"
-                  alt="LinkedIn"
-                />
-              </a>
+                <div className="font-medium text-[#141414]">Experiences</div>
+                <div className="font-medium text-[#141414]">Artists</div>
+              </div>
+              <div className="space-y-4">
+                <div className="font-medium text-[#141414]">Press</div>
+                <div className="font-medium text-[#141414]">Gallery</div>
+                <div className="font-medium text-[#141414]">Contact us</div>
+                <div className="font-medium text-[#141414]">Shop</div>
+              </div>
+              <div className="flex flex-col space-y-4 border-l-1 px-4 border-[#D5D5D5]">
+                <Youtube className="w-6 h-6 text-[#141414]" />
+                <Linkedin className="w-6 h-6 text-[#141414]" />
+              </div>
             </div>
           </div>
         </div>
