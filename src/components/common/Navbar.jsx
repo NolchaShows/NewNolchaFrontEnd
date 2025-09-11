@@ -7,7 +7,6 @@ import InnerCircleModal from "../Modals/InnerCircleModal";
 function Navbar() {
   const [isExperiencesOpen, setIsExperiencesOpen] = useState(false);
   const [isCharityPartnersOpen, setIsCharityPartnersOpen] = useState(false);
-  const [isUpcomingModalOpen, setIsUpcomingModalOpen] = useState(false);
   const [isInnerCircleModalOpen, setIsInnerCircleModalOpen] = useState(false);
   const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,9 +28,7 @@ function Navbar() {
     },
     {
       label: "Upcoming",
-      href: "#",
-      isModal: true,
-      modalType: "upcoming",
+      href: "/upcoming",
       subtitle: "Plan + Go",
       key: "upcoming",
     },
@@ -169,9 +166,7 @@ function Navbar() {
 
   const handleModalClick = (modalType) => (e) => {
     e.preventDefault();
-    if (modalType === "upcoming") {
-      setIsUpcomingModalOpen(true);
-    } else if (modalType === "innerCircle") {
+    if (modalType === "innerCircle") {
       setIsInnerCircleModalOpen(true);
     }
     setIsMobileMenuOpen(false);
@@ -188,13 +183,13 @@ function Navbar() {
     if (item.isModal) {
       return (
         <div
-          className="text-center cursor-pointer hover:opacity-80 transition-opacity"
+          className="cursor-pointer hover:opacity-80 transition-opacity"
           onClick={handleModalClick(item.modalType)}
         >
-          <div className="font-bold text-black mb-1 2xl:text-2xl">
+          <div className="text-center font-bold text-[18px] text-black mb-1 2xl:text-2xl">
             {item.label} ▾
           </div>
-          <div className="text-xs text-gray-500 2xl:text-xl">
+          <div className="text-[14px] text-[#141414] 2xl:text-xl">
             {item.subtitle}
           </div>
         </div>
@@ -202,14 +197,14 @@ function Navbar() {
     } else if (item.hasDropdown) {
       return (
         <div
-          className="relative text-center cursor-pointer hover:opacity-80 transition-opacity"
+          className="relative cursor-pointer hover:opacity-80 transition-opacity"
           onMouseEnter={() => setDropdownState(item.dropdownType, true)}
           onMouseLeave={() => setDropdownState(item.dropdownType, false)}
         >
-          <div className="font-bold text-black mb-1 2xl:text-2xl">
+          <div className="text-center font-bold text-[18px] text-black mb-1 2xl:text-2xl">
             {item.label} ▾
           </div>
-          <div className="text-xs text-gray-500 2xl:text-xl">
+          <div className="text-[14px] text-[#141414] 2xl:text-xl">
             {item.subtitle}
           </div>
 
@@ -241,12 +236,12 @@ function Navbar() {
       return (
         <Link
           href={item.href}
-          className="text-center hover:opacity-80 transition-opacity"
+          className="hover:opacity-80 transition-opacity"
         >
-          <div className="font-bold text-black mb-1 2xl:text-2xl">
+          <div className="text-center font-bold text-[18px] text-black mb-1 2xl:text-2xl">
             {item.label} ▾
           </div>
-          <div className="text-xs text-gray-500 2xl:text-xl">
+          <div className="text-[14px] text-[#141414] 2xl:text-xl">
             {item.subtitle}
           </div>
         </Link>
@@ -412,7 +407,7 @@ function Navbar() {
                 <div className="font-bold text-black mb-1  2xl:text-2xl">
                   More
                 </div>
-                <div className="text-xs text-gray-500 2xl:text-xl">Options</div>
+                <div className="text-[14px] text-[#141414] 2xl:text-xl">Options</div>
 
                 {isMoreDropdownOpen && (
                   <div className="absolute top-full left-1/2 transform -translate-x-[70%] pt-2 z-50 w-64">
@@ -516,11 +511,6 @@ function Navbar() {
             </div>
           </div>
         </div>
-      )}
-
-      {/* Modals */}
-      {isUpcomingModalOpen && (
-        <EventModal setIsUpcomingModalOpen={setIsUpcomingModalOpen} />
       )}
 
       {isInnerCircleModalOpen && (

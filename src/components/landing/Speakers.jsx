@@ -118,7 +118,7 @@ function Speakers() {
           <h3 className="text-xl md:text-2xl font-bold 2xl:text-3xl text-black mb-4 uppercase tracking-wide">
             {detail.name}
           </h3>
-          <p className="text-black text-xs md:text-sm 2xl:text-xl leading-relaxed px-2">
+          <p className="text-black text-base md:text-lg 2xl:text-xl font-semibold leading-relaxed px-2">
             {detail.description}
           </p>
 
@@ -139,21 +139,11 @@ function Speakers() {
   };
 
   return (
-    <div className="max-w-none bg-[#EBE2D7] w-full mx-auto lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] overflow-hidden">
-      <div className="flex flex-col p-[10px] gap-[40px] max-w-[1440px] mx-auto">
+    <div className="max-w-none bg-[#EBE2D7] w-full mx-auto 2xl:py-[120px] 2xl:px-[60px] lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] overflow-hidden">
+      <div className="flex flex-col p-[10px] gap-[40px]">
         {/* Heading + arrows (desktop only) */}
         <div className="flex items-center justify-between">
-          <h1
-            className="
-    font-neue
-    font-[700] 
-    text-[52px] 
-    leading-[120%] 
-    tracking-[-3%] 
-    capitalize 
-    text-black
-  "
-          >
+          <h1 className="lg:text-[52px] 2xl:text-[64px] text-[40px] font-bold text-[#000000]">
             Featured Speakers
           </h1>
 

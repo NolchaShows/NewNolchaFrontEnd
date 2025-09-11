@@ -36,7 +36,7 @@ const EventModal = ({ setIsUpcomingModalOpen }) => {
                 </button>
 
                 <div className="p-8 overflow-y-auto overflow-x-hidden flex-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                    <div className='py-6'>
+                    <div className='py-10 md:py-6'>
                         <EventCard />
                     </div>
                     <MediaCarousel items={media} />

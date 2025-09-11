@@ -5,11 +5,10 @@ function RecentEvents() {
   const events = [
     {
       id: 1,
-      name: "Crypto Summit Dubai 2024",
+      name: "Bitcoin Nashville 2024",
       video:
         "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     },
-    { id: 2, name: "Blockchain Expo 2024", video: "/video.mp4" },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,29 +22,15 @@ function RecentEvents() {
   };
 
   return (
-    <div className="md:py-[64px] md:px-[40px] py-[20px] px-[16px] max-w-none w-full mx-auto flex flex-col md:gap-[40px] gap-[20px]">
-      <h1
-        className="
-    text-[52px] 
-    leading-[120%] 
-    tracking-[-0.03em] 
-    font-bold 
-    capitalize 
-    text-black 
-    text-center
-  "
-        style={{
-          fontFamily: "Neue Haas Grotesk Text Pro, sans-serif",
-          fontWeight: 700,
-        }}
-      >
+    <div className="py-[60px] md:py-[100px] 2xl:py-[140px] max-w-none w-full mx-auto flex flex-col gap-[30px] md:gap-[50px] 2xl:gap-[70px]">
+      <h1 className="text-[#000000] text-center text-[32px] md:text-[52px] 2xl:text-[64px] font-bold">
         Recent Events: {events[currentIndex].name}
       </h1>
 
       <motion.video
         key={events[currentIndex].id}
         src={events[currentIndex].video}
-        className="rounded-[17px] w-full lg:max-h-[726px] 2xl:max-h-[1000px] object-cover max-w-[1440px] mx-auto"
+        className="rounded-[17px] w-full object-cover"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
@@ -58,14 +43,14 @@ function RecentEvents() {
 
       <div className="flex gap-[15px] justify-center ">
         <motion.img
-          src="/landing/left.svg"
-          className="cursor-pointer 2xl:h-[70px] 2xl:w-[70px]"
+          src="left_dark.png"
+          className="cursor-pointer h-[36px] w-[36px] md:w-[48px] md:h-[48px] 2xl:h-[70px] 2xl:w-[70px]"
           whileTap={{ scale: 0.9 }}
           onClick={handlePrev}
         />
         <motion.img
-          src="/landing/right.svg"
-          className="cursor-pointer 2xl:h-[70px] 2xl:w-[70px]"
+          src="right_dark.png"
+          className="cursor-pointer h-[36px] w-[36px] md:h-[48px] md:w-[48px] 2xl:h-[70px] 2xl:w-[70px]"
           whileTap={{ scale: 0.9 }}
           onClick={handleNext}
         />

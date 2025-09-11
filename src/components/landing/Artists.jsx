@@ -7,20 +7,16 @@ function VideoGridZigZag({ videos }) {
     <div className="w-full flex justify-center">
       {/* Desktop grid (zig-zag pattern - all 4 videos in one row) */}
       {videos && videos.length > 0 ? (
-        <div className="hidden lg:flex lg:justify-center lg:gap-6 2xl:gap-12 lg:h-[600px] 2xl:h-[700px] lg:items-end">
+        <div className="hidden lg:flex lg:justify-center 2xl:gap-12 lg:h-[600px] 2xl:h-[900px] lg:items-end">
           {videos.map((src, i) => (
             <div
               key={i}
-              className={`flex ${i % 2 === 0 ? "items-start" : "items-end"}`}
-              style={{ height: "600px" }}
+              className={`flex ${i % 2 === 0 ? "items-start" : "items-end"} h-[600px] 2xl:h-[800px]`}
             >
-              <video
+              <img
                 src={src}
-                className="w-[250px] h-[450px] 2xl:w-[300px] 2xl:h-[520px] object-cover border-4 border-black rounded-[16px]"
-                autoPlay
-                muted
-                loop
-                playsInline
+                alt={`Gallery image ${i + 1}`}
+                className="w-[275px] h-[491px] 2xl:w-[450px] 2xl:h-[650px] object-covers rounded-[20px]"
               />
             </div>
           ))}
@@ -30,14 +26,14 @@ function VideoGridZigZag({ videos }) {
           {Array.from({ length: 4 }).map(
             (
               _,
-              i // show 3 empty cards
+              i // show 4 empty cards
             ) => (
               <div
                 key={i}
                 className={`flex ${i % 2 === 0 ? "items-start" : "items-end"}`}
                 style={{ height: "600px" }}
               >
-                <div className="w-[250px] h-[450px] 2xl:w-[390px] 2xl:h-[520px] border-6 2xl:border-8 border-black rounded-[16px] flex items-center justify-center text-gray-400  text-lg 2xl:text-xl">
+                <div className="w-[250px] h-[450px] 2xl:w-[400px] 2xl:h-[600px] border-6 2xl:border-8 border-black rounded-[16px] flex items-center justify-center text-gray-400 text-lg 2xl:text-xl bg-gray-100">
                   Empty
                 </div>
               </div>
@@ -49,42 +45,30 @@ function VideoGridZigZag({ videos }) {
       {/* Mobile + Tablet grid (2 columns zig-zag) */}
       <div className="flex justify-center gap-4 lg:hidden">
         {/* Left Column - Higher position */}
-        <div className="flex flex-col gap-6 ">
-          <video
+        <div className="flex flex-col gap-6">
+          <img
             src={videos[0]}
-            className="w-[200px] h-[280px] border-6 border-black  object-cover rounded-[12px] shadow-md"
-            autoPlay
-            muted
-            loop
-            playsInline
+            alt="Gallery image 1"
+            className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] rounded-[12px]"
           />
-          <video
+          <img
             src={videos[2]}
-            className="w-[200px] h-[280px] border-6 border-black  object-cover rounded-[12px] shadow-md"
-            autoPlay
-            muted
-            loop
-            playsInline
+            alt="Gallery image 3"
+            className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] rounded-[12px]"
           />
         </div>
 
         {/* Right Column - Lower position (with top margin for offset) */}
         <div className="flex flex-col gap-6 mt-15">
-          <video
+          <img
             src={videos[1]}
-            className="w-[200px] h-[280px] border-6 border-black  object-cover rounded-[12px] shadow-md"
-            autoPlay
-            muted
-            loop
-            playsInline
+            alt="Gallery image 2"
+            className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] rounded-[12px]"
           />
-          <video
+          <img
             src={videos[3]}
-            className="w-[200px] h-[280px] border-6 border-black  object-cover rounded-[12px] shadow-md"
-            autoPlay
-            muted
-            loop
-            playsInline
+            alt="Gallery image 4"
+            className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] rounded-[12px]"
           />
         </div>
       </div>
@@ -218,20 +202,19 @@ function Artists({ textColor, backgroundColor, isFade, videos, isSlider }) {
             <h1 className="font-neue text-[52px] font-bold 2xl:text-[80px] ">
               And + 500 Other Artists
             </h1>
-            <p className="text-lg 2xl:text-2xl">
+            <p className="font-medium text-[20px] 2xl:text-4xl">
               ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY COWART -
               LINDSAY <br /> KOKOSKA - NODEMONKES - KIRA BURSKY - VINCENT
               D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA <br /> ZOREF - ROB PRIOR -
               LAURENCE FULLER - JANEDAO - IZZY WEISSGERBER - GRETTA KRUESI -
               <br />
               JANEDAO -YIYANG LU - SKYE NICOLAS - AEFORIA - ARNO CARSTENS -
-              MOHSEN HAZRATI <br /> - RAGZY X - MUSKETON - TILLAVISION - MADE BY
-              OONA - STACIE
-              <br /> ANT - YOUNG & SICK
+              MOHSEN HAZRATI - <br /> RAGZY X - MUSKETON - TILLAVISION - MADE BY
+              OONA - STACIE ANT - YOUNG & SICK
             </p>
           </div>
         </div>
-        {videos.length === 0 ? (
+        {videos.length === 4 ? (
           <VideoGridZigZag videos={videos} />
         ) : (
           <VideoGrid videos={videos} />

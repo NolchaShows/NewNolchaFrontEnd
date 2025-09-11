@@ -3,98 +3,56 @@ import React from "react";
 
 function About({ title, paragraphs = [], image, link, linkText, imageStyle }) {
   return (
-    <div
-      className="
-  font-neue 
-  py-[20px] px-[16px] sm:py-[40px] sm:px-[24px] md:py-[60px] md:px-[35px] 
-  lg:py-[75px] lg:px-[45px] xl:py-[80px] xl:px-[50px] 2xl:py-[100px] 2xl:px-[60px] 
-  flex md:flex-row flex-col gap-[20px] sm:gap-[30px] md:gap-[40px] lg:gap-[50px] xl:gap-[120px] 2xl:gap-[160px] 
-  md:justify-between md:items-center w-full max-w-[1440px] mx-auto
-"
-    >
-      {/* Text Section */}
-      <div
-        className="flex flex-col gap-[32px] sm:gap-[36px] md:gap-[40px] lg:gap-[48px] xl:gap-[32px] 2xl:gap-[64px] 
-  text-[#000000] mt-8 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-20 2xl:mt-30 flex-1 md:max-w-[50%]"
-      >
-        {/* Title */}
-        {title && (
-          <h1
-            className="
-        font-bold 
-        text-[52px] 
-        leading-[120%] 
-        tracking-[-0.03em] 
-        capitalize 
-        text-black
-      "
-            style={{ fontFamily: "Neue Haas Grotesk Text Pro, sans-serif" }}
-          >
-            {title}
-          </h1>
-        )}
-
-        {/* Paragraphs */}
-        <div className="flex flex-col gap-[16px]">
-          {paragraphs.map((text, i) => (
-            <p
-              key={i}
-              className="text-[20px] leading-[150%] tracking-[-0.03em] text-black font-normal"
-              style={{ fontFamily: "Neue Haas Grotesk Text Pro, sans-serif" }}
-            >
-              {text}
-            </p>
-          ))}
-        </div>
-
-        {/* Desktop Button */}
-        {link && (
-          <Link
-            href={link}
-            className="
-        hidden md:flex items-center justify-center
-        w-[136px] h-[44px]
-        rounded-[10px]
-        border border-[#B5BF9E]
-        bg-[#E7F0D3]
-        gap-[8px]
-        pt-[3px] pr-[6px] pb-[3px] pl-[6px]
-        text-[16px] leading-[126%] tracking-[0]
-        text-black
-        opacity-100
-        hover:opacity-90 transition-opacity
-        align-middle
-      "
-            style={{
-              fontFamily: "Neue Haas Grotesk Text Pro, sans-serif",
-              fontWeight: 600,
-            }}
-          >
-            {linkText}
-          </Link>
-        )}
-      </div>
-
+    <div className="font-neue py-[20px] px-[16px] sm:py-[40px] sm:px-[24px] md:py-[60px] md:px-[35px] lg:py-[75px] lg:px-[45px] xl:py-[80px] xl:px-[50px] 2xl:py-[100px] 2xl:px-[60px] w-full max-w-none mx-auto flex md:flex-row flex-col gap-[23px] md:gap-[32px] 2xl:gap-[45px] md:justify-between md:items-center">
       {/* Image */}
       {image && (
-        <div className="flex-shrink-0 lg:flex-1 mx-auto lg:mx-0">
+        <div className="flex-shrink-0 w-full md:w-[50%] xl:flex-1 mx-auto 2xl:ml-40 xl:mx-0 md:order-2">
           <img
             src={image}
-            className={`${imageStyle} w-[658px] h-[579px] rounded-[16px] object-cover opacity-100`}
+            className={`max-w-[667px] 2xl:max-w-none w-full rounded-[8px] sm:rounded-[10px] md:rounded-[12px] lg:rounded-[14px] xl:rounded-[16px] 2xl:rounded-[20px] object-cover h-[400px] sm:h-[350px] md:h-[400px] lg:h-[500px] xl:h-[600px] 2xl:h-[1000px]`}
             alt="About section"
           />
         </div>
       )}
 
-      {/* Mobile Button */}
-      {link && (
-        <Link
-          href={link}
-          className="bg-[var(--primary-color)] text-center border-1 border-[#000000] py-[12px] px-[24px] rounded-[4px] w-full md:hidden hover:opacity-90 transition-opacity text-[14px] sm:text-[16px]"
+      {/* Text Section */}
+      <div className="flex flex-col gap-[24px] sm:gap-[28px] md:gap-[32px] lg:gap-[40px] xl:gap-[48px] 2xl:gap-[64px] text-[#000000] mt-8 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-20 2xl:mt-30 flex-1 md:max-w-[50%] md:order-1">
+        <div className="flex flex-col gap-[16px] sm:gap-[18px] md:gap-[20px] lg:gap-[28px] xl:gap-[36px] 2xl:gap-[48px]">
+          {title && (
+            <h1 className="text-[26px] sm:text-[26px] md:text-[32px] lg:text-[36px] xl:text-[52px] 2xl:text-[66px] font-bold">
+              {title}
+            </h1>
+          )}
+
+          {/* Paragraphs */}
+          <div className="flex flex-col gap-[12px] sm:gap-[8px] md:gap-[4px] lg:gap-[8px] xl:gap-[16px] 2xl:gap-[20px] md:mr-10">
+            {paragraphs.map((text, i) => (
+              <p
+                key={i}
+                className="text-[16px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[36px] leading-[1.5] sm:leading-[1.55] md:leading-[1.6] lg:leading-[1.65] xl:leading-[1.7]"
+              >
+                {text}
+              </p>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop Button */}
+        <button
+          // href={link}
+          className="bg-[#E7F0D3] w-[136px] h-[44px] 2xl:w-[180px] 2xl:h-[70px] border-1 border-[#B5BF9E] font-medium rounded-[10px] hidden md:block hover:opacity-90 transition-opacity text-[16px] 2xl:text-[24px] py-[3px] px-[6px] 2xl:py-[8px] 2xl:px-[16px]"
         >
           {linkText}
-        </Link>
-      )}
+        </button>
+      </div>
+
+      {/* Mobile Button */}
+      <button
+        href={link}
+        className="bg-[#E7F0D3] w-[123px] font-medium text-center border-1 border-[#B5BF9E] py-[12px] px-[6px] rounded-[10px] md:hidden hover:opacity-90 transition-opacity text-[14px]"
+      >
+        {linkText}
+      </button>
     </div>
   );
 }

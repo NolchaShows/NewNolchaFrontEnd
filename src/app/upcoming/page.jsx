@@ -1,14 +1,8 @@
-"use client";
+import Partners from "@/components/home/Partners";
+import UpcomingEvents from "@/components/home/UpcomingEvents";
 import React from "react";
-import Hero from "../press/Hero";
-import ArtistGallery from "../designers/ArtistsGallery";
-import DynamicGallery from "../designers/DynamicGallery";
-import PressMediaRecognition from "../designers/PressMediaRecognition";
-import Companies from "./Companies";
-import Artists from "../landing/Artists";
-import Partners from "../home/Partners";
 
-const Designer = () => {
+const Page = () => {
   const press = [
     {
       id: 1,
@@ -130,62 +124,19 @@ const Designer = () => {
       backgroundColor: "bg-black",
     },
   ];
-  const imagesGallery = [
-    { image: "/designers/6.png", text: "YUE MINJUN" },
-    { image: "/designers/7.png", text: "YUE MINJUN" },
-    { image: "/designers/8.png", text: "YUE MINJUN" },
-    { image: "/designers/9.png", text: "YUE MINJUN" },
-    { image: "/designers/10.png", text: "YUE MINJUN" },
-    { image: "/designers/11.png", text: "YUE MINJUN" },
-    { image: "/designers/12.png", text: "YUE MINJUN" },
-    { image: "/designers/13.png", text: "YUE MINJUN" },
-    { image: "/designers/14.png", text: "YUE MINJUN" },
-    { image: "/designers/15.png", text: "YUE MINJUN" },
-    { image: "/designers/16.png", text: "YUE MINJUN" },
-    { image: "/designers/17.png", text: "YUE MINJUN" },
-  ];
-  const companies = [
-    { name: "Coca Cola", logo: "/landing/coca-cola.svg" },
-    { name: "BNB", logo: "/landing/bnb.svg" },
-    { name: "Stacks", logo: "/landing/stacks.svg" },
-    { name: "Trust", logo: "/landing/trust.svg" },
-    { name: "Alchemy", logo: "/landing/alchemy.svg" },
-  ];
-  const videos = [];
-
   return (
     <div>
-      <div className="py-8 px-4 ml-5">
-        <h1 className="text-[48px] 2xl:text-[64px] font-bold text-[#000000] mb-2">
-          Designers
-        </h1>
-        <p className="text-[#000000] text-sm md:text-xl 2xl:text-2xl ">
-          Fashion Runway
-        </p>
+      <UpcomingEvents />
+      <div className="mt-5">
+        <Partners
+          title={"Press and Media Recognition"}
+          partners={press}
+          bg={"bg-[#F4F4F4]"}
+        />
       </div>
-      <img src="/designers/1.png" className="w-full" alt="Designer Image" />
-      <Artists
-        textColor={"text-[var(--tertiary-text-color)]"}
-        videos={videos}
-      />
-      {/* <ArtistGallery /> */}
-      <DynamicGallery imagesGallery={imagesGallery} />
-      <Partners
-        title={"Press and Media Recognition"}
-        partners={press}
-        bg={"bg-[#F4F4F4]"}
-      />
-      {/* <div className="bg-[#F4F4F4] mt-5">
-        <Companies companies={companies} title={"Press & Media Recognition"} />
-      </div> */}
-
-      {/* <img
-        src={"/designers/18.png"}
-        alt={`Designers`}
-        className="mt-10 mb-10 w-full object-contain"
-      /> */}
+      <img src="/landing/background.png" className="mx-auto w-full" />
     </div>
   );
 };
 
-export default Designer;
+export default Page;
