@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import "./flip-card.css"; // Import the CSS file
 
 function Speakers() {
   const images = [
@@ -45,7 +46,6 @@ function Speakers() {
   ];
 
   const [index, setIndex] = useState(0);
-  const [hoveredCard, setHoveredCard] = useState(null);
   const scrollContainerRef = useRef(null);
 
   const handlePrev = () => {
@@ -85,53 +85,53 @@ function Speakers() {
   };
 
   const SpeakerCard = ({ src, detail, cardIndex, className }) => {
-    const isHovered = hoveredCard === cardIndex;
-
     return (
-      <div
-        className={`relative cursor-pointer ${className}`}
-        onMouseEnter={() => setHoveredCard(cardIndex)}
-        onMouseLeave={() => setHoveredCard(null)}
-      >
-        {/* Front of card - Image */}
-        <div
-          className={`inset-0 w-full h-full transition-opacity duration-300 ${
-            isHovered ? "opacity-0" : "opacity-100"
-          }`}
-        >
-          <img
-            src={src}
-            className="w-full h-full rounded-[8px] object-cover"
-            alt={detail.name}
-          />
-        </div>
+      <div className={`${className} h-[500px] 2xl:h-[700px]`}>
+        {/* 3D Flip Container */}
+        <div className="square-flip w-full h-full">
+          {/* Front of card - Image */}
+          <div className="square rounded-[8px]">
+            <div className="align-center">
+              <img
+                src={src}
+                className="w-full h-full object-cover rounded-[8px]"
+                alt={detail.name}
+              />
+            </div>
+            {/* Removed flip-overlay to fix dark issue */}
+          </div>
 
-        {/* Back of card - Details */}
-        <div
-          className={`absolute inset-0 w-full h-full rounded-[8px] p-6 flex flex-col justify-start items-start text-left transition-opacity duration-300 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          }`}
-          style={{
-            background: "linear-gradient(135deg, #7FFFD4 0%, #40E0D0 100%)",
-          }}
-        >
-          <h3 className="text-xl md:text-2xl font-bold 2xl:text-3xl text-black mb-4 uppercase tracking-wide">
-            {detail.name}
-          </h3>
-          <p className="text-black text-base md:text-lg 2xl:text-xl font-semibold leading-relaxed px-2">
-            {detail.description}
-          </p>
+          {/* Back of card - Details */}
+          <div
+            className="square2 rounded-[8px] relative"
+            style={{
+              background: "linear-gradient(135deg, #7FFFD4 0%, #40E0D0 100%)",
+            }}
+          >
+            {/* Fixed container positioning and layout */}
+            <div className="absolute inset-0 p-6 flex flex-col justify-between">
+              {/* Top content */}
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold 2xl:text-3xl text-black mb-4 uppercase tracking-wide">
+                  {detail.name}
+                </h3>
+                <p className="text-black text-base md:text-lg 2xl:text-xl font-semibold leading-relaxed">
+                  {detail.description}
+                </p>
+              </div>
 
-          {/* X/Twitter icon at bottom */}
-          <div className="absolute bottom-4 left-4 flex gap-2">
-            <svg
-              className="w-6 h-6 text-black"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-            {detail.name}
+              {/* Bottom content - Twitter info */}
+              <div className="flex items-center gap-2 mt-auto">
+                <svg
+                  className="w-6 h-6 text-black"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+                <span className="text-black font-medium">{detail.name}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -175,7 +175,7 @@ function Speakers() {
               src={src}
               detail={details[i]}
               cardIndex={`mobile-${i}`}
-              className="md:max-w-[400px] max-w-[358px] object-cover flex-shrink-0"
+              className="md:w-[400px] [358px] flex-shrink-0"
             />
           ))}
         </div>
@@ -209,7 +209,7 @@ function Speakers() {
                 src={src}
                 detail={details[i]}
                 cardIndex={`desktop-${i}`}
-                className="max-w-[400px] 2xl:max-w-[580px] flex-shrink-0 object-cover"
+                className="w-[400px] 2xl:w-[580px] flex-shrink-0"
               />
             ))}
           </motion.div>
