@@ -1,0 +1,150 @@
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+
+const useScreenSize = () => {
+  const [screenSize, setScreenSize] = useState("lg");
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      if (window.innerWidth < 640) {
+        setScreenSize("sm");
+      } else if (window.innerWidth < 1024) {
+        setScreenSize("md");
+      } else {
+        setScreenSize("lg");
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  return screenSize;
+};
+
+const ImageCarousel = ({
+  posts,
+  carousalData,
+  padding = "px-4 md:px-8 mb-6",
+  title = "Trusted by",
+}) => {
+  const [currentPostIndex, setCurrentPostIndex] = useState(0);
+  const screenSize = useScreenSize();
+
+  // Use dynamic data from Strapi if available, otherwise fallback to posts prop
+  const carouselTitle = carousalData?.title || title;
+  const carouselItems = carousalData?.carousal_item || posts || [];
+
+  console.log('ImageCarousel - carousalData:', carousalData);
+  console.log('ImageCarousel - carouselItems:', carouselItems);
+
+  const getPostsPerSlide = () => {
+    switch (screenSize) {
+      case "sm":
+        return 1;
+      case "md":
+        return 2;
+      case "lg":
+        return 3;
+      default:
+        return 3;
+    }
+  };
+
+  const postsPerSlide = getPostsPerSlide();
+
+  const nextPost = () => {
+    if (currentPostIndex + postsPerSlide < carouselItems.length) {
+      setCurrentPostIndex((prev) => prev + postsPerSlide);
+    }
+  };
+
+  const prevPost = () => {
+    if (currentPostIndex - postsPerSlide >= 0) {
+      setCurrentPostIndex((prev) => prev - postsPerSlide);
+    }
+  };
+
+  // If no data available, don't render the component
+  if (!carouselItems || carouselItems.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className={`overflow-hidden ${padding}`}>
+      <div className="flex items-center justify-between mb-6">
+        <h2
+          className="
+            text-[32px] md:text-[52px] 2xl:text-[60px]
+            font-bold
+            leading-[120%]
+            tracking-[-0.03em]
+            uppercase
+            text-black
+          "
+        >
+          {carouselTitle}
+        </h2>
+
+        <div className="flex mt-6 gap-[12px] md:gap-[16px] 2xl:gap-[22px]">
+          <button
+            onClick={prevPost}
+            disabled={currentPostIndex === 0}
+            aria-label="Previous post"
+          >
+            <motion.img
+              src="/left_dark.png"
+              className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+              whileTap={{ scale: 0.9 }}
+            />
+          </button>
+          <button
+            onClick={nextPost}
+            disabled={currentPostIndex + postsPerSlide >= carouselItems.length}
+            aria-label="Next post"
+          >
+            <motion.img
+              src="/right_dark.png"
+              className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+              whileTap={{ scale: 0.9 }}
+            />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative overflow-hidden">
+        <div
+          className="flex transition-transform duration-500"
+          style={{
+            transform: `translateX(-${
+              (currentPostIndex / postsPerSlide) * 100
+            }%)`,
+          }}
+        >
+          {carouselItems.map((item, idx) => {
+            // Handle both legacy posts array and new Strapi carousel items
+            const imageUrl = typeof item === 'string' ? item : 
+                            item.image?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${item.image.url}` : item;
+            const altText = item.alt_text || `Post ${idx + 1}`;
+            
+            return (
+              <div
+                key={idx}
+                className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 p-2"
+              >
+                <img
+                  src={imageUrl}
+                  alt={altText}
+                  className="w-full h-auto object-cover border-1 border-gray-100 rounded-lg shadow-md"
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ImageCarousel;

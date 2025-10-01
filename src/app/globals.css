@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* globals.css */
+:root {
+  --surface-color: #E2E2E2;
+  --surface-color2:#F4F4F4;
+  --primary-color:#E7F0D3;
+  --secondary-color:#EBE2D7;
+  --tertiary-color:#FFFFFF;
+  --primary-text-color:#003233;
+  --secondary-text-color:#141414;
+  --tertiary-text-color:#909090;
+  --brown2:#EBE2D7;
+}
+/* In your global.css or index.css */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  font-family: 'Tomorrow', sans-serif !important;
+}
+
+body {
+  font-family: 'Tomorrow', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, span, div, a, button, input, textarea, select {
+  font-family: 'Tomorrow', sans-serif !important;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-marquee {
+  display: inline-flex;
+  animation: marquee 15s linear infinite;
+}
+
+/* Featured Speakers Navigation Button Styles */
+.slider-navigation-button {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  padding: 14px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #E7F0D3;
+  position: relative;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow:
+    0 0.8px 32px 0 rgba(227, 222, 255, 0.05) inset,
+    0 3.19px 14.37px 0 rgba(154, 146, 210, 0.05) inset,
+    0 78.26px 78.26px -38.33px rgba(202, 172, 255, 0.05) inset,
+    0 -65.48px 54.3px -51.11px rgba(96, 68, 144, 0.05) inset,
+    0 5.59px 8.78px -3.25px rgba(255, 255, 255, 0.07) inset,
+    0 32px 40px -2px rgba(255, 255, 255, 0.02) inset,
+    0 0.5px 10px -6px rgba(0, 0, 0, 0.10),
+    0 9px 26px -5px rgba(0, 0, 0, 0.20);
+  backdrop-filter: blur(4px);
+}
+
+.slider-navigation-button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0.8px 32px 0 rgba(227, 222, 255, 0.05) inset,
+    0 3.19px 14.37px 0 rgba(154, 146, 210, 0.05) inset,
+    0 78.26px 78.26px -38.33px rgba(202, 172, 255, 0.05) inset,
+    0 -65.48px 54.3px -51.11px rgba(96, 68, 144, 0.05) inset,
+    0 5.59px 8.78px -3.25px rgba(255, 255, 255, 0.07) inset,
+    0 32px 40px -2px rgba(255, 255, 255, 0.02) inset,
+    0 2px 15px -6px rgba(0, 0, 0, 0.15),
+    0 12px 30px -5px rgba(0, 0, 0, 0.25);
+}
+
+.slider-navigation-button:active {
+  transform: translateY(0);
+}
+
+/* Speaker Image Container */
+.speaker-image-container {
+  position: relative;
+  flex-shrink: 0;
+}
+

@@ -1,0 +1,288 @@
+:root {
+  --primary-text-color: #003233;
+  --tertiary-color: #FFF;
+  --primary-color: #E7F0D3;
+  --secondary-text-color: #141414;
+}
+
+.welcome-container {
+  position: relative;
+  width: 1017px;
+  height: 864px;
+  border-radius: 24px;
+  background: #F4F4F4;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Header Section */
+.header-section {
+  display: flex;
+  width: 100%;
+  padding: 53px 0 54px 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  background: var(--primary-color);
+  height: 202px;
+  position: relative;
+}
+
+.nolcha-logo {
+  width: 175px;
+  height: 46px;
+  aspect-ratio: 174.67/46.00;
+}
+
+.welcome-title {
+  color: var(--primary-text-color);
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  width: 291px;
+  height: 25px;
+}
+
+/* Main Content */
+.main-content {
+  display: flex;
+  width: 600px;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  position: absolute;
+  left: 208px;
+  top: 244px;
+  height: 172px;
+}
+
+.greeting-text {
+  align-self: stretch;
+  color: #000;
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.user-name {
+  font-weight: 700;
+}
+
+.welcome-description {
+  align-self: stretch;
+  color: #000;
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.highlight {
+  font-weight: 700;
+}
+
+/* Info Card */
+.info-card {
+  display: flex;
+  width: 484px;
+  padding: 24px 31px;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  border-radius: 20px;
+  border: 12px solid #EBE2D7;
+  background: var(--tertiary-color);
+  position: absolute;
+  left: 279px;
+  top: 478px;
+  height: 338px;
+  z-index: 10;
+}
+
+.card-title {
+  align-self: stretch;
+  color: var(--primary-text-color);
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.benefits-list {
+  align-self: stretch;
+  color: #000;
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.benefit-item {
+  margin-bottom: 8px;
+}
+
+.benefit-highlight {
+  font-weight: 700;
+}
+
+.ready-text {
+  color: #000;
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.membership-button {
+  display: flex;
+  padding: 12px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 4px;
+  background: var(--primary-color);
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+  font-family: 'Plus Jakarta Sans', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: normal;
+  transition: opacity 0.2s ease;
+}
+
+.membership-button:hover {
+  opacity: 0.9;
+}
+
+/* Background Gallery */
+.background-gallery {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5.65px;
+  filter: blur(3px);
+  position: absolute;
+  left: 0;
+  top: 538px;
+  height: 565px;
+  overflow: hidden;
+}
+
+.gallery-container {
+  display: flex;
+  height: 565px;
+  max-height: 565px;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 0;
+  position: relative;
+}
+
+.gallery-grid {
+  width: 1476px;
+  height: 1300px;
+  transform: rotate(25deg);
+  position: absolute;
+  left: -435px;
+  top: -618px;
+  display: grid;
+  grid-template-columns: repeat(6, 266px);
+  grid-template-rows: repeat(8, 211px);
+  gap: 8px;
+}
+
+.gallery-image {
+  width: 266px;
+  height: 211px;
+  border-radius: 4.237px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .welcome-container {
+    width: 100%;
+    max-width: 1017px;
+    height: auto;
+    min-height: 864px;
+  }
+  
+  .main-content {
+    width: 90%;
+    left: 5%;
+  }
+  
+  .info-card {
+    width: 90%;
+    max-width: 484px;
+    left: 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-section {
+    padding: 30px 20px;
+  }
+  
+  .welcome-title {
+    font-size: 18px;
+    width: auto;
+  }
+  
+  .nolcha-logo {
+    width: 140px;
+    height: 37px;
+  }
+  
+  .main-content {
+    top: 220px;
+    gap: 24px;
+    padding: 0 20px;
+  }
+  
+  .greeting-text {
+    font-size: 18px;
+  }
+  
+  .welcome-description {
+    font-size: 16px;
+  }
+  
+  .info-card {
+    top: 420px;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  .card-title {
+    font-size: 18px;
+  }
+  
+  .benefits-list {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  
+  .ready-text {
+    font-size: 16px;
+  }
+  
+  .membership-button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
