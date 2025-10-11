@@ -15,7 +15,7 @@ const VenueSection = ({
       <div className="flex flex-col lg:flex-row gap-[30px] md:gap-[40px] lg:gap-[60px]" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="flex-1">
           <div className="pl-12">
-            <h1 className="text-[#000000] text-[40px] md:text-[56px] lg:text-[72px] 2xl:text-[80px] font-bold mt-[120px]">
+            <h1 className="text-[#0000] text-[40px] md:text-[56px] lg:text-[72px] 2xl:text-[80px] font-bold mt-[120px]">
               {heading}
             </h1>
 
