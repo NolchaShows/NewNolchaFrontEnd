@@ -17,7 +17,7 @@ export default function LogoSlider({ logoSliderData, loading }) {
     
     // Ensure we use the full Strapi URL if it's a relative path
     if (imageUrl && !imageUrl.startsWith('http')) {
-      const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+      const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:3000';
       imageUrl = `${strapiUrl}${imageUrl}`;
     }
     
