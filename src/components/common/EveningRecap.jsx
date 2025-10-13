@@ -3,7 +3,7 @@ import StyledHeading from './StyledHeading';
 
 const EveningRecap = ({ year, title, videoUrl }) => {
     return (
-        <div className="py-[52px] lg:py-[150px] lg:px-[40px] max-w-none w-full mx-auto">
+        <div className="py-[52px] lg:py-[150px] max-w-none w-full mx-auto">
             {year && title && (
                 <StyledHeading
                     firstPart={year}
