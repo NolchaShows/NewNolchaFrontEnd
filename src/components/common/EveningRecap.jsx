@@ -3,7 +3,7 @@ import StyledHeading from './StyledHeading';
 
 const EveningRecap = ({ year, title, videoUrl }) => {
     return (
-        <div className="py-[40px] md:py-[60px] lg:py-[80px] px-[16px] md:px-[40px] max-w-none w-full mx-auto">
+        <div className="py-[52px] lg:py-[150px] lg:px-[40px] max-w-none w-full mx-auto">
             {year && title && (
                 <StyledHeading
                     firstPart={year}
@@ -16,7 +16,7 @@ const EveningRecap = ({ year, title, videoUrl }) => {
             )}
             <video
                 src={videoUrl}
-                className="rounded-[12px] w-full max-h-[700px] 2xl:max-h-[900px] object-cover"
+                className="w-full max-h-[700px] 2xl:max-h-[900px] object-cover"
                 controls
                 playsInline
             >
