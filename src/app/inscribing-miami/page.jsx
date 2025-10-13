@@ -212,7 +212,7 @@ const inscribingMiamiData = {
   venue: {
     heading: "The Venue",
     description: "Built in 1934, this iconic Miami Beach theatre fuses timeless architecture with state-of-the-art tech capabilities, creating the perfect environment for immersive brand storytelling and immersive activations.",
-    decorativeImage: "/inscribing_miami/venue_decorative.png",
+    decorativeImage: "/inscribing_miami/venue_decorative_full.png",
     venueImages: [
       "/inscribing_miami/venue_1.png",
       "/inscribing_miami/venue_2.png"
