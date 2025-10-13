@@ -344,9 +344,9 @@ const Page = () => {
   return (
     <div className="w-full bg-white">
       {mainImage ? (
-        <img src={mainImage} alt={mainHeading} className="w-full h-[308px] object-cover" />
+        <img src={mainImage} alt={mainHeading} className="w-full h-[153px] md:h-[308px] object-cover lg:mb-[50px] bg-white" />
       ) : (
-        <img src={"/landing/hero.jpg"} alt="Inscribing Miami" className="w-full h-[308px] object-cover" />
+        <img src={"/landing/hero.jpg"} alt="Inscribing Miami" className="w-full h-[153px] md:h-[308px] object-cover lg:mb-[50px] bg-white" />
       )}
       
       <EventHero 

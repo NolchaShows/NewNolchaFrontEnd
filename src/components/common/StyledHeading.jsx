@@ -9,7 +9,7 @@ const StyledHeading = ({
   className = ''
 }) => {
   return (
-    <h1 className={`text-[32px] md:text-[48px] lg:text-[64px] 2xl:text-[90px] lg:leading-20 font-bold ${className}`}>
+    <h1 className={`text-[50px] lg:text-[90px] leading-[57px] lg:leading-[108px] tracking-[-1.5px] lg:tracking-[-2.7px] font-bold ${className}`}>
       <span style={{ color: textColor }}>
         {firstPart}
       </span>{" "}
