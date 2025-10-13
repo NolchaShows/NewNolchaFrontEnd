@@ -9,46 +9,46 @@ const AgendaSection = ({
   buttonLink = "#"
 }) => {
   return (
-    <div className="py-[40px] md:py-[60px] lg:pt-[150px] px-[16px] md:px-[40px] max-w-none w-full mx-auto bg-[#E8E8E8]">
+    <div className="pt-[52px] pb-[70px] lg:py-[150px] px-[22px] lg:px-12 max-w-none w-full mx-auto bg-[#E8E8E8]">
       {/* Main Heading */}
       {mainHeading && (
-        <h1 className="text-[#000000] text-[32px] md:text-[48px] lg:text-[87px] 2xl:text-[64px] font-bold mb-[40px] md:mb-[60px] leading-tight">
+        <h1 className="text-[40px] lg:text-[87px] font-bold text-black mb-[26px] lg:mb-[62px] leading-tight">
           {mainHeading}
         </h1>
       )}
 
       {/* Day Agenda Section */}
       {dayAgenda && (
-        <div className="mb-[40px] md:mb-[60px]">
+        <div className="mb-[70px] lg:mb-[100px]">
           <StyledHeading 
             firstPart={dayAgenda.firstPart}
             secondPart={dayAgenda.secondPart}
             strokeColor="#000000"
             fillColor="#FEF991"
             textColor="#000000"
-            className="mb-[30px] md:mb-[40px]"
+            className="mb-[22px] lg:mb-[40px]"
           />
           
-          <div className="bg-[#2B2B2B] rounded-[20px] md:rounded-[24px] p-[24px] md:p-[32px] lg:p-[40px] flex flex-col lg:flex-row gap-[24px] lg:gap-[32px]">
+          <div className="bg-[#1A1A1A] rounded-[13px] lg:rounded-[17px] py-[40px] lg:py-[60px] px-[20px] lg:px-[35px] flex flex-row lg:gap-[30px]">
             {/* Left Side - Schedule Items */}
-            <div className="flex-1 space-y-[24px] md:space-y-[32px]">
+            <div className="flex-1 space-y-[16px] lg:space-y-[38px]">
               {dayAgenda.items.map((item, index) => (
-                <div key={index} className="flex gap-[16px] md:gap-[20px]">
-                  <div className="flex-shrink-0 text-white text-[14px] md:text-[16px] lg:text-[18px] font-medium">
+                <div key={index} className="flex gap-[11px] lg:gap-[20px]">
+                  <div className="flex-shrink-0 text-white text-[12px] font-bold lg:text-[20px] w-[50px] lg:w-[90px]">
                     {item.time}
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-start gap-[12px] mb-[8px]">
-                      <div className="w-[8px] h-[8px] rounded-full bg-white mt-[8px] flex-shrink-0"></div>
-                      <h3 className="text-white text-[18px] md:text-[20px] lg:text-[24px] 2xl:text-[28px] font-bold">
+                    <div className="flex items-start gap-[11px] lg:gap-[20px] mb-[9px] lg:mb-[16px]">
+                      <div className="w-[8px] lg:w-[14px] h-[8px] lg:h-[14px] rounded-full bg-white mt-1 lg:mt-2 flex-shrink-0"></div>
+                      <h3 className="text-white text-[17px] lg:text-[30px] font-bold leading-none">
                         {item.title}
                       </h3>
                     </div>
-                    <p className="text-gray-300 text-[14px] md:text-[16px] lg:text-[18px] leading-relaxed ml-[20px]">
+                    <p className="text-gray-300 text-[14px] lg:text-[17px] leading-normal lg:leading-[24px] ml-[18px] lg:ml-[34px] mb-[9px] lg:mb-[16px]">
                       {item.description}
                     </p>
                     {item.stats && (
-                      <p className="text-[#FEF991] text-[14px] md:text-[16px] font-medium mt-[8px] ml-[20px]">
+                      <p className="text-[#FEF991] text-[14px] lg:text-[16px] ml-[18px] lg:ml-[34px] leading-none">
                         {item.stats}
                       </p>
                     )}
@@ -59,7 +59,7 @@ const AgendaSection = ({
 
             {/* Right Side - Images */}
             {dayAgenda.images && dayAgenda.images.length > 0 && (
-              <div className="lg:w-[400px] xl:w-[450px] 2xl:w-[500px] space-y-[16px]">
+              <div className="lg:w-[400px] xl:w-[450px] 2xl:w-[500px] space-y-[16px] lg:block hidden">
                 {dayAgenda.images.map((image, index) => (
                   <img 
                     key={index}
