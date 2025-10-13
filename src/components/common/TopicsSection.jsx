@@ -7,31 +7,31 @@ const TopicsSection = ({
 }) => {
   return (
     <div
-      className="pb-[40px] md:pb-[60px] lg:pb-[80px] px-[16px] md:px-[40px] max-w-none w-full mx-auto"
+      className="max-w-none w-full mx-auto"
     >
-      <div className='px-12 pb-[150px]' style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div className='px-[22px] lg:px-12 pb-[60px] lg:pb-[150px]' style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         {/* Heading */}
-        <h1 className="text-[#000000] text-[40px] md:text-[56px] lg:text-[72px] 2xl:text-[80px] font-bold mb-[60px] md:mb-[60px] pt-[100px]">
+        <h1 className="text-[35px] lg:text-[87px] font-bold text-[#000000] leading-none mb-4 lg:mb-[60px] pt-[32px] lg:pt-[120px]">
           {heading}
         </h1>
 
         {/* Topic Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] md:gap-[30px] lg:gap-[40px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[32px] lg:gap-[60px]">
           {topicGroups.map((group, groupIndex) => (
             <div
               key={groupIndex}
-              className="bg-white rounded-[16px] md:rounded-[20px] p-[24px] md:p-[32px] lg:p-[40px]"
+              className="bg-white rounded-[9px] lg:rounded-[17px] px-[14px] lg:px-[26px] py-[36px] lg:py-[67px]"
             >
-              <div className="space-y-[16px] md:space-y-[20px]">
+              <div className="space-y-[10px] lg:space-y-[20px]">
                 {group.topics.map((topic, topicIndex) => (
-                  <div key={topicIndex} className="flex gap-[12px] md:gap-[16px] items-start">
-                    <div className="flex-shrink-0 mt-1">
+                  <div key={topicIndex} className="flex gap-[15px] md:gap-[28px] items-center">
+                    <div className="flex-shrink-0">
                       <div
-                        className="w-[20px] h-[20px] md:w-[20px] md:h-[20px] rounded-[5px] border-1 border-[#000]"
+                        className="w-[10px] h-[10px] lg:w-[20px] lg:h-[20px] rounded-[3px] lg:rounded-[5px] border-1 border-[#000]"
                         style={{ backgroundColor: '#FEF991' }}
                       ></div>
                     </div>
-                    <p className="text-[#000000] text-[16px] md:text-[18px] lg:text-[20px] 2xl:text-[24px] font-medium leading-tight">
+                    <p className="text-[16px] lg:text-[26px] text-black leading-tight">
                       {topic}
                     </p>
                   </div>
