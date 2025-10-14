@@ -15,8 +15,9 @@ export default function LogoSlider({ logoSliderData, loading }) {
    
     let imageUrl = logo.url || (logo.formats?.medium?.url || logo.formats?.small?.url || logo.formats?.thumbnail?.url);
     
-    // Ensure we use the full Strapi URL if it's a relative path
-    if (imageUrl && imageUrl.startsWith('/')) {
+    // Only prepend Strapi URL if the image URL doesn't start with / (meaning it's not from public folder)
+    // and it's a relative Strapi path (starts with /uploads/)
+    if (imageUrl && imageUrl.startsWith('/uploads/')) {
       const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || '';
       imageUrl = strapiUrl ? `${strapiUrl}${imageUrl}` : imageUrl;
     }
