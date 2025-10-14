@@ -1,9 +1,6 @@
 "use client";
 import React from 'react';
 import LogoSlider from "@/components/home/TextSlider";
-import ImageCarousel from "@/components/experiences/ImageCarousel";
-import ContactForm from "@/components/common/ContactForm";
-import Partners from "@/components/home/Partners";
 import EveningRecap from "@/components/common/EveningRecap";
 import PastSpeakers from "@/components/common/PastSpeakers";
 import EventHero from "@/components/common/EventHero";
@@ -13,6 +10,7 @@ import TopicsSection from "@/components/common/TopicsSection";
 import AgendaSection from "@/components/common/AgendaSection";
 import ImageGallerySlider from "@/components/common/ImageGallerySlider";
 import CommunityTrust from "@/components/common/CommunityTrust";
+import PartnersTwo from '@/components/home/PartnersTwo';
 
 // Data array for Inscribing Miami page
 const inscribingMiamiData = {
@@ -38,7 +36,7 @@ const inscribingMiamiData = {
     ]
   },
   partners: {
-    title: "Press and Media Recognition",
+    title: "Trusted By Global Brands ",
     press: [
       {
         id: 1,
@@ -413,7 +411,7 @@ const Page = () => {
 
       <PastSpeakers speakers={pastSpeakers} />
 
-      <Partners
+      <PartnersTwo
         partnerData={null}
         loading={false}
         title={partners.title}
