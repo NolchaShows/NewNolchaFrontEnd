@@ -128,7 +128,7 @@ const AgendaSection = ({
         <div className="flex justify-center">
           <a
             href={buttonLink}
-            className="px-[6px] py-[9px] lg:py-[16px] text-[14px] lg:text-[20px] font-bold bg-[#FEF991] text-black rounded-[8px] border-1 border-[#F6F068] hover:bg-[#FEE871] transition-colors"
+            className="px-[24px] py-[9px] lg:py-[16px] text-[14px] lg:text-[20px] font-bold bg-[#FEF991] text-black rounded-[4px] lg:rounded-[6px] border-1 border-[#F6F068] hover:bg-[#FEE871] transition-colors"
           >
             {buttonText}
           </a>
