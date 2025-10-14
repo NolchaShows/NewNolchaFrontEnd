@@ -15,7 +15,7 @@ const CommunityTrust = ({
     <div>
       {/* Top Section - Yellow Background with Social Cards */}
       <div 
-        className="py-[52px] lg:py-[70px] px-[22px] lg:px-12 max-w-none w-full mx-auto overflow-hidden"
+        className="py-[52px] lg:py-[70px] px-[22px] lg:px-[102px] max-w-none w-full mx-auto overflow-hidden"
         style={{ backgroundColor: backgroundColor }}
       >
         <StyledHeading 
