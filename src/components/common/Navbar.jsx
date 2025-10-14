@@ -326,15 +326,15 @@ function Navbar() {
 
           <div className="flex items-center gap-[30px]">
             {/* Navigation Links */}
-            <div className="flex items-center gap-8">
+            {/* <div className="flex items-center gap-8">
               {visibleMenuItems.map((item, idx) => (
                 <div key={idx} className="relative">
                   {renderDesktopMenuItem(item, idx)}
                 </div>
-              ))}
+              ))} */}
 
               {/* More Dropdown */}
-              <div
+              {/* <div
                 className="relative cursor-pointer"
                 onMouseEnter={() => setIsMoreDropdownOpen(true)}
                 onMouseLeave={() => setIsMoreDropdownOpen(false)}
@@ -374,8 +374,8 @@ function Navbar() {
                     </div>
                   </div>
                 )}
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
 
             {/* Right Side - Buttons and Social Icons */}
             <div className="flex items-center gap-[30px]">
@@ -466,13 +466,13 @@ function Navbar() {
               </div>
 
               {/* Mobile Menu Items */}
-              <nav className="mb-8">
+              {/* <nav className="mb-8">
                 {visibleMenuItems.map((item, idx) => (
                   <div key={idx}>{renderMobileMenuItem(item, idx)}</div>
-                ))}
+                ))} */}
 
                 {/* More Dropdown in Mobile */}
-                <div className="border-b border-gray-100">
+                {/* <div className="border-b border-gray-100">
                   <div
                     className="flex items-center justify-between py-4 cursor-pointer"
                     onClick={() => toggleMobileDropdown('more')}
@@ -483,10 +483,10 @@ function Navbar() {
                         <path d="M5.61531 8.5L0.945312 0.5H10.2753L5.60531 8.5H5.61531Z" fill="black" />
                       </svg>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Expanded more dropdown content */}
-                  {mobileDropdowns.more && (
+                  {/* {mobileDropdowns.more && (
                     <div className="pb-4 pl-4">
                       {moreMenuItems.map((item, idx) => (
                         <div key={idx}>
@@ -511,7 +511,7 @@ function Navbar() {
                     </div>
                   )}
                 </div>
-              </nav>
+              </nav> */}
 
               {/* Social Icons */}
               <div className="flex gap-5 mb-8">

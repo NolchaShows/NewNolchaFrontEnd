@@ -232,19 +232,19 @@ const inscribingMiamiData = {
     topicGroups: [
       {
         topics: [
-          "Open Source Development",
-          "Sovereignty in the Digital Age",
-          "AI Art & Aesthetics",
+          "Bitcoin Ordinals & Inscriptions",
+          "Bitcoin Layer 2 Innovation (Lightning, Rollups, Drivechains)",
+          "Vibecoding with AI",
           "Archival NFTs & Cultural Preservation on-Chain",
-          "Memetics, Virality, and Internet Subcultures"
+          "Open Source Development"
         ]
       },
       {
         topics: [
-          "Open Source Development",
           "Sovereignty in the Digital Age",
+          "Hyperbitcoinization and Decentralization",
           "AI Art & Aesthetics",
-          "Archival NFTs & Cultural Preservation on-Chain",
+          "Multi-chain Interoperability",
           "Memetics, Virality, and Internet Subcultures"
         ]
       }
