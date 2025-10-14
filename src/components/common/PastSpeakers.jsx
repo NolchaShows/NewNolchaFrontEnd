@@ -306,7 +306,7 @@ const PastSpeakers = ({ speakers = [] }) => {
                 </div>
 
                 {/* Back of card */}
-                <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] p-6 flex flex-col justify-start shadow-lg">
+                <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] p-6 flex flex-col justify-start">
                   <h3 className="text-black text-[1.4rem] font-extrabold uppercase mb-4 leading-tight">
                     {speaker.name || 'Speaker Name'}
                   </h3>
@@ -358,7 +358,7 @@ const PastSpeakers = ({ speakers = [] }) => {
                   </div>
 
                   {/* Back of card */}
-                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] p-6 flex flex-col justify-start shadow-lg">
+                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] p-6 flex flex-col justify-start">
                     <h3 className="text-black text-[1.4rem] font-extrabold uppercase mb-4 leading-tight">
                       {speaker.name || 'Speaker Name'}
                     </h3>
@@ -406,7 +406,7 @@ const PastSpeakers = ({ speakers = [] }) => {
                   </div>
 
                   {/* Back of card */}
-                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] p-6 flex flex-col justify-start shadow-lg">
+                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] p-6 flex flex-col justify-start">
                     <h3 className="text-black text-[1.4rem] font-extrabold uppercase mb-4 leading-tight">
                       {speaker.name || 'Speaker Name'}
                     </h3>
