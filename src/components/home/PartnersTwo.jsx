@@ -39,7 +39,7 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
             }
 
             // Map color field to backgroundColor for compatibility with existing logic
-            const bgColor = partner.color === 'black' ? 'bg-black' : 'bg-[#E7F0D3]';
+            const bgColor = partner.color === 'black' ? 'bg-black' : 'bg-[#FBF499]';
 
             return {
                 id: partner.id || index + 1,
@@ -98,23 +98,23 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
 
         const currentBackgroundColor = isHovered
             ? isDefaultBlack
-                ? "#E7F0D3" // If default is black, hover becomes light green/cream
-                : "#000000" // If default is light green/cream, hover becomes black
+                ? "#FBF499" // If default is black, hover becomes light yellow/green
+                : "#222024" // If default is light yellow/green, hover becomes dark gray
             : isDefaultBlack
-                ? "#000000" // Default black background
-                : "#E7F0D3"; // Default light green/cream background
+                ? "#222024" // Default dark gray background
+                : "#FBF499"; // Default light yellow/green background
 
         // Simple hover logic: show primary image normally, secondary on hover
-        const currentImage = currentBackgroundColor === "#E7F0D3" ? partner.imageBlack : partner.imageWhite;
+        const currentImage = currentBackgroundColor === "#FBF499" ? partner.imageBlack : partner.imageWhite;
 
         return (
             <div
-                className="flex items-center justify-center w-full aspect-square min-w-[80px] min-h-[80px] sm:min-w-[100px] sm:min-h-[100px] md:min-w-[120px] md:min-h-[120px] lg:min-w-[140px] lg:min-h-[140px] xl:min-w-[145px] xl:min-h-[145px] 2xl:min-w-[180px] 2xl:min-h-[180px] rounded-[24px] xl:rounded-[16px] lg:rounded-lg md:rounded-lg sm:rounded-lg backdrop-blur-sm shadow-[0_0.8px_32px_0_rgba(227,222,255,0.05)_inset,0_3.19px_14.37px_0_rgba(154,146,210,0.05)_inset,0_78.26px_78.26px_-38.33px_rgba(202,172,255,0.05)_inset,0_-65.48px_54.3px_-51.11px_rgba(96,68,144,0.05)_inset,0_5.59px_8.78px_-3.25px_rgba(255,255,255,0.07)_inset,0_32px_40px_-2px_rgba(255,255,255,0.02)_inset,0_0.5px_10px_-6px_rgba(0,0,0,0.10),0_20px_26px_-5px_rgba(0,0,0,0.40)] bg-[#1A1A1A] cursor-pointer"
+                className="flex items-center justify-center w-[70px] h-[70px] sm:w-[90px] sm:h-[90px] md:w-[120px] md:h-[120px] lg:w-[167px] lg:h-[170px] rounded-[12px] sm:rounded-[16px] lg:rounded-[24px] backdrop-blur-sm shadow-[0_0.8px_32px_0_rgba(227,222,255,0.05)_inset,0_3.19px_14.37px_0_rgba(154,146,210,0.05)_inset,0_78.26px_78.26px_-38.33px_rgba(202,172,255,0.05)_inset,0_-65.48px_54.3px_-51.11px_rgba(96,68,144,0.05)_inset,0_5.59px_8.78px_-3.25px_rgba(255,255,255,0.07)_inset,0_32px_40px_-2px_rgba(255,255,255,0.02)_inset,0_0.5px_10px_-6px_rgba(0,0,0,0.10),0_20px_26px_-5px_rgba(0,0,0,0.40)] bg-[#1A1A1A] cursor-pointer"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
                 <div
-                    className="flex items-center justify-center w-full h-full rounded-2xl xl:rounded-xl lg:rounded-lg md:rounded-lg sm:rounded-lg relative transition-all duration-300 ease-in-out p-2 sm:p-3 md:p-4"
+                    className="flex items-center justify-center w-full h-full rounded-[12px] sm:rounded-[16px] lg:rounded-[24px] relative transition-all duration-300 ease-in-out p-2 sm:p-3 md:p-4"
                     style={{ backgroundColor: currentBackgroundColor }}
                 >
                     <img
@@ -138,8 +138,8 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
     const getResponsiveClasses = () => {
         // Use consistent responsive classes for all breakpoints to ensure gaps always exist
         const baseClasses = {
-            columnGap: "gap-2 sm:gap-3 md:gap-4 xl:gap-6 2xl:gap-12", // Always has gap on all screens
-            cardGap: "gap-1.5 sm:gap-2 md:gap-2.5", // Cards gap
+            columnGap: "gap-[5px]", // Horizontal gap between columns
+            cardGap: "gap-[7px]", // Vertical gap between cards
         };
 
         if (windowWidth >= 1800) {
@@ -173,9 +173,9 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
         } else {
             return {
                 ...baseClasses,
-                containerPadding: "px-[50px] sm:px-[50px]",
-                maxColumnWidth: "max-w-[30%]",
-                minHeight: "min-h-[250px]",
+                containerPadding: "px-[12px] sm:px-[22px]",
+                maxColumnWidth: "",
+                minHeight: "min-h-[200px]",
             };
         }
     };
@@ -204,7 +204,9 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
 
     return (
         <section
-            className={`py-[70px] lg:py-[150px] px-[22px] lg:px-12 max-w-none w-full mx-auto bg-[#FFFFFF]`}
+            className={`w-full py-[50px] sm:py-[70px] lg:py-[150px] bg-[#FFFFFF] ${
+                responsiveClasses.containerPadding
+              } overflow-hidden`}
         >
             <div>
                 {/* Header Section - Overlapping the border */}
@@ -215,9 +217,9 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
                 </div>
 
                 {/* Container with Bracket Borders */}
-                <div className="relative bg-white px-[40px] py-[50px] lg:px-[60px] lg:py-[70px] mt-[-30px] lg:mt-[-40px]">
-                    {/* Left Bracket Border SVG */}
-                    <div className="absolute left-0 top-0 bottom-0 h-full">
+                <div className="relative bg-white px-[16px] py-[30px] sm:px-[30px] sm:py-[40px] lg:px-[60px] lg:py-[70px] mt-0 lg:mt-[-28px]">
+                    {/* Left Bracket Border SVG - Hidden on mobile */}
+                    <div className="hidden lg:block absolute left-0 top-0 bottom-0 h-full">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 481 736"
@@ -240,8 +242,8 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
                         </svg>
                     </div>
 
-                    {/* Right Bracket Border SVG */}
-                    <div className="absolute right-0 top-0 bottom-0 h-full">
+                    {/* Right Bracket Border SVG - Hidden on mobile */}
+                    <div className="hidden lg:block absolute right-0 top-0 bottom-0 h-full">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 481 736"
@@ -265,16 +267,14 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
                     </div>
 
                     {/* Dynamic Partners Grid */}
-                    <div className="w-full pt-[40px] lg:pt-[50px]">
+                    <div className="w-full pt-[25px] sm:pt-[35px] lg:pt-[50px]">
                         <div
-                            className={`flex justify-center items-start ${responsiveClasses.columnGap} w-full ${responsiveClasses.minHeight}`}
+                            className={`flex flex-wrap md:flex-nowrap justify-center items-start ${responsiveClasses.columnGap} w-full ${responsiveClasses.minHeight}`}
                         >
                             {Array.from({ length: columnsCount }, (_, columnIndex) => (
                                 <div
                                     key={columnIndex}
-                                    className={`flex flex-col items-center ${responsiveClasses.cardGap
-                                        } flex-1 ${responsiveClasses.maxColumnWidth
-                                        } ${getColumnMarginTop(columnIndex)}`}
+                                    className={`flex flex-col items-center ${responsiveClasses.cardGap} ${getColumnMarginTop(columnIndex)}`}
                                 >
                                     {getColumnPartners(columnIndex).map((partner) => (
                                         <PartnerCard key={partner.id} partner={partner} />
