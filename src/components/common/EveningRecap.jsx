@@ -1,9 +1,9 @@
 import React from 'react';
 import StyledHeading from './StyledHeading';
 
-const EveningRecap = ({ year, title, videoUrl }) => {
+const EveningRecap = ({ year, title, videoUrl, paddingTop }) => {
     return (
-        <div className="pb-[70px] lg:pb-[150px] max-w-none w-full mx-auto bg-[#F4F4F4]">
+        <div className={`pb-[70px] lg:pb-[150px] max-w-none w-full mx-auto bg-[#F4F4F4] ${paddingTop ? 'pt-[70px] lg:pt-[150px]' : ''}`}>
             {year && title && (
                 <StyledHeading
                     firstPart={year}
@@ -12,6 +12,7 @@ const EveningRecap = ({ year, title, videoUrl }) => {
                     fillColor="#FEF991"
                     textColor="#000000"
                     className="mb-[22px] lg:mb-[40px] px-[22px] lg:px-12"
+                    size="small"
                 />
             )}
             <video

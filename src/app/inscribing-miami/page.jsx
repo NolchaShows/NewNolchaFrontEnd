@@ -184,6 +184,13 @@ const inscribingMiamiData = {
     { id: 4, image: '/past_speakers/4.png'},
     { id: 5, image: '/past_speakers/5.png'},
     { id: 6, image: '/past_speakers/6.png'},
+    { id: 7, image: '/past_speakers/7.png'},
+    { id: 8, image: '/past_speakers/8.png'},
+    { id: 9, image: '/past_speakers/9.png'},
+    { id: 10, image: '/past_speakers/10.png'},
+    { id: 11, image: '/past_speakers/11.png'},
+    { id: 12, image: '/past_speakers/12.png'},
+    { id: 13, image: '/past_speakers/13.png'},
   ],
   whatToExpect: {
     firstHeadingPart: "15+ Years of Pioneering",
@@ -364,6 +371,7 @@ const Page = () => {
 
       <EveningRecap 
         videoUrl={eveningRecap.videoUrl}
+        paddingTop={true}
       />
 
       <WhatToExpect 

@@ -27,6 +27,7 @@ const AgendaSection = ({
             fillColor="#FEF991"
             textColor="#000000"
             className="mb-[22px] lg:mb-[40px]"
+            size="medium"
           />
 
           <div className="bg-[#1A1A1A] rounded-[13px] lg:rounded-[17px] py-[40px] lg:py-[60px] px-[20px] lg:px-[35px] flex flex-row lg:gap-[30px]">
@@ -84,6 +85,7 @@ const AgendaSection = ({
             fillColor="#FEF991"
             textColor="#000000"
             className="mb-[22px] lg:mb-[40px]"
+            size="medium"
           />
 
           <div className="bg-[#1A1A1A] rounded-[13px] lg:rounded-[17px] py-[40px] lg:py-[60px] px-[20px] lg:px-[35px] flex flex-row lg:gap-[30px]">
@@ -111,7 +113,7 @@ const AgendaSection = ({
 
             {/* Right Side - Image */}
             {eveningHighlight.image && (
-              <div className="lg:w-[400px] xl:w-[450px] 2xl:w-[500px]">
+              <div className="lg:w-[400px] xl:w-[450px] 2xl:w-[500px] lg:block hidden">
                 <img
                   src={eveningHighlight.image}
                   alt="Evening highlight"
