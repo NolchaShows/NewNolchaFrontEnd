@@ -118,14 +118,14 @@ const TweetCarousel = ({
         </div>
       </div>
 
-      <div className="flex mt-6 gap-[12px] md:gap-[16px] 2xl:gap-[22px] justify-center">
+      <div className="flex mt-6 gap-[17px] lg:gap-[30px] justify-center">
         <button
           onClick={prevPost}
           disabled={currentPostIndex === 0}
           aria-label="Previous post"
         >
           <motion.img
-            src="/left_dark.png"
+            src="/left_white.png"
             className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
             whileTap={{ scale: 0.9 }}
           />
@@ -136,7 +136,7 @@ const TweetCarousel = ({
           aria-label="Next post"
         >
           <motion.img
-            src="/right_dark.png"
+            src="/right_white.png"
             className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
             whileTap={{ scale: 0.9 }}
           />

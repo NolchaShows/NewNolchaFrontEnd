@@ -12,10 +12,10 @@ const CommunityTrust = ({
   backgroundColor = "#FEF991"
 }) => {
   return (
-    <div className="pt-[40px] md:pt-[60px] lg:pt-[80px] px-[16px] md:px-[40px] max-w-none w-full mx-auto">
+    <div>
       {/* Top Section - Yellow Background with Social Cards */}
       <div 
-        className="py-[40px] md:py-[70px] lg:pt-[70px] px-[16px] md:px-[40px] max-w-none w-full mx-auto rounded-t-[40px] overflow-hidden"
+        className="py-[52px] lg:py-[70px] px-[22px] lg:px-12 max-w-none w-full mx-auto overflow-hidden"
         style={{ backgroundColor: backgroundColor }}
       >
         <StyledHeading 
@@ -28,7 +28,7 @@ const CommunityTrust = ({
         />
         
         {description && (
-          <p className="text-[#000000] text-[16px] md:text-[18px] lg:text-[20px] 2xl:text-[24px] leading-relaxed mb-[40px] md:mb-[30px] max-w-[900px]">
+          <p className="text-[#000000] text-[14px] lg:text-[30px] leading-none lg:leading-[36px] max-w-[900px]">
             {description}
           </p>
         )}
