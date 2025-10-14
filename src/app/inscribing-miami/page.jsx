@@ -321,7 +321,7 @@ const inscribingMiamiData = {
     backgroundColor: "#FEF991",
     formSection: {
       backgroundImage: "/landing/background2.jpg",
-      heading: "Be Part Of The Most Influential Art, Tech & Culture Gathering During Art Basel.",
+      heading: "Be part of the most Influential Art, Tech & Culture Gathering During Art Basel.",
       sponsorshipInfo: {
         title: "For Sponsorship inquirers and speaking engagement",
         linkText: "View the full partnership deck here",
