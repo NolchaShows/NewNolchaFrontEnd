@@ -9,7 +9,7 @@ const AgendaSection = ({
   buttonLink = "#"
 }) => {
   return (
-    <div className="pt-[52px] pb-[70px] lg:py-[150px] px-[22px] lg:px-12 max-w-none w-full mx-auto bg-white">
+    <div className="pt-[52px] pb-[70px] lg:py-[150px] px-[22px] lg:px-12 max-w-none w-full mx-auto bg-[#F4F4F4]">
       {/* Main Heading */}
       {mainHeading && (
         <h1 className="text-[40px] lg:text-[87px] font-bold text-black mb-[26px] lg:mb-[62px] leading-tight">

@@ -10,7 +10,7 @@ const WhatToExpect = ({
   quoteBox
 }) => {
   return (
-    <div className="pb-[52px] lg:pb-[150px] px-[22px] lg:px-[40px] max-w-none w-full mx-auto">
+    <div className="pb-[52px] lg:pb-[150px] px-[22px] lg:px-[40px] max-w-none w-full mx-auto bg-[#F4F4F4]">
       {/* Top Section: Heading, Description, and Image */}
       <div className="flex flex-col lg:flex-row gap-[30px]">
         <div className="flex-1">

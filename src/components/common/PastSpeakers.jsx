@@ -13,7 +13,7 @@ const PastSpeakers = ({ speakers = [] }) => {
   const displaySpeakers = speakers.length > 0 ? speakers : defaultSpeakers;
 
   return (
-    <div className="py-[40px] md:py-[60px] lg:py-[80px] px-[16px] md:px-[40px] max-w-none w-full mx-auto">
+    <div className="pb-[70px] lg:pb-[150px] px-[22px] lg:px-12 max-w-none w-full mx-auto bg-[#F4F4F4]">
       <StyledHeading 
         firstPart="Past"
         secondPart="Speakers"

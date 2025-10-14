@@ -12,7 +12,7 @@ const EventHero = ({
   secondaryButtonLink = "#"
 }) => {
   return (
-    <section className="w-full py-[52px] lg:pt-[100px] lg:pb-[150px] px-[22px] lg:px-[102px] bg-[#F4F4F4]">
+    <section className="w-full py-[52px] lg:pt-[100px] lg:pb-[150px] px-[22px] lg:px-[102px] bg-[#ffffff]">
       {/* Logo */}
       {logoImage && (
         <div className="mb-[18px] lg:mb-[20px]">
