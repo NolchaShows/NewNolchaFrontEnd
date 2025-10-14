@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from "framer-motion";
 
 const ImageGallerySlider = ({
   leftImages = [],
@@ -50,50 +51,24 @@ const ImageGallerySlider = ({
           <div className="absolute bottom-[30px] md:bottom-[40px] left-1/2 transform -translate-x-1/2 flex gap-[16px] z-10">
             <button
               onClick={handlePrev}
-              className="w-[48px] h-[48px] md:w-[56px] md:h-[56px] rounded-full flex items-center justify-center transition-all hover:opacity-80"
-              style={{ backgroundColor: arrowColor }}
               aria-label="Previous image"
             >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-[20px] h-[20px] md:w-[24px] md:h-[24px]"
-              >
-                <path
-                  d="M15 18L9 12L15 6"
-                  stroke="black"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <motion.img
+                src="/left_yellow.png"
+                className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+                whileTap={{ scale: 0.9 }}
+              />
             </button>
 
             <button
               onClick={handleNext}
-              className="w-[48px] h-[48px] md:w-[56px] md:h-[56px] rounded-full flex items-center justify-center transition-all hover:opacity-80"
-              style={{ backgroundColor: arrowColor }}
               aria-label="Next image"
             >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-[20px] h-[20px] md:w-[24px] md:h-[24px]"
-              >
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="black"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <motion.img
+                src="/right_yellow.png"
+                className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+                whileTap={{ scale: 0.9 }}
+              />
             </button>
           </div>
         )}
