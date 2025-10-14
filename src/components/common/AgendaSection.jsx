@@ -30,7 +30,12 @@ const AgendaSection = ({
             size="medium"
           />
 
-          <div className="bg-[#1A1A1A] rounded-[13px] lg:rounded-[17px] py-[40px] lg:py-[60px] px-[20px] lg:px-[35px] flex flex-row lg:gap-[30px]">
+          <div 
+            className="bg-[#1A1A1A] rounded-[13px] lg:rounded-[17px] py-[40px] lg:py-[60px] px-[20px] lg:px-[35px] flex flex-row lg:gap-[30px]"
+            style={{
+              boxShadow: '0 0.8px 32px 0 rgba(227, 222, 255, 0.05) inset, 0 3.19px 14.37px 0 rgba(154, 146, 210, 0.05) inset, 0 78.26px 78.26px -38.33px rgba(202, 172, 255, 0.05) inset, 0 -65.48px 54.3px -51.11px rgba(96, 68, 144, 0.05) inset, 0 5.59px 8.78px -3.25px rgba(255, 255, 255, 0.07) inset, 0 32px 40px -2px rgba(255, 255, 255, 0.02) inset, 0 0.5px 10px -6px rgba(0, 0, 0, 0.10), 0 20px 26px -5px rgba(0, 0, 0, 0.40)'
+            }}
+          >
             {/* Left Side - Schedule Items */}
             <div className="flex-1 space-y-[16px] lg:space-y-[38px]">
               {dayAgenda.items.map((item, index) => (
@@ -88,7 +93,12 @@ const AgendaSection = ({
             size="medium"
           />
 
-          <div className="bg-[#1A1A1A] rounded-[13px] lg:rounded-[17px] py-[40px] lg:py-[60px] px-[20px] lg:px-[35px] flex flex-row lg:gap-[30px]">
+          <div 
+            className="bg-[#1A1A1A] rounded-[13px] lg:rounded-[17px] py-[40px] lg:py-[60px] px-[20px] lg:px-[35px] flex flex-row lg:gap-[30px]"
+            style={{
+              boxShadow: '0 0.8px 32px 0 rgba(227, 222, 255, 0.05) inset, 0 3.19px 14.37px 0 rgba(154, 146, 210, 0.05) inset, 0 78.26px 78.26px -38.33px rgba(202, 172, 255, 0.05) inset, 0 -65.48px 54.3px -51.11px rgba(96, 68, 144, 0.05) inset, 0 5.59px 8.78px -3.25px rgba(255, 255, 255, 0.07) inset, 0 32px 40px -2px rgba(255, 255, 255, 0.02) inset, 0 0.5px 10px -6px rgba(0, 0, 0, 0.10), 0 20px 26px -5px rgba(0, 0, 0, 0.40)'
+            }}
+          >
             {/* Left Side - Highlight Items */}
             <div className="flex-1 space-y-[15px] lg:space-y-[35px]">
               {eveningHighlight.items.map((item, index) => (
