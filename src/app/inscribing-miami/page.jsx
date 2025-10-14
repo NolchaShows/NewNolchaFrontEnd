@@ -170,10 +170,15 @@ const inscribingMiamiData = {
     bg: "/landing/background2.jpg",
     heading: "Lets Talk"
   },
+  mainVideo: {
+    year: "2024",
+    title: "Main Video",
+    videoUrl: "https://drive.google.com/file/d/1drqwPLE-yXLcTHzFIvCnDzbxMbfsOPBb/view?usp=drive_link"
+  },
   eveningRecap: {
     year: "2024",
     title: "Evening Recap",
-    videoUrl: "/video2.mp4"
+    videoUrl: "https://drive.google.com/file/d/1Ofberq8ShZMTrmtFJv24N6KyroeiwUHo/view?usp=drive_link"
   },
   pastSpeakers: [
     { id: 1, image: '/past_speakers/1.png' },
@@ -344,7 +349,7 @@ const inscribingMiamiData = {
 };
 
 const Page = () => {
-  const { mainHeading, mainImage, eventHero, logoSlider, partners, posts, contact, eveningRecap, pastSpeakers, whatToExpect, venue, topics, agenda, imageGallery, communityTrust } = inscribingMiamiData;
+  const { mainHeading, mainImage, eventHero, logoSlider, mainVideo, partners, posts, contact, eveningRecap, pastSpeakers, whatToExpect, venue, topics, agenda, imageGallery, communityTrust } = inscribingMiamiData;
 
   return (
     <div className="w-full bg-white">
@@ -368,7 +373,7 @@ const Page = () => {
       <LogoSlider logoSliderData={logoSlider} loading={false} />
 
       <EveningRecap 
-        videoUrl={eveningRecap.videoUrl}
+        videoUrl={mainVideo.videoUrl}
         paddingTop={true}
       />
 
