@@ -45,7 +45,7 @@ const EventHero = ({
       <div className="flex flex-wrap gap-[5px] lg:gap-[10px]">
         <a 
           href={primaryButtonLink}
-          className="text-[16px] lg:text-[25px] font-bold px-4 lg:px-10 py-2 lg:py-4 bg-white text-black border-1 border-black rounded-[6px] hover:bg-gray-100 transition-colors"
+          className="text-[16px] lg:text-[25px] font-bold px-4 lg:px-10 py-2 lg:py-4 bg-white text-black border-1 border-black rounded-[6px] hover:bg-[#FEF991] transition-colors"
         >
           {primaryButtonText}
         </a>

@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import LogoSlider from "@/components/home/TextSlider";
+import LogoSlider from "@/components/home/LogoSlider";
 import EveningRecap from "@/components/common/EveningRecap";
 import PastSpeakers from "@/components/common/PastSpeakers";
 import EventHero from "@/components/common/EventHero";
@@ -33,6 +33,8 @@ const inscribingMiamiData = {
       { name: "AdAge", url: "/home/slider1.png" },
       { name: "VOGUE", url: "/home/slider2.png" },
       { name: "Forbes", url: "/home/slider3.png" },
+      { name: "Cointelegraph", url: "/home/slider4.jpg" },
+
     ]
   },
   partners: {
