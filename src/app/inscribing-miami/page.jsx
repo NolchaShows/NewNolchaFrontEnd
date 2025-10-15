@@ -307,15 +307,6 @@ const inscribingMiamiData = {
     buttonText: "Partner With Us",
     buttonLink: "#partner"
   },
-  imageGallery: {
-    leftImages: [
-      "/inscribing_miami/gallery_left_1.png",
-      "/inscribing_miami/gallery_left_2.png",
-      "/inscribing_miami/gallery_left_3.png"
-    ],
-    rightImage: "/inscribing_miami/gallery_right.png",
-    arrowColor: "#FEF991"
-  },
   communityTrust: {
     firstHeadingPart: "Community",
     secondHeadingPart: "Trust",
@@ -422,9 +413,6 @@ const Page = () => {
       />
 
       <ImageGallerySlider 
-        leftImages={imageGallery.leftImages}
-        rightImage={imageGallery.rightImage}
-        arrowColor={imageGallery.arrowColor}
       />
 
       <CommunityTrust 

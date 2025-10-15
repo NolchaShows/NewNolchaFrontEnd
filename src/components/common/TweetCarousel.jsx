@@ -73,12 +73,36 @@ const TweetCarousel = ({
   const nextPost = () => {
     if (currentPostIndex + postsPerSlide < carouselItems.length) {
       setCurrentPostIndex((prev) => prev + postsPerSlide);
+    } else {
+      // Fade animation when reaching the end - go back to first tweet
+      const carouselElement = document.querySelector('.tweet-carousel');
+      if (carouselElement) {
+        carouselElement.style.opacity = '0';
+        setTimeout(() => {
+          setCurrentPostIndex(0);
+          carouselElement.style.opacity = '1';
+        }, 300);
+      } else {
+        setCurrentPostIndex(0);
+      }
     }
   };
 
   const prevPost = () => {
     if (currentPostIndex - postsPerSlide >= 0) {
       setCurrentPostIndex((prev) => prev - postsPerSlide);
+    } else {
+      // Fade animation when reaching the beginning - go to last tweet
+      const carouselElement = document.querySelector('.tweet-carousel');
+      if (carouselElement) {
+        carouselElement.style.opacity = '0';
+        setTimeout(() => {
+          setCurrentPostIndex(Math.max(0, carouselItems.length - postsPerSlide));
+          carouselElement.style.opacity = '1';
+        }, 300);
+      } else {
+        setCurrentPostIndex(Math.max(0, carouselItems.length - postsPerSlide));
+      }
     }
   };
 
@@ -106,10 +130,11 @@ const TweetCarousel = ({
 
       <div className="relative overflow-hidden">
         <div
-          className="flex transition-transform duration-500"
+          className="flex transition-transform duration-500 tweet-carousel"
           style={{
             transform: `translateX(-${(currentPostIndex / postsPerSlide) * 100
               }%)`,
+            transition: 'transform 0.5s ease-in-out, opacity 0.3s ease-in-out'
           }}
         >
           {carouselItems.map((item, idx) => {
@@ -135,7 +160,6 @@ const TweetCarousel = ({
       <div className="flex mt-6 gap-[17px] lg:gap-[30px] justify-center">
         <button
           onClick={prevPost}
-          disabled={currentPostIndex === 0}
           aria-label="Previous post"
         >
           <motion.img
@@ -146,7 +170,6 @@ const TweetCarousel = ({
         </button>
         <button
           onClick={nextPost}
-          disabled={currentPostIndex + postsPerSlide >= carouselItems.length}
           aria-label="Next post"
         >
           <motion.img
