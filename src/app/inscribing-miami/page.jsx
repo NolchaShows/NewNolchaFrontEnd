@@ -11,6 +11,7 @@ import AgendaSection from "@/components/common/AgendaSection";
 import ImageGallerySlider from "@/components/common/ImageGallerySlider";
 import CommunityTrust from "@/components/common/CommunityTrust";
 import PartnersTwo from '@/components/home/PartnersTwo';
+import { tweetsData } from '@/data/tweetsData';
 
 // Data array for Inscribing Miami page
 const inscribingMiamiData = {
@@ -161,13 +162,7 @@ const inscribingMiamiData = {
       },
     ]
   },
-  posts: [
-    "/experiences/jack/posts/1.png",
-    "/experiences/jack/posts/2.png",
-    "/experiences/jack/posts/3.png",
-    "/experiences/jack/posts/4.png",
-    "/experiences/jack/posts/5.png",
-  ],
+  posts: tweetsData,
   contact: {
     bg: "/landing/background2.jpg",
     heading: "Lets Talk"

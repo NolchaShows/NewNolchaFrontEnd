@@ -54,6 +54,22 @@ const TweetCarousel = ({
 
   const postsPerSlide = getPostsPerSlide();
 
+  // Load Twitter embed script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    script.charset = 'utf-8';
+    document.body.appendChild(script);
+
+    return () => {
+      // Clean up script when component unmounts
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
+
   const nextPost = () => {
     if (currentPostIndex + postsPerSlide < carouselItems.length) {
       setCurrentPostIndex((prev) => prev + postsPerSlide);
@@ -97,21 +113,19 @@ const TweetCarousel = ({
           }}
         >
           {carouselItems.map((item, idx) => {
-            // Handle both legacy posts array and new Strapi carousel items
-            const imageUrl = typeof item === 'string' ? item :
-              item.image?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${item.image.url}` : item;
-            const altText = item.alt_text || `Post ${idx + 1}`;
+            // Handle tweet IDs for Twitter embeds
+            const tweetId = typeof item === 'string' ? item : item.tweetId || item.id;
 
             return (
               <div
                 key={idx}
                 className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 p-2"
               >
-                <img
-                  src={imageUrl}
-                  alt={altText}
-                  className="w-full h-auto object-cover border-1 border-gray-100 rounded-lg shadow-md"
-                />
+                <div className="w-full">
+                  <blockquote className="twitter-tweet" data-theme="light">
+                    <a href={`https://twitter.com/x/status/${tweetId}`}></a>
+                  </blockquote>
+                </div>
               </div>
             );
           })}
