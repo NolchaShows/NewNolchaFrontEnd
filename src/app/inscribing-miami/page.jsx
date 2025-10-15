@@ -25,8 +25,8 @@ const inscribingMiamiData = {
     dateLocation: "Thursday December 4th, 2025 / Miami Beach",
     primaryButtonText: "Partner With Us",
     secondaryButtonText: "Request Tickets",
-    primaryButtonLink: "#partner",
-    secondaryButtonLink: "#tickets"
+    primaryButtonLink: "https://calendly.com/nolcha",
+    secondaryButtonLink: "pr@nolcha.com"
   },
   logoSlider: {
     title: "AS SEEN IN",
@@ -305,16 +305,7 @@ const inscribingMiamiData = {
       image: "/inscribing_miami/evening_highlight.png"
     },
     buttonText: "Partner With Us",
-    buttonLink: "#partner"
-  },
-  imageGallery: {
-    leftImages: [
-      "/inscribing_miami/gallery_left_1.png",
-      "/inscribing_miami/gallery_left_2.png",
-      "/inscribing_miami/gallery_left_3.png"
-    ],
-    rightImage: "/inscribing_miami/gallery_right.png",
-    arrowColor: "#FEF991"
+    buttonLink: "https://calendly.com/nolcha"
   },
   communityTrust: {
     firstHeadingPart: "Community",
@@ -422,9 +413,6 @@ const Page = () => {
       />
 
       <ImageGallerySlider 
-        leftImages={imageGallery.leftImages}
-        rightImage={imageGallery.rightImage}
-        arrowColor={imageGallery.arrowColor}
       />
 
       <CommunityTrust 

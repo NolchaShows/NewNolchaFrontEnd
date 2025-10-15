@@ -50,7 +50,7 @@ const EventHero = ({
           {primaryButtonText}
         </a>
         <a 
-          href={secondaryButtonLink}
+          href={secondaryButtonLink.includes('@') ? `mailto:${secondaryButtonLink}` : secondaryButtonLink}
           className="text-[16px] lg:text-[25px] font-bold px-4 lg:px-10 py-2 lg:py-4 bg-[#FEF991] text-black border-1 border-[#F6F068] rounded-[6px] hover:bg-[#FEE871] transition-colors"
         >
           {secondaryButtonText}
