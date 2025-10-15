@@ -1,11 +1,12 @@
 'use client';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import StyledHeading from './StyledHeading';
 import { motion } from "framer-motion";
 
 const PastSpeakers = ({ speakers = [] }) => {
   const carouselRef = useRef(null);
   const animationRef = useRef(null);
+  const [flippedCards, setFlippedCards] = useState(new Set());
 
   // Default placeholder speakers if none provided
   const defaultSpeakersRow1 = [
@@ -24,13 +25,13 @@ const PastSpeakers = ({ speakers = [] }) => {
     { id: 10, image: '/past_speakers/10.png', name: 'Amanda Terry', description: "Amanda is the Co-Founder & COO OnChainMonkey, Bitcoin's 1st 10K Ordinals Collection and @osura_com Co-Founder & GP @ACTAIVentures", twitter: 'https://x.com/amandaterry' },
     { id: 11, image: '/past_speakers/11.png', name: 'Danny Yang', description: 'Speaker description goes here', twitter: 'https://twitter.com' },
     { id: 12, image: '/past_speakers/12.png', name: 'Cara Ponzini', description: 'Speaker description goes here', twitter: 'https://twitter.com' },
-    { id: 12, image: '/past_speakers/13.png', name: 'Jack Butcher', description: 'Jack Butcher is a pioneering digital artist and entrepreneur at the forefront of the NFT revolution. As the founder of Visualize Value, Butcher has established himself as a master of minimalist design, translating complex philosophical and economic concepts into striking visual metaphors.', twitter: 'https://x.com/jackbutcher' },
+    { id: 13, image: '/past_speakers/13.png', name: 'Jack Butcher', description: 'Jack Butcher is a pioneering digital artist and entrepreneur at the forefront of the NFT revolution. As the founder of Visualize Value, Butcher has established himself as a master of minimalist design, translating complex philosophical and economic concepts into striking visual metaphors.', twitter: 'https://x.com/jackbutcher' },
   ];
 
   const displaySpeakers = speakers.length > 0 ? speakers : [...defaultSpeakersRow1, ...defaultSpeakersRow2];
 
-  // Duplicate speakers for infinite scroll effect (mobile)
-  const duplicatedSpeakers = [...displaySpeakers, ...displaySpeakers];
+  // Duplicate speakers for infinite scroll effect (mobile) - always use default data
+  const duplicatedSpeakers = [...defaultSpeakersRow1, ...defaultSpeakersRow2, ...defaultSpeakersRow1, ...defaultSpeakersRow2];
 
   // Split speakers into two rows for desktop with different images
   const row1 = [...defaultSpeakersRow1, ...defaultSpeakersRow1]; // Duplicate for infinite scroll
@@ -44,6 +45,18 @@ const PastSpeakers = ({ speakers = [] }) => {
   const pauseTimeoutRow2Ref = useRef(null);
   const isPausedRow1Ref = useRef(false);
   const isPausedRow2Ref = useRef(false);
+
+  const handleCardClick = (cardId) => {
+    setFlippedCards(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(cardId)) {
+        newSet.delete(cardId);
+      } else {
+        newSet.add(cardId);
+      }
+      return newSet;
+    });
+  };
 
   const handleScrollLeft = () => {
     if (row1Ref.current && row2Ref.current) {
@@ -91,54 +104,24 @@ const PastSpeakers = ({ speakers = [] }) => {
     }
   };
 
-  // Auto-scroll for mobile
+  // Touch scroll handling for mobile (no auto-scroll)
   useEffect(() => {
     const carousel = carouselRef.current;
     if (!carousel) return;
 
-    let scrollPosition = 0;
-    const scrollSpeed = 0.5; // Pixels per frame (adjust for speed)
+    // Enable smooth scrolling and touch behavior
+    carousel.style.scrollBehavior = 'smooth';
+    carousel.style.touchAction = 'pan-x';
+    carousel.style.overflowX = 'auto';
+    carousel.style.webkitOverflowScrolling = 'touch';
 
-    const autoScroll = () => {
-      scrollPosition += scrollSpeed;
-
-      // Get the width of one set of cards
-      const cardWidth = 280 + 32; // card width + gap (mobile)
-      const totalWidth = cardWidth * displaySpeakers.length;
-
-      // Reset position when we've scrolled through one full set
-      if (scrollPosition >= totalWidth) {
-        scrollPosition = 0;
-      }
-
-      carousel.scrollLeft = scrollPosition;
-      animationRef.current = requestAnimationFrame(autoScroll);
-    };
-
-    animationRef.current = requestAnimationFrame(autoScroll);
-
-    // Pause on hover
-    const handleMouseEnter = () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-
-    const handleMouseLeave = () => {
-      animationRef.current = requestAnimationFrame(autoScroll);
-    };
-
-    carousel.addEventListener('mouseenter', handleMouseEnter);
-    carousel.addEventListener('mouseleave', handleMouseLeave);
-
+    // Add momentum scrolling for iOS
+    carousel.style.webkitOverflowScrolling = 'touch';
+    
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      carousel.removeEventListener('mouseenter', handleMouseEnter);
-      carousel.removeEventListener('mouseleave', handleMouseLeave);
+      // Cleanup if needed
     };
-  }, [displaySpeakers.length]);
+  }, []);
 
   // Auto-scroll for desktop Row 1
   useEffect(() => {
@@ -253,12 +236,12 @@ const PastSpeakers = ({ speakers = [] }) => {
   return (
     <div className="pb-[70px] lg:pb-[150px] max-w-none w-full mx-auto bg-[#F4F4F4] overflow-hidden">
       <div className="px-[22px] lg:px-12 relative mb-[30px] md:mb-[50px] flex flex-row items-center justify-between">
-        <StyledHeading
-          firstPart="Past"
-          secondPart="Speakers"
-          strokeColor="#000000"
-          fillColor="#FEF991"
-          textColor="#000000"
+      <StyledHeading 
+        firstPart="Past"
+        secondPart="Speakers"
+        strokeColor="#000000"
+        fillColor="#FEF991"
+        textColor="#000000"
           size="small"
         />
 
@@ -291,11 +274,22 @@ const PastSpeakers = ({ speakers = [] }) => {
       <div className="lg:hidden relative">
         <div
           ref={carouselRef}
-          className="flex gap-8 overflow-x-hidden px-[22px]"
+          className="flex gap-8 overflow-x-auto px-[22px] scrollbar-hide"
+          style={{
+            touchAction: 'pan-x',
+            WebkitOverflowScrolling: 'touch'
+          }}
         >
-          {duplicatedSpeakers.map((speaker, index) => (
-            <div key={`${speaker.id}-${index}`} className="group flex-shrink-0 w-[280px] h-[350px] perspective-[2000px]">
-              <div className="relative w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+          {duplicatedSpeakers.map((speaker, index) => {
+            const cardId = `${speaker.id}-${index}`;
+            const isFlipped = flippedCards.has(cardId);
+            return (
+            <div key={cardId} className="flex-shrink-0 w-[280px] h-[350px] perspective-[2000px]">
+              <div 
+                className={`relative w-full h-full transition-transform duration-500 transform-style-3d ${isFlipped ? 'rotate-y-180' : ''} lg:group-hover:rotate-y-180`}
+                onClick={() => handleCardClick(cardId)}
+                style={{ cursor: 'pointer' }}
+              >
                 {/* Front of card */}
                 <div className="absolute w-full h-full backface-hidden">
                   <img
@@ -336,7 +330,8 @@ const PastSpeakers = ({ speakers = [] }) => {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
