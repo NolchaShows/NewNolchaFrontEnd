@@ -54,7 +54,7 @@ const VenueSection = ({
 
       {/* Venue Images Row */}
       {venueImages.length > 0 && (
-        <div className="flex w-full">
+        <div className="flex w-full mt-[-1px]">
           {venueImages.map((image, index) => (
             <div 
               key={index} 
