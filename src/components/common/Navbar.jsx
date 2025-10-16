@@ -398,22 +398,36 @@ function Navbar() {
             <div className="flex items-center gap-[30px]">
               <div className="flex items-center">
                 {/* Lets Talk Button */}
-                <Link
-                  href="/contact-us"
+                <button
+                  onClick={() => {
+                    const el = document.getElementById('contact');
+                    if (!el) return;
+                    const nav = document.querySelector('.sticky.top-0');
+                    const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+                    const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                  }}
                   className="px-[18.5px] py-[7.5px] bg-[#97FC6A] text-xl text-black font-medium rounded-full hover:bg-[#9ED706] transition-colors"
                 >
                   Lets Talk
-                </Link>
+                </button>
 
                 {/* Arrow Button */}
-                <Link
-                  href="/membership"
+                <button
+                  onClick={() => {
+                    const el = document.getElementById('contact');
+                    if (!el) return;
+                    const nav = document.querySelector('.sticky.top-0');
+                    const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+                    const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                  }}
                   className="w-11 h-11 bg-[#97FC6A] rounded-full flex items-center justify-center hover:bg-[#9ED706] transition-colors"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                     <path d="M4.99662 5.55025L4.99662 7.29504L11.9077 7.30123L4.3779 14.831L5.61534 16.0685L13.1451 8.53866L13.1513 15.4497L14.8961 15.4497V5.55025H4.99662Z" fill="#343434" />
                   </svg>
-                </Link>
+                </button>
               </div>
 
               {/* Social Icons */}
@@ -555,14 +569,21 @@ function Navbar() {
 
               {/* Mobile Buttons */}
               <div className="space-y-3">
-                <Link
-                  href="/contact-us"
-                  className="block text-center py-3 px-6 bg-[#9ED706] text-black font-medium rounded-full hover:bg-[#9ED706] transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                <button
+                  className="block w-full text-center py-3 px-6 bg-[#9ED706] text-black font-medium rounded-full hover:bg-[#9ED706] transition-colors"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    setTimeout(() => {
+                      const el = document.getElementById('contact');
+                      if (!el) return;
+                      const y = el.getBoundingClientRect().top + window.pageYOffset - 12;
+                      window.scrollTo({ top: y, behavior: 'smooth' });
+                    }, 50);
+                  }}
                 >
                   Lets Talk
-                </Link>
-                <Link
+                </button>
+                {/* <Link
                   href="/membership"
                   className="block text-center flex items-center justify-center py-3 px-6 bg-[#9ED706] text-black font-medium rounded-full hover:bg-[#9ED706] transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -570,7 +591,7 @@ function Navbar() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                     <path d="M4.99662 5.55025L4.99662 7.29504L11.9077 7.30123L4.3779 14.831L5.61534 16.0685L13.1451 8.53866L13.1513 15.4497L14.8961 15.4497V5.55025H4.99662Z" fill="#343434" />
                   </svg>
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>

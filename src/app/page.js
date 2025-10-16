@@ -317,7 +317,7 @@ const inscribingMiamiData = {
       sponsorshipInfo: {
         title: "For Sponsorship inquirers and speaking engagement",
         linkText: "View the full partnership deck here",
-        link: "#partnership-deck"
+        link: "https://calendly.com/nolcha"
       },
       contacts: [
         {
