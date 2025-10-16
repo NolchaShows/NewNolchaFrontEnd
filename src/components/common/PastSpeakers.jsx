@@ -11,9 +11,9 @@ const PastSpeakers = ({ speakers = [] }) => {
   // Default placeholder speakers if none provided
   const defaultSpeakersRow1 = [
     { id: 1, image: '/past_speakers/1.png', name: 'Elizabeth Olson', description: 'Elizabeth Olson is Head of Marketing at Magic Eden Wallet and was previously Head of Growth at Xverse.', twitter: 'https://x.com/elizabethols0n?lang=en' },
-    { id: 2, image: '/past_speakers/2.png', name: 'Pete Rizzo', description: 'Speaker description goes here', twitter: 'https://twitter.com' },
-    { id: 3, image: '/past_speakers/3.png', name: 'Avihu levy', description: 'Speaker description goes here', twitter: 'https://twitter.com' },
-    { id: 4, image: '/past_speakers/4.png', name: 'Dan held', description: 'Speaker description goes here', twitter: 'https://twitter.com' },
+    { id: 2, image: '/past_speakers/2.png', name: 'Pete Rizzo', description: "Pete Rizzo conducts archival research on Bitcoin's history, working to identify the people and events that most impacted its development', twitter: 'https://x.com/pete_rizzo_?lang=en" },
+    { id: 3, image: '/past_speakers/3.png', name: 'Avihu levy', description: 'CPO at StarkWare', twitter: 'https://x.com/avihu28' },
+    { id: 4, image: '/past_speakers/4.png', name: 'Dan held', description: 'Dan is investing in Bitcoin DeFi as a GP at Asymmetric, and a marketing advisor at Taproot Wizards, Mezo, Starkware others.', twitter: 'https://x.com/danheld?lang=en' },
     { id: 5, image: '/past_speakers/5.png', name: 'Charlie Spears', description: 'Charlie Spears is Co-Founder of Blockspace Media, Strategy at Nakamotor Partners, a Bitcoin mining company building the future of energy.', twitter: 'https://x.com/cbspears' },
     { id: 6, image: '/past_speakers/6.png', name: 'Trevor Owens', description: 'Trevor Owens is the managing partner of Bitcoin Frontier Fund and co-founder and CEO of Ninjalerts. He graduated from the Stern School of Business at New York University.', twitter: 'https://x.com/TO' },
   ];
@@ -23,8 +23,8 @@ const PastSpeakers = ({ speakers = [] }) => {
     { id: 8, image: '/past_speakers/8.png', name: 'Violetta Zironi', description: 'Violetta Zironi, Italian singer-songwriter and actress with a decade-long career in traditional music, has birthed five studio albums and multiple world tours. In film, she has starred in three movies, including a Netflix Original production.', twitter: 'https://x.com/ZironiVioletta/' },
     { id: 9, image: '/past_speakers/9.png', name: 'BOOTOSHI', description: 'BOOTOSHI is a Digital Creator & teaches AI Development.', twitter: 'https://x.com/KingBootoshi' },
     { id: 10, image: '/past_speakers/10.png', name: 'Amanda Terry', description: "Amanda is the Co-Founder & COO OnChainMonkey, Bitcoin's 1st 10K Ordinals Collection and @osura_com Co-Founder & GP @ACTAIVentures", twitter: 'https://x.com/amandaterry' },
-    { id: 11, image: '/past_speakers/11.png', name: 'Danny Yang', description: 'Speaker description goes here', twitter: 'https://twitter.com' },
-    { id: 12, image: '/past_speakers/12.png', name: 'Cara Ponzini', description: 'Speaker description goes here', twitter: 'https://twitter.com' },
+    { id: 11, image: '/past_speakers/11.png', name: 'Danny Yang', description: 'Builder of 3 x Bitcoin ventures since 2013. Creator of @OnChainMonkey', twitter: 'https://x.com/huuep' },
+    { id: 12, image: '/past_speakers/12.png', name: 'Cara Ponzini', description: 'CEO of PolyBeam building infrastructure to unlock the untapped potential of Bitcoin-native assets.', twitter: 'https://x.com/ponzini' },
     { id: 13, image: '/past_speakers/13.png', name: 'Jack Butcher', description: 'Jack Butcher is a pioneering digital artist and entrepreneur at the forefront of the NFT revolution. As the founder of Visualize Value, Butcher has established himself as a master of minimalist design, translating complex philosophical and economic concepts into striking visual metaphors.', twitter: 'https://x.com/jackbutcher' },
   ];
 
