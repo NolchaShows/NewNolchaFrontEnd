@@ -1,7 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import EventModal from "../Modals/EventModal";
 import InnerCircleModal from "../Modals/InnerCircleModal";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -11,10 +10,12 @@ function Navbar() {
   const [isInnerCircleModalOpen, setIsInnerCircleModalOpen] = useState(false);
   const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isShareDropdownOpen, setIsShareDropdownOpen] = useState(false);
+  const shareRef = useRef(null);
 
   const router = useRouter();
   const pathname = usePathname();
-  
+
   // Mobile dropdown states
   const [mobileDropdowns, setMobileDropdowns] = useState({
     btcVegas: false,
@@ -26,10 +27,8 @@ function Navbar() {
 
   // Share functions
   const handleTwitterShare = () => {
-    const url = typeof window !== 'undefined' ? window.location.href : '';
-    const text = 'Check out this page!';
-    const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-    window.open(twitterUrl, '_blank', 'width=550,height=420');
+    const profileUrl = 'https://x.com/nolchashows';
+    window.open(profileUrl, '_blank');
   };
 
   const handleTelegramShare = () => {
@@ -37,6 +36,59 @@ function Navbar() {
     const text = 'Check out this page!';
     const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
     window.open(telegramUrl, '_blank');
+  };
+
+  const handleCopyLink = () => {
+    try {
+      const href = typeof window !== 'undefined' ? window.location.href : '';
+      if (!href) return;
+      navigator.clipboard.writeText(href);
+    } catch (e) { }
+  };
+
+  useEffect(() => {
+    const onClickAway = (e) => {
+      if (!shareRef.current) return;
+      if (!shareRef.current.contains(e.target)) {
+        setIsShareDropdownOpen(false);
+      }
+    };
+    document.addEventListener('click', onClickAway);
+    return () => document.removeEventListener('click', onClickAway);
+  }, []);
+
+  const handleShare = (platform) => {
+    const href = typeof window !== 'undefined' ? window.location.href : '';
+    if (!href) return;
+    const encoded = encodeURIComponent(href);
+    let shareUrl = '';
+    switch (platform) {
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?url=${encoded}`;
+        break;
+      case 'telegram':
+        shareUrl = `https://t.me/share/url?url=${encoded}`;
+        break;
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encoded}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`;
+        break;
+      case 'instagram':
+        // Instagram has no web share URL; fallback to copying the link and opening Instagram
+        try { navigator.clipboard.writeText(href); } catch (e) { }
+        shareUrl = 'https://instagram.com';
+        break;
+      case 'discord':
+        // Discord has no public web share; open site and copy link
+        try { navigator.clipboard.writeText(href); } catch (e) { }
+        shareUrl = 'https://discord.com';
+        break;
+      default:
+        break;
+    }
+    if (shareUrl) window.open(shareUrl, '_blank');
   };
 
   const visibleMenuItems = [
@@ -350,8 +402,8 @@ function Navbar() {
                 </div>
               ))} */}
 
-              {/* More Dropdown */}
-              {/* <div
+            {/* More Dropdown */}
+            {/* <div
                 className="relative cursor-pointer"
                 onMouseEnter={() => setIsMoreDropdownOpen(true)}
                 onMouseLeave={() => setIsMoreDropdownOpen(false)}
@@ -431,9 +483,9 @@ function Navbar() {
               </div>
 
               {/* Social Icons */}
-              <div className="flex items-center gap-5">
+              <div className="flex items-center gap-5 relative" ref={shareRef}>
                 {/* X (Twitter) Icon */}
-                <button 
+                <button
                   onClick={handleTwitterShare}
                   className="cursor-pointer hover:opacity-70 transition-opacity"
                   aria-label="Share on X (Twitter)"
@@ -443,9 +495,9 @@ function Navbar() {
                   </svg>
                 </button>
 
-                {/* Telegram Icon */}
-                <button 
-                  onClick={handleTelegramShare}
+                {/* Telegram Icon (toggles share dropdown) */}
+                <button
+                  onClick={() => setIsShareDropdownOpen((v) => !v)}
                   className="cursor-pointer hover:opacity-70 transition-opacity"
                   aria-label="Share on Telegram"
                 >
@@ -453,6 +505,36 @@ function Navbar() {
                     <path d="M20.499 22.3181L22.9408 10.8239C23.04 10.3276 22.9805 9.97029 22.7621 9.75191C22.5437 9.53354 22.2559 9.50377 21.8986 9.66258L7.54567 15.1715C7.22804 15.2906 7.00967 15.4295 6.89056 15.5884C6.77145 15.7472 6.7516 15.8961 6.83101 16.035C6.91041 16.174 7.08908 16.2832 7.36701 16.3626L11.0595 17.4941L19.5759 12.1341C19.8141 11.9753 19.9928 11.9455 20.1119 12.0448C20.1913 12.1044 20.1615 12.1838 20.0226 12.283L13.1439 18.5364L12.8759 22.3181C13.134 22.3181 13.3821 22.1891 13.6203 21.931L15.407 20.2039L19.1292 22.9732C19.8439 23.3703 20.3005 23.1519 20.499 22.3181ZM30.5043 15.499C30.5043 17.5239 30.1073 19.4495 29.3132 21.2759C28.5192 23.1023 27.467 24.6904 26.1568 26.0404C24.8466 27.3903 23.2584 28.4424 21.3923 29.1968C19.5263 29.9512 17.6006 30.3482 15.6155 30.3879C13.6303 30.4276 11.7046 30.0306 9.83856 29.1968C7.97249 28.363 6.38434 27.3109 5.07412 26.0404C3.7639 24.7698 2.71175 23.1817 1.91767 21.2759C1.1236 19.3701 0.726562 17.4445 0.726562 15.499C0.726562 13.5535 1.1236 11.6279 1.91767 9.72214C2.71175 7.81636 3.7639 6.22821 5.07412 4.95769C6.38434 3.68717 7.97249 2.63503 9.83856 1.80125C11.7046 0.96747 13.6303 0.570433 15.6155 0.610136C17.6006 0.649841 19.5263 1.04688 21.3923 1.80125C23.2584 2.55562 24.8466 3.60777 26.1568 4.95769C27.467 6.30762 28.5192 7.89577 29.3132 9.72214C30.1073 11.5485 30.5043 13.4741 30.5043 15.499Z" fill="black" />
                   </svg>
                 </button>
+
+                {isShareDropdownOpen && (
+                  <div className="absolute top-full right-0 mt-2 min-w-[40px]">
+                    <div className="flex flex-col items-center">
+                      <button onClick={() => handleShare('twitter')} className="w-[31px] h-[31px] rounded-full bg-[#333] text-white flex items-center justify-center shadow hover:bg-[#444] mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 31 29" fill="currentColor">
+                          <path d="M18.9906 12.4141L28.9662 0.860271H24.4102L16.8764 9.58516L10.3551 0.860271H0.945312L12.2013 15.7789L1.54087 28.1367H6.09687L14.3453 18.6078L21.5218 28.1367H30.7231L18.9906 12.4141ZM8.98531 3.48072L25.3333 25.3674H22.8022L6.27553 3.48072H8.98531Z" />
+                        </svg>
+                      </button>
+                        <button onClick={() => handleShare('instagram')} className="w-[31px] h-[31px] rounded-full bg-[#333] text-white flex items-center justify-center shadow hover:bg-[#444] mb-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
+                        </button>
+                      <button onClick={() => handleShare('telegram')} className="w-[31px] h-[31px] rounded-full bg-[#333] text-white flex items-center justify-center shadow hover:bg-[#444] mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" /></svg>
+                      </button>
+                      <button onClick={() => handleShare('discord')} className="w-[31px] h-[31px] rounded-full bg-[#333] text-white flex items-center justify-center shadow hover:bg-[#444] mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.118.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" /></svg>
+                      </button>
+                      <button onClick={() => handleShare('facebook')} className="w-[31px] h-[31px] rounded-full bg-[#333] text-white flex items-center justify-center shadow hover:bg-[#444] mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z" /></svg>
+                      </button>
+                      <button onClick={() => handleShare('linkedin')} className="w-[31px] h-[31px] rounded-full bg-[#333] text-white flex items-center justify-center shadow hover:bg-[#444] mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z" /></svg>
+                      </button>
+                      <button onClick={handleCopyLink} className="w-[31px] h-[31px] rounded-full bg-[#333] text-white flex items-center justify-center shadow hover:bg-[#444]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.0605 8.11073L14.4747 9.52494C16.0155 11.0657 16.0155 13.5783 14.4747 15.1191L10.8895 18.7043C9.34873 20.2451 6.83614 20.2451 5.29534 18.7043C3.75455 17.1635 3.75455 14.6509 5.29534 13.1101L6.70956 11.6959L5.29534 10.2817L3.88113 11.6959C1.55192 14.0251 1.55192 17.7893 3.88113 20.1185C6.21034 22.4477 9.97453 22.4477 12.3037 20.1185L15.8889 16.5333C18.2181 14.2041 18.2181 10.4399 15.8889 8.11073L14.4747 6.69651L13.0605 8.11073ZM10.9395 15.8891L9.52525 14.4749C7.98446 12.9341 7.98446 10.4215 9.52525 8.88073L13.1105 5.29553C14.6512 3.75474 17.1638 3.75474 18.7046 5.29553C20.2454 6.83633 20.2454 9.34892 18.7046 10.8897L17.2904 12.3039L18.7046 13.7181L20.1188 12.3039C22.448 9.97468 22.448 6.21049 20.1188 3.88128C17.7896 1.55207 14.0254 1.55207 11.6962 3.88128L8.11099 7.46648C5.78178 9.79569 5.78178 13.5599 8.11099 15.8891L9.52521 17.3033L10.9395 15.8891Z" /></svg>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -514,8 +596,8 @@ function Navbar() {
                   <div key={idx}>{renderMobileMenuItem(item, idx)}</div>
                 ))} */}
 
-                {/* More Dropdown in Mobile */}
-                {/* <div className="border-b border-gray-100">
+              {/* More Dropdown in Mobile */}
+              {/* <div className="border-b border-gray-100">
                   <div
                     className="flex items-center justify-between py-4 cursor-pointer"
                     onClick={() => toggleMobileDropdown('more')}
@@ -528,8 +610,8 @@ function Navbar() {
                     </div>
                   </div> */}
 
-                  {/* Expanded more dropdown content */}
-                  {/* {mobileDropdowns.more && (
+              {/* Expanded more dropdown content */}
+              {/* {mobileDropdowns.more && (
                     <div className="pb-4 pl-4">
                       {moreMenuItems.map((item, idx) => (
                         <div key={idx}>
@@ -558,13 +640,25 @@ function Navbar() {
 
               {/* Social Icons */}
               <div className="flex gap-5 mb-8">
-                <svg xmlns="http://www.w3.org/2000/svg" width="31" height="29" viewBox="0 0 31 29" fill="none" className="cursor-pointer hover:opacity-70 transition-opacity" onClick={() => window.open("https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.nolcha.com", "_blank")}>
-                  <path d="M18.9906 12.4141L28.9662 0.860271H24.4102L16.8764 9.58516L10.3551 0.860271H0.945312L12.2013 15.7789L1.54087 28.1367H6.09687L14.3453 18.6078L21.5218 28.1367H30.7231L18.9906 12.4141ZM8.98531 3.48072L25.3333 25.3674H22.8022L6.27553 3.48072H8.98531Z" fill="black" />
-                </svg>
+                <button
+                  onClick={handleTwitterShare}
+                  className="cursor-pointer hover:opacity-70 transition-opacity"
+                  aria-label="Share on X (Twitter)"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="31" height="29" viewBox="0 0 31 29" fill="none" className="cursor-pointer hover:opacity-70 transition-opacity" onClick={() => window.open("https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.nolcha.com", "_blank")}>
+                    <path d="M18.9906 12.4141L28.9662 0.860271H24.4102L16.8764 9.58516L10.3551 0.860271H0.945312L12.2013 15.7789L1.54087 28.1367H6.09687L14.3453 18.6078L21.5218 28.1367H30.7231L18.9906 12.4141ZM8.98531 3.48072L25.3333 25.3674H22.8022L6.27553 3.48072H8.98531Z" fill="black" />
+                  </svg>
+                </button>
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none" className="cursor-pointer hover:opacity-70 transition-opacity" onClick={() => window.open("https://instagram.com", "_blank")}>
-                  <path d="M20.499 22.3181L22.9408 10.8239C23.04 10.3276 22.9805 9.97029 22.7621 9.75191C22.5437 9.53354 22.2559 9.50377 21.8986 9.66258L7.54567 15.1715C7.22804 15.2906 7.00967 15.4295 6.89056 15.5884C6.77145 15.7472 6.7516 15.8961 6.83101 16.035C6.91041 16.174 7.08908 16.2832 7.36701 16.3626L11.0595 17.4941L19.5759 12.1341C19.8141 11.9753 19.9928 11.9455 20.1119 12.0448C20.1913 12.1044 20.1615 12.1838 20.0226 12.283L13.1439 18.5364L12.8759 22.3181C13.134 22.3181 13.3821 22.1891 13.6203 21.931L15.407 20.2039L19.1292 22.9732C19.8439 23.3703 20.3005 23.1519 20.499 22.3181ZM30.5043 15.499C30.5043 17.5239 30.1073 19.4495 29.3132 21.2759C28.5192 23.1023 27.467 24.6904 26.1568 26.0404C24.8466 27.3903 23.2584 28.4424 21.3923 29.1968C19.5263 29.9512 17.6006 30.3482 15.6155 30.3879C13.6303 30.4276 11.7046 30.0306 9.83856 29.1968C7.97249 28.363 6.38434 27.3109 5.07412 26.0404C3.7639 24.7698 2.71175 23.1817 1.91767 21.2759C1.1236 19.3701 0.726562 17.4445 0.726562 15.499C0.726562 13.5535 1.1236 11.6279 1.91767 9.72214C2.71175 7.81636 3.7639 6.22821 5.07412 4.95769C6.38434 3.68717 7.97249 2.63503 9.83856 1.80125C11.7046 0.96747 13.6303 0.570433 15.6155 0.610136C17.6006 0.649841 19.5263 1.04688 21.3923 1.80125C23.2584 2.55562 24.8466 3.60777 26.1568 4.95769C27.467 6.30762 28.5192 7.89577 29.3132 9.72214C30.1073 11.5485 30.5043 13.4741 30.5043 15.499Z" fill="black" />
-                </svg>
+                <button
+                  onClick={handleTelegramShare}
+                  className="cursor-pointer hover:opacity-70 transition-opacity"
+                  aria-label="Share on Telegram"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none" className="cursor-pointer hover:opacity-70 transition-opacity" onClick={() => window.open("https://instagram.com", "_blank")}>
+                    <path d="M20.499 22.3181L22.9408 10.8239C23.04 10.3276 22.9805 9.97029 22.7621 9.75191C22.5437 9.53354 22.2559 9.50377 21.8986 9.66258L7.54567 15.1715C7.22804 15.2906 7.00967 15.4295 6.89056 15.5884C6.77145 15.7472 6.7516 15.8961 6.83101 16.035C6.91041 16.174 7.08908 16.2832 7.36701 16.3626L11.0595 17.4941L19.5759 12.1341C19.8141 11.9753 19.9928 11.9455 20.1119 12.0448C20.1913 12.1044 20.1615 12.1838 20.0226 12.283L13.1439 18.5364L12.8759 22.3181C13.134 22.3181 13.3821 22.1891 13.6203 21.931L15.407 20.2039L19.1292 22.9732C19.8439 23.3703 20.3005 23.1519 20.499 22.3181ZM30.5043 15.499C30.5043 17.5239 30.1073 19.4495 29.3132 21.2759C28.5192 23.1023 27.467 24.6904 26.1568 26.0404C24.8466 27.3903 23.2584 28.4424 21.3923 29.1968C19.5263 29.9512 17.6006 30.3482 15.6155 30.3879C13.6303 30.4276 11.7046 30.0306 9.83856 29.1968C7.97249 28.363 6.38434 27.3109 5.07412 26.0404C3.7639 24.7698 2.71175 23.1817 1.91767 21.2759C1.1236 19.3701 0.726562 17.4445 0.726562 15.499C0.726562 13.5535 1.1236 11.6279 1.91767 9.72214C2.71175 7.81636 3.7639 6.22821 5.07412 4.95769C6.38434 3.68717 7.97249 2.63503 9.83856 1.80125C11.7046 0.96747 13.6303 0.570433 15.6155 0.610136C17.6006 0.649841 19.5263 1.04688 21.3923 1.80125C23.2584 2.55562 24.8466 3.60777 26.1568 4.95769C27.467 6.30762 28.5192 7.89577 29.3132 9.72214C30.1073 11.5485 30.5043 13.4741 30.5043 15.499Z" fill="black" />
+                  </svg>
+                </button>
               </div>
 
               {/* Mobile Buttons */}
@@ -595,14 +689,17 @@ function Navbar() {
               </div>
             </div>
           </div>
-        </div>
-      )}
+        </div >
+      )
+      }
 
-      {isInnerCircleModalOpen && (
-        <InnerCircleModal
-          setIsInnerCircleModalOpen={setIsInnerCircleModalOpen}
-        />
-      )}
+      {
+        isInnerCircleModalOpen && (
+          <InnerCircleModal
+            setIsInnerCircleModalOpen={setIsInnerCircleModalOpen}
+          />
+        )
+      }
     </>
   );
 }
