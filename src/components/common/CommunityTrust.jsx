@@ -113,7 +113,7 @@ const CommunityTrust = ({
                         {contact.name}
                       </h3>
                       <p className="text-[10px] lg:text-[22px]">
-                        <span className="font-medium">Email:</span> {contact.email}
+                        <span className="font-medium">Email:</span> <a href={`mailto:${contact.email}`} >{contact.email}</a>
                       </p>
                     </div>
                   ))}
