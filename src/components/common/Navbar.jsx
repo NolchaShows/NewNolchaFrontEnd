@@ -525,13 +525,17 @@ function Navbar() {
                   className="cursor-pointer hover:opacity-70 transition-opacity"
                   aria-label="Share on Telegram"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none">
-                    <path d="M20.499 22.3181L22.9408 10.8239C23.04 10.3276 22.9805 9.97029 22.7621 9.75191C22.5437 9.53354 22.2559 9.50377 21.8986 9.66258L7.54567 15.1715C7.22804 15.2906 7.00967 15.4295 6.89056 15.5884C6.77145 15.7472 6.7516 15.8961 6.83101 16.035C6.91041 16.174 7.08908 16.2832 7.36701 16.3626L11.0595 17.4941L19.5759 12.1341C19.8141 11.9753 19.9928 11.9455 20.1119 12.0448C20.1913 12.1044 20.1615 12.1838 20.0226 12.283L13.1439 18.5364L12.8759 22.3181C13.134 22.3181 13.3821 22.1891 13.6203 21.931L15.407 20.2039L19.1292 22.9732C19.8439 23.3703 20.3005 23.1519 20.499 22.3181ZM30.5043 15.499C30.5043 17.5239 30.1073 19.4495 29.3132 21.2759C28.5192 23.1023 27.467 24.6904 26.1568 26.0404C24.8466 27.3903 23.2584 28.4424 21.3923 29.1968C19.5263 29.9512 17.6006 30.3482 15.6155 30.3879C13.6303 30.4276 11.7046 30.0306 9.83856 29.1968C7.97249 28.363 6.38434 27.3109 5.07412 26.0404C3.7639 24.7698 2.71175 23.1817 1.91767 21.2759C1.1236 19.3701 0.726562 17.4445 0.726562 15.499C0.726562 13.5535 1.1236 11.6279 1.91767 9.72214C2.71175 7.81636 3.7639 6.22821 5.07412 4.95769C6.38434 3.68717 7.97249 2.63503 9.83856 1.80125C11.7046 0.96747 13.6303 0.570433 15.6155 0.610136C17.6006 0.649841 19.5263 1.04688 21.3923 1.80125C23.2584 2.55562 24.8466 3.60777 26.1568 4.95769C27.467 6.30762 28.5192 7.89577 29.3132 9.72214C30.1073 11.5485 30.5043 13.4741 30.5043 15.499Z" fill="black" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="2.2" />
+                    <circle cx="6" cy="12" r="2.2" />
+                    <circle cx="18" cy="19" r="2.2" />
+                    <path d="M8.6 12.9L15.4 17.1" />
+                    <path d="M8.6 11.1L15.4 6.9" />
                   </svg>
                 </button>
 
                 {isShareDropdownOpen && (
-                  <div className="absolute top-full right-0 mt-2 min-w-[40px]">
+                  <div className="absolute top-full right-[-4px] mt-4 min-w-[40px]">
                     <div className="flex flex-col items-center">
                       <button onClick={() => handleShare('twitter')} className="w-[31px] h-[31px] rounded-full bg-[#333] text-white flex items-center justify-center shadow hover:bg-[#444] mb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 31 29" fill="currentColor">
@@ -690,13 +694,13 @@ function Navbar() {
               </div>
 
               {/* Social Icons */}
-              <div className="flex gap-5">
+              <div className="flex flex-row items-center gap-5">
                 <button
                   onClick={() => handleShare('twitter')}
                   className="cursor-pointer hover:opacity-70 transition-opacity"
                   aria-label="Share on X (Twitter)"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="31" height="29" viewBox="0 0 31 29" fill="none" className="cursor-pointer hover:opacity-70 transition-opacity">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 29" fill="none" className="cursor-pointer hover:opacity-70 transition-opacity">
                     <path d="M18.9906 12.4141L28.9662 0.860271H24.4102L16.8764 9.58516L10.3551 0.860271H0.945312L12.2013 15.7789L1.54087 28.1367H6.09687L14.3453 18.6078L21.5218 28.1367H30.7231L18.9906 12.4141ZM8.98531 3.48072L25.3333 25.3674H22.8022L6.27553 3.48072H8.98531Z" fill="black" />
                   </svg>
                 </button>
@@ -704,17 +708,21 @@ function Navbar() {
                 <div className="relative" ref={mobileShareRef}>
                   <button
                     onClick={() => setIsShareDropdownOpen(!isShareDropdownOpen)}
-                    className="cursor-pointer hover:opacity-70 transition-opacity"
+                    className="cursor-pointer hover:opacity-70 transition-opacity mt-2"
                     aria-label="Share"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none" className="cursor-pointer hover:opacity-70 transition-opacity">
-                      <path d="M20.499 22.3181L22.9408 10.8239C23.04 10.3276 22.9805 9.97029 22.7621 9.75191C22.5437 9.53354 22.2559 9.50377 21.8986 9.66258L7.54567 15.1715C7.22804 15.2906 7.00967 15.4295 6.89056 15.5884C6.77145 15.7472 6.7516 15.8961 6.83101 16.035C6.91041 16.174 7.08908 16.2832 7.36701 16.3626L11.0595 17.4941L19.5759 12.1341C19.8141 11.9753 19.9928 11.9455 20.1119 12.0448C20.1913 12.1044 20.1615 12.1838 20.0226 12.283L13.1439 18.5364L12.8759 22.3181C13.134 22.3181 13.3821 22.1891 13.6203 21.931L15.407 20.2039L19.1292 22.9732C19.8439 23.3703 20.3005 23.1519 20.499 22.3181ZM30.5043 15.499C30.5043 17.5239 30.1073 19.4495 29.3132 21.2759C28.5192 23.1023 27.467 24.6904 26.1568 26.0404C24.8466 27.3903 23.2584 28.4424 21.3923 29.1968C19.5263 29.9512 17.6006 30.3482 15.6155 30.3879C13.6303 30.4276 11.7046 30.0306 9.83856 29.1968C7.97249 28.363 6.38434 27.3109 5.07412 26.0404C3.7639 24.7698 2.71175 23.1817 1.91767 21.2759C1.1236 19.3701 0.726562 17.4445 0.726562 15.499C0.726562 13.5535 1.1236 11.6279 1.91767 9.72214C2.71175 7.81636 3.7639 6.22821 5.07412 4.95769C6.38434 3.68717 7.97249 2.63503 9.83856 1.80125C11.7046 0.96747 13.6303 0.570433 15.6155 0.610136C17.6006 0.649841 19.5263 1.04688 21.3923 1.80125C23.2584 2.55562 24.8466 3.60777 26.1568 4.95769C27.467 6.30762 28.5192 7.89577 29.3132 9.72214C30.1073 11.5485 30.5043 13.4741 30.5043 15.499Z" fill="black" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="18" cy="5" r="2.2" />
+                      <circle cx="6" cy="12" r="2.2" />
+                      <circle cx="18" cy="19" r="2.2" />
+                      <path d="M8.6 12.9L15.4 17.1" />
+                      <path d="M8.6 11.1L15.4 6.9" />
                     </svg>
                   </button>
-                  
+
                   {/* Mobile Share Dropdown */}
                   {isShareDropdownOpen && (
-                    <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-3 z-50">
+                    <div className="absolute top-full left-[-4px] mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-3 z-50">
                       <div className="flex flex-col gap-2">
                         <button onClick={() => handleShare('twitter')} className="w-[31px] h-[31px] rounded-full bg-[#333] text-white flex items-center justify-center shadow hover:bg-[#444]">
                           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 31 29" fill="currentColor">
