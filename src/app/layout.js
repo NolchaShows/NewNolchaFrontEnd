@@ -12,6 +12,24 @@ const orbitron = Orbitron({
 export const metadata = {
   title: "Nolcha-Inscribing Miami",
   description: "Miami Art Week's Largest Art + Tech Culture Convergence",
+  openGraph: {
+    title: "Nolcha-Inscribing Miami",
+    description: "Miami Art Week's Largest Art + Tech Culture Convergence",
+    images: [
+      {
+        url: "/meta-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Nolcha Inscribing Miami - Miami Art Week's Largest Art + Tech Culture Convergence",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nolcha-Inscribing Miami",
+    description: "Miami Art Week's Largest Art + Tech Culture Convergence",
+    images: ["/meta-image.jpg"],
+  },
 };
 
 export default function RootLayout({ children }) {
