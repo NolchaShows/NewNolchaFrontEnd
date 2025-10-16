@@ -1,6 +1,6 @@
 import "./globals.css";
-import ConditionalLayout from "./ConditionalLayout";
 import { Orbitron } from "next/font/google";
+import Navbar from "@/components/common/Navbar";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -18,9 +18,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={orbitron.variable}>
       <body>
-        <ConditionalLayout>
-          {children}
-        </ConditionalLayout>
+        <div className="bg-[var(--surface-color)]">
+          <Navbar/>
+        </div>
+        {children}
       </body>
     </html>
   );
