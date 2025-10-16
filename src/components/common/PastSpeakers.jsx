@@ -11,7 +11,7 @@ const PastSpeakers = ({ speakers = [] }) => {
   // Default placeholder speakers if none provided
   const defaultSpeakersRow1 = [
     { id: 1, image: '/past_speakers/1.png', name: 'Elizabeth Olson', description: 'Elizabeth Olson is Head of Marketing at Magic Eden Wallet and was previously Head of Growth at Xverse.', twitter: 'https://x.com/elizabethols0n?lang=en' },
-    { id: 2, image: '/past_speakers/2.png', name: 'Pete Rizzo', description: "Pete Rizzo conducts archival research on Bitcoin's history, working to identify the people and events that most impacted its development', twitter: 'https://x.com/pete_rizzo_?lang=en" },
+    { id: 2, image: '/past_speakers/2.png', name: 'Pete Rizzo', description: "Pete Rizzo conducts archival research on Bitcoin's history, working to identify the people and events that most impacted its development", twitter: 'https://x.com/pete_rizzo_?lang=en' },
     { id: 3, image: '/past_speakers/3.png', name: 'Avihu levy', description: 'CPO at StarkWare', twitter: 'https://x.com/avihu28' },
     { id: 4, image: '/past_speakers/4.png', name: 'Dan held', description: 'Dan is investing in Bitcoin DeFi as a GP at Asymmetric, and a marketing advisor at Taproot Wizards, Mezo, Starkware others.', twitter: 'https://x.com/danheld?lang=en' },
     { id: 5, image: '/past_speakers/5.png', name: 'Charlie Spears', description: 'Charlie Spears is Co-Founder of Blockspace Media, Strategy at Nakamotor Partners, a Bitcoin mining company building the future of energy.', twitter: 'https://x.com/cbspears' },
