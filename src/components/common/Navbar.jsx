@@ -585,7 +585,7 @@ function Navbar() {
 
           {/* Mobile hamburger menu */}
           <button
-            className="w-10 h-10 bg-[#9ED706] rounded-lg border border-[#B5BF9E] flex items-center justify-center cursor-pointer hover:bg-[#9ED706] transition-colors"
+            className="w-10 h-10 bg-[#97FC6A] rounded-lg border border-[#B5BF9E] flex items-center justify-center cursor-pointer hover:bg-[#9ED706] transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
@@ -669,7 +669,7 @@ function Navbar() {
               {/* Mobile Buttons */}
               <div className="space-y-3 mb-8">
                 <button
-                  className="block w-full text-center py-3 px-6 bg-[#9ED706] text-black font-medium rounded-full hover:bg-[#9ED706] transition-colors"
+                  className="block w-full text-center py-3 px-6 bg-[#97FC6A] text-black font-medium rounded-full hover:bg-[#9ED706] transition-colors"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     setTimeout(() => {
