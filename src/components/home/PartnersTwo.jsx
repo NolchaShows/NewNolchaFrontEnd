@@ -82,9 +82,9 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
         } else if (windowWidth >= 1024) {
             return Math.min(Math.max(Math.ceil(partnerCount / 4), 3), 5);
         } else if (windowWidth >= 768) {
-            return Math.min(Math.max(Math.ceil(partnerCount / 5), 2), 4);
+            return Math.min(Math.max(Math.ceil(partnerCount / 4), 2), 3);
         } else {
-            return Math.min(Math.max(Math.ceil(partnerCount / 5), 2), 4);
+            return Math.min(Math.max(Math.ceil(partnerCount / 4), 2), 3);
         }
     };
 

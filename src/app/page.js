@@ -154,9 +154,16 @@ const inscribingMiamiData = {
       },
       {
         id: 17,
-        imageWhite: "/home/press/10w.png",
-        imageBlack: "/home/press/10b.png",
+        imageWhite: "/home/press/17w.png",
+        imageBlack: "/home/press/17b.png",
         altText: "Partner 17",
+        backgroundColor: "bg-black",
+      },
+      {
+        id: 18,
+        imageWhite: "/home/press/18w.png",
+        imageBlack: "/home/press/18b.png",
+        altText: "Partner 18",
         backgroundColor: "bg-black",
       },
     ]
