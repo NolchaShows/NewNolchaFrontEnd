@@ -92,12 +92,12 @@ const CommunityTrust = ({
               {/* Sponsorship Info */}
               {formSection.sponsorshipInfo && (
                 <div className="text-center mb-[36px]">
-                  <p className="text-white text-[14px] lg:text-[30px] mb-[5px] lg:mb-[16px]">
+                  <p className="text-white text-[16px] lg:text-[30px] mb-[10px] lg:mb-[16px]">
                     {formSection.sponsorshipInfo.title}
                   </p>
                   <a
                     href={formSection.sponsorshipInfo.link}
-                    className="text-white text-[10px] lg:text-[22px] underline hover:opacity-80"
+                    className="text-white text-[12px] lg:text-[22px] hover:opacity-80"
                   >
                     {formSection.sponsorshipInfo.linkText}
                   </a>
@@ -112,7 +112,7 @@ const CommunityTrust = ({
                       <h3 className="text-[14px] lg:text-[26px] font-bold mb-[4px] lg:mb-[10px] leading-none">
                         {contact.name}
                       </h3>
-                      <p className="text-[10px] lg:text-[22px]">
+                      <p className="text-[12px] lg:text-[22px]">
                         <span className="font-medium">Email:</span> <a href={`mailto:${contact.email}`} >{contact.email}</a>
                       </p>
                     </div>
