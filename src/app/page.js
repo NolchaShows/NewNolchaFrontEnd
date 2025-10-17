@@ -258,17 +258,17 @@ const inscribingMiamiData = {
         {
           time: "1:30pm-\n6:30pm",
           title: "Inscribing Miami",
-          description: "Grand & intimate, high-caliber conference gathering leaders across blockchain, Bitcoin, and digital culture. Includes Master Crypto & Agentic AI panel discussions, and networking lounges.",
+          description: "Intimate, high-caliber workshops gathering leaders across blockchain, Bitcoin, and digital culture. Includes Master Crypto & Agentic AI discussions, and networking lounges.",
           stats: "400+ Industry leaders"
         },
         {
           time: "7:30pm-\n9:00pm",
-          title: "Annual Bitcoin Art Awards",
-          description: "Celebrating visionaries with curated networking.",
+          title: "VIP Reception",
+          description: "An exclusive evening designed for meaningful connections and great conversation — featuring live opera, musicians, and captivating performances.",
           stats: "600+ VIPs & creators"
         },
         {
-          time: "9:00pm-\n2:00pm",
+          time: "9:00pm-\n2:00am",
           title: "Immersive Art Adventure",
           description: "A 360° visual experience with 50 LED walls, live performances, aerialists, and surprise acts.",
           stats: "2,500+ guests across art, tech, fashion & crypto."
