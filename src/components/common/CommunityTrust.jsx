@@ -106,7 +106,7 @@ const CommunityTrust = ({
 
               {/* Contact Details */}
               {formSection.contacts && (
-                <div className="flex flex-col lg:flex-row lg:justify-between gap-[30px] text-white">
+                <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-[30px] text-white">
                   {formSection.contacts.map((contact, index) => (
                     <div key={index} className={index === 1 ? 'lg:text-left' : ''}>
                       <h3 className="text-[14px] lg:text-[26px] font-bold mb-[4px] lg:mb-[10px] leading-none">
