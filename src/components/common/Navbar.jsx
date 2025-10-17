@@ -28,11 +28,7 @@ function Navbar() {
 
   // Share functions
   const handleTwitterShare = () => {
-    const href = typeof window !== 'undefined' ? window.location.href : '';
-    if (!href) return;
-    const encoded = encodeURIComponent(href);
-    const shareUrl = `https://twitter.com/intent/tweet?url=${encoded}`;
-    window.open(shareUrl, '_blank');
+    window.open('https://x.com/nolchashows', '_blank');
   };
 
   const handleTelegramShare = () => {
@@ -696,7 +692,7 @@ function Navbar() {
               {/* Social Icons */}
               <div className="flex flex-row items-center gap-5">
                 <button
-                  onClick={() => handleShare('twitter')}
+                  onClick={handleTwitterShare}
                   className="cursor-pointer hover:opacity-70 transition-opacity"
                   aria-label="Share on X (Twitter)"
                 >
