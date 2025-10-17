@@ -109,7 +109,7 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
 
         return (
             <div
-                className="flex items-center justify-center w-[70px] h-[70px] sm:w-[90px] sm:h-[90px] md:w-[120px] md:h-[120px] lg:w-[167px] lg:h-[170px] rounded-[12px] sm:rounded-[16px] lg:rounded-[24px] backdrop-blur-sm shadow-[0_0.8px_32px_0_rgba(227,222,255,0.05)_inset,0_3.19px_14.37px_0_rgba(154,146,210,0.05)_inset,0_78.26px_78.26px_-38.33px_rgba(202,172,255,0.05)_inset,0_-65.48px_54.3px_-51.11px_rgba(96,68,144,0.05)_inset,0_5.59px_8.78px_-3.25px_rgba(255,255,255,0.07)_inset,0_32px_40px_-2px_rgba(255,255,255,0.02)_inset,0_0.5px_10px_-6px_rgba(0,0,0,0.10),0_20px_26px_-5px_rgba(0,0,0,0.40)] bg-[#1A1A1A] cursor-pointer"
+                className="flex items-center justify-center w-[90px] h-[90px] sm:w-[110px] sm:h-[110px] md:w-[120px] md:h-[120px] lg:w-[167px] lg:h-[170px] rounded-[12px] sm:rounded-[16px] lg:rounded-[24px] backdrop-blur-sm shadow-[0_0.8px_32px_0_rgba(227,222,255,0.05)_inset,0_3.19px_14.37px_0_rgba(154,146,210,0.05)_inset,0_78.26px_78.26px_-38.33px_rgba(202,172,255,0.05)_inset,0_-65.48px_54.3px_-51.11px_rgba(96,68,144,0.05)_inset,0_5.59px_8.78px_-3.25px_rgba(255,255,255,0.07)_inset,0_32px_40px_-2px_rgba(255,255,255,0.02)_inset,0_0.5px_10px_-6px_rgba(0,0,0,0.10),0_20px_26px_-5px_rgba(0,0,0,0.40)] bg-[#1A1A1A] cursor-pointer"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
@@ -136,43 +136,54 @@ const PartnersTwo = ({ partnerData, loading, title, description, partners, bg, l
 
     // Get responsive gap and container classes
     const getResponsiveClasses = () => {
-        // Use consistent responsive classes for all breakpoints to ensure gaps always exist
-        const baseClasses = {
-            columnGap: "gap-[5px]", // Horizontal gap between columns
-            cardGap: "gap-[7px]", // Vertical gap between cards
+        // Responsive gap classes - smaller on mobile, larger on desktop
+        const getGapClasses = () => {
+            if (windowWidth >= 1024) {
+                return {
+                    columnGap: "gap-[5px]", // Desktop horizontal gap
+                    cardGap: "gap-[7px]", // Desktop vertical gap
+                };
+            } else {
+                return {
+                    columnGap: "gap-[3px]", // Mobile horizontal gap
+                    cardGap: "gap-[4px]", // Mobile vertical gap
+                };
+            }
         };
+
+        const gapClasses = getGapClasses();
 
         if (windowWidth >= 1800) {
             return {
-                ...baseClasses,
+                ...gapClasses,
                 containerPadding: "px-[177px] 2xl:px-32 xl:px-16",
                 maxColumnWidth: "max-w-[145px]",
                 minHeight: "min-h-[400px]",
             };
         } else if (windowWidth >= 1280) {
             return {
-                ...baseClasses,
+                ...gapClasses,
                 containerPadding: "px-[177px] 2xl:px-32 xl:px-16",
                 maxColumnWidth: "max-w-[145px]",
                 minHeight: "min-h-[400px]",
             };
         } else if (windowWidth >= 1024) {
             return {
-                ...baseClasses,
+                ...gapClasses,
                 containerPadding: "lg:px-10",
                 maxColumnWidth: "max-w-[180px]",
                 minHeight: "min-h-[350px]",
             };
         } else if (windowWidth >= 768) {
             return {
-                ...baseClasses,
+                ...gapClasses,
                 containerPadding: "md:px-6",
                 maxColumnWidth: "max-w-[200px]",
                 minHeight: "min-h-[300px]",
             };
         } else {
             return {
-                ...baseClasses,
+                ...gapClasses,
                 containerPadding: "px-[12px] sm:px-[22px]",
                 maxColumnWidth: "",
                 minHeight: "min-h-[200px]",
