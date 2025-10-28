@@ -73,6 +73,12 @@ function page() {
                     "At Artechouse New York, an interactive art museum in Chelsea, we produced Shao New York's Spring/Summer 2026 runway show, \"Futures of the Past: Chrome Legacy.\""
                 ]}
                 background="#FEF991"
+                tags={[
+                    { label: "Branding", color: "#BDACFF" },
+                    { label: "Strategy", color: "#BBD7FF" },
+                    { label: "Content", color: "#CCF4A6" },
+                    { label: "Campaigns", color: "#BDACFF" }
+                ]}
             />
 
             <EveningRecap
