@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import SectionTitle from "./SectionTitle";
 
 const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
   const [formData, setFormData] = useState({
@@ -12,8 +13,30 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectedServices, setSelectedServices] = useState(new Set());
 
   const router = useRouter();
+
+  const services = [
+    "Events",
+    "Collaboration",
+    "Partnership",
+    "Event Planning",
+    "Merch",
+    "Customer Support"
+  ];
+
+  const handleServiceClick = (service) => {
+    setSelectedServices(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(service)) {
+        newSet.delete(service);
+      } else {
+        newSet.add(service);
+      }
+      return newSet;
+    });
+  };
 
   // Dynamic data from Strapi or props fallback
   const dynamicHeading = contactData?.heading || heading || "Lets Talk";
@@ -53,7 +76,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat relative flex justify-center px-0 md:px-[60px] xl:px-[96px] 2xl:px-[150px]"
+      className="bg-cover bg-center bg-no-repeat relative flex justify-center page-container"
       style={{
         backgroundImage: `url("${dynamicBackgroundImage}")`,
         backgroundColor: "#1a1a1a", // fallback dark color
@@ -62,14 +85,26 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
 
-      <div className="relative z-10 min-h-screen w-full flex flex-col lg:flex-row lg:items-center mx-10 md:mx-0 py-12 md:py-16 2xl:py-16 gap-[20px]">
+      <div className="relative z-10 w-full flex flex-col lg:flex-row lg:items-center gap-[26px] lg:gap-[68px] 2xl:gap-[120px]">
         {/* Left Side */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center mb-8 md:mb-12 lg:mb-0 text-center md:text-left">
-          <h1 className="text-white font-bold leading-tight mb-6 md:mb-8 lg:mb-12 2xl:mb-16">
-            <span className="text-[40px] md:text-[64px] 2xl:text-[80px] uppercase">
-              {dynamicHeading}
-            </span>
-          </h1>
+        <div className="w-full lg:w-1/2 flex flex-col justify-center text-center md:text-left">
+          <SectionTitle className="text-left text-white" >{dynamicHeading}</SectionTitle>
+
+          {/* Service Buttons Grid */}
+          <div className="flex flex-wrap gap-[7px] lg:gap-[10px] 2xl:gap-[18px] title-spacing">
+            {services.map((service, index) => (
+              <button
+                key={index}
+                onClick={() => handleServiceClick(service)}
+                className={`rounded-full py-2 px-4 lg:px-6 lg:py-3 2xl:py-5 2xl:px-10 border transition-all text-[11px] lg:text-[16px] 2xl:text-[28px] font-medium whitespace-nowrap ${selectedServices.has(service)
+                    ? 'bg-[#CAD533] text-black border-[#CAD533]'
+                    : 'bg-white text-black border-[#CAD533] hover:opacity-90'
+                  }`}
+              >
+                {service}
+              </button>
+            ))}
+          </div>
 
           {dynamicDescription && (
             <div className="text-white font-medium leading-tight pr-[20px] mb-6 md:mb-8 lg:mb-12 2xl:mb-16">
@@ -79,7 +114,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
             </div>
           )}
 
-          <div className="flex justify-center lg:justify-start w-[80%] mx-auto lg:mx-0">
+          <div className="flex justify-center lg:justify-start">
             {!isButton ? (
               <img
                 src="/contact/1.png"
@@ -109,7 +144,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                   placeholder={firstNamePlaceholder}
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="h-full rounded-[12px] w-full p-[10px] md:pl-[30px] text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="h-full rounded-full w-full p-[10px] md:pl-[30px] text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
                   required
                 />
               </div>
@@ -120,7 +155,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                   placeholder={lastNamePlaceholder}
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="h-full rounded-[12px] w-full p-[10px] md:pl-[30px] text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="h-full rounded-full w-full p-[10px] md:pl-[30px] text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
                   required
                 />
               </div>
@@ -134,22 +169,22 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                 placeholder={emailPlaceholder}
                 value={formData.email}
                 onChange={handleChange}
-                className="rounded-[12px] h-full w-full p-[10px] md:pl-[30px] 2xl:px-6 2xl:py-5 text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="rounded-full h-full w-full p-[10px] md:pl-[30px] 2xl:px-6 2xl:py-5 text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
                 required
               />
             </div>
 
             {/* Message */}
-            <div className="w-full h-[193px] 2xl:h-[250px]">
-              <textarea
+            <div className="w-full h-[56px] 2xl:h-[80px]">
+              <input
+                type="text"
                 name="message"
                 placeholder={messagePlaceholder}
-                rows="6"
                 value={formData.message}
                 onChange={handleChange}
-                className="h-full rounded-[12px] w-full p-[10px] md:pl-[30px] 2xl:px-6 2xl:py-5 text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50 resize-none min-h-[120px] md:min-h-[140px] 2xl:min-h-[200px]"
+                className="rounded-full h-full w-full p-[10px] md:pl-[30px] 2xl:px-6 2xl:py-5 text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
                 required
-              ></textarea>
+              />
             </div>
 
             {/* Submit */}
@@ -159,20 +194,20 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                 onClick={handleSubmit}
                 disabled={isLoading}
                 className={`
-    border-[1px] border-[#000000]
-    rounded-[10px]
-    w-full
-    py-3 px-6 2xl:py-6 2xl:px-12
-    text-[16px]
-    2xl:text-[24px]
-    font-['Neue_Haas_Grotesk_Text_Pro',sans-serif]
-    font-medium
-    bg-[#E7F0D3]
-    hover:bg-[#C5B195]
-    text-[#000000]
-    transition-colors duration-200
-    flex justify-center items-center
-  `}
+                border-[1px] border-[#000000]
+                rounded-full
+                w-full
+                py-3 px-6 2xl:py-6 2xl:px-12
+                text-[16px]
+                2xl:text-[24px]
+                font-['Neue_Haas_Grotesk_Text_Pro',sans-serif]
+                font-medium
+                bg-[#CAD533]
+                hover:bg-[#BFC943]
+                text-[#000000]
+                transition-colors duration-200
+                flex justify-center items-center
+              `}
               >
                 {isLoading ? (
                   <div className="linear-loader"></div>

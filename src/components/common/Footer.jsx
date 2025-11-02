@@ -64,21 +64,21 @@ function Footer() {
 
   return (
     <div
-      className="overflow-hidden px-[13px] pb-[37px] lg:px-10 lg:py-16 bg-zinc-100 max-md:px-5"
+      className="overflow-hidden px-[13px] pb-[37px] lg:px-10 lg:py-16 bg-[#000000] max-md:px-5"
       data-name="Footer"
     >
-      <div className="w-full bg-gray-100 pt-8 lg:py-8 sm:p-0">
+      <div className="w-full bg-[#000000] pt-8 lg:py-8 sm:p-0">
         {/* Large screen layout */}
         <div className="hidden lg:flex w-full max-w-none gap-[70px] xl:gap-[100px] 2xl:gap-[150px] mx-auto">
           {/* Left section - Newsletter signup (1/3 width) */}
-          <div className="w-3/7 pr-8 p-8 2xl:p-[56px] bg-white lg:rounded-[8px] rounded-[12px] 2xl:rounded-[15px]">
+          <div className="w-3/7 pr-8 p-8 2xl:p-[56px] bg-[#FFF7E6] lg:rounded-[8px] rounded-[12px] 2xl:rounded-[15px]">
             <div className="w-full">
               <div
                 className="
                           text-[32px] 2xl:text-[44px]
                           font-bold
                           leading-10
-                          text-neutral-900
+                          text-[#141414]
                         "
               >
                 Subscribe
@@ -86,7 +86,7 @@ function Footer() {
                 to our newsletter
               </div>
 
-              <div className="flex justify-center items-center lg:px-6 lg:py-3 2xl:py-5 2xl:px-10 mt-10 2xl:mt-30 w-full text-base rounded-full bg-[#0D0639]">
+              <div className="flex justify-center items-center lg:px-6 lg:py-3 2xl:py-5 2xl:px-10 mt-10 2xl:mt-30 w-full text-base rounded-full bg-[#000000]">
                 <div className="flex gap-3 justify-between items-center w-full">
                   <input
                     type="email"
@@ -94,15 +94,15 @@ function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
-                    className="flex-1 min-w-0 2xl:pt-[12px] placeholder:text-[16px] lg:placeholder:text-[20px] 2xl:placeholder:text-[35px] font-medium text-white bg-transparent border-none outline-none focus:outline-none placeholder:text-[#fff]"
+                    className="flex-1 min-w-0 2xl:pt-[12px] placeholder:text-[16px] lg:placeholder:text-[20px] 2xl:placeholder:text-[35px] font-medium text-[#000000] bg-transparent border-none outline-none focus:outline-none placeholder:text-[#fff]"
                     disabled={isLoading}
                   />
                   <button
                     onClick={handleSubmit}
                     disabled={isLoading}
-                    className={`flex-shrink-0 px-6 2xl:px-8 py-3 2xl:py-5 text-[16px] 2xl:text-[28px] leading-none text-black whitespace-nowrap bg-[#92FF68] rounded-full border border-black border-solid transition-colors ${isLoading
+                    className={`flex-shrink-0 px-6 2xl:px-8 py-3 2xl:py-5 text-[16px] 2xl:text-[28px] leading-none text-black whitespace-nowrap bg-[#CAD533] rounded-full border border-black border-solid transition-colors ${isLoading
                       ? 'opacity-50 cursor-not-allowed'
-                      : 'hover:bg-[#92FF68]'
+                      : 'hover:bg-[#CAD533]'
                       }`}
                   >
                     {isLoading ? 'Sending...' : 'Send'}
@@ -127,19 +127,19 @@ function Footer() {
             {/* First column */}
             <div className="flex flex-col space-y-8">
               <div>
-                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#141414] mb-1">
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#fff] mb-1">
                   BTC Vegas
                 </h3>
-                <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#141414]">
+                <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#fff]">
                   Plan + Go
                 </p>
               </div>
 
               <div>
-                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#141414] mb-1">
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#fff] mb-1">
                   Upcoming
                 </h3>
-                <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#141414]">
+                <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#fff]">
                   Plan + Go
                 </p>
               </div>
@@ -147,7 +147,7 @@ function Footer() {
               {/* Charity Partners with Dropdown - Desktop */}
               <div className="relative group cursor-pointer">
                 <div>
-                  <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#141414] mb-1">
+                  <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#fff] mb-1">
                     Charity Partners
                     <img
                       src="/arrow.svg"
@@ -155,19 +155,19 @@ function Footer() {
                       className="ml-2 w-[9.33px] h-[8px] 2xl:w-[16px] 2xl:h-[10px] opacity-100 rotate-0 transition-transform duration-200"
                     />
                   </h3>
-                  <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#141414]">
+                  <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#fff]">
                     Plan + Go
                   </p>
                 </div>
 
                 {/* Dropdown Menu - Desktop */}
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+                <div className="absolute top-full left-0 mt-2 w-64 bg-[#000] border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                   <div className="py-2">
                     {charityPartnersDropdown.map((item, index) => (
                       <Link
                         key={index}
                         href={item.href}
-                        className="block px-4 py-2 text-[14px] 2xl:text-[18px] text-[#141414] hover:bg-gray-50 transition-colors"
+                        className="block px-4 py-2 text-[14px] 2xl:text-[18px] text-[#fff] hover:bg-gray-50 transition-colors"
                       >
                         {item.label}
                       </Link>
@@ -180,28 +180,28 @@ function Footer() {
             {/* Second column */}
             <div className="flex flex-col space-y-8">
               <div>
-                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#141414] mb-1">
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#fff] mb-1">
                   Artist
                 </h3>
-                <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#141414]">
+                <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#fff]">
                   Plan + Go
                 </p>
               </div>
 
               <div>
-                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#141414] mb-1">
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#fff] mb-1">
                   Press
                 </h3>
-                <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#141414]">
+                <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#fff]">
                   Plan + Go
                 </p>
               </div>
 
               <div>
-                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#141414] mb-1">
+                <h3 className="flex items-center text-[18px] 2xl:text-[30px] font-bold leading-[120%] text-[#fff] mb-1">
                   Designers
                 </h3>
-                <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#141414]">
+                <p className="text-[14px] 2xl:text-[24px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] leading-[120%] text-[#fff]">
                   Plan + Go
                 </p>
               </div>
@@ -396,19 +396,19 @@ function Footer() {
               />
               <div className="mt-5 w-full">
                 <div
-                  className="text-[14px] lg:text-[20px] 2xl:text-[30px] font-[400] text-[#141414] px-10 lg:px-0"
+                  className="text-[14px] lg:text-[20px] 2xl:text-[30px] font-[400] text-[#fff] px-10 lg:px-0"
                   data-name="1345 Ave of the Americas, 2nd floor, New York, NY 10105"
                 >
                   1345 Ave of the Americas, 2nd floor, New York, NY 10105
                 </div>
                 <div
-                  className="mt-2.5 text-[14px] lg:text-[20px] 2xl:text-[30px] font-[400] text-[#141414]"
+                  className="mt-2.5 text-[14px] lg:text-[20px] 2xl:text-[30px] font-[400] text-[#fff]"
                   data-name="Pr@nolcha.com"
                 >
                   Pr@nolcha.com
                 </div>
                 <div
-                  className="mt-2.5 text-[14px] lg:text-[20px] 2xl:text-[30px] font-[400] text-[#141414]"
+                  className="mt-2.5 text-[14px] lg:text-[20px] 2xl:text-[30px] font-[400] text-[#fff]"
                   data-name="© Copyright Rudy 2024"
                 >
                   © Copyright Rudy 2024
@@ -418,21 +418,21 @@ function Footer() {
             <div className="flex gap-10 items-center justify-center text-center mx-auto lg:min-w-60">
               <Link
                 href="/terms-of-use"
-                className="self-stretch my-auto text-[12px] lg:text-[20px] font-[400] text-[#141414]"
+                className="self-stretch my-auto text-[12px] lg:text-[20px] font-[400] text-[#fff]"
                 data-name="Terms of Use"
               >
                 Terms of Use
               </Link>
               <Link
                 href="/privacy-policy"
-                className="self-stretch my-auto text-[12px] lg:text-[20px] font-[400] text-[#141414]"
+                className="self-stretch my-auto text-[12px] lg:text-[20px] font-[400] text-[#fff]"
                 data-name="Privacy Policy"
               >
                 Privacy Policy
               </Link>
               <Link
                 href="/cookie-policy"
-                className="self-stretch my-auto text-[12px] lg:text-[20px] font-[400] text-[#141414]"
+                className="self-stretch my-auto text-[12px] lg:text-[20px] font-[400] text-[#fff]"
                 data-name="cookies"
               >
                 Cookies

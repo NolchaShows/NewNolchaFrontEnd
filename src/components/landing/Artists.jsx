@@ -1,9 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import SectionTitle from "../common/SectionTitle";
 
 // "use client";
 
 function VideoGridZigZag({ videos }) {
+  const borderColors = ['#FF6813', '#BBD7FF', '#CAD533', '#E6C6C5'];
+  
   return (
     <div className="w-full flex justify-center">
       {/* 🖥️ Desktop/Large screens */}
@@ -21,6 +24,7 @@ function VideoGridZigZag({ videos }) {
                 loop
                 playsInline
                 className="w-[275px] h-[491px] 2xl:w-[450px] 2xl:h-[650px] object-cover rounded-[20px] shadow-lg"
+                style={{ border: `10px solid ${borderColors[i]}` }}
               />
             </div>
           ))}
@@ -54,6 +58,7 @@ function VideoGridZigZag({ videos }) {
               loop
               playsInline
               className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] object-cover rounded-[12px]"
+              style={{ border: `10px solid ${borderColors[0]}` }}
             />
           )}
           {videos[2] && (
@@ -64,6 +69,7 @@ function VideoGridZigZag({ videos }) {
               loop
               playsInline
               className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] object-cover rounded-[12px]"
+              style={{ border: `10px solid ${borderColors[2]}` }}
             />
           )}
         </div>
@@ -78,6 +84,7 @@ function VideoGridZigZag({ videos }) {
               loop
               playsInline
               className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] object-cover rounded-[12px]"
+              style={{ border: `10px solid ${borderColors[1]}` }}
             />
           )}
           {videos[3] && (
@@ -88,6 +95,7 @@ function VideoGridZigZag({ videos }) {
               loop
               playsInline
               className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] object-cover rounded-[12px]"
+              style={{ border: `10px solid ${borderColors[3]}` }}
             />
           )}
         </div>
@@ -196,7 +204,7 @@ function Artists({ artistData, loading, textColor, backgroundColor, isFade, vide
   // Use dynamic data from Strapi if available, otherwise fall back to defaults
   const title = artistData?.title || "And +500 Other Artists";
   const description = artistData?.description || "ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY COWART - LINDSAY KOKOSKA - NODEMONKES - KIRA BURSKY - VINCENT D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA ZOREF - ROB PRIOR - LAURENCE FULLER - JANEDAO - IZZY WEISSGERBER - GRETTA KRUESI - JANEDAO -YIYANG LU - SKYE NICOLAS - AEFORIA - ARNO CARSTENS - MOHSEN HAZRATI - RAGZY X - MUSKETON - TILLAVISION - MADE BY OONA - STACIE ANT - YOUNG & SICK";
- 
+
   // Map carousel artists from Strapi data
   const carouselArtists = artistData?.carousal_item?.map(item => item.text) || [];
 
@@ -224,7 +232,7 @@ function Artists({ artistData, loading, textColor, backgroundColor, isFade, vide
     "/landing/artists/6.png",
   ];
   return (
-    <div className="lg:py-[64px]flex flex-col">
+    <div className="flex flex-col">
       {isSlider && (
         <Carousel
           textColor={textColor}
@@ -233,12 +241,10 @@ function Artists({ artistData, loading, textColor, backgroundColor, isFade, vide
           carouselArtists={carouselArtists}
         />
       )}
-      <div className="bg-[var(--secondary-color)] font-neue lg:p-[60px] 2xl:p-[100px] py-[60px] px-[16px] rounded-[8px] flex flex-col gap-[30px]">
+      <div className="bg-[#ffffff] page-container rounded-[8px] flex flex-col gap-[30px] lg:gap-[40px] 2xl:gap-[0]">
         <div className="flex w-full justify-center xl:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
           <div className={`flex flex-col gap-[20px] 2xl:gap-[30px] font-medium lg:items-center lg:text-center ${isTextLeft ? 'text-lefwt lg:text-center' : 'text-center'}`}>
-            <h1 className="text-[32px] md:text-[52px] font-bold 2xl:text-[80px] text-black uppercase">
-              {title}
-            </h1>
+            <SectionTitle disableTitleSpacing={true}>{title}</SectionTitle>
             <p className="font-normal text-[16px] md:text-[20px] 2xl:text-4xl text-black">
               {description}
             </p>

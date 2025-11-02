@@ -65,10 +65,10 @@ export default function LogoSlider({ logoSliderData, loading }) {
         }
       `}</style>
 
-      <div className="w-full bg-white border-t border-gray-200 overflow-hidden">
+      <div className="w-full">
         <div className="flex h-[60px] md:h-[116px] 2xl:h-[130px] items-center">
           {/* Fixed "AS SEEN IN" section */}
-          <div className="flex-shrink-0 bg-gray-50 h-full flex items-center justify-center px-8 border-r border-gray-200 min-w-[180px] md:min-w-[350px] 2xl:min-w-[400px]">
+          <div className="flex-shrink-0 bg-[#E6C6C5] h-full flex items-center justify-center px-8 border-r border-gray-200 min-w-[180px] md:min-w-[350px] 2xl:min-w-[400px]">
             <h3 className="font-neue text-[16px] lg:text-[26px] font-bold text-gray-800 tracking-wide 2xl:text-[36px]">
               {title}
             </h3>
@@ -86,7 +86,7 @@ export default function LogoSlider({ logoSliderData, loading }) {
                 {duplicatedLogos.map((logo, index) => (
                   <div
                     key={`${logo.name}-${index}`}
-                    className="flex-shrink-0 flex border border-white bg-black items-center justify-center w-[180px] md:w-[350px] h-[60px] md:h-[116px] 2xl:min-h-[130px] rounded-md"
+                    className="flex-shrink-0 flex bg-black items-center justify-center w-[180px] md:w-[350px] h-[60px] md:h-[116px] 2xl:min-h-[130px]"
                   >
                     {logo.url ? (
                       <img

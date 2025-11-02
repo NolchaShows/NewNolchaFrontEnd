@@ -11,14 +11,12 @@ export default function ConditionalLayout({ children }) {
     <>
       {!hideNavFooter && (
         <div className="bg-[var(--surface-color)]">
-          <Navbar/>
+          <Navbar />
         </div>
       )}
       {children}
       {!hideNavFooter && (
-        <div className="bg-[var(--surface-color2)]">
-          <Footer/>
-        </div>
+        <Footer />
       )}
     </>
   );

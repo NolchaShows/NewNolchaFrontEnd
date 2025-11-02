@@ -1,19 +1,23 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import About from "@/components/landing/About";
 import Artists from "@/components/landing/Artists";
-import RecentEvents from "@/components/landing/RecentEvents";
-import Speakers from "@/components/landing/Speakers";
 import TextHero from "@/components/charity_partners/TextHero";
 import ImageCarousel from "@/components/experiences/ImageCarousel";
 import ContactForm from "@/components/common/ContactForm";
-import Hero from "@/components/home/Hero";
 import LogoSlider from "@/components/home/TextSlider";
-import Services from "@/components/home/Services";
 import Partners from "@/components/home/Partners";
-import NolchaExperience from "@/components/home/Collaboration";
-import UpcomingEvents from "@/components/home/UpcomingEvents";
 import { getLandingPageData } from "@/lib/strapi";
+import VideoHeroSection from "@/components/common/VideoHeroSection";
+import BuildMomentumSection from "@/components/home/BuildMomentumSection";
+import ImageGallerySlider from "@/components/common/ImageGallerySlider";
+import EveningRecap from "@/components/common/EveningRecap";
+import PastSpeakers from "@/components/common/PastSpeakers";
+import FashionGrid3x3 from "@/components/shao/FashionGrid3x3";
+import UpcomingEventsList from "@/components/home/UpcomingEventsList";
+import ExploreServices from "@/components/home/ExploreServices";
+import TweetCarousel from "@/components/common/TweetCarousel";
+import { tweetsData } from "@/data/tweetsData";
+import PastExperiences from "@/components/common/PastExperiences";
 
 export default function Home() {
   const [heroData, setHeroData] = useState(null);
@@ -110,14 +114,14 @@ export default function Home() {
   const slideData = [
     {
       image: "/home/hero.png",
-      video:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
       title: "/home/Forbes.png",
       description:
         "“Nolcha Shows Returns To Art Basel Miami Beach Featuring Leading Web3 Brands.”",
     },
     {
       image: "/home/hero.png",
-            video:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
 
       title: "home/forbes.png",
       description: "lorem ipsum",
@@ -399,95 +403,130 @@ export default function Home() {
       backgroundColor: "bg-black",
     },
   ];
+
+  const pastSpeakers = [
+    { id: 1, image: '/homepage/past_speakers/1.png' },
+    { id: 2, image: '/homepage/past_speakers/2.png' },
+    { id: 3, image: '/homepage/past_speakers/3.png' },
+    { id: 4, image: '/homepage/past_speakers/4.png' },
+    { id: 5, image: '/homepage/past_speakers/5.png' },
+    { id: 6, image: '/homepage/past_speakers/6.png' },
+    { id: 7, image: '/homepage/past_speakers/7.png' },
+    { id: 8, image: '/homepage/past_speakers/8.png' },
+    { id: 9, image: '/homepage/past_speakers/9.png' },
+    { id: 10, image: '/homepage/past_speakers/10.png' },
+    { id: 11, image: '/homepage/past_speakers/11.png' },
+    { id: 12, image: '/homepage/past_speakers/12.png' },
+    { id: 13, image: '/homepage/past_speakers/13.png' },
+  ]
+
+  const eveningRecap = {
+    year: "2024",
+    title: "Recent Events: Bitcoin Nashville 2024",
+    videoUrl: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov"
+  }
+
+  // Upcoming events (accordion list style under EveningRecap)
+  const upcomingListEvents = [
+    {
+      title: "Art Basel",
+      image: "/homepage/upcoming_events/art-basal.png",
+      date: "07-07-2025",
+      location: "22908 Houston Texas Usa",
+      pastEventsLocation: "Houston Texas Usa",
+      letsTalkLocation: "Location:",
+      whiteLabelLocation: "Location:",
+    },
+    { title: "Consensus HK" },
+    { title: "Bitcoin Vegas" },
+    { title: "Consensus Miami" },
+  ];
+
+  const exploreServices = {
+    title: "Explore Our Services",
+    image: "/homepage/explore_services/explore-services.png",
+    caption: "Our commitment to building websites and apps that last means focusing on sustainable experiences rather than chasing the latest",
+    items: [
+      { label: "Events", text: "Strategy. Story. Experience" },
+      { label: "Creative", text: "Innovation & Creative" },
+      { label: "Business", text: "Biz Dev & Fundraising" },
+      { label: "Agentic AI Solutions", text: "Biz Dev And Fundraising" },
+    ],
+  }
+
+  const pastExperiences = [
+    { image: "/experiences/bitcoin/conf.png", text: "Bitcoin Conference" },
+    { image: "/experiences/opening/conf.png", text: "Opening Night Consensus" },
+    { image: "/experiences/newyork/conf.png", text: "NYFW Immersive" },
+    { image: "/experiences/jack/conf.png", text: "BTC Nashville" },
+    { image: "/experiences/ctrl/conf.png", text: "NYFW OH POLLY" },
+    { image: "/experiences/bitcoin/conf.png", text: "Bitcoin Conference" },
+    { image: "/experiences/opening/conf.png", text: "Opening Night Consensus" },
+    { image: "/experiences/newyork/conf.png", text: "NYFW Immersive" },
+    { image: "/experiences/jack/conf.png", text: "BTC Nashville" },
+    { image: "/experiences/ctrl/conf.png", text: "NYFW OH POLLY" },
+  ]
+
+  const heroVideo = "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4";
+
   return (
     <div className="">
       <div className="bg-[var(--surface-color2)]">
-        <Hero heroData={heroData} loading={loading} />
-        <LogoSlider logoSliderData={logoSliderData} loading={loading} />
-        <About
-          title={aboutData?.title || "About Nolcha"}
-          paragraphs={
-            aboutData
-              ? buildParagraphs(aboutData)
-              : [
-                  <>
-                    Partnering with leading brands and global blockchain, AI,
-                    and crypto conferences, Nolcha has{" "}
-                    <span className="font-bold">15+ years</span> of shaping
-                    culture, tech, and community through high-impact
-                    experiential events
-                  </>,
-                ]
-          }
-          link={(() => {
-            const linkValue =
-              aboutData?.link || aboutData?.Link || aboutData?.url || "#";
-
-            return linkValue;
-          })()}
-          linkText={(() => {
-            const linkTextValue =
-              aboutData?.linkText ||
-              aboutData?.LinkText ||
-              aboutData?.link_text ||
-              aboutData?.buttonText ||
-              "Learn More";
-
-            return linkTextValue;
-          })()}
-          image={
-            aboutData?.image
-              ? (() => {
-                  let imageUrl =
-                    aboutData.image.url ||
-                    aboutData.image.formats?.medium?.url ||
-                    aboutData.image.formats?.small?.url;
-                  if (imageUrl && !imageUrl.startsWith("http")) {
-                    const strapiUrl =
-                      process.env.NEXT_PUBLIC_STRAPI_URL ||
-                      "http://localhost:1337";
-                    imageUrl = `${strapiUrl}${imageUrl}`;
-                  }
-                  return imageUrl;
-                })()
-              : "/home/about.png"
-          }
-          loading={loading}
+        <VideoHeroSection
+          videoSrc={heroVideo}
+          firstPart="Curated connections for leaders in AI, Web3 & Crypto."
+          secondPart=""
+          strokeColor="#000000"
+          fillColor="#FEF991"
+          textColor="#FFFFFF"
+          size="large"
+          overlayOpacity={20}
+          isGoogleDrive={false}
         />
-      </div>
-      <div className="bg-[var(--secondary-color)]">
-        <RecentEvents recentEventsData={recentEventsData} loading={loading} />
-      </div>
-      <Services serviceData={serviceData} loading={loading} />
-      <Partners
-        partnerData={partnerData}
-        loading={loading}
-        title={"Partners That Trailblaze With Us"}
-        description={
-          "From cutting-edge tech startups and rapidly expanding businesses to impactful charities"
-        }
-        partners={partners}
-      />
-      <UpcomingEvents />
-      <div className="mt-5 2xl:mt-15">
-        <Speakers speakerData={speakerData} loading={loading} />
+        <BuildMomentumSection />
+        <ImageGallerySlider />
+        <LogoSlider logoSliderData={logoSliderData} loading={loading} />
+        <UpcomingEventsList title="Upcoming Events" events={upcomingListEvents} />
+        <EveningRecap
+          year={eveningRecap.year}
+          title={eveningRecap.title}
+          videoUrl={eveningRecap.videoUrl}
+        />
+        <ExploreServices
+          title={exploreServices.title}
+          image={exploreServices.image}
+          caption={exploreServices.caption}
+          items={exploreServices.items}
+        />
+        <div className="hidden lg:block">
+          <img src="/homepage/less_height_image/top-image.png" />
+        </div>
+        <Partners
+          partnerData={partnerData}
+          loading={loading}
+          title={"Trusted by Global Brands For Over 15 Years"}
+          description={
+            "From cutting-edge tech startups and rapidly expanding businesses to impactful charities"
+          }
+          partners={partners}
+        />
+        <PastSpeakers speakers={pastSpeakers} />
       </div>
       <TextHero
         textHeroData={textHeroData}
         loading={loading}
         images={slideData}
       />
-      <NolchaExperience
-        nolchaExperienceData={nolchaExperienceData}
-        loading={loading}
-      />
-      <Partners
+      {/* <div className="bg-[var(--secondary-color)]">
+        <RecentEvents recentEventsData={recentEventsData} loading={loading} />
+      </div> */}
+      {/* <Partners
         partnerData={partnerSection2Data}
         loading={loading}
         title={"Press and Media Recognition"}
         partners={press}
         bg={"bg-white"}
-      />
+      /> */}
       <img src="/home/AboveArtist.png" />
       <Artists
         artistData={artistData}
@@ -495,20 +534,33 @@ export default function Home() {
         textColor={"text-[var(--tertiary-text-color)]"}
         videos={videos}
         isDesktop={true}
-      /> 
-      <div className="bg-[var(--surface-color2)]">
-        <img src="/landing/background.png" className="mx-auto w-full" />
-        <div className="bg-[var(--surface-color2)] mt-10">
-          <ImageCarousel posts={posts} carousalData={carousalData} />
-        </div>
-        <div className="mt-10">
-          <ContactForm
-            bg={"/landing/background2.jpg"}
-            heading={"Lets Talk"}
-            contactData={contactData}
-          />
-        </div>
-      </div>
+      />
+      <img src="/home/AboveArtist.png" />
+      <FashionGrid3x3
+        images={[
+          "/shao_nyfw/image 21.png",
+          "/shao_nyfw/image 22.png",
+          "/shao_nyfw/image 23.png",
+          "/shao_nyfw/image 24.png",
+          "/shao_nyfw/image 25.png",
+          "/shao_nyfw/image 26.png",
+          "/shao_nyfw/image 27.png",
+          "/shao_nyfw/image 28.png",
+        ]}
+        background="#FEF991"
+      />
+      <TweetCarousel
+        posts={tweetsData}
+        carousalData={null}
+        padding=""
+        title="Community Moments"
+      />
+      <PastExperiences experiences={pastExperiences} />
+      <ContactForm
+        bg={"/landing/background2.jpg"}
+        heading={"I am Interested In"}
+        contactData={contactData}
+      />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
 function TextHero({ textHeroData, loading, images = [] }) {
   const mapStrapiSlides = (strapiSlides) => {
@@ -49,10 +49,7 @@ function TextHero({ textHeroData, loading, images = [] }) {
     );
   }
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const handleNext = () => setCurrentIndex((prev) => (prev + 1) % slidesData.length);
-  const handlePrev = () => setCurrentIndex((prev) => (prev === 0 ? slidesData.length - 1 : prev - 1));
-  const currentSlide = slidesData[currentIndex];
+  const currentSlide = slidesData[0];
 
   if (!slidesData || slidesData.length === 0) {
     return (
@@ -72,24 +69,13 @@ function TextHero({ textHeroData, loading, images = [] }) {
   }
 
   return (
-    <div className="lg:py-[80px] lg:px-[40px] py-[20px] px-[16px] w-full max-w-none mx-auto">
-      <div className="flex flex-col gap-[40px]">
-        <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-          {/* Left button */}
-          {slidesData.length > 1 && (
-            <button
-              onClick={handlePrev}
-              className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity lg:relative lg:top-auto lg:translate-y-0"
-            >
-              <img src="/left_dark.png" alt="Previous" className="h-[48px] w-[48px] 2xl:h-[64px] 2xl:w-[64px]" />
-            </button>
-          )}
-
+    <div className="page-container w-full max-w-none mx-auto">
+      <div className="flex flex-col">
+        <div className="relative flex flex-col lg:flex-row gap-[40px] lg:gap-[52px] 2xl:gap-[92px] items-center">
           {/* Media (Video or Image) */}
-          <div className="flex-1 w-full lg:max-w-[600px] 2xl:max-w-[1300px]">
+          <div className="flex-1 w-full lg:max-w-[656px] 2xl:max-w-[1165px]">
             {currentSlide?.video ? (
               <video
-                key={currentIndex}
                 src={currentSlide.video}
                 controls
                 autoPlay
@@ -99,7 +85,6 @@ function TextHero({ textHeroData, loading, images = [] }) {
               />
             ) : (
               <img
-                key={currentIndex}
                 src={currentSlide?.image}
                 alt="Slide"
                 className="w-full object-cover rounded-[16px]"
@@ -108,46 +93,24 @@ function TextHero({ textHeroData, loading, images = [] }) {
           </div>
 
           {/* Right side content */}
-          <div className="flex-1 w-full mr-0 md:mr-12 lg:text-left">
-            <div className="mb-6 mt-3 lg:mt-0 lg:ml-0 2xl:ml-10 px-[30px] lg:px-0 relative">
+          <div className="flex-1 w-full lg:text-left">
+            <div className="mb-[25px] lg:mb-[40px] 2xl:mb-[72px] relative">
               <img
                 src="/home/quote.png"
                 alt="Quote"
-                className="absolute pl-[40px] lg:px-0 -left-[35px] bottom-[10px] h-[100px] w-[150px] md:w-[192px] md:h-[150px] 2xl:w-[200px] 2xl:h-[160px] z-0"
+                className="absolute pl-[40px] lg:px-0 -left-[35px] bottom-[40px] lg:bottom-[30px] 2xl:bottom-[60px] w-[140px] lg:w-[160px] 2xl:w-[283px] z-0"
               />
               <img
                 src={currentSlide?.title}
                 alt="Forbes"
-                className="relative h-[80px] w-[200px] md:h-[119px] md:w-[337px] z-10"
+                className="relative w-[230px] lg:w-[340px] 2xl:w-[600px] z-10"
               />
             </div>
-            <div className="text-black px-[25px] lg:px-0 text-[16px] lg:text-[20px] 2xl:text-[36px] leading-relaxed">
+            <div className="text-black text-[16px] lg:text-[20px] 2xl:text-[36px] font-bold">
               {currentSlide?.description}
             </div>
           </div>
-
-          {/* Right button */}
-          {slidesData.length > 1 && (
-            <button
-              onClick={handleNext}
-              className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer z-10 hover:opacity-80 transition-opacity"
-            >
-              <img src="/right_dark.png" alt="Next" className="h-[48px] w-[48px] 2xl:h-[64px] 2xl:w-[64px]" />
-            </button>
-          )}
         </div>
-
-        {/* Mobile arrows */}
-        {slidesData.length > 1 && (
-          <div className="flex justify-center gap-[12px] lg:hidden">
-            <button onClick={handlePrev} className="cursor-pointer hover:opacity-80 transition-opacity">
-              <img src="/left_dark.png" alt="Previous" className="h-[36px] w-[36px] md:h-[48px] md:w-[48px]" />
-            </button>
-            <button onClick={handleNext} className="cursor-pointer hover:opacity-80 transition-opacity">
-              <img src="/right_dark.png" alt="Next" className="h-[36px] w-[36px] md:h-[48px] md:w-[48px]" />
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

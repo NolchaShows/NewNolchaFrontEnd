@@ -1,0 +1,155 @@
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import StyledHeading from "./StyledHeading";
+import SectionTitle from "./SectionTitle";
+
+const useScreenSize = () => {
+  const [screenSize, setScreenSize] = useState("lg");
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      if (window.innerWidth < 640) {
+        setScreenSize("sm");
+      } else if (window.innerWidth < 1024) {
+        setScreenSize("md");
+      } else {
+        setScreenSize("lg");
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  return screenSize;
+};
+
+const PastExperiences = ({
+  experiences = [],
+  title = "Past experience",
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const screenSize = useScreenSize();
+
+  const getItemsPerSlide = () => {
+    switch (screenSize) {
+      case "sm":
+        return 1;
+      case "md":
+        return 2;
+      case "lg":
+        return 5;
+      default:
+        return 5;
+    }
+  };
+
+  const itemsPerSlide = getItemsPerSlide();
+
+  const nextSlide = () => {
+    if (currentIndex + itemsPerSlide < experiences.length) {
+      setCurrentIndex((prev) => prev + itemsPerSlide);
+    } else {
+      // Loop back to start
+      setCurrentIndex(0);
+    }
+  };
+
+  const prevSlide = () => {
+    if (currentIndex - itemsPerSlide >= 0) {
+      setCurrentIndex((prev) => prev - itemsPerSlide);
+    } else {
+      // Go to end
+      setCurrentIndex(Math.max(0, experiences.length - itemsPerSlide));
+    }
+  };
+
+  // If no data available, don't render the component
+  if (!experiences || experiences.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="py-[60px] lg:py-[100px] 2xl:py-[180px] overflow-hidden bg-[#F4F4F4]">
+      <div className="px-[20px] lg:px-[140px] 2xl:px-[250px] title-spacing flex flex-row items-center justify-between">
+        <SectionTitle disableTitleSpacing >Past experience</SectionTitle>
+
+        {/* Navigation Arrows - Desktop Only */}
+        <div className="hidden lg:flex gap-4">
+          <button
+            onClick={prevSlide}
+            aria-label="Scroll left"
+          >
+            <motion.img
+              src="/icons/left-black-button.svg"
+              className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+              whileTap={{ scale: 0.9 }}
+            />
+          </button>
+          <button
+            onClick={nextSlide}
+            aria-label="Scroll right"
+          >
+            <motion.img
+              src="/icons/right-black-button.svg"
+              className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+              whileTap={{ scale: 0.9 }}
+            />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative overflow-hidden px-[22px] lg:px-12 2xl:px-[85px]">
+        <div
+          className="flex transition-transform duration-500"
+          style={{
+            transform: `translateX(-${(currentIndex / itemsPerSlide) * 100}%)`,
+          }}
+        >
+          {experiences.map((experience, idx) => {
+            const imageUrl = typeof experience === 'string' ? experience :
+              experience.image?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${experience.image.url}` : experience.image || experience;
+            const text = experience.text || experience.title || `Experience ${idx + 1}`;
+
+            return (
+              <div
+                key={idx}
+                className="w-full sm:w-1/2 lg:w-1/5 flex-shrink-0 px-2"
+              >
+                <div className="relative w-full rounded-[20px] overflow-hidden">
+                  <img
+                    src={imageUrl}
+                    alt={text}
+                    className="w-full h-[300px] lg:h-[328px] 2xl:h-[583px] object-cover"
+                  />
+                  {/* Text Overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 lg:p-6 2xl:p-8">
+                    <h3 className="text-white text-[20px] lg:text-[24px] 2xl:text-[42px] font-medium text-center">
+                      {text}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Mobile arrows */}
+      {experiences.length > 1 && (
+        <div className="flex justify-center gap-[12px] lg:hidden mt-8">
+          <button onClick={prevSlide} className="cursor-pointer hover:opacity-80 transition-opacity">
+            <img src="/icons/left-black-button.svg" alt="Previous" className="h-[36px] w-[36px]" />
+          </button>
+          <button onClick={nextSlide} className="cursor-pointer hover:opacity-80 transition-opacity">
+            <img src="/icons/right-black-button.svg" alt="Next" className="h-[36px] w-[36px]" />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default PastExperiences;
+

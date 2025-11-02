@@ -1,0 +1,177 @@
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import SectionTitle from "./SectionTitle";
+
+const useScreenSize = () => {
+  const [screenSize, setScreenSize] = useState("lg");
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      if (window.innerWidth < 640) {
+        setScreenSize("sm");
+      } else if (window.innerWidth < 1024) {
+        setScreenSize("md");
+      } else {
+        setScreenSize("lg");
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  return screenSize;
+};
+
+const TweetCarousel = ({
+  posts,
+  carousalData,
+  padding = "px-4 md:px-8 mb-6",
+  title = "Trusted by",
+}) => {
+  const [currentPostIndex, setCurrentPostIndex] = useState(0);
+  const screenSize = useScreenSize();
+
+  // Use dynamic data from Strapi if available, otherwise fallback to posts prop
+  const carouselTitle = carousalData?.title || title;
+  const carouselItems = carousalData?.carousal_item || posts || [];
+
+  console.log('TweetCarousel - carousalData:', carousalData);
+  console.log('TweetCarousel - carouselItems:', carouselItems);
+
+  const getPostsPerSlide = () => {
+    switch (screenSize) {
+      case "sm":
+        return 1;
+      case "md":
+        return 2;
+      case "lg":
+        return 3;
+      default:
+        return 3;
+    }
+  };
+
+  const postsPerSlide = getPostsPerSlide();
+
+  // Load Twitter embed script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    script.charset = 'utf-8';
+    document.body.appendChild(script);
+
+    return () => {
+      // Clean up script when component unmounts
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
+
+  const nextPost = () => {
+    if (currentPostIndex + postsPerSlide < carouselItems.length) {
+      setCurrentPostIndex((prev) => prev + postsPerSlide);
+    } else {
+      // Fade animation when reaching the end - go back to first tweet
+      const carouselElement = document.querySelector('.tweet-carousel');
+      if (carouselElement) {
+        carouselElement.style.opacity = '0';
+        setTimeout(() => {
+          setCurrentPostIndex(0);
+          carouselElement.style.opacity = '1';
+        }, 300);
+      } else {
+        setCurrentPostIndex(0);
+      }
+    }
+  };
+
+  const prevPost = () => {
+    if (currentPostIndex - postsPerSlide >= 0) {
+      setCurrentPostIndex((prev) => prev - postsPerSlide);
+    } else {
+      // Fade animation when reaching the beginning - go to last tweet
+      const carouselElement = document.querySelector('.tweet-carousel');
+      if (carouselElement) {
+        carouselElement.style.opacity = '0';
+        setTimeout(() => {
+          setCurrentPostIndex(Math.max(0, carouselItems.length - postsPerSlide));
+          carouselElement.style.opacity = '1';
+        }, 300);
+      } else {
+        setCurrentPostIndex(Math.max(0, carouselItems.length - postsPerSlide));
+      }
+    }
+  };
+
+  // If no data available, don't render the component
+  if (!carouselItems || carouselItems.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className={`py-[60px] lg:py-[100px] 2xl:py-[180px] overflow-hidden bg-[#FFF7E6] ${padding}`}>
+      <div className="px-[20px] lg:px-[140px] 2xl:px-[250px] title-spacing flex flex-row items-center justify-between">
+        <SectionTitle disableTitleSpacing >{carouselTitle}</SectionTitle>
+
+        {/* Navigation Arrows - Desktop Only */}
+        <div className="hidden lg:flex gap-4">
+          <button
+            onClick={prevPost}
+            aria-label="Scroll left"
+          >
+            <motion.img
+              src="/icons/left-black-button.svg"
+              className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+              whileTap={{ scale: 0.9 }}
+            />
+          </button>
+          <button
+            onClick={nextPost}
+            aria-label="Scroll right"
+          >
+            <motion.img
+              src="/icons/right-black-button.svg"
+              className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+              whileTap={{ scale: 0.9 }}
+            />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative overflow-hidden">
+        <div
+          className="flex transition-transform duration-500 tweet-carousel"
+          style={{
+            transform: `translateX(-${(currentPostIndex / postsPerSlide) * 100
+              }%)`,
+            transition: 'transform 0.5s ease-in-out, opacity 0.3s ease-in-out'
+          }}
+        >
+          {carouselItems.map((item, idx) => {
+            // Handle tweet IDs for Twitter embeds
+            const tweetId = typeof item === 'string' ? item : item.tweetId || item.id;
+
+            return (
+              <div
+                key={idx}
+                className="w-full sm:w-1/2 lg:w-1/3 2xl:w-1/4 flex-shrink-0 p-2"
+              >
+                <div className="w-full max-h-[450px] lg:max-h-[640px] 2xl:max-h-[800px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
+                  <blockquote className="twitter-tweet" data-theme="light">
+                    <a href={`https://twitter.com/x/status/${tweetId}`}></a>
+                  </blockquote>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TweetCarousel;

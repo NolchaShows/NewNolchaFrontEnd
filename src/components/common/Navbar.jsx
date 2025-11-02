@@ -479,7 +479,7 @@ function Navbar() {
                     const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
-                  className="px-[18.5px] 2xl:px-[40px] py-[7.5px] 2xl:py-[15px] bg-[#97FC6A] text-xl 2xl:text-[35px] text-black font-medium rounded-full hover:bg-[#9ED706] transition-colors"
+                  className="px-[18.5px] 2xl:px-[40px] py-[7.5px] 2xl:py-[15px] bg-[#FF6813] text-xl 2xl:text-[35px] text-white font-medium rounded-full hover:bg-[#FF9640] transition-colors"
                 >
                   Lets Talk
                 </button>
@@ -494,15 +494,15 @@ function Navbar() {
                     const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
-                  className="w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-[#97FC6A] rounded-full flex items-center justify-center hover:bg-[#9ED706] transition-colors"
+                  className="w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-[#FF6813] rounded-full flex items-center justify-center hover:bg-[#FF9640] transition-colors"
                 >
                   {/* Default SVG for smaller screens */}
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" className="block 2xl:hidden">
-                    <path d="M4.99662 5.55025L4.99662 7.29504L11.9077 7.30123L4.3779 14.831L5.61534 16.0685L13.1451 8.53866L13.1513 15.4497L14.8961 15.4497V5.55025H4.99662Z" fill="#343434" />
+                    <path d="M4.99662 5.55025L4.99662 7.29504L11.9077 7.30123L4.3779 14.831L5.61534 16.0685L13.1451 8.53866L13.1513 15.4497L14.8961 15.4497V5.55025H4.99662Z" fill="#fff" />
                   </svg>
                   {/* Larger SVG for 2xl screens */}
                   <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" className="hidden 2xl:block">
-                    <path d="M9.09643 9.42701V12.5289L21.3828 12.5399L7.99648 25.9262L10.1964 28.1261L23.5827 14.7397L23.5937 27.0261L26.6955 27.0261V9.42701H9.09643Z" fill="#343434" />
+                    <path d="M9.09643 9.42701V12.5289L21.3828 12.5399L7.99648 25.9262L10.1964 28.1261L23.5827 14.7397L23.5937 27.0261L26.6955 27.0261V9.42701H9.09643Z" fill="#fff" />
                   </svg>
                 </button>
               </div>
@@ -604,12 +604,12 @@ function Navbar() {
 
           {/* Mobile hamburger menu */}
           <button
-            className="w-10 h-10 bg-[#97FC6A] rounded-lg border border-[#B5BF9E] flex items-center justify-center cursor-pointer hover:bg-[#9ED706] transition-colors"
+            className="w-10 h-10 bg-[#FF6813] rounded-lg border border-[#FF6813] flex items-center justify-center cursor-pointer hover:bg-[#FF6813] transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
-              <rect x="0.9375" y="5.65234" width="16.7147" height="1.04467" fill="black" stroke="black" stroke-width="1.30887" stroke-linejoin="round" />
-              <rect x="9.28906" y="10.8789" width="8.35736" height="1.04467" fill="black" stroke="black" stroke-width="1.30887" stroke-linejoin="round" />
+              <rect x="0.9375" y="5.65234" width="16.7147" height="1.04467" fill="white" stroke="white" stroke-width="1.30887" stroke-linejoin="round" />
+              <rect x="9.28906" y="10.8789" width="8.35736" height="1.04467" fill="white" stroke="white" stroke-width="1.30887" stroke-linejoin="round" />
             </svg>
           </button>
         </div>
@@ -688,7 +688,7 @@ function Navbar() {
               {/* Mobile Buttons */}
               <div className="space-y-3 mb-8">
                 <button
-                  className="block w-full text-center py-3 px-6 bg-[#97FC6A] text-black font-medium rounded-full hover:bg-[#9ED706] transition-colors"
+                  className="block w-full text-center py-3 px-6 bg-[#FF6813] text-white font-medium rounded-full hover:bg-[#FF6813] transition-colors"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     setTimeout(() => {

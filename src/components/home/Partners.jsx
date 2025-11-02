@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import SectionTitle from "../common/SectionTitle";
 
 const Partners = ({ partnerData, loading, title, description, partners, bg, logo }) => {
   const [windowWidth, setWindowWidth] = useState(0);
@@ -57,8 +58,8 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
   // Loading state
   if (loading) {
     return (
-      <div className={`${bg || "bg-[#0A0A0F]"} py-20`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className={`${bg || "bg-[#0A0A0F]"} page-container`}>
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">Loading...</h2>
           </div>
@@ -98,14 +99,14 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
     
     const currentBackgroundColor = isHovered
       ? isDefaultBlack
-        ? "#E7F0D3" // If default is black, hover becomes light green/cream
+        ? "#FEF991" // If default is black, hover becomes light green/cream
         : "#000000" // If default is light green/cream, hover becomes black
       : isDefaultBlack
       ? "#000000" // Default black background
-      : "#E7F0D3"; // Default light green/cream background
+      : "#FEF991"; // Default light green/cream background
     
     // Simple hover logic: show primary image normally, secondary on hover
-    const currentImage = currentBackgroundColor === "#E7F0D3" ? partner.imageBlack : partner.imageWhite;
+    const currentImage = currentBackgroundColor === "#FEF991" ? partner.imageBlack : partner.imageWhite;
 
     return (
       <div
@@ -205,29 +206,14 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
   return (
     <section
       className={`w-full ${
-        bg ? bg : "bg-[var(--surface-color2)]"
-      } py-[60px] xl:py-20 lg:py-16 md:py-12 sm:py-10 ${
+        bg ? bg : "bg-[#FFFEE8]"
+      } page-container ${
         responsiveClasses.containerPadding
       } overflow-hidden`}
     >
-      <div className="max-w-[1076px] mx-auto flex flex-col items-center gap-[50px] xl:gap-10 lg:gap-8">
+      <div className="max-w-[818px] 2xl:max-w-[1454px] mx-auto flex flex-col items-center">
         {/* Header Section */}
-        <div className="flex flex-col items-center gap-2.5">
-          {partnersTitle ? (
-            <h2 className="uppercase text-[32px] lg:text-[52px] text-black font-bold text-center leading-[120%] -tracking-[1.56px]">
-              {partnersTitle}
-            </h2>
-          ) : (
-            <div>
-              <img src={logo} alt="LOGO" className="h-20 2xl:h-30" />
-            </div>
-          )}
-          {partnersDescription && (
-            <p className="text-black font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] text-center font-normal text-[16px] 2xl:text-[28px] lg:text-[20px] leading-[140%] -tracking-[0.6px] 2xl:-tracking-[0.72px] xl:-tracking-[0.54px] lg:-tracking-[0.48px]">
-              {partnersDescription}
-            </p>
-          )}
-        </div>
+        <SectionTitle className="text-black lg:text-center tracking-[-0.84px] lg:tracking-none">{partnersTitle}</SectionTitle>
 
         {/* Dynamic Partners Grid */}
         <div className="w-full">
