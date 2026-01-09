@@ -33,7 +33,7 @@ const UpcomingEventsList = ({
   };
 
   return (
-    <section className="w-full bg-[#FFF7E6] page-container relative">
+    <section className="w-full bg-white page-container relative">
       <SectionTitle>{title}</SectionTitle>
 
       <div className="flex flex-col gap-[6px] lg:gap-[10px] 2xl:gap-[18px]">
@@ -59,7 +59,7 @@ const UpcomingEventsList = ({
               }}
             >
               {isOpen ? (
-                <div className="bg-[#E6C6C5] px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] flex flex-col lg:flex-row gap-5 lg:gap-[30px] 2xl:gap-[50px] items-start">
+                <div className="bg-[#D1FFE9] px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] flex flex-col lg:flex-row gap-5 lg:gap-[30px] 2xl:gap-[50px] items-center">
                   <div className="flex-1 flex flex-row items-center gap-[10px] lg:gap-[20px] 2xl:gap-[30px]">
                     {/* Left */}
                     {display.image && (
@@ -77,16 +77,28 @@ const UpcomingEventsList = ({
                     </div>
                   </div>
                   {/* Right details */}
-                  <div className="text-[16px] lg:text-[18px] 2xl:text-[32px] text-black mr-[20px] lg:mr-[60px] 2xl:mr-[100px]">
-                    <p><span className="font-bold">Date:</span> {display.date}</p>
-                    <p><span className="font-bold">Location:</span> {display.location}</p>
-                    <p><span className="font-bold">View Past Events:</span> {display.pastEventsLocation}</p>
-                    <p><span className="font-bold">Lets Talk:</span> {display.letsTalkLocation}</p>
-                    <p><span className="font-bold">Turn White-label:</span> {display.whiteLabelLocation}</p>
+                  <div className="flex flex-col gap-1 lg:gap-[10px] 2xl:gap-[20px]">
+                    <p className="text-[16px] lg:text-[28px] 2xl:text-[40px] text-black">
+                      <span className="font-bold">Date:</span> {display.date}
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 2xl:gap-5">
+                      <button 
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-black text-white rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-800 transition-colors"
+                      >
+                        See past events
+                      </button>
+                      <button 
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-transparent border border-black text-black rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-50 transition-colors"
+                      >
+                        Request details
+                      </button>
+                    </div>
                   </div>
                 </div>
               ) : (
-                <div className="bg-white px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px]">
+                <div className="bg-[#F3F3F3] px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px]">
                   <h3 className="text-h3 text-black">
                     {ev.title}
                   </h3>
