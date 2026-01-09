@@ -2,7 +2,7 @@ import React from "react";
 
 export default function LogoSlider({ logoSliderData, loading }) {
   // Default values in case data is not available
-  const defaultTitle = "AS SEEN IN";
+  const defaultTitle = "As Seen As";
   const defaultLogos = [
     { name: "AdAge", url: "/home/slider1.png" },
     { name: "VOGUE", url: "/home/slider2.png" },
@@ -68,8 +68,8 @@ export default function LogoSlider({ logoSliderData, loading }) {
       <div className="w-full">
         <div className="flex h-[60px] md:h-[116px] 2xl:h-[130px] items-center">
           {/* Fixed "AS SEEN IN" section */}
-          <div className="flex-shrink-0 bg-[#E6C6C5] h-full flex items-center justify-center px-8 border-r border-gray-200 min-w-[180px] md:min-w-[350px] 2xl:min-w-[400px]">
-            <h3 className="font-neue text-[16px] lg:text-[26px] font-bold text-gray-800 tracking-wide 2xl:text-[36px]">
+          <div className="flex-shrink-0 bg-black h-full flex items-center justify-center px-8 min-w-[180px] md:min-w-[350px] 2xl:min-w-[400px]">
+            <h3 className="font-neue text-[16px] lg:text-[26px] font-bold text-white tracking-wide 2xl:text-[36px]">
               {title}
             </h3>
           </div>
@@ -86,7 +86,7 @@ export default function LogoSlider({ logoSliderData, loading }) {
                 {duplicatedLogos.map((logo, index) => (
                   <div
                     key={`${logo.name}-${index}`}
-                    className="flex-shrink-0 flex bg-black items-center justify-center w-[180px] md:w-[350px] h-[60px] md:h-[116px] 2xl:min-h-[130px]"
+                    className="flex-shrink-0 flex bg-black items-center justify-center w-[180px] md:w-[350px] h-[60px] md:h-[116px] 2xl:min-h-[130px] border-r border-[#535353]"
                   >
                     {logo.url ? (
                       <img
