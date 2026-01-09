@@ -423,6 +423,21 @@ export default function Home() {
   const eveningRecap = {
     year: "2024",
     title: "Recent Events: Bitcoin Nashville 2024",
+    videos: [
+      {
+        url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov",
+        isGoogleDrive: false
+      },
+      {
+        url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov",
+        isGoogleDrive: false
+      },
+      {
+        url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov",
+        isGoogleDrive: false
+      }
+    ],
+    // Keep videoUrl for backward compatibility
     videoUrl: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov"
   }
 
@@ -490,6 +505,7 @@ export default function Home() {
         <EveningRecap
           year={eveningRecap.year}
           title={eveningRecap.title}
+          videos={eveningRecap.videos}
           videoUrl={eveningRecap.videoUrl}
         />
         <ExploreServices
