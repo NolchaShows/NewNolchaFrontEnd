@@ -40,13 +40,13 @@ const BuildMomentumSection = () => {
         {partnerLogos.map((partner, index) => (
           <div
             key={index}
-            className="flex items-center justify-center h-8 md:h-10 lg:h-12 xl:h-14 2xl:h-16 opacity-80 hover:opacity-100 transition-opacity"
+            className="flex items-center justify-center h-10 md:h-14 lg:h-16 xl:h-20 2xl:h-24 opacity-80 hover:opacity-100 transition-opacity"
           >
             {partner.logo ? (
               <img
                 src={partner.logo}
                 alt={partner.name}
-                className="h-full w-auto max-w-[120px] lg:max-w-[120px] 2xl:max-w-[240px] object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                className="h-full w-auto max-w-[140px] lg:max-w-[160px] 2xl:max-w-[200px] object-contain grayscale hover:grayscale-0 transition-all duration-300"
               />
             ) : (
               <span className="text-[#1A1A1A] text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-medium">
