@@ -69,7 +69,7 @@ function TextHero({ textHeroData, loading, images = [] }) {
   }
 
   return (
-    <div className="page-container w-full max-w-none mx-auto">
+    <div className="page-container w-full max-w-none mx-auto bg-[#000]">
       <div className="flex flex-col">
         <div className="relative flex flex-col lg:flex-row gap-[40px] lg:gap-[52px] 2xl:gap-[92px] items-center">
           {/* Media (Video or Image) */}
@@ -95,18 +95,18 @@ function TextHero({ textHeroData, loading, images = [] }) {
           {/* Right side content */}
           <div className="flex-1 w-full lg:text-left">
             <div className="mb-[25px] lg:mb-[40px] 2xl:mb-[72px] relative">
-              <img
+              {/* <img
                 src="/home/quote.png"
                 alt="Quote"
                 className="absolute pl-[40px] lg:px-0 -left-[35px] bottom-[40px] lg:bottom-[30px] 2xl:bottom-[60px] w-[140px] lg:w-[160px] 2xl:w-[283px] z-0"
-              />
+              /> */}
               <img
-                src={currentSlide?.title}
+                src={'/home/forbes/Forbes.png'}
                 alt="Forbes"
                 className="relative w-[230px] lg:w-[340px] 2xl:w-[600px] z-10"
               />
             </div>
-            <div className="text-black text-[16px] lg:text-[20px] 2xl:text-[36px] font-bold">
+            <div className="text-white text-[16px] lg:text-[20px] 2xl:text-[36px] font-bold">
               {currentSlide?.description}
             </div>
           </div>

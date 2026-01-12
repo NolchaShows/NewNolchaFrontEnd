@@ -241,9 +241,9 @@ function Artists({ artistData, loading, textColor, backgroundColor, isFade, vide
           carouselArtists={carouselArtists}
         />
       )}
-      <div className="bg-[#ffffff] page-container rounded-[8px] flex flex-col gap-[30px] lg:gap-[40px] 2xl:gap-[0]">
+      <div className="bg-[#D1FFE9] page-container rounded-[8px] flex flex-col gap-[30px] lg:gap-[40px] 2xl:gap-[0]">
         <div className="flex w-full justify-center xl:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
-          <div className={`flex flex-col gap-[20px] 2xl:gap-[30px] font-medium lg:items-center lg:text-center ${isTextLeft ? 'text-lefwt lg:text-center' : 'text-center'}`}>
+          <div className={`flex flex-col gap-[20px] 2xl:gap-[30px] font-bold lg:items-center lg:text-center ${isTextLeft ? 'text-lefwt lg:text-center' : 'text-center'}`}>
             <SectionTitle disableTitleSpacing={true}>{title}</SectionTitle>
             <p className="font-normal text-[16px] md:text-[20px] 2xl:text-4xl text-black">
               {description}

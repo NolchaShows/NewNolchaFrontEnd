@@ -548,6 +548,7 @@ export default function Home() {
         partners={press}
         bg={"bg-white"}
       /> */}
+      <img src="/home/press-and-media-recognition/press-and-media-recognition.jpg" />
       <img src="/home/AboveArtist.png" />
       <Artists
         artistData={artistData}
