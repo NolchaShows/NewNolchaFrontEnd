@@ -18,6 +18,7 @@ import ExploreServices from "@/components/home/ExploreServices";
 import TweetCarousel from "@/components/common/TweetCarousel";
 import { tweetsData } from "@/data/tweetsData";
 import PastExperiences from "@/components/common/PastExperiences";
+import NolchaExperience from "@/components/home/Collaboration";
 
 export default function Home() {
   const [heroData, setHeroData] = useState(null);
@@ -525,6 +526,10 @@ export default function Home() {
             "From cutting-edge tech startups and rapidly expanding businesses to impactful charities"
           }
           partners={partners}
+        />
+        <NolchaExperience
+          nolchaExperienceData={nolchaExperienceData}
+          loading={loading}
         />
         <PastSpeakers speakers={pastSpeakers} />
       </div>
