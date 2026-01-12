@@ -52,7 +52,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
     contactData?.second_name_placeholder || "Last Name";
   const emailPlaceholder = contactData?.email_placeholder || "Email";
   const messagePlaceholder = contactData?.message_placeholder || "Message";
-  const submitButtonText = contactData?.submit_button_text || "Submit";
+  const submitButtonText = contactData?.submit_button_text || "Let's Talk";
 
   const handleChange = (e) => {
     setFormData({
@@ -83,7 +83,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60"></div>
+      <div className="absolute inset-0 bg-black/80"></div>
 
       <div className="relative z-10 w-full flex flex-col lg:flex-row lg:items-center gap-[26px] lg:gap-[68px] 2xl:gap-[120px]">
         {/* Left Side */}
@@ -91,7 +91,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
           <SectionTitle className="text-left text-white" >{dynamicHeading}</SectionTitle>
 
           {/* Service Buttons Grid */}
-          <div className="flex flex-wrap gap-[7px] lg:gap-[10px] 2xl:gap-[18px] title-spacing">
+          {/* <div className="flex flex-wrap gap-[7px] lg:gap-[10px] 2xl:gap-[18px] title-spacing">
             {services.map((service, index) => (
               <button
                 key={index}
@@ -104,7 +104,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                 {service}
               </button>
             ))}
-          </div>
+          </div> */}
 
           {dynamicDescription && (
             <div className="text-white font-medium leading-tight pr-[20px] mb-6 md:mb-8 lg:mb-12 2xl:mb-16">
@@ -113,6 +113,8 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
               </span>
             </div>
           )}
+          
+          <p className="text-white text-[16px] lg:text-[24px] 2xl:text-[30px] font-bold mb-6 lg:mb-10 2xl:mb-[70px]">You're in great company.</p>
 
           <div className="flex justify-center lg:justify-start">
             {!isButton ? (
@@ -144,7 +146,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                   placeholder={firstNamePlaceholder}
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="h-full rounded-full w-full p-[10px] md:pl-[30px] text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="h-full rounded-lg lg:rounded-[16px] 2xl:rounded-[20px] w-full p-[10px] md:pl-[30px] text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
                   required
                 />
               </div>
@@ -155,7 +157,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                   placeholder={lastNamePlaceholder}
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="h-full rounded-full w-full p-[10px] md:pl-[30px] text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="h-full rounded-lg lg:rounded-[16px] 2xl:rounded-[20px] w-full p-[10px] md:pl-[30px] text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
                   required
                 />
               </div>
@@ -169,7 +171,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                 placeholder={emailPlaceholder}
                 value={formData.email}
                 onChange={handleChange}
-                className="rounded-full h-full w-full p-[10px] md:pl-[30px] 2xl:px-6 2xl:py-5 text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="rounded-lg lg:rounded-[16px] 2xl:rounded-[20px] h-full w-full p-[10px] md:pl-[30px] 2xl:px-6 2xl:py-5 text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
                 required
               />
             </div>
@@ -182,7 +184,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                 placeholder={messagePlaceholder}
                 value={formData.message}
                 onChange={handleChange}
-                className="rounded-full h-full w-full p-[10px] md:pl-[30px] 2xl:px-6 2xl:py-5 text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="rounded-lg lg:rounded-[16px] 2xl:rounded-[20px] h-full w-full p-[10px] md:pl-[30px] 2xl:px-6 2xl:py-5 text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
                 required
               />
             </div>
@@ -194,7 +196,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                 onClick={handleSubmit}
                 disabled={isLoading}
                 className={`
-                border-[1px] border-[#000000]
+                border-[1px] border-[#FF6813]
                 rounded-full
                 w-full
                 py-3 px-6 2xl:py-6 2xl:px-12
@@ -202,9 +204,9 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
                 2xl:text-[24px]
                 font-['Neue_Haas_Grotesk_Text_Pro',sans-serif]
                 font-medium
-                bg-[#CAD533]
+                bg-[#FF6813]
                 hover:bg-[#BFC943]
-                text-[#000000]
+                text-[#fff]
                 transition-colors duration-200
                 flex justify-center items-center
               `}

@@ -580,8 +580,9 @@ export default function Home() {
       <PastExperiences experiences={pastExperiences} />
       <ContactForm
         bg={"/landing/background2.jpg"}
-        heading={"I am Interested In"}
+        heading={"Contact us"}
         contactData={contactData}
+        desc={'For over 15 years, Nolcha has operated at the intersection of technology and culture, producing high-impact events, summits, and activations for leading blockchain, AI, and emerging-tech brands.'}
       />
     </div>
   );
