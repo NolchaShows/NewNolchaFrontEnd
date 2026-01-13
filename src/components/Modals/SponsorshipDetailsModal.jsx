@@ -1,0 +1,219 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { RxCross2 } from "react-icons/rx";
+
+const SponsorshipDetailsModal = ({ isOpen, onClose }) => {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    company: "",
+    events: {
+      "Consensus Hong Kong Kong": true,
+      "Bitcoin Conference Vegas": false,
+      "New York Fashion Week": false,
+      "Consensus Miami": false,
+      "Multichain Summer Series": false,
+      "Art Basel Miami": false,
+      "Token 2049 Singapore": false,
+      "White Label Events": false,
+    },
+  });
+
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleEventToggle = (eventName) => {
+    setFormData((prev) => ({
+      ...prev,
+      events: {
+        ...prev.events,
+        [eventName]: !prev.events[eventName],
+      },
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // TODO: Implement form submission logic
+    console.log("Form submitted:", formData);
+    // You can add API call here
+    alert("Thank you for your request! We'll be in touch soon.");
+    handleClose();
+  };
+
+  const handleClose = () => {
+    document.body.style.overflow = "unset";
+    onClose();
+  };
+
+  if (!isOpen) return null;
+
+  const eventsList = [
+    "Consensus Hong Kong Kong",
+    "Bitcoin Conference Vegas",
+    "New York Fashion Week",
+    "Consensus Miami",
+    "Multichain Summer Series",
+    "Art Basel Miami",
+    "Token 2049 Singapore",
+    "White Label Events",
+  ];
+
+  return (
+    <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-4">
+      <div className="bg-[#D1FFE9] rounded-2xl max-w-3xl w-full max-h-[96vh] relative shadow-lg overflow-hidden flex flex-col">
+        {/* Close Button */}
+        <button
+          onClick={handleClose}
+          className="absolute top-4 right-4 z-10 p-2 cursor-pointer bg-white rounded-full shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200"
+          aria-label="Close modal"
+        >
+          <RxCross2 className="w-5 h-5" />
+        </button>
+
+        {/* Scrollable content */}
+        <div className="p-4 lg:p-6 overflow-y-auto overflow-x-hidden flex-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+          {/* Logo and Title */}
+          <div className="mb-6 flex flex-col items-center">
+            <img
+              src="/navbar/logo.svg"
+              alt="NOLCHA"
+              className="h-5 lg:h-8 w-auto mb-1"
+            />
+            <h2 className="text-[18px] lg:text-[28px] font-bold text-gray-800">
+              Request Sponsorship Details
+            </h2>
+          </div>
+
+          {/* Header Image */}
+          <div className="mb-6 overflow-hidden">
+            <img
+              src="/home/upcoming/request.jpg"
+              alt="Cityscape with boats"
+              className="w-full h-[140px] lg:h-[200px] object-cover"
+            />
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Full Name */}
+            <div>
+              <label
+                htmlFor="fullName"
+                className="block text-sm lg:text-base font-medium text-gray-800 mb-1.5"
+              >
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleInputChange}
+                placeholder="Enter your full Name"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all duration-200 bg-white"
+                required
+              />
+            </div>
+
+            {/* Email and Company in single row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Email */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm lg:text-base font-medium text-gray-800 mb-1.5"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all duration-200 bg-white"
+                  required
+                />
+              </div>
+
+              {/* Company */}
+              <div>
+                <label
+                  htmlFor="company"
+                  className="block text-sm lg:text-base font-medium text-gray-800 mb-1.5"
+                >
+                  Company
+                </label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                  placeholder="Search for company"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all duration-200 bg-white"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Event(s) of interest */}
+            <div>
+              <label className="block text-sm lg:text-base font-medium text-gray-800 mb-3">
+                Event(s) of interest
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[5px]">
+                {eventsList.map((eventName) => (
+                  <label
+                    key={eventName}
+                    className="flex items-center space-x-2 cursor-pointer hover:bg-white/50 rounded-lg transition-colors"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.events[eventName]}
+                      onChange={() => handleEventToggle(eventName)}
+                      className="w-4 h-4 text-black border-gray-300 rounded focus:ring-2 focus:ring-black cursor-pointer"
+                    />
+                    <span className="text-sm lg:text-base text-gray-800">
+                      {eventName}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Send Button */}
+            <button
+              type="submit"
+              className="w-full bg-[#FF6813] hover:bg-[#FF9640] text-white font-medium py-4 px-6 rounded-full transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-orange-400 focus:outline-none"
+            >
+              Send
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SponsorshipDetailsModal;

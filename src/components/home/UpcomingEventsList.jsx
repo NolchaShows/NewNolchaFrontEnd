@@ -1,11 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import SectionTitle from "../common/SectionTitle";
+import SponsorshipDetailsModal from "../Modals/SponsorshipDetailsModal";
+
 const UpcomingEventsList = ({
   title = "Upcoming Events",
   events = [],
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const safeEvents = events && events.length > 0 ? events : [
     {
@@ -89,7 +92,10 @@ const UpcomingEventsList = ({
                         See past events
                       </button>
                       <button 
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsModalOpen(true);
+                        }}
                         className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-transparent border border-black text-black rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-50 transition-colors"
                       >
                         Request details
@@ -108,6 +114,12 @@ const UpcomingEventsList = ({
           );
         })}
       </div>
+
+      {/* Sponsorship Details Modal */}
+      <SponsorshipDetailsModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </section>
   );
 };
