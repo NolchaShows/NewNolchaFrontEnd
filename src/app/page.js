@@ -459,14 +459,14 @@ export default function Home() {
   ];
 
   const exploreServices = {
-    title: "Explore Our Services",
+    title: "How Brands Work With NOLCHA",
     image: "/homepage/explore_services/explore-services.png",
     caption: "Our commitment to building websites and apps that last means focusing on sustainable experiences rather than chasing the latest",
     items: [
-      { label: "Events", text: "Strategy. Story. Experience" },
-      { label: "Creative", text: "Innovation & Creative" },
-      { label: "Business", text: "Biz Dev & Fundraising" },
-      { label: "Agentic AI Solutions", text: "Biz Dev And Fundraising" },
+      { label: "Events", text: "Strategy. Story. Experience", description: "Fluent in innovation, tech, and crypto culture — we bridge creative vision with operational precision. From concept to completion, our team delivers full-scale event strategy, talent and programming, logistics, venue sourcing, art direction, and guest list curation. <br/> We handle every detail so your brand can own the moment.", work:"Bitcoin Conference, ETHDenver, Art Basel, Oh Polly, Consensus Official Opening Night." },
+      { label: "Creative", text: "Innovation & Creative", description: "From large-scale projection mapping to multi sensory installations and interactive environments, we produce immersive creative that enhances live events. <br /> Every activation supports the narrative of the event while delivering visually striking, technically precise experiences designed for both audience engagement and brand impact.", work: "Bitcoin Conference Nashville, Bitcoin Conference Vegas, Fvkrender, SHAO New York." },
+      { label: "Business", text: "Biz Dev & Fundraising", description: "Connecting Capital to Culture. <br /> Through our network of investors, family offices, and strategic partners, we help founders and brands build the right relationships and access aligned capital for growth. We support ventures shaping the future of technology, art, and culture.", work: "" },
+      { label: "Agentic AI Solutions", text: "Biz Dev And Fundraising", description: "From large-scale projection mapping to multi sensory installations and interactive environments, we produce immersive creative that enhances live events. <br /> Every activation supports the narrative of the event while delivering visually striking, technically precise experiences designed for both audience engagement and brand impact.", work: "Bitcoin Conference Nashville, Bitcoin Conference Vegas, Fvkrender, SHAO New York." },
     ],
   }
 

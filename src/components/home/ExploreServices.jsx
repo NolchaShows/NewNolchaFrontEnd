@@ -36,7 +36,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
             const isExpanded = expandedIndex === idx;
             const itemTitle = `${item.label}: ${item.text}`;
             const description = item.description || "Fluent in innovation, tech, and crypto culture — we bridge creative vision with operational precision. From concept to completion, our team delivers full-scale event strategy, talent and programming, logistics, venue sourcing, art direction, and guest list curation. We handle every detail so your brand can own the moment — seamlessly merging storytelling, design, and experience.";
-            const scopeOfWork = item.scopeOfWork || ["Branding", "Strategy", "Content", "Campaigns"];
+            const seeOurWork = item.work || "";
             const tagColors = [
               "bg-green-200 text-green-800",
               "bg-blue-200 text-blue-800",
@@ -106,23 +106,18 @@ const ExploreServices = ({ title, image, caption, items }) => {
                         </p>
 
                         {/* Scope of work */}
-                        <div className="mb-[10px] lg:mb-[20px] 2xl:mb-[30px]">
-                          <h4 className="text-black text-[14px] lg:text-[16px] 2xl:text-[18px] font-semibold mb-[12px] lg:mb-[10px] 2xl:mb-[14px]">
-                            Scope of work
-                          </h4>
-                          <div className="flex flex-wrap gap-[8px] lg:gap-[12px] 2xl:gap-[16px]">
-                            {scopeOfWork.map((tag, tagIdx) => (
-                              <span
-                                key={tagIdx}
-                                className={`px-[8px] lg:px-[12px] 2xl:px-[14px] py-[4px] lg:py-[6px] 2xl:py-[8px] rounded-full text-[12px] lg:text-[14px] 2xl:text-[16px] font-medium ${
-                                  tagColors[tagIdx % tagColors.length]
-                                }`}
-                              >
-                                {tag}
-                              </span>
-                            ))}
+                        {seeOurWork && (
+                          <div className="mb-[10px] lg:mb-[20px] 2xl:mb-[30px]">
+                            <h4 className="text-black text-[14px] lg:text-[16px] 2xl:text-[18px] font-semibold mb-[12px] lg:mb-[10px] 2xl:mb-[14px]">
+                              See our Work
+                            </h4>
+                            <div className="flex flex-wrap gap-[8px] lg:gap-[12px] 2xl:gap-[16px]">
+                              <p className="text-black text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed mb-[6px] lg:mb-[10px] 2xl:mb-[14px]">
+                                {seeOurWork}
+                              </p>
+                            </div>
                           </div>
-                        </div>
+                        )}
 
                         {/* Lets Talk Button */}
                         <button
