@@ -445,7 +445,7 @@ export default function Home() {
   // Upcoming events (accordion list style under EveningRecap)
   const upcomingListEvents = [
     {
-      title: "Art Basel",
+      title: "Consensus Hong Kong Kong",
       image: "/homepage/upcoming_events/art-basal.png",
       date: "07-07-2025",
       location: "22908 Houston Texas Usa",
@@ -453,9 +453,13 @@ export default function Home() {
       letsTalkLocation: "Location:",
       whiteLabelLocation: "Location:",
     },
-    { title: "Consensus HK" },
-    { title: "Bitcoin Vegas" },
+    { title: "Bitcoin Conference Vegas" },
     { title: "Consensus Miami" },
+    { title: "Multichain Summer Series" },
+    { title: "New York Fashion Week" },
+    { title: "Token 2049 Singapore" },
+    { title: "Art Basel Miami" },
+
   ];
 
   const exploreServices = {

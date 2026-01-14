@@ -4,9 +4,14 @@ export default function LogoSlider({ logoSliderData, loading }) {
   // Default values in case data is not available
   const defaultTitle = "As Seen As";
   const defaultLogos = [
-    { name: "AdAge", url: "/home/slider1.png" },
-    { name: "VOGUE", url: "/home/slider2.png" },
-    { name: "Forbes", url: "/home/slider3.png" },
+    { name: "AdAge", url: "/home/slider1.jpg" },
+    { name: "VOGUE", url: "/home/slider2.jpg" },
+    { name: "Forbes", url: "/home/slider3.jpg" },
+    { name: "Consensus Miami", url: "/home/slider4.jpg" },
+    { name: "Consensus Hong Kong", url: "/home/slider5.jpg" },
+    { name: "NFT.NYC", url: "/home/slider6.jpg" },
+    { name: "Bitcoin Vegas", url: "/home/slider7.jpg" },
+    { name: "Bitcoin Nashville", url: "/home/slider8.jpg" },
   ];
 
   // Use data from props if available, otherwise use defaults
