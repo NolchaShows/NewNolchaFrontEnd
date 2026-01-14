@@ -20,13 +20,13 @@ const ExploreServices = ({ title, image, caption, items }) => {
           <div className="rounded-[14px] lg:rounded-[22px] 2xl:rounded-[40px] overflow-hidden relative">
             <img src={image} alt="services" className="w-full h-[340px] lg:h-[570px] 2xl:h-[700px] object-cover" />
             {/* Overlay text box at bottom-left */}
-            {caption && (
+            {/* {caption && (
               <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-[16px] lg:p-[24px] 2xl:p-[32px]">
                 <p className="text-white text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed">
                   {caption}
                 </p>
               </div>
-            )}
+            )} */}
           </div>
         </div>
 
