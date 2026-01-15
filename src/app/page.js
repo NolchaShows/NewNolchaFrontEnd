@@ -481,11 +481,8 @@ export default function Home() {
     { image: "/experiences/newyork/conf.png", text: "NYFW Immersive" },
     { image: "/experiences/jack/conf.png", text: "BTC Nashville" },
     { image: "/experiences/ctrl/conf.png", text: "NYFW OH POLLY" },
-    { image: "/experiences/bitcoin/conf.png", text: "Bitcoin Conference" },
-    { image: "/experiences/opening/conf.png", text: "Opening Night Consensus" },
-    { image: "/experiences/newyork/conf.png", text: "NYFW Immersive" },
-    { image: "/experiences/jack/conf.png", text: "BTC Nashville" },
-    { image: "/experiences/ctrl/conf.png", text: "NYFW OH POLLY" },
+    { image: "/experiences/bitcoin/conf.png", text: "JACK BUTCHER RACE" },
+    { image: "/experiences/opening/conf.png", text: "UPCOMING" },
   ]
 
   const heroVideo = "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4";

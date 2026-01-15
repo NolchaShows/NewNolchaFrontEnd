@@ -15,7 +15,7 @@ const FashionGrid3x3 = ({
       <div className="">
         <div className="bg-[#FEF991]">
           {/* Row 1: 3 images */}
-          <div className="grid grid-cols-3 gap-1 lg:gap-2.5 2xl:gap-4.5 mb-1 lg:mb-2.5 2xl:mb-4.5">
+          <div className="grid grid-cols-3 gap-[5px] mb-[5px]">
             <div className="relative h-[166px] lg:h-[480px] 2xl:h-[854px] bg-white">
               {paddedImages[0] ? (
                 <img
@@ -58,7 +58,7 @@ const FashionGrid3x3 = ({
           </div>
 
           {/* Row 2: 2 images */}
-          <div className="grid grid-cols-2 gap-1 lg:gap-2.5 2xl:gap-4.5 mb-1 lg:mb-2.5 2xl:mb-4.5">
+          <div className="grid grid-cols-2 gap-[5px] mb-[5px]">
             <div className="relative h-[166px] lg:h-[480px] 2xl:h-[854px] bg-white">
               {paddedImages[3] ? (
                 <img
@@ -88,7 +88,7 @@ const FashionGrid3x3 = ({
           </div>
 
           {/* Row 3: 3 images */}
-          <div className="grid grid-cols-3 gap-1 lg:gap-2.5 2xl:gap-4.5">
+          <div className="grid grid-cols-3 gap-[5px]">
             <div className="relative h-[166px] lg:h-[480px] 2xl:h-[854px] bg-white">
               {paddedImages[5] ? (
                 <img
