@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import SectionTitle from "./SectionTitle";
 
-const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
+const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -78,10 +78,20 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData }) => {
     <div
       className="bg-cover bg-center bg-no-repeat relative flex justify-center page-container"
       style={{
-        backgroundImage: `url("${dynamicBackgroundImage}")`,
+        backgroundImage: videoSrc ? undefined : `url("${dynamicBackgroundImage}")`,
         backgroundColor: "#1a1a1a", // fallback dark color
       }}
     >
+      {videoSrc && (
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          src={videoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+      )}
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/80"></div>
 

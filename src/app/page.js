@@ -19,6 +19,7 @@ import TweetCarousel from "@/components/common/TweetCarousel";
 import { tweetsData } from "@/data/tweetsData";
 import PastExperiences from "@/components/common/PastExperiences";
 import NolchaExperience from "@/components/home/Collaboration";
+import HomeWideVideoBanner from "@/components/home/HomeWideVideoBanner";
 
 export default function Home() {
   const [heroData, setHeroData] = useState(null);
@@ -115,14 +116,14 @@ export default function Home() {
   const slideData = [
     {
       image: "/home/hero.png",
-      video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      video: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-1.mp4",
       title: "/home/Forbes.png",
       description:
         "“Nolcha Shows Returns To Art Basel Miami Beach Featuring Leading Web3 Brands.”",
     },
     {
       image: "/home/hero.png",
-      video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      video: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-1.mp4",
 
       title: "home/forbes.png",
       description: "lorem ipsum",
@@ -136,10 +137,10 @@ export default function Home() {
     "/experiences/jack/posts/5.png",
   ];
   const videos = [
-    "/video2.mp4",
-    "/video2.mp4",
-    "/video2.mp4",
-    "/video2.mp4",
+    "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-4.mp4",
+    "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-5.mp4",
+    "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-6.mp4",
+    "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-7.mp4",
   ];
   const partners = [
     {
@@ -467,7 +468,7 @@ export default function Home() {
     image: "/homepage/explore_services/explore-services.png",
     caption: "Our commitment to building websites and apps that last means focusing on sustainable experiences rather than chasing the latest",
     items: [
-      { label: "Events", text: "Strategy. Story. Experience", description: "Fluent in innovation, tech, and crypto culture — we bridge creative vision with operational precision. From concept to completion, our team delivers full-scale event strategy, talent and programming, logistics, venue sourcing, art direction, and guest list curation. <br/> We handle every detail so your brand can own the moment.", work:"Bitcoin Conference, ETHDenver, Art Basel, Oh Polly, Consensus Official Opening Night." },
+      { label: "Events", text: "Strategy. Story. Experience", description: "Fluent in innovation, tech, and crypto culture — we bridge creative vision with operational precision. From concept to completion, our team delivers full-scale event strategy, talent and programming, logistics, venue sourcing, art direction, and guest list curation. <br/> We handle every detail so your brand can own the moment.", work: "Bitcoin Conference, ETHDenver, Art Basel, Oh Polly, Consensus Official Opening Night." },
       { label: "Creative", text: "Innovation & Creative", description: "From large-scale projection mapping to multi sensory installations and interactive environments, we produce immersive creative that enhances live events. <br /> Every activation supports the narrative of the event while delivering visually striking, technically precise experiences designed for both audience engagement and brand impact.", work: "Bitcoin Conference Nashville, Bitcoin Conference Vegas, Fvkrender, SHAO New York." },
       { label: "Business", text: "Biz Dev & Fundraising", description: "Connecting Capital to Culture. <br /> Through our network of investors, family offices, and strategic partners, we help founders and brands build the right relationships and access aligned capital for growth. We support ventures shaping the future of technology, art, and culture.", work: "" },
       { label: "Agentic AI Solutions", text: "Biz Dev And Fundraising", description: "From large-scale projection mapping to multi sensory installations and interactive environments, we produce immersive creative that enhances live events. <br /> Every activation supports the narrative of the event while delivering visually striking, technically precise experiences designed for both audience engagement and brand impact.", work: "Bitcoin Conference Nashville, Bitcoin Conference Vegas, Fvkrender, SHAO New York." },
@@ -519,9 +520,10 @@ export default function Home() {
           caption={exploreServices.caption}
           items={exploreServices.items}
         />
-        <div className="hidden lg:block">
-          <img src="/homepage/less_height_image/top-image.png" />
-        </div>
+        <HomeWideVideoBanner
+          className="hidden lg:block"
+          src="https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-2.mp4"
+        />
         <Partners
           partnerData={partnerData}
           loading={loading}
@@ -553,7 +555,6 @@ export default function Home() {
         bg={"bg-white"}
       /> */}
       <img src="/home/press-and-media-recognition/press-and-media-recognition.jpg" />
-      <img src="/home/AboveArtist.png" />
       <Artists
         artistData={artistData}
         loading={loading}
@@ -561,7 +562,10 @@ export default function Home() {
         videos={videos}
         isDesktop={true}
       />
-      <img src="/home/AboveArtist.png" />
+      <HomeWideVideoBanner
+        className="hidden lg:block"
+        src="https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-3.mp4"
+      />
       <FashionGrid3x3
         images={[
           "/shao_nyfw/image 21.png",
@@ -586,7 +590,10 @@ export default function Home() {
         bg={"/landing/background2.jpg"}
         heading={"Contact us"}
         contactData={contactData}
-        desc={'For over 15 years, Nolcha has operated at the intersection of technology and culture, producing high-impact events, summits, and activations for leading blockchain, AI, and emerging-tech brands.'}
+        desc={
+          "For over 15 years, Nolcha has operated at the intersection of technology and culture, producing high-impact events, summits, and activations for leading blockchain, AI, and emerging-tech brands."
+        }
+        videoSrc="https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-8.mp4"
       />
     </div>
   );
