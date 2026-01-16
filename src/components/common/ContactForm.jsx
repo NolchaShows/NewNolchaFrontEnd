@@ -187,14 +187,14 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
             </div>
 
             {/* Message */}
-            <div className="w-full h-[100px] lg:h-[133px] 2xl:h-[166px]">
-              <input
-                type="text"
+            <div className="w-full">
+              <textarea
                 name="message"
                 placeholder={messagePlaceholder}
                 value={formData.message}
                 onChange={handleChange}
-                className="rounded-lg lg:rounded-[16px] 2xl:rounded-[20px] h-full w-full p-[10px] md:pl-[30px] 2xl:px-6 2xl:py-5 text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50"
+                rows={4}
+                className="rounded-lg lg:rounded-[16px] 2xl:rounded-[20px] h-[100px] lg:h-[133px] 2xl:h-[166px] w-full p-[10px] md:pl-[30px] md:pt-[16px] 2xl:px-6 2xl:py-5 text-base md:text-[16px] 2xl:text-xl bg-white/90 backdrop-blur-sm text-gray-800 placeholder-[#141414] focus:outline-none focus:ring-2 focus:ring-white/50 resize-none"
                 required
               />
             </div>
