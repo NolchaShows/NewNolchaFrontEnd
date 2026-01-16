@@ -77,8 +77,8 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
     <div className="bg-white page-container py-[60px] lg:py-[100px] 2xl:py-[140px]">
       <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[50px] 2xl:gap-[80px] items-start">
         {/* Left side - Image with gradient overlay */}
-        <div className="relative w-[513px] h-[531px] flex-shrink-0">
-          <div className="rounded-[12px] overflow-hidden relative w-full h-full">
+        <div className="relative w-full lg:w-[513px] h-auto lg:h-[531px] flex-shrink-0">
+          <div className="rounded-[12px] overflow-hidden relative w-full" style={{ aspectRatio: '513/531', maxHeight: '531px' }}>
             <img
               src={getImageUrl()}
               alt="Nolcha Shows collaboration event"
@@ -95,7 +95,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
 
             {/* Caption text (no box overlay) */}
             {imageCaption && (
-              <p className="absolute bottom-4 left-5 right-4 text-white text-[18px] leading-relaxed">
+              <p className="absolute bottom-4 left-5 right-4 text-white text-[14px] lg:text-[18px] leading-relaxed">
                 {imageCaption}
               </p>
             )}

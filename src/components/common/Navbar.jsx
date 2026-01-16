@@ -495,7 +495,7 @@ function Navbar() {
                     const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
-                  className="w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-[#FF6813] rounded-full flex items-center justify-center hover:bg-[#FF9640] transition-colors"
+                  className="hidden lg:flex w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-[#FF6813] rounded-full items-center justify-center hover:bg-[#FF9640] transition-colors"
                 >
                   {/* Default SVG for smaller screens */}
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" className="block 2xl:hidden">
