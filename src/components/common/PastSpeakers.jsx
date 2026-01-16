@@ -246,8 +246,8 @@ const PastSpeakers = ({ speakers = [] }) => {
             aria-label="Scroll left"
           >
             <motion.img
-              src="/homepage/past_speakers/left_yellow.png"
-              className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+              src="/left.jpg"
+              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] 2xl:h-[70px] 2xl:w-[70px] rounded-[5px] lg:rounded-[10px] 2xl:rounded-[15px]"
               whileTap={{ scale: 0.9 }}
             />
           </button>
@@ -256,8 +256,8 @@ const PastSpeakers = ({ speakers = [] }) => {
             aria-label="Scroll right"
           >
             <motion.img
-              src="/homepage/past_speakers/right_yellow.png"
-              className="cursor-pointer w-[36px] h-[36px] md:w-[60px] md:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+              src="/right.jpg"
+              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] 2xl:h-[70px] 2xl:w-[70px] rounded-[5px] lg:rounded-[10px] 2xl:rounded-[15px]"
               whileTap={{ scale: 0.9 }}
             />
           </button>
