@@ -80,7 +80,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   }
 
   return (
-    <div className="bg-[#F4F4F4] p-10">
+    <div className="bg-[#FFFFFF] p-10">
       <div className="max-w-7xl 2xl:max-w-none mx-auto 2xl:mx-10 py-16">
         <div className=" grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
           {/* Left side - Image only */}
@@ -96,7 +96,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
           <div className="flex flex-col">
             {/* Main heading */}
             <div className="border-b-1 border-[#000000B2]">
-              <h1 className="text-[20px] lg:text-[24px] 2xl:text-[32px] font-bold text-black leading-tight mb-8 uppercase">
+              <h1 className="text-[20px] lg:text-[40px] 2xl:text-[32px] font-bold text-black leading-tight mb-8">
                 {heading}
               </h1>
             </div>

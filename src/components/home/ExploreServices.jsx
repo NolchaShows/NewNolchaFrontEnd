@@ -1,32 +1,97 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionTitle from "../common/SectionTitle";
 
 const ExploreServices = ({ title, image, caption, items }) => {
   const [expandedIndex, setExpandedIndex] = useState(0); // First item expanded by default
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
+
+  // Video URLs mapping
+  const videoUrls = [
+    "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4",
+    "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%203.mp4",
+  ];
+
+  // Get video URL for current item (cycle through if more items than videos)
+  const getVideoUrl = (index) => {
+    return videoUrls[index % videoUrls.length];
+  };
 
   const toggleItem = (index) => {
-    setExpandedIndex(expandedIndex === index ? -1 : index);
+    const newIndex = expandedIndex === index ? -1 : index;
+    setExpandedIndex(newIndex);
+    // Reset video when switching to a different item
+    if (newIndex >= 0) {
+      setIsPlaying(false);
+      if (videoRef.current) {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+      }
+    }
   };
+
+  const handlePlayClick = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const handleVideoPause = () => {
+    setIsPlaying(false);
+  };
+
+  const handleVideoPlay = () => {
+    setIsPlaying(true);
+  };
+
+  // Update video source when expandedIndex changes
+  useEffect(() => {
+    if (videoRef.current && expandedIndex >= 0) {
+      const newSrc = getVideoUrl(expandedIndex);
+      if (videoRef.current.src !== newSrc) {
+        videoRef.current.src = newSrc;
+        videoRef.current.load(); // Reload video with new source
+      }
+    }
+  }, [expandedIndex]);
 
   return (
     <section className="page-container bg-white py-[60px] lg:py-[100px] 2xl:py-[140px]">
       <SectionTitle className="text-black text-left mb-[30px] lg:mb-[50px] 2xl:mb-[70px]">{title}</SectionTitle>
 
       <div className="flex flex-col lg:flex-row gap-[10px] lg:gap-[30px] 2xl:gap-[60px]">
-        {/* Left image with overlay caption */}
+        {/* Left video player with play button */}
         <div className="relative w-[300px] lg:w-[435px] 2xl:w-[580px]">
-          <div className="rounded-[14px] lg:rounded-[22px] 2xl:rounded-[40px] overflow-hidden relative">
-            <img src={image} alt="services" className="w-full h-[340px] lg:h-[570px] 2xl:h-[700px] object-cover" />
-            {/* Overlay text box at bottom-left */}
-            {/* {caption && (
-              <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-[16px] lg:p-[24px] 2xl:p-[32px]">
-                <p className="text-white text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed">
-                  {caption}
-                </p>
+          <div className="rounded-[14px] lg:rounded-[22px] 2xl:rounded-[40px] overflow-hidden relative bg-black">
+            <video
+              ref={videoRef}
+              src={getVideoUrl(expandedIndex >= 0 ? expandedIndex : 0)}
+              className="w-full h-[340px] lg:h-[570px] 2xl:h-[700px] object-cover"
+              onPause={handleVideoPause}
+              onPlay={handleVideoPlay}
+              onEnded={handleVideoPause}
+              playsInline
+            />
+            {/* Play button overlay */}
+            {!isPlaying && (
+              <div
+                className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer transition-opacity hover:bg-black/40"
+                onClick={handlePlayClick}
+              >
+                <div className="w-[60px] h-[60px] lg:w-[80px] lg:h-[80px] 2xl:w-[100px] 2xl:h-[100px] bg-white/90 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                  <svg
+                    className="w-[30px] h-[30px] lg:w-[40px] lg:h-[40px] 2xl:w-[50px] 2xl:h-[50px] text-black ml-1"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
               </div>
-            )} */}
+            )}
           </div>
         </div>
 
