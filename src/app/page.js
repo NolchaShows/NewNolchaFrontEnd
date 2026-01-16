@@ -518,13 +518,13 @@ export default function Home() {
   }
 
   const pastExperiences = [
-    { image: "/experiences/bitcoin/conf.png", text: "Bitcoin Conference" },
-    { image: "/experiences/opening/conf.png", text: "Opening Night Consensus" },
-    { image: "/experiences/newyork/conf.png", text: "NYFW Immersive" },
-    { image: "/experiences/jack/conf.png", text: "BTC Nashville" },
-    { image: "/experiences/ctrl/conf.png", text: "NYFW OH POLLY" },
-    { image: "/experiences/bitcoin/conf.png", text: "JACK BUTCHER RACE" },
-    { image: "/experiences/opening/conf.png", text: "UPCOMING" },
+    { image: "homepage/past_experiences/event-1.png", text: "Bitcoin Conference" },
+    { image: "homepage/past_experiences/event-2.png", text: "Opening Night Consensus" },
+    { image: "homepage/past_experiences/event-3.png", text: "NYFW Immersive" },
+    { image: "homepage/past_experiences/event-4.png", text: "BTC Nashville" },
+    { image: "homepage/past_experiences/event-5.png", text: "NYFW OH POLLY" },
+    { image: "homepage/past_experiences/event-6.png", text: "JACK BUTCHER RACE" },
+    { image: "homepage/past_experiences/event-7.png", text: "UPCOMING" },
   ]
 
   const heroVideo = "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4";

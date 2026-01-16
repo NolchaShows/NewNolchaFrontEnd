@@ -46,6 +46,12 @@ const PastExperiences = ({
   };
 
   const itemsPerSlide = getItemsPerSlide();
+  const isDesktop = screenSize === "lg";
+  // Card sizing (requested)
+  const CARD_W = 345;
+  const CARD_H = 397;
+  // Matches `px-2` on each card container (8px left + 8px right)
+  const CARD_GUTTER = 16;
 
   const nextSlide = () => {
     if (currentIndex + itemsPerSlide < experiences.length) {
@@ -104,7 +110,9 @@ const PastExperiences = ({
         <div
           className="flex transition-transform duration-500"
           style={{
-            transform: `translateX(-${(currentIndex / itemsPerSlide) * 100}%)`,
+            transform: isDesktop
+              ? `translateX(-${currentIndex * (CARD_W + CARD_GUTTER)}px)`
+              : `translateX(-${(currentIndex / itemsPerSlide) * 100}%)`,
           }}
         >
           {experiences.map((experience, idx) => {
@@ -115,17 +123,17 @@ const PastExperiences = ({
             return (
               <div
                 key={idx}
-                className="w-full sm:w-1/2 lg:w-1/5 flex-shrink-0 px-2"
+                className="w-full sm:w-1/2 lg:w-[345px] flex-shrink-0 px-2"
               >
-                <div className="relative w-full rounded-[20px] overflow-hidden">
+                <div className="relative w-full rounded-[20px] overflow-hidden h-[300px] lg:h-[397px]">
                   <img
                     src={imageUrl}
                     alt={text}
-                    className="w-full h-[300px] lg:h-[328px] 2xl:h-[583px] object-cover"
+                    className="w-full h-full object-cover"
                   />
                   {/* Text Overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 lg:p-6 2xl:p-8">
-                    <h3 className="text-white text-[20px] lg:text-[24px] 2xl:text-[42px] font-medium text-center">
+                    <h3 className="text-white text-[20px] lg:text-[24px] 2xl:text-[42px] font-medium text-left">
                       {text}
                     </h3>
                   </div>
