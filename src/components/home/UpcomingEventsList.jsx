@@ -9,6 +9,7 @@ const UpcomingEventsList = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContext, setModalContext] = useState({ title: "", image: "" });
 
   const safeEvents = events && events.length > 0 ? events : [
     {
@@ -94,6 +95,10 @@ const UpcomingEventsList = ({
                       <button 
                         onClick={(e) => {
                           e.stopPropagation();
+                          setModalContext({
+                            title: display.title || ev.title || "",
+                            image: display.image || "",
+                          });
                           setIsModalOpen(true);
                         }}
                         className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-transparent border border-black text-black rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-50 transition-colors"
@@ -118,7 +123,9 @@ const UpcomingEventsList = ({
       {/* Sponsorship Details Modal */}
       <SponsorshipDetailsModal 
         isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+        onClose={() => setIsModalOpen(false)}
+        headerImageSrc={modalContext.image}
+        selectedEventTitle={modalContext.title}
       />
     </section>
   );
