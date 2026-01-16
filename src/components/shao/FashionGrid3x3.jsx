@@ -2,7 +2,7 @@ import React from "react";
 
 const FashionGrid3x3 = ({
   images = [],
-  background = "#FEF991"
+  background = "#D1FFE9"
 }) => {
   // Ensure we have exactly 9 images, pad with empty strings if needed
   const paddedImages = [...images];
@@ -13,7 +13,7 @@ const FashionGrid3x3 = ({
   return (
     <section className="w-full" style={{ backgroundColor: background }}>
       <div className="">
-        <div className="bg-[#FEF991]">
+        <div className="bg-[#D1FFE9]">
           {/* Row 1: 3 images */}
           <div className="grid grid-cols-3 gap-[5px] mb-[5px]">
             <div className="relative h-[166px] lg:h-[480px] 2xl:h-[854px] bg-white">
