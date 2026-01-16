@@ -66,7 +66,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
     <section className="page-container bg-white py-[60px] lg:py-[100px] 2xl:py-[140px]">
       <SectionTitle className="text-black text-left mb-[30px] lg:mb-[50px] 2xl:mb-[70px]">{title}</SectionTitle>
 
-      <div className="flex flex-col lg:flex-row gap-[10px] lg:gap-[30px] 2xl:gap-[60px]">
+      <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[30px] 2xl:gap-[60px] items-center lg:items-start">
         {/* Left video player with play button */}
         <div className="relative w-[300px] lg:w-[435px] 2xl:w-[580px]">
           <div className="rounded-[14px] lg:rounded-[22px] 2xl:rounded-[40px] overflow-hidden relative bg-black">
