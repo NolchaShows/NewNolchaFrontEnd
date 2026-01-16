@@ -54,7 +54,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   if (loading) {
     return (
       <div className="bg-white page-container py-[60px] lg:py-[100px] 2xl:py-[140px]">
-        <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[50px] 2xl:gap-[80px] items-start">
+        <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[60px] 2xl:gap-[80px] items-start">
           {/* Left side - Image skeleton */}
           <div className="relative w-full lg:w-[435px] 2xl:w-[580px] flex-shrink-0">
             <div className="rounded-[20px] lg:rounded-[24px] 2xl:rounded-[30px] w-full h-[400px] lg:h-[570px] 2xl:h-[700px] bg-gray-300 animate-pulse"></div>
@@ -76,21 +76,28 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   return (
     <div className="bg-white page-container py-[60px] lg:py-[100px] 2xl:py-[140px]">
       <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[50px] 2xl:gap-[80px] items-start">
-        {/* Left side - Image with overlay caption */}
-        <div className="relative w-full lg:w-[435px] 2xl:w-[580px] flex-shrink-0">
-          <div className="rounded-[20px] lg:rounded-[24px] 2xl:rounded-[30px] overflow-hidden relative">
+        {/* Left side - Image with gradient overlay */}
+        <div className="relative w-[513px] h-[531px] flex-shrink-0">
+          <div className="rounded-[12px] overflow-hidden relative w-full h-full">
             <img
               src={getImageUrl()}
               alt="Nolcha Shows collaboration event"
-              className="w-full h-[400px] lg:h-[570px] 2xl:h-[700px] object-cover"
+              className="w-full h-full object-cover"
             />
-            {/* Overlay text box at bottom-left */}
+            {/* Gradient overlay (full image) */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%)",
+              }}
+            />
+
+            {/* Caption text (no box overlay) */}
             {imageCaption && (
-              <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-[16px] lg:p-[20px] 2xl:p-[24px]">
-                <p className="text-white text-[14px] lg:text-[16px] 2xl:text-[18px] leading-relaxed">
-                  {imageCaption}
-                </p>
-              </div>
+              <p className="absolute bottom-4 left-5 right-4 text-white text-[18px] leading-relaxed">
+                {imageCaption}
+              </p>
             )}
           </div>
         </div>
