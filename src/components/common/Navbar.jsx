@@ -6,10 +6,17 @@ import InnerCircleModal from "../Modals/InnerCircleModal";
 import { useRouter } from "next/navigation";
 
 function Navbar() {
-  const [isExperiencesOpen, setIsExperiencesOpen] = useState(false);
-  const [isCharityPartnersOpen, setIsCharityPartnersOpen] = useState(false);
+  // Testing helper: keep one mega dropdown open
+  const FORCE_DESKTOP_MEGA_OPEN = false;
+  const FORCED_DESKTOP_MEGA_KEY = "upcoming";
+
   const [isInnerCircleModalOpen, setIsInnerCircleModalOpen] = useState(false);
-  const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
+  const [isDesktopSecondRowOpen, setIsDesktopSecondRowOpen] = useState(
+    FORCE_DESKTOP_MEGA_OPEN ? true : false
+  );
+  const [activeDesktopMegaMenu, setActiveDesktopMegaMenu] = useState(
+    FORCE_DESKTOP_MEGA_OPEN ? FORCED_DESKTOP_MEGA_KEY : null
+  );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -72,6 +79,7 @@ function Navbar() {
       label: "Creative Circle",
       href: "/creative-circle",
       hasDropdown: true,
+      dropdownType: "creativeCircle",
       key: "creativeCircle",
     },
   ];
@@ -147,36 +155,104 @@ function Navbar() {
     { label: "ST.JUDE", href: "/charity_partners/st_jude" },
   ];
 
-  const getDropdownState = (dropdownType) => {
-    switch (dropdownType) {
-      case "experiences":
-        return isExperiencesOpen;
-      case "charityPartners":
-        return isCharityPartnersOpen;
-      default:
-        return false;
-    }
-  };
-
-  const setDropdownState = (dropdownType, value) => {
-    switch (dropdownType) {
-      case "experiences":
-        setIsExperiencesOpen(value);
-        break;
-      case "charityPartners":
-        setIsCharityPartnersOpen(value);
-        break;
-    }
-  };
-
   const getDropdownItems = (dropdownType) => {
     switch (dropdownType) {
       case "experiences":
         return experiencesDropdown;
       case "charityPartners":
         return charityPartnersDropdown;
+      case "press":
+        return [
+          { label: "Press Highlights", href: "/press" },
+          { label: "Media Coverage", href: "/press" },
+        ];
+      case "creativeCircle":
+        return [
+          { label: "Membership", href: "/membership" },
+          { label: "Apply", href: "/membership" },
+        ];
       default:
         return [];
+    }
+  };
+
+  const getMegaMenuConfig = (menuKey) => {
+    // First item should NOT have a dropdown
+    if (!menuKey || menuKey === "btcVegas") return null;
+
+    switch (menuKey) {
+      case "upcoming":
+        return {
+          sectionLabel: "Upcoming",
+          items: [
+            { label: "Art Basel Dec 4, 2025", href: "/upcoming" },
+            { label: "Consensus HK February 10-12, 2026", href: "/upcoming" },
+            { label: "BTC Vegas", href: "/upcoming" },
+            { label: "Consensus Miami", href: "/upcoming" },
+            { label: "Summer Series 2025", href: "/upcoming" },
+            { label: "Turnkey- White Label", href: "/upcoming" },
+          ],
+          cta: {
+            title: "View All Upcoming",
+            description: "See the full calendar and join us at upcoming events.",
+            href: "/upcoming",
+          },
+          imageSrc: "/homepage/menu_dropdown/dropdown1.jpg",
+        };
+      case "charityPartners":
+        return {
+          sectionLabel: "Charity",
+          items: charityPartnersDropdown,
+          cta: {
+            title: "View All Charity Partners",
+            description: "Learn how we give back and support meaningful causes.",
+            href: "/charity_partners/cerebral_palsy_foundation",
+          },
+          imageSrc: "/homepage/menu_dropdown/dropdown2.jpg",
+        };
+      case "experiences":
+        return {
+          sectionLabel: "Experiences",
+          items: experiencesDropdown,
+          cta: {
+            title: "View All Experiences",
+            description: "Explore immersive events and experiences.",
+            href: "/experiences",
+          },
+          imageSrc: "/homepage/menu_dropdown/dropdown3.jpg",
+        };
+      case "press":
+        return {
+          sectionLabel: "Press",
+          items: [
+            { label: "Press Highlights", href: "/press" },
+            { label: "Media Coverage", href: "/press" },
+            { label: "Press Page", href: "/press" },
+          ],
+          cta: {
+            title: "View All Press",
+            description: "Read news, features, and coverage.",
+            href: "/press",
+          },
+          imageSrc: "/homepage/menu_dropdown/dropdown4.jpg",
+        };
+      case "creativeCircle":
+        return {
+          sectionLabel: "Creative Circle",
+          items: [
+            { label: "Membership", href: "/membership" },
+            { label: "Why Join", href: "/membership" },
+            { label: "Apply", href: "/membership" },
+          ],
+          cta: {
+            title: "View Creative Circle",
+            description: "Join our community of creators and collaborators.",
+            href: "/creative-circle",
+          },
+          imageSrc: "/homepage/menu_dropdown/dropdown5.jpg",
+        };
+      default:
+        return null;
     }
   };
 
@@ -205,90 +281,6 @@ function Navbar() {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     console.log("Search query:", searchQuery);
-  };
-
-  const renderDesktopMenuItem = (item, idx) => {
-    if (item.isModal) {
-      return (
-        <div
-          className="cursor-pointer hover:opacity-80 transition-opacity"
-          onClick={handleModalClick(item.modalType)}
-        >
-          <div className="text-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
-            {item.label}
-          </div>
-          <div
-            className="text-[14px] text-[#141414] 2xl:text-xl "
-            style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
-          >
-            {item.subtitle}
-          </div>
-        </div>
-      );
-    } else if (item.hasDropdown) {
-      return (
-        <div
-          className="relative cursor-pointer"
-          onMouseEnter={() => setDropdownState(item.dropdownType, true)}
-          onMouseLeave={() => setDropdownState(item.dropdownType, false)}
-        >
-          <div className="flex flex-1 items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
-            {item.label}
-            <img
-              src="/arrow.svg"
-              alt="arrow"
-              className="ml-2 w-[9.33px] h-[8px] 2xl:w-[16px] 2xl:h-[10px]  opacity-100 rotate-0 transition-transform duration-200"
-            />
-          </div>
-
-          <div
-            className="text-[14px] text-[#141414] 2xl:text-2xl "
-            style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
-          >
-            {item.subtitle}
-          </div>
-
-          {getDropdownState(item.dropdownType) && (
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 pt-2 z-50 w-64 2xl:w-80">
-              <div className="bg-white shadow-lg rounded-md border border-gray-200">
-                <div className="py-2">
-                  {getDropdownItems(item.dropdownType).map(
-                    (dropdownItem, dropdownIdx) => (
-                      <Link
-                        key={dropdownIdx}
-                        href={dropdownItem.href}
-                        className="block px-4 py-2 text-sm 2xl:text-xl hover:bg-gray-100 transition-colors duration-200"
-                        onClick={() =>
-                          setDropdownState(item.dropdownType, false)
-                        }
-                      >
-                        {dropdownItem.label}
-                      </Link>
-                    )
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    } else {
-      return (
-        <Link href={item.href} className="hover:opacity-80 transition-opacity">
-          <div
-            className="text-left font-bold text-[18px] text-black mb-1 2xl:text-3xl "
-          >
-            {item.label}
-          </div>
-          <div
-            className="text-[14px] text-[#141414] 2xl:text-2xl "
-            style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
-          >
-            {item.subtitle}
-          </div>
-        </Link>
-      );
-    }
   };
 
   const renderMobileMenuItem = (item, idx) => {
@@ -399,7 +391,16 @@ function Navbar() {
     <>
       {/* Sticky Navbar */}
       <div
-        className="sticky top-0 bg-[#FFF7E6]  z-40 shadow-sm"
+        className="sticky top-0 bg-[#FFF7E6]  z-40 shadow-sm relative"
+        onMouseEnter={() => {
+          if (FORCE_DESKTOP_MEGA_OPEN) return;
+          setIsDesktopSecondRowOpen(true);
+        }}
+        onMouseLeave={() => {
+          if (FORCE_DESKTOP_MEGA_OPEN) return;
+          setIsDesktopSecondRowOpen(false);
+          setActiveDesktopMegaMenu(null);
+        }}
       >
         <div className="w-full mx-auto flex justify-between items-center px-10 py-5">
           {/* Logo */}
@@ -511,67 +512,137 @@ function Navbar() {
         </div>
 
         {/* Second Row - Desktop Menu (hidden on mobile) */}
-        <div className="hidden lg:block border-t border-[#C9C9C9] mx-8">
-          <div className="w-full max-w-none mx-auto px-6 py-4">
+        {/*
+          When FORCE_DESKTOP_MEGA_OPEN is true:
+          - second row stays open
+          - mega dropdown stays open on FORCED_DESKTOP_MEGA_KEY
+        */}
+        <div
+          className={[
+            "hidden lg:grid mx-8 transform-gpu",
+            "transition-[grid-template-rows,opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+            (FORCE_DESKTOP_MEGA_OPEN ? true : isDesktopSecondRowOpen)
+              ? "grid-rows-[1fr] opacity-100 translate-y-0 border-t border-[#C9C9C9] pointer-events-auto"
+              : "grid-rows-[0fr] opacity-0 -translate-y-2 border-t-0 pointer-events-none",
+          ].join(" ")}
+        >
+          <div className="overflow-hidden">
+            <div className="w-full max-w-none mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               {visibleMenuItems.map((item, idx) => (
-                <div key={idx} className="relative">
-                  {renderDesktopMenuItem(item, idx)}
-                </div>
-              ))}
-
-              {/* More Dropdown */}
-              <div
-                className="relative text-center cursor-pointer"
-                onMouseEnter={() => setIsMoreDropdownOpen(true)}
-                onMouseLeave={() => setIsMoreDropdownOpen(false)}
-              >
                 <div
-                  className="font-bold text-left text-black mb-1 2xl:text-3xl "
-
-                >
-                  More
-                </div>
-                <div
-                  className="text-[14px] text-[#141414] 2xl:text-2xl "
-                  style={{
-                    fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif",
+                  key={item.key ?? idx}
+                  className="relative"
+                  onMouseEnter={() => {
+                    if (FORCE_DESKTOP_MEGA_OPEN) return;
+                    if (idx === 0) {
+                      setActiveDesktopMegaMenu(null);
+                      return;
+                    }
+                    setActiveDesktopMegaMenu(item.key);
                   }}
                 >
-                  Options
+                  {item.href && item.href !== "#" ? (
+                    <Link href={item.href} className="hover:opacity-80 transition-opacity">
+                      <div className="flex items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
+                        {item.label}
+                        {idx !== 0 && (
+                          <img
+                            src="/arrow.svg"
+                            alt="arrow"
+                            className="ml-2 w-[9.33px] h-[8px] 2xl:w-[16px] 2xl:h-[10px] opacity-100 rotate-0"
+                          />
+                        )}
+                      </div>
+                      <div
+                        className="text-[14px] text-[#141414] 2xl:text-2xl"
+                        style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
+                      >
+                        {item.subtitle}
+                      </div>
+                    </Link>
+                  ) : (
+                    <div className="cursor-pointer">
+                      <div className="flex items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
+                        {item.label}
+                      </div>
+                      <div
+                        className="text-[14px] text-[#141414] 2xl:text-2xl"
+                        style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
+                      >
+                        {item.subtitle}
+                      </div>
+                    </div>
+                  )}
                 </div>
+              ))}
+            </div>
+            </div>
+          </div>
+        </div>
 
-                {isMoreDropdownOpen && (
-                  <div className="absolute top-full left-1/2 transform -translate-x-[70%] pt-2 z-50 w-64">
-                    <div className="bg-white shadow-lg rounded-md border border-gray-200">
-                      <div className="py-2">
-                        {moreMenuItems.map((item, idx) => (
-                          <div key={idx} className="relative">
-                            {item.isModal ? (
-                              <span
-                                className="block px-4 py-2 text-sm 2xl:text-xl hover:bg-gray-100 transition-colors duration-200 cursor-pointer "
-                                onClick={handleModalClick(item.modalType)}
-                              >
-                                {item.label}
-                              </span>
-                            ) : (
-                              <Link
-                                href={item.href}
-                                className="block px-4 py-2 text-sm 2xl:text-xl hover:bg-gray-100 transition-colors duration-200 "
-                                onClick={() => setIsMoreDropdownOpen(false)}
-                              >
-                                {item.label}
-                              </Link>
-                            )}
-                          </div>
+        {/* Mega dropdown panel (desktop only) */}
+        <div
+          className={[
+            "hidden lg:block absolute left-1/2 -translate-x-1/2",
+            "transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+            (FORCE_DESKTOP_MEGA_OPEN
+              ? true
+              : activeDesktopMegaMenu && isDesktopSecondRowOpen)
+              ? "opacity-100 translate-y-0 pointer-events-auto"
+              : "opacity-0 -translate-y-2 pointer-events-none",
+          ].join(" ")}
+          style={{ top: "100%" }}
+        >
+          {(() => {
+            const cfg = getMegaMenuConfig(
+              FORCE_DESKTOP_MEGA_OPEN ? FORCED_DESKTOP_MEGA_KEY : activeDesktopMegaMenu
+            );
+            if (!cfg) return null;
+            return (
+              <div className="pt-3">
+                <div className="w-[746px] h-[427px] rounded-[20px] bg-[#FFF7E6] overflow-hidden">
+                  <div className="grid grid-cols-[1fr_400px] gap-6 p-6 h-full">
+                    <div>
+                      <div className="text-[16px] text-black/70 mb-4">
+                        {cfg.sectionLabel}
+                      </div>
+                      <div className="space-y-[14px] max-h-[calc(427px-32px-32px-18px-32px)] overflow-auto">
+                        {cfg.items.map((it, i) => (
+                          <Link
+                            key={`${it.href}-${i}`}
+                            href={it.href}
+                            className="block text-[22px] leading-[1.15] font-[700] text-black hover:opacity-80 transition-opacity"
+                            onClick={() => setActiveDesktopMegaMenu(null)}
+                          >
+                            {it.label}
+                          </Link>
                         ))}
                       </div>
                     </div>
+
+                    <div>
+                      <div className="bg-white rounded-[20px] p-6 shadow-sm h-full flex flex-col w-[400px]">
+                        <div className="text-[20px] leading-[1.05] font-[700] text-black">
+                          {cfg.cta.title}
+                        </div>
+                        <div className="mt-3 text-[16px] text-black/80">
+                          {cfg.cta.description}
+                        </div>
+                        <div className="mt-5 flex-1 rounded-[24px] overflow-hidden bg-[#F2F2F2]">
+                          <img
+                            src={cfg.imageSrc}
+                            alt={`${cfg.sectionLabel} preview`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-          </div>
+            );
+          })()}
         </div>
       </div>
 
