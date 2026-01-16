@@ -187,7 +187,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
             </div>
 
             {/* Message */}
-            <div className="w-full h-[56px] 2xl:h-[80px]">
+            <div className="w-full h-[100px] lg:h-[133px] 2xl:h-[166px]">
               <input
                 type="text"
                 name="message"
