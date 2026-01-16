@@ -51,7 +51,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
                   onClick={() => toggleItem(idx)}
                   className="w-full flex justify-between items-center text-left transition-colors"
                 >
-                  <h3 className="text-[18px] lg:text-[28px] 2xl:text-[40px] text-black leading-[1.2] pr-4">
+                  <h3 className="text-[18px] lg:text-[28px] 2xl:text-[40px] text-black leading-[1.2] pr-4 mb-[10px] lg:mb-[20px] 2xl:mb-[30px]">
                     <span className="font-bold">{item.label}:</span>{" "}
                     <span className="font-normal">{item.text}</span>
                   </h3>
