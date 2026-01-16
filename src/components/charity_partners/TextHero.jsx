@@ -11,7 +11,7 @@ function TextHero({ textHeroData, loading, images = [] }) {
       
       return {
         image: mainImageUrl || "/home/hero.png",
-        title: secondImageUrl || "/home/Forbes.png",
+        title: secondImageUrl || "/home/forbes/Forbes.png",
         description: slide.description || "Default description text",
         video: slide.video_url || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", // fallback demo video
       };

@@ -117,7 +117,7 @@ export default function Home() {
     {
       image: "/home/hero.png",
       video: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-1.mp4",
-      title: "/home/Forbes.png",
+      title: "/home/forbes/Forbes.png",
       description:
         "“Nolcha Shows Returns To Art Basel Miami Beach Featuring Leading Web3 Brands.”",
     },
@@ -125,7 +125,7 @@ export default function Home() {
       image: "/home/hero.png",
       video: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-1.mp4",
 
-      title: "home/forbes.png",
+      title: "/home/forbes/Forbes.png",
       description: "lorem ipsum",
     },
   ];
