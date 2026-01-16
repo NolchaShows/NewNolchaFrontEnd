@@ -1,22 +1,17 @@
-// Twitter/X Tweet IDs for Inscribing Miami Community Trust section
+// Twitter/X Tweet IDs extracted from newtweetsData.js
 export const tweetsData = [
-  "1865577730835616223", // @leap_xyz
-  "1927103945677111640", // @realizingerin
-  "1933228337624674510", // @OmnityNetwork
-  "1929308816878993868", // @Web3Maxx
-  "1926443355531088024", // @NolchaShows
-  "1927524974392197502", // @huuep
-  "1902389670954332528", // @InscribAtlantis
-  "1902841614847885340", // @TheDegenesse
-  "1925918916322234833", // @Pizza_Ninjas
-  "1925200953667359032", // @sirjohnhargrave
-  "1880350444419182891", // @BLE77_ED
-  "1902794938183495804", // @NolchaShows
-  "1733568111176007928", // @OnChainMonkey
-  "1865204411913392544", // @NolchaShows
-  "1863967147828957639", // @trygamma
-  "1770201271812997412", // @NolchaShows
-  "1818367401802842490", // @trygamma
-  "1648493185184813056", // @NolchaShows
-  "1847299188633083935"  // @Web3Maxx
+  "1724820805354492212", // @InscribAtlantis - Casey Rodarmor announcement
+  "1648493185184813056", // @NolchaShows - 360 Immersive Art Exhibition
+  "1750550864354505032", // @REBASEgg - Rebase partnership announcement
+  "1733528242748031395", // @xverseApp - Ordinals take Art Basel
+  "1646482072687742978", // @fvckrender - Last night at @NolchaShows
+  "1733568111176007928", // @OnChainMonkey - OCM family experience
+  "1664688166975012890", // @udiWertheimer - TaprootWizards community
+  "1796352187116777899", // @consensus2025 - Tulum by zeebu and NolchaShows
+  "1681859897749827584", // @fvckrender - FULL HOUSE LVCIDIA party
+  "1747406636761612590", // @NolchaShows - 2024 events schedule recap
+  "1733203124708429910", // @Goodthings - Surrounded by legends
+  "1730638416155386187", // @trygamma - Featured in Forbes
+  "1816957978098241886", // @jackbutcher - Top tier day
+  "1862625083535077716"  // @EthereumDenver - ETHDenver Opening Party
 ];
