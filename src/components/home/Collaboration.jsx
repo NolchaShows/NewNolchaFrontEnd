@@ -1,14 +1,15 @@
+"use client";
 import React, { useState } from 'react';
 
 const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   const fallbackSections = [
     {
-      id: 'connect',
-      title: 'Connect + Collaborate',
+      id: 'creative',
+      title: 'Creative: Innovation & creative',
       content: 'Join leaders in Web3 and crypto for dynamic gatherings. Connect, engage and build with pioneers in a setting that fosters collaboration and drives industry innovation.'
     },
     {
-      id: 'connect2',
+      id: 'connect',
       title: 'Connect + Collaborate',
       content: 'Join leaders in Web3 and crypto for dynamic gatherings. Connect, engage and build with pioneers in a setting that fosters collaboration and drives industry innovation.'
     },
@@ -19,7 +20,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
     }
   ];
 
-  const heading = nolchaExperienceData?.heading || "Nolcha Shows Experiences Are The Destination For Brands And Organizations To Continue To Build, Engage And Connect.";
+  const heading = nolchaExperienceData?.heading || "Nolcha Shows experiences are the destination for brands & organizations to continue to build, engage & connect.";
   const imageCaption = nolchaExperienceData?.image_caption || "Image from Nolcha Shows x World Trade Center 69 Floor";
 
   const getImageUrl = () => {
@@ -52,27 +53,20 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   // Loading state
   if (loading) {
     return (
-      <div className="bg-[#F4F4F4] p-10">
-        <div className="max-w-7xl 2xl:max-w-none mx-auto 2xl:mx-10 py-16">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            {/* Left side - Image skeleton */}
-            <div className="relative">
-              <div className="w-full h-[400px] bg-gray-300 animate-pulse rounded-lg"></div>
-              <div className="mt-3 h-4 bg-gray-300 animate-pulse rounded w-3/4"></div>
-            </div>
-            {/* Right side - Content skeleton */}
-            <div>
-              <div className="border-b-1 border-[#000000B2] mb-6">
-                <div className="h-8 bg-gray-300 animate-pulse rounded mb-4"></div>
-                <div className="h-6 bg-gray-300 animate-pulse rounded mb-2"></div>
-                <div className="h-6 bg-gray-300 animate-pulse rounded w-3/4 mb-8"></div>
+      <div className="bg-white page-container py-[60px] lg:py-[100px] 2xl:py-[140px]">
+        <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[50px] 2xl:gap-[80px] items-start">
+          {/* Left side - Image skeleton */}
+          <div className="relative w-full lg:w-[435px] 2xl:w-[580px] flex-shrink-0">
+            <div className="rounded-[20px] lg:rounded-[24px] 2xl:rounded-[30px] w-full h-[400px] lg:h-[570px] 2xl:h-[700px] bg-gray-300 animate-pulse"></div>
+          </div>
+          {/* Right side - Content skeleton */}
+          <div className="flex-1 flex flex-col">
+            <div className="h-[60px] lg:h-[80px] 2xl:h-[100px] bg-gray-300 animate-pulse rounded mb-[30px] lg:mb-[40px] 2xl:mb-[50px]"></div>
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="bg-[#F3F3F3] rounded-[6px] lg:rounded-[12px] 2xl:rounded-[20px] p-4 mb-3">
+                <div className="h-6 bg-gray-300 animate-pulse rounded"></div>
               </div>
-              {[...Array(3)].map((_, index) => (
-                <div key={index} className="border-b-1 border-[#000000B2] py-4">
-                  <div className="h-6 bg-gray-300 animate-pulse rounded mb-2"></div>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -80,93 +74,87 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   }
 
   return (
-    <div className="bg-[#FFFFFF] p-10">
-      <div className="max-w-7xl 2xl:max-w-none mx-auto 2xl:mx-10 py-16">
-        <div className=" grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
-          {/* Left side - Image only */}
-          <div className="relative flex flex-col h-full">
+    <div className="bg-white page-container py-[60px] lg:py-[100px] 2xl:py-[140px]">
+      <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[50px] 2xl:gap-[80px] items-start">
+        {/* Left side - Image with overlay caption */}
+        <div className="relative w-full lg:w-[435px] 2xl:w-[580px] flex-shrink-0">
+          <div className="rounded-[20px] lg:rounded-[24px] 2xl:rounded-[30px] overflow-hidden relative">
             <img
               src={getImageUrl()}
               alt="Nolcha Shows collaboration event"
-              className="w-full h-full object-cover rounded-lg shadow-lg"
+              className="w-full h-[400px] lg:h-[570px] 2xl:h-[700px] object-cover"
             />
-          </div>
-
-          {/* Right side - Content */}
-          <div className="flex flex-col">
-            {/* Main heading */}
-            <div className="border-b-1 border-[#000000B2]">
-              <h1 className="text-[20px] lg:text-[40px] 2xl:text-[32px] font-bold text-black leading-tight mb-8">
-                {heading}
-              </h1>
-            </div>
-
-            {/* Expandable sections */}
-            <div className="flex-1">
-              {sections.map((section) => (
-                <div key={section.id} className="border-b-1 border-[#000000B2]">
-                  {/* Section header */}
-                  <button
-                    onClick={() => toggleSection(section.id)}
-                    className="w-full flex justify-between items-center py-6 text-left transition-colors duration-200"
-                  >
-                    <h2 className="text-[20px] lg:text-[24px] 2xl:text-3xl font-bold text-black uppercase">
-                      {section.title}
-                    </h2>
-                    <div className="ml-4 flex-shrink-0">
-                      {expandedSection === section.id ? (
-                        <svg
-                          className="w-6 h-6 text-black"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M20 12H4"
-                          />
-                        </svg>
-                      ) : (
-                        <svg
-                          className="w-6 h-6 text-black"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 4v16m8-8H4"
-                          />
-                        </svg>
-                      )}
-                    </div>
-                  </button>
-
-                  {/* Expandable content */}
-                  <div
-                    className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedSection === section.id ? "max-h-96" : "max-h-0"
-                      }`}
-                  >
-                    <div className="pb-6 font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] text-gray-700 text-[18px] lg:text-[20px] 2xl:text-xl leading-relaxed pr-8 font-normal">
-                      {section.content}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {/* Overlay text box at bottom-left */}
+            {imageCaption && (
+              <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-[16px] lg:p-[20px] 2xl:p-[24px]">
+                <p className="text-white text-[14px] lg:text-[16px] 2xl:text-[18px] leading-relaxed">
+                  {imageCaption}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Caption placed outside the grid, below the image */}
-        <p className="mt-3 text-[20px] text-black font-[400] text-center lg:text-left">
-          {imageCaption}
-        </p>
+        {/* Right side - Content */}
+        <div className="flex-1 flex flex-col">
+          {/* Main heading */}
+          <h1 className="text-[28px] lg:text-[36px] 2xl:text-[48px] font-bold text-black leading-tight mb-[30px] lg:mb-[40px] 2xl:mb-[50px]">
+            {heading}
+          </h1>
 
+          {/* Expandable accordion sections */}
+          <div className="flex flex-col gap-[10px] lg:gap-[12px] 2xl:gap-[14px]">
+            {sections.map((section) => {
+              const isExpanded = expandedSection === section.id;
+              return (
+                <div
+                  key={section.id}
+                  className="bg-[#F3F3F3] rounded-[6px] lg:rounded-[12px] 2xl:rounded-[20px] overflow-hidden"
+                >
+                  {/* Accordion Header */}
+                  <button
+                    onClick={() => toggleSection(section.id)}
+                    className="w-full flex justify-between items-center px-[16px] lg:px-[24px] 2xl:px-[32px] py-[16px] lg:py-[20px] 2xl:py-[24px] text-left transition-colors hover:bg-[#E8E8E8]"
+                  >
+                    <h2 className="text-[18px] lg:text-[24px] 2xl:text-[32px] font-bold text-black leading-tight pr-4">
+                      {section.title}
+                    </h2>
+                    {/* Chevron Icon */}
+                    <div className="flex-shrink-0">
+                      <svg
+                        className={`w-6 h-6 lg:w-8 lg:h-8 2xl:w-10 2xl:h-10 text-black transition-transform duration-300 ${
+                          isExpanded ? "rotate-180" : ""
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </div>
+                  </button>
 
+                  {/* Expandable Content */}
+                  {isExpanded && (
+                    <div className="px-[16px] lg:px-[24px] 2xl:px-[32px] pb-[16px] lg:pb-[20px] 2xl:pb-[24px]">
+                      <p
+                        className="text-black text-[14px] lg:text-[16px] 2xl:text-[18px] leading-relaxed font-normal"
+                        style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
+                      >
+                        {section.content}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
