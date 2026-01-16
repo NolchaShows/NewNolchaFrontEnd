@@ -203,7 +203,7 @@ export function Carousel({
 function Artists({ artistData, loading, textColor, backgroundColor, isFade, videos, isSlider, isTextLeft, isDesktop = false }) {
   // Use dynamic data from Strapi if available, otherwise fall back to defaults
   const title = artistData?.title || "And +500 Other Artists";
-  const description = artistData?.description || "ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY COWART - LINDSAY KOKOSKA - NODEMONKES - KIRA BURSKY - VINCENT D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA ZOREF - ROB PRIOR - LAURENCE FULLER - JANEDAO - IZZY WEISSGERBER - GRETTA KRUESI - JANEDAO -YIYANG LU - SKYE NICOLAS - AEFORIA - ARNO CARSTENS - MOHSEN HAZRATI - RAGZY X - MUSKETON - TILLAVISION - MADE BY OONA - STACIE ANT - YOUNG & SICK";
+  const description = artistData?.description || "Onchainmonkey - World Of Women - Ron English - Jeremy Cowart - Lindsay Kokoska - Nodemonkes - Kira  Bursky - Vincent D’onofrio - Latashá - Vakseen - Talia Zoref - Rob Prior - Laurence Fuller - Janedao - Izzy  Weissgerber - Gretta Kruesi - Janedao -yiyang Lu - Skye Nicolas  - Aeforia  - Arno Carstens - Mohsen  Hazrati - Ragzy X - Musketon - Tillavision - Made By Oona - Stacie Ant - Young & Sick";
 
   // Map carousel artists from Strapi data
   const carouselArtists = artistData?.carousal_item?.map(item => item.text) || [];

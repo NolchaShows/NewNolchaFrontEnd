@@ -612,7 +612,7 @@ function Navbar() {
                           <Link
                             key={`${it.href}-${i}`}
                             href={it.href}
-                            className="block text-[22px] leading-[1.15] font-[700] text-black hover:opacity-80 transition-opacity"
+                            className="block text-[20px] leading-[1.15] font-[500] text-black hover:text-[#FF6813] transition-opacity"
                             onClick={() => setActiveDesktopMegaMenu(null)}
                           >
                             {it.label}

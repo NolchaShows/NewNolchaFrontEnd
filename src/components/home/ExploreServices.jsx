@@ -22,41 +22,45 @@ const ExploreServices = ({ title, image, caption, items }) => {
   const toggleItem = (index) => {
     const newIndex = expandedIndex === index ? -1 : index;
     setExpandedIndex(newIndex);
-    // Reset video when switching to a different item
-    if (newIndex >= 0) {
-      setIsPlaying(false);
-      if (videoRef.current) {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
-      }
-    }
   };
 
-  const handlePlayClick = () => {
-    if (videoRef.current) {
-      videoRef.current.play();
-      setIsPlaying(true);
-    }
-  };
-
-  const handleVideoPause = () => {
-    setIsPlaying(false);
-  };
-
-  const handleVideoPlay = () => {
-    setIsPlaying(true);
-  };
-
-  // Update video source when expandedIndex changes
+  // Auto-play video when expandedIndex changes
   useEffect(() => {
     if (videoRef.current && expandedIndex >= 0) {
       const newSrc = getVideoUrl(expandedIndex);
       if (videoRef.current.src !== newSrc) {
         videoRef.current.src = newSrc;
-        videoRef.current.load(); // Reload video with new source
+        videoRef.current.load();
+      }
+      // Auto-play video
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch((error) => {
+            // Autoplay failed (user interaction required in some browsers)
+            console.log("Autoplay prevented:", error);
+            setIsPlaying(false);
+          });
+      }
+    } else {
+      // Pause when no item is expanded
+      if (videoRef.current) {
+        videoRef.current.pause();
+        setIsPlaying(false);
       }
     }
   }, [expandedIndex]);
+
+  const handleVideoPlay = () => {
+    setIsPlaying(true);
+  };
+
+  const handleVideoPause = () => {
+    setIsPlaying(false);
+  };
 
   return (
     <section className="page-container bg-white py-[60px] lg:py-[100px] 2xl:py-[140px]">
@@ -72,14 +76,28 @@ const ExploreServices = ({ title, image, caption, items }) => {
               className="w-full h-[340px] lg:h-[570px] 2xl:h-[700px] object-cover"
               onPause={handleVideoPause}
               onPlay={handleVideoPlay}
-              onEnded={handleVideoPause}
+              onEnded={() => {
+                // Loop video when it ends
+                if (videoRef.current) {
+                  videoRef.current.currentTime = 0;
+                  videoRef.current.play();
+                }
+              }}
+              autoPlay
+              muted
+              loop
               playsInline
             />
-            {/* Play button overlay */}
-            {!isPlaying && (
+            {/* Play button overlay - only show if video failed to autoplay */}
+            {!isPlaying && expandedIndex >= 0 && (
               <div
                 className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer transition-opacity hover:bg-black/40"
-                onClick={handlePlayClick}
+                onClick={() => {
+                  if (videoRef.current) {
+                    videoRef.current.play();
+                    setIsPlaying(true);
+                  }
+                }}
               >
                 <div className="w-[60px] h-[60px] lg:w-[80px] lg:h-[80px] 2xl:w-[100px] 2xl:h-[100px] bg-white/90 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
                   <svg
@@ -100,7 +118,16 @@ const ExploreServices = ({ title, image, caption, items }) => {
           {items.map((item, idx) => {
             const isExpanded = expandedIndex === idx;
             const itemTitle = `${item.label}: ${item.text}`;
-            const description = item.description || "Fluent in innovation, tech, and crypto culture — we bridge creative vision with operational precision. From concept to completion, our team delivers full-scale event strategy, talent and programming, logistics, venue sourcing, art direction, and guest list curation. We handle every detail so your brand can own the moment — seamlessly merging storytelling, design, and experience.";
+            const rawDescription = item.description || "Fluent in innovation, tech, and crypto culture — we bridge creative vision with operational precision. From concept to completion, our team delivers full-scale event strategy, talent and programming, logistics, venue sourcing, art direction, and guest list curation. We handle every detail so your brand can own the moment — seamlessly merging storytelling, design, and experience.";
+            
+            // Process description to replace <br /> tags with spacing divs
+            const processDescription = (text) => {
+              if (!text) return "";
+              // Replace <br /> and <br> tags with a div that adds spacing (responsive)
+              return text.replace(/<br\s*\/?>/gi, '<div class="h-[6px] lg:h-[12px] 2xl:h-[18px]"></div>');
+            };
+            const description = processDescription(rawDescription);
+            
             const seeOurWork = item.work || "";
             const tagColors = [
               "bg-green-200 text-green-800",
@@ -166,9 +193,10 @@ const ExploreServices = ({ title, image, caption, items }) => {
                     >
                       <div>
                         {/* Description */}
-                        <p className="text-black text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed mb-[6px] lg:mb-[10px] 2xl:mb-[14px] mt-[10px] lg:mt-[20px] 2xl:mt-[30px]">
-                          {description}
-                        </p>
+                        <div
+                          className="text-black text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed mb-[6px] lg:mb-[10px] 2xl:mb-[14px] mt-[10px] lg:mt-[20px] 2xl:mt-[30px]"
+                          dangerouslySetInnerHTML={{ __html: description }}
+                        />
 
                         {/* Scope of work */}
                         {seeOurWork && (

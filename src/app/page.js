@@ -506,7 +506,7 @@ export default function Home() {
   ];
 
   const exploreServices = {
-    title: "How Brands Work With NOLCHA",
+    title: "How Brands Work With Nolcha",
     image: "/homepage/explore_services/explore-services.png",
     caption: "Our commitment to building websites and apps that last means focusing on sustainable experiences rather than chasing the latest",
     items: [
