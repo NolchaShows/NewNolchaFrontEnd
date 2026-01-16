@@ -17,7 +17,7 @@ const ImageTextSection = ({
               <img
                 src={image}
                 alt="Fashion show image"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-[12px]"
               />
               {/* Tags Overlay */}
               {tags.length > 0 && (
@@ -45,7 +45,7 @@ const ImageTextSection = ({
           <div className="flex-1">
             <div className="space-y-6">
               {/* Main Title */}
-              <h2 className="text-[32px] lg:text-[52px] 2xl:text-[114px] font-bold text-black mb-[10px] lg:mb-[20px] 2xl:mb-[40px]">
+              <h2 className="text-[28px] lg:text-[48px] 2xl:text-[96px] font-bold leading-[120%] text-black mb-[10px] lg:mb-[20px] 2xl:mb-[40px]">
                 {title.split('\n').map((line, index) => (
                   <div key={index}>{line}</div>
                 ))}
@@ -54,7 +54,7 @@ const ImageTextSection = ({
               {/* Paragraphs */}
               <div className="space-y-4 text-black">
                 {paragraphs.map((paragraph, index) => (
-                  <p key={index} className="text-[16px] lg:text-[32px] 2xl:text-[60px] leading-relaxed">
+                  <p key={index} className="text-[14px] lg:text-[28px] 2xl:text-[56px] leading-relaxed">
                     {paragraph.split('**').map((part, partIndex) => {
                       if (partIndex % 2 === 1) {
                         return <strong key={partIndex}>{part}</strong>;

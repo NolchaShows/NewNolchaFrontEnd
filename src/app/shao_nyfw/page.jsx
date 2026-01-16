@@ -39,7 +39,7 @@ function page() {
                 firstPart="SHAO"
                 secondPart="NYFW"
                 strokeColor="#000000"
-                fillColor="#FEF991"
+                fillColor="#FFFFFF"
                 textColor="#FFFFFF"
                 size="large"
                 overlayOpacity={20}
@@ -49,7 +49,7 @@ function page() {
                 images={["/shao_nyfw/image 1.jpg", "/shao_nyfw/image 2.jpg", "/shao_nyfw/image 3.jpg"]}
                 line1="360 Projection"
                 line2="Mapped Venue"
-                background="#FEF991"
+                background="#D1FFE9"
             />
 
             <FashionGrid
@@ -72,7 +72,7 @@ function page() {
                     "This season, we went **beyond the traditional runway** — bringing our 15-year legacy of **immersive production** and **crypto-culture storytelling** into the fashion world.",
                     "At Artechouse New York, an interactive art museum in Chelsea, we produced Shao New York's Spring/Summer 2026 runway show, \"Futures of the Past: Chrome Legacy.\""
                 ]}
-                background="#FEF991"
+                background="#FFF7E6"
                 tags={[
                     { label: "Branding", color: "#BDACFF" },
                     { label: "Strategy", color: "#BBD7FF" },

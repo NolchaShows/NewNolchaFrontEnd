@@ -42,7 +42,7 @@ const VideoHeroSection = ({
     
     const isGoogleDriveVideo = embedUrl.includes('drive.google.com');
     return (
-        <div className={`relative w-full overflow-hidden h-[464px] lg:h-[725px] 2xl:h-[1288px] ${className}`} >
+        <div className={`relative w-full overflow-hidden h-[505px] lg:h-[725px] 2xl:h-[1288px] ${className}`} >
             {/* Video Background */}
             <div className="absolute inset-0 z-0">
                 {isGoogleDriveVideo ? (

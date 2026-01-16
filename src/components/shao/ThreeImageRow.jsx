@@ -10,9 +10,9 @@ const ThreeImageRow = ({
 
   return (
     <section className="w-full" style={{ backgroundColor: background }}>
-      <div className="py-[5px] lg:py-[10px] 2xl:py-[18px]">
-        <div className="bg-[#FEF991]">
-          <div className="grid grid-cols-1 lg:grid-cols-3 bg-[#FEF991] gap-[5px] lg:gap-[10px] 2xl:gap-[18px]">
+      <div className="py-[5px]">
+        <div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-[5px]">
             <div className="relative h-[375px] lg:h-[525px] 2xl:h-[933px] bg-white">
               {left && (
                 <img src={left} alt="Left visual" className="w-full h-full object-cover" />
