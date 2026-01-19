@@ -21,6 +21,7 @@ function Navbar() {
   const mobileShareRef = useRef(null);
   const [isShareDropdownOpen, setIsShareDropdownOpen] = useState(false);
   const prevBodyOverflowRef = useRef("");
+  const [isDesktopHidden, setIsDesktopHidden] = useState(false);
 
   const router = useRouter();
   // Mobile dropdown states
@@ -288,6 +289,32 @@ function Navbar() {
     };
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    // Desktop: hide navbar while scrolling (show only at very top)
+    if (typeof window === "undefined") return;
+
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => {
+      if (!mq.matches) {
+        setIsDesktopHidden(false);
+        return;
+      }
+      setIsDesktopHidden(window.scrollY > 10);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    // Safari compatibility: guard addEventListener on MediaQueryList
+    if (typeof mq.addEventListener === "function") mq.addEventListener("change", update);
+    else if (typeof mq.addListener === "function") mq.addListener(update);
+
+    return () => {
+      window.removeEventListener("scroll", update);
+      if (typeof mq.removeEventListener === "function") mq.removeEventListener("change", update);
+      else if (typeof mq.removeListener === "function") mq.removeListener(update);
+    };
+  }, []);
+
   const renderMobileMenuItem = (item, idx) => {
     const isExpanded = item.key && mobileDropdowns[item.key];
 
@@ -415,7 +442,13 @@ function Navbar() {
       {/* Fixed Navbar (overlays hero/video) */}
       <div
         data-navbar="main"
-        className="sticky top-0 left-0 right-0 w-full bg-[#FFF7E6] lg:fixed lg:bg-transparent lg:hover:bg-[#FFF7E6] transition-colors duration-300 z-40 group"
+        className={[
+          "sticky top-0 left-0 right-0 w-full bg-[#FFF7E6]",
+          "lg:fixed lg:bg-transparent lg:hover:bg-[#FFF7E6]",
+          "transition-colors duration-300 z-40 group",
+          "lg:transition-transform lg:duration-300 lg:ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isDesktopHidden ? "lg:-translate-y-full" : "lg:translate-y-0",
+        ].join(" ")}
         onMouseEnter={() => {
           if (FORCE_DESKTOP_MEGA_OPEN) return;
           setIsDesktopSecondRowOpen(true);
