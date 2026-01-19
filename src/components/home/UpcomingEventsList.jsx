@@ -38,7 +38,7 @@ const UpcomingEventsList = ({
 
   return (
     <section className="w-full bg-white page-container relative">
-      <SectionTitle>{title}</SectionTitle>
+      <SectionTitle className="mb-[20px] lg:mb-[30px] 2xl:mb-[50px]">{title}</SectionTitle>
 
       <div className="flex flex-col gap-[6px] lg:gap-[10px] 2xl:gap-[18px]">
         {safeEvents.map((ev, idx) => {
@@ -64,7 +64,7 @@ const UpcomingEventsList = ({
             >
               {isOpen ? (
                 <div className="bg-[#D1FFE9] px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] flex flex-col lg:flex-row gap-5 lg:gap-[30px] 2xl:gap-[50px] items-center">
-                  <div className="flex-1 flex flex-row items-center gap-[10px] lg:gap-[20px] 2xl:gap-[30px]">
+                  <div className="flex-1 flex flex-row items-center gap-[10px] lg:gap-[30px] 2xl:gap-[50px]">
                     {/* Left */}
                     {display.image && (
                       <img
