@@ -49,6 +49,7 @@ function Navbar() {
       label: "Upcoming",
       href: "/upcoming",
       subtitle: "Join Us + Explore",
+      hasDropdown: true,
       key: "upcoming",
     },
     {
@@ -546,12 +547,14 @@ function Navbar() {
                     <Link href={item.href} className="hover:opacity-80 transition-opacity">
                       <div className="flex items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
                         {item.label}
-                        {idx !== 0 && (
-                          <img
-                            src="/arrow.svg"
-                            alt="arrow"
-                            className="ml-2 w-[9.33px] h-[8px] 2xl:w-[16px] 2xl:h-[10px] opacity-100 rotate-0"
-                          />
+                        {item.hasDropdown && (
+                          <svg
+                            className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-black"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M7 10l5 5 5-5z" />
+                          </svg>
                         )}
                       </div>
                       <div
@@ -565,6 +568,15 @@ function Navbar() {
                     <div className="cursor-pointer">
                       <div className="flex items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
                         {item.label}
+                        {item.hasDropdown && (
+                          <svg
+                          className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-black"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M7 10l5 5 5-5z" />
+                        </svg>
+                        )}
                       </div>
                       <div
                         className="text-[14px] text-[#141414] 2xl:text-2xl"
