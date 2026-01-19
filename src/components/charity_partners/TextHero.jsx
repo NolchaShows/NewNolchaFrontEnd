@@ -11,7 +11,7 @@ function TextHero({ textHeroData, loading, images = [] }) {
       
       return {
         image: mainImageUrl || "/home/hero.png",
-        title: secondImageUrl || "/home/forbes/Forbes.png",
+        title: secondImageUrl || "/home/forbes/forbes.png",
         description: slide.description || "Default description text",
         video: slide.video_url || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", // fallback demo video
       };
@@ -101,7 +101,7 @@ function TextHero({ textHeroData, loading, images = [] }) {
                 className="absolute pl-[40px] lg:px-0 -left-[35px] bottom-[40px] lg:bottom-[30px] 2xl:bottom-[60px] w-[140px] lg:w-[160px] 2xl:w-[283px] z-0"
               /> */}
               <img
-                src={'/home/forbes/Forbes.png'}
+                src={'/home/forbes/forbes.png'}
                 alt="Forbes"
                 className="relative w-[230px] lg:w-[340px] 2xl:w-[600px] z-10"
               />
