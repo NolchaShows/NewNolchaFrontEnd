@@ -90,7 +90,7 @@ const UpcomingEventsList = ({
                         onClick={(e) => e.stopPropagation()}
                         className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-black text-white rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-800 transition-colors"
                       >
-                        See past events
+                        Learn more
                       </button>
                       <button 
                         onClick={(e) => {
