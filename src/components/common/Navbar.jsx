@@ -128,31 +128,31 @@ function Navbar() {
 
   const experiencesDropdown = [
     {
-      label: "VV RACHING WITH JACK BUTCHER",
+      label: "Vv raching with Jack Butcher",
       href: "/experiences/vv_raching_with_jack_butcher",
     },
-    { label: "BITCOIN CONFERANCE", href: "/experiences/bitcoin_conferance" },
+    { label: "Bitcoin conferance", href: "/experiences/bitcoin_conferance" },
     {
-      label: "OPENING NIGHT CONSENSUS",
+      label: "Opening night consensus",
       href: "/experiences/opening_night_consensus",
     },
     {
-      label: "CTRL ORDINALS COLLECTION LAUNCH",
+      label: "Ctrl ordinals collection launch",
       href: "/experiences/ctrl_ordinals_collection_launch",
     },
     {
-      label: "NEW YORK FASHION WEEK",
+      label: "New York Fashion Week",
       href: "/experiences/new_york_fashion_week",
     },
   ];
 
   const charityPartnersDropdown = [
     {
-      label: "CEREBRAL PALSY FOUNDATION",
+      label: "Cerebral palsy foundation",
       href: "/charity_partners/cerebral_palsy_foundation",
     },
-    { label: "MAKE-A-WISH", href: "/charity_partners/make_a_wish" },
-    { label: "ST.JUDE", href: "/charity_partners/st_jude" },
+    { label: "Make-a-wish", href: "/charity_partners/make_a_wish" },
+    { label: "St. Jude", href: "/charity_partners/st_jude" },
   ];
 
   const getDropdownItems = (dropdownType) => {
