@@ -79,6 +79,7 @@ function Navbar() {
     {
       label: "Creative Circle",
       href: "/creative-circle",
+      subtitle: "‎",
       hasDropdown: true,
       dropdownType: "creativeCircle",
       key: "creativeCircle",
