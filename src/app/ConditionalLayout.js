@@ -14,7 +14,9 @@ export default function ConditionalLayout({ children }) {
           <Navbar />
         </div>
       )}
-      {children}
+      <div className={!hideNavFooter ? "pt-[88px] 2xl:pt-[120px]" : ""}>
+        {children}
+      </div>
       {!hideNavFooter && (
         <Footer />
       )}

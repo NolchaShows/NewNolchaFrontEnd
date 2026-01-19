@@ -33,10 +33,10 @@ function Navbar() {
     experiences: false,
   });
 
-    // Share functions
-    const handleTwitterShare = () => {
-      window.open('https://x.com/nolchashows', '_blank');
-    };
+  // Share functions
+  const handleTwitterShare = () => {
+    window.open('https://x.com/nolchashows', '_blank');
+  };
 
   const visibleMenuItems = [
     {
@@ -391,9 +391,10 @@ function Navbar() {
 
   return (
     <>
-      {/* Sticky Navbar */}
+      {/* Fixed Navbar (overlays hero/video) */}
       <div
-        className="sticky top-0 bg-[#FFF7E6]  z-40 shadow-sm relative"
+        data-navbar="main"
+        className="fixed top-0 left-0 right-0 w-full bg-transparent hover:bg-[#FFF7E6] transition-colors duration-300 z-40 group"
         onMouseEnter={() => {
           if (FORCE_DESKTOP_MEGA_OPEN) return;
           setIsDesktopSecondRowOpen(true);
@@ -404,13 +405,13 @@ function Navbar() {
           setActiveDesktopMegaMenu(null);
         }}
       >
-        <div className="w-full mx-auto flex justify-between items-center px-10 py-5">
+        <div className="w-full mx-auto flex justify-between items-center px-10 py-5 relative">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <img
                 src="/navbar/logo.svg"
-                className="h-12 2xl:h-20"
+                className="h-12 2xl:h-20 transition-[filter] duration-300 filter brightness-0 invert group-hover:invert-0 group-hover:brightness-100"
                 alt="NOLCHA"
               />
             </Link>
@@ -471,18 +472,29 @@ function Navbar() {
 
             {/* Right Side - Buttons and Social Icons */}
             <div className="flex items-center gap-[30px]">
-            <div className="flex items-center group relative">
+              <div className="flex items-center group relative">
                 {/* Lets Talk Button */}
                 <button
                   onClick={() => {
                     const el = document.getElementById('contact');
                     if (!el) return;
-                    const nav = document.querySelector('.sticky.top-0');
+                    const nav = document.querySelector('[data-navbar="main"]');
                     const navHeight = nav ? nav.getBoundingClientRect().height : 0;
                     const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
-                  className="px-[18.5px] 2xl:px-[40px] py-[7.5px] 2xl:py-[15px] bg-[#FF6813] text-xl 2xl:text-[35px] text-white font-medium rounded-full transition-colors"
+                  className={[
+                    "py-[7.5px] 2xl:py-[15px]",
+                    "bg-[#FF6813] text-xl 2xl:text-[35px] text-white font-medium rounded-full",
+                    // Desktop: keep only arrow visible initially; reveal this button on hover (no absolute -> shape stays identical)
+                    "hidden lg:inline-flex",
+                    "overflow-hidden whitespace-nowrap",
+                    "lg:max-w-0 lg:px-0 lg:opacity-0 lg:translate-x-2 lg:pointer-events-none",
+                    "lg:transition-[max-width,opacity,transform,padding] lg:duration-300",
+                    "lg:group-hover:max-w-[240px] 2xl:group-hover:max-w-[360px]",
+                    "lg:group-hover:px-[18.5px] 2xl:group-hover:px-[40px]",
+                    "lg:group-hover:opacity-100 lg:group-hover:translate-x-0 lg:group-hover:pointer-events-auto",
+                  ].join(" ")}
                 >
                   Lets Talk
                 </button>
@@ -492,12 +504,12 @@ function Navbar() {
                   onClick={() => {
                     const el = document.getElementById('contact');
                     if (!el) return;
-                    const nav = document.querySelector('.sticky.top-0');
+                    const nav = document.querySelector('[data-navbar="main"]');
                     const navHeight = nav ? nav.getBoundingClientRect().height : 0;
                     const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
-                className="hidden lg:flex w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-[#FF6813] rounded-full items-center justify-center transition-all duration-300 opacity-0 -translate-x-2 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto ml-2"
+                  className="hidden lg:flex w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-[#FF6813] rounded-full items-center justify-center ml-2"
                 >
                   {/* Default SVG for smaller screens */}
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" className="block 2xl:hidden">
@@ -530,66 +542,66 @@ function Navbar() {
         >
           <div className="overflow-hidden">
             <div className="w-full max-w-none mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              {visibleMenuItems.map((item, idx) => (
-                <div
-                  key={item.key ?? idx}
-                  className="relative"
-                  onMouseEnter={() => {
-                    if (FORCE_DESKTOP_MEGA_OPEN) return;
-                    if (idx === 0) {
-                      setActiveDesktopMegaMenu(null);
-                      return;
-                    }
-                    setActiveDesktopMegaMenu(item.key);
-                  }}
-                >
-                  {item.href && item.href !== "#" ? (
-                    <Link href={item.href} className="hover:opacity-80 transition-opacity">
-                      <div className="flex items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
-                        {item.label}
-                        {item.hasDropdown && (
-                          <svg
-                            className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-black"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M7 10l5 5 5-5z" />
-                          </svg>
-                        )}
-                      </div>
-                      <div
-                        className="text-[14px] text-[#141414] 2xl:text-2xl"
-                        style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
-                      >
-                        {item.subtitle}
-                      </div>
-                    </Link>
-                  ) : (
-                    <div className="cursor-pointer">
-                      <div className="flex items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
-                        {item.label}
-                        {item.hasDropdown && (
-                          <svg
-                          className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-black"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
+              <div className="flex items-center justify-between">
+                {visibleMenuItems.map((item, idx) => (
+                  <div
+                    key={item.key ?? idx}
+                    className="relative"
+                    onMouseEnter={() => {
+                      if (FORCE_DESKTOP_MEGA_OPEN) return;
+                      if (idx === 0) {
+                        setActiveDesktopMegaMenu(null);
+                        return;
+                      }
+                      setActiveDesktopMegaMenu(item.key);
+                    }}
+                  >
+                    {item.href && item.href !== "#" ? (
+                      <Link href={item.href} className="hover:opacity-80 transition-opacity">
+                        <div className="flex items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
+                          {item.label}
+                          {item.hasDropdown && (
+                            <svg
+                              className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-black"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M7 10l5 5 5-5z" />
+                            </svg>
+                          )}
+                        </div>
+                        <div
+                          className="text-[14px] text-[#141414] 2xl:text-2xl"
+                          style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
                         >
-                          <path d="M7 10l5 5 5-5z" />
-                        </svg>
-                        )}
+                          {item.subtitle}
+                        </div>
+                      </Link>
+                    ) : (
+                      <div className="cursor-pointer">
+                        <div className="flex items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
+                          {item.label}
+                          {item.hasDropdown && (
+                            <svg
+                              className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-black"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M7 10l5 5 5-5z" />
+                            </svg>
+                          )}
+                        </div>
+                        <div
+                          className="text-[14px] text-[#141414] 2xl:text-2xl"
+                          style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
+                        >
+                          {item.subtitle}
+                        </div>
                       </div>
-                      <div
-                        className="text-[14px] text-[#141414] 2xl:text-2xl"
-                        style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
-                      >
-                        {item.subtitle}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -730,9 +742,9 @@ function Navbar() {
 
               {/* Social Icons */}
               <div className="flex gap-3 mb-8">
-                <img src="/x.png" alt="X" className="cursor-pointer w-[21px] h-[21px]" onClick={()=>window.open("https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.nolcha.com%2Fcontent-for-swiper-with-popup%2Fart-basel-2025-xw6ct", "_blank")}/>
-                <img src="/insta.png" alt="Instagram" className="cursor-pointer w-[20px] h-[21px]" onClick={()=>window.open("https://instagram.com", "_blank")}/>
-                <img src="/linkedIn.png" alt="LinkedIn" className="cursor-pointer w-[21px] h-[21px]" onClick={()=>window.open("https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.nolcha.com%2Fcontent-for-swiper-with-popup%2Fart-basel-2025-xw6ct", "_blank")}/>
+                <img src="/x.png" alt="X" className="cursor-pointer w-[21px] h-[21px]" onClick={() => window.open("https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.nolcha.com%2Fcontent-for-swiper-with-popup%2Fart-basel-2025-xw6ct", "_blank")} />
+                <img src="/insta.png" alt="Instagram" className="cursor-pointer w-[20px] h-[21px]" onClick={() => window.open("https://instagram.com", "_blank")} />
+                <img src="/linkedIn.png" alt="LinkedIn" className="cursor-pointer w-[21px] h-[21px]" onClick={() => window.open("https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.nolcha.com%2Fcontent-for-swiper-with-popup%2Fart-basel-2025-xw6ct", "_blank")} />
               </div>
 
               {/* Mobile Buttons */}
