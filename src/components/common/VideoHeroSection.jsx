@@ -13,7 +13,8 @@ const VideoHeroSection = ({
     overlayOpacity = 20,
     className = "",
     children,
-    isGoogleDrive = false
+    isGoogleDrive = false,
+    isSticky = false
 }) => {
     // Helper function to convert Google Drive link to embed URL
     const getGoogleDriveEmbedUrl = (url) => {
@@ -42,7 +43,13 @@ const VideoHeroSection = ({
     
     const isGoogleDriveVideo = embedUrl.includes('drive.google.com');
     return (
-        <div className={`relative w-full overflow-hidden h-[505px] lg:h-[725px] 2xl:h-[1288px] ${className}`} >
+        <div
+            className={[
+                "relative w-full overflow-hidden h-[505px] lg:h-[725px] 2xl:h-[1288px]",
+                isSticky ? "sticky top-0 z-0" : "",
+                className
+            ].join(" ")}
+        >
             {/* Video Background */}
             <div className="absolute inset-0 z-0">
                 {isGoogleDriveVideo ? (

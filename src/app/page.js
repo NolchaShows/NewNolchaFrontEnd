@@ -534,6 +534,7 @@ export default function Home() {
       <div className="bg-[var(--surface-color2)]">
         <VideoHeroSection
           videoSrc={heroVideo}
+          isSticky={true}
           firstPart="Curated connections for leaders in AI, Web3 & Crypto."
           secondPart=""
           strokeColor="#000000"
@@ -543,40 +544,42 @@ export default function Home() {
           overlayOpacity={20}
           isGoogleDrive={false}
         />
-        <BuildMomentumSection />
-        <ImageGallerySlider />
-        <LogoSlider logoSliderData={logoSliderData} loading={loading} />
-        <UpcomingEventsList title="Upcoming Events" events={upcomingListEvents} />
-        <EveningRecap
-          year={eveningRecap.year}
-          title={eveningRecap.title}
-          videos={eveningRecap.videos}
-          videoUrl={eveningRecap.videoUrl}
-        />
-        <ExploreServices
-          title={exploreServices.title}
-          image={exploreServices.image}
-          caption={exploreServices.caption}
-          items={exploreServices.items}
-        />
-        <HomeWideVideoBanner
-          className="hidden lg:block"
-          src="https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-2.mp4"
-        />
-        <Partners
-          partnerData={partnerData}
-          loading={loading}
-          title={"Trusted by Global Brands For Over 15 Years"}
-          description={
-            "From cutting-edge tech startups and rapidly expanding businesses to impactful charities"
-          }
-          partners={partners}
-        />
-        <NolchaExperience
-          nolchaExperienceData={nolchaExperienceData}
-          loading={loading}
-        />
-        <PastSpeakers speakers={pastSpeakers} />
+        <div className="relative z-10">
+          <BuildMomentumSection />
+          <ImageGallerySlider />
+          <LogoSlider logoSliderData={logoSliderData} loading={loading} />
+          <UpcomingEventsList title="Upcoming Events" events={upcomingListEvents} />
+          <EveningRecap
+            year={eveningRecap.year}
+            title={eveningRecap.title}
+            videos={eveningRecap.videos}
+            videoUrl={eveningRecap.videoUrl}
+          />
+          <ExploreServices
+            title={exploreServices.title}
+            image={exploreServices.image}
+            caption={exploreServices.caption}
+            items={exploreServices.items}
+          />
+          <HomeWideVideoBanner
+            className="hidden lg:block"
+            src="https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-2.mp4"
+          />
+          <Partners
+            partnerData={partnerData}
+            loading={loading}
+            title={"Trusted by Global Brands For Over 15 Years"}
+            description={
+              "From cutting-edge tech startups and rapidly expanding businesses to impactful charities"
+            }
+            partners={partners}
+          />
+          <NolchaExperience
+            nolchaExperienceData={nolchaExperienceData}
+            loading={loading}
+          />
+          <PastSpeakers speakers={pastSpeakers} />
+        </div>
       </div>
       <TextHero
         textHeroData={textHeroData}
