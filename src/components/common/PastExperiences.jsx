@@ -106,7 +106,7 @@ const PastExperiences = ({
         </div>
       </div>
 
-      <div className="relative overflow-hidden px-[22px] lg:px-12 2xl:px-[85px]">
+      <div className="relative overflow-hidden px-[20px] lg:px-[140px] 2xl:px-[250px]">
         <div
           className="flex transition-transform duration-500"
           style={{
@@ -123,9 +123,9 @@ const PastExperiences = ({
             return (
               <div
                 key={idx}
-                className="w-full sm:w-1/2 lg:w-[345px] flex-shrink-0 px-2"
+                className="w-full sm:w-1/2 lg:w-[345px] flex-shrink-0 mx-2"
               >
-                <div className="relative w-full rounded-[20px] overflow-hidden h-[300px] lg:h-[397px]">
+                <div className="relative w-full lg:w-[345px] rounded-[20px] overflow-hidden h-[300px] lg:h-[397px]">
                   <img
                     src={imageUrl}
                     alt={text}
