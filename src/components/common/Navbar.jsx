@@ -1,7 +1,6 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import EventModal from "../Modals/EventModal";
 import InnerCircleModal from "../Modals/InnerCircleModal";
 import { useRouter } from "next/navigation";
 
@@ -18,11 +17,10 @@ function Navbar() {
     FORCE_DESKTOP_MEGA_OPEN ? FORCED_DESKTOP_MEGA_KEY : null
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const shareRef = useRef(null);
   const mobileShareRef = useRef(null);
   const [isShareDropdownOpen, setIsShareDropdownOpen] = useState(false);
+  const prevBodyOverflowRef = useRef("");
 
   const router = useRouter();
   // Mobile dropdown states
@@ -273,120 +271,143 @@ function Navbar() {
     }));
   };
 
-  const handleSearchToggle = () => {
-    setIsSearchOpen(!isSearchOpen);
-    if (isSearchOpen) {
-      setSearchQuery("");
-    }
-  };
+  useEffect(() => {
+    // Prevent background scroll when the mobile drawer is open
+    if (typeof document === "undefined") return;
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    console.log("Search query:", searchQuery);
-  };
+    if (!isMobileMenuOpen) {
+      document.body.style.overflow = prevBodyOverflowRef.current || "";
+      return;
+    }
+
+    prevBodyOverflowRef.current = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = prevBodyOverflowRef.current || "";
+    };
+  }, [isMobileMenuOpen]);
 
   const renderMobileMenuItem = (item, idx) => {
     const isExpanded = item.key && mobileDropdowns[item.key];
 
+    const RightChevron = (
+      <svg
+        className={[
+          "w-5 h-5 text-black/70 transition-transform duration-200",
+          isExpanded ? "rotate-180" : "",
+        ].join(" ")}
+        viewBox="0 0 20 20"
+        fill="none"
+      >
+        <path
+          d="M5 7.5L10 12.5L15 7.5"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+
+    const megaItems = item.key ? getMegaMenuConfig(item.key)?.items : null;
+    const mobileDropdownItems =
+      megaItems && megaItems.length ? megaItems : getDropdownItems(item.dropdownType);
+
+    const RowHeader = ({ showChevron, onChevronClick }) => (
+      <div className="py-4 flex items-start justify-between gap-4">
+        <div className="flex-1">
+          <div className="font-[700] text-[20px] leading-[1.1] text-black">
+            {item.label}
+          </div>
+          <div
+            className="mt-1 text-[13px] text-black/60"
+            style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
+          >
+            {item.subtitle}
+          </div>
+        </div>
+        {showChevron ? (
+          <button
+            type="button"
+            aria-label={isExpanded ? "Collapse section" : "Expand section"}
+            aria-expanded={Boolean(isExpanded)}
+            onClick={onChevronClick}
+            className="pt-1 w-10 h-10 -mr-2 inline-flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+          >
+            {RightChevron}
+          </button>
+        ) : null}
+      </div>
+    );
+
     if (item.isModal) {
       return (
-        <div className="border-b border-gray-100">
-          <div
-            className="flex items-center justify-between py-4 cursor-pointer"
+        <div className="border-b border-black/10">
+          <button
+            type="button"
             onClick={handleModalClick(item.modalType)}
+            className="w-full text-left"
           >
-            <div>
-              <div
-                className="font-medium text-black text-lg mb-1 "
-              >
-                {item.label}
-              </div>
-              <div
-                className="text-sm text-gray-500 "
-                style={{
-                  fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif",
-                }}
-              >
-                {item.subtitle}
-              </div>
-            </div>
-            <span className="text-2xl text-gray-400">+</span>
-          </div>
+            <RowHeader showChevron={false} />
+          </button>
         </div>
-      );
-    } else if (item.hasDropdown) {
-      return (
-        <div className="border-b border-gray-100">
-          <div
-            className="flex items-center justify-between py-4 cursor-pointer"
-            onClick={() => toggleMobileDropdown(item.key)}
-          >
-            <div>
-              <div
-                className="font-medium text-black text-lg mb-1 "
-              >
-                {item.label}
-              </div>
-              <div
-                className="text-sm text-gray-500 "
-                style={{
-                  fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif",
-                }}
-              >
-                {item.subtitle}
-              </div>
-            </div>
-            <span
-              className={`text-2xl text-gray-400 transition-transform ${isExpanded ? "rotate-45" : ""
-                }`}
-            >
-              +
-            </span>
-          </div>
-
-          {/* Expanded dropdown content */}
-          {isExpanded && (
-            <div className="pb-4 pl-4">
-              {getDropdownItems(item.dropdownType).map(
-                (dropdownItem, dropdownIdx) => (
-                  <Link
-                    key={dropdownIdx}
-                    href={dropdownItem.href}
-                    className="block py-2 text-sm text-gray-600 hover:text-gray-800 "
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {dropdownItem.label}
-                  </Link>
-                )
-              )}
-            </div>
-          )}
-        </div>
-      );
-    } else {
-      return (
-        <Link
-          href={item.href}
-          className="flex items-center justify-between py-4 border-b border-gray-100"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <div>
-            <div
-              className="font-medium text-black text-lg mb-1 "
-            >
-              {item.label}
-            </div>
-            <div
-              className="text-sm text-gray-500 "
-              style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
-            >
-              {item.subtitle}
-            </div>
-          </div>
-          <span className="text-2xl text-gray-400">+</span>
-        </Link>
       );
     }
+
+    if (item.hasDropdown) {
+      return (
+        <div className="border-b border-black/10">
+          <RowHeader
+            showChevron={true}
+            onChevronClick={() => toggleMobileDropdown(item.key)}
+          />
+
+          <div
+            className={[
+              "grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+              isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+            ].join(" ")}
+          >
+            <div className="overflow-hidden">
+              <div className="pb-4">
+                <div className="mt-1 bg-white rounded-[14px] border border-black/10 p-4">
+                  <div className="space-y-3">
+                    {mobileDropdownItems.map((dropdownItem, dropdownIdx) => (
+                      <Link
+                        key={dropdownIdx}
+                        href={dropdownItem.href}
+                        className="block text-[16px] text-black/90 hover:text-[#FF6813] transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {dropdownItem.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="border-b border-black/10">
+        <button
+          type="button"
+          className="w-full text-left"
+          onClick={() => {
+            if (item.href && item.href !== "#") {
+              router.push(item.href);
+              setIsMobileMenuOpen(false);
+            }
+          }}
+        >
+          <RowHeader showChevron={false} />
+        </button>
+      </div>
+    );
   };
 
   return (
@@ -394,7 +415,7 @@ function Navbar() {
       {/* Fixed Navbar (overlays hero/video) */}
       <div
         data-navbar="main"
-        className="fixed top-0 left-0 right-0 w-full bg-transparent hover:bg-[#FFF7E6] transition-colors duration-300 z-40 group"
+        className="sticky top-0 left-0 right-0 w-full bg-[#FFF7E6] lg:fixed lg:bg-transparent lg:hover:bg-[#FFF7E6] transition-colors duration-300 z-40 group"
         onMouseEnter={() => {
           if (FORCE_DESKTOP_MEGA_OPEN) return;
           setIsDesktopSecondRowOpen(true);
@@ -405,19 +426,37 @@ function Navbar() {
           setActiveDesktopMegaMenu(null);
         }}
       >
-        <div className="w-full mx-auto flex justify-between items-center px-10 py-5 relative">
+        <div className="w-full mx-auto flex justify-between items-center px-4 py-4 lg:px-10 lg:py-5 relative">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <img
                 src="/navbar/logo.svg"
-                className="h-12 2xl:h-20 transition-[filter] duration-300 filter brightness-0 invert group-hover:invert-0 group-hover:brightness-100"
+                className="h-10 lg:h-12 2xl:h-20 transition-[filter] duration-300 lg:filter lg:brightness-0 lg:invert lg:group-hover:invert-0 lg:group-hover:brightness-100"
                 alt="NOLCHA"
               />
             </Link>
           </div>
 
-          <div className="flex items-center gap-[30px]">
+          <div className="flex items-center gap-4">
+            {/* Mobile menu icon (right of logo) */}
+            <button
+              type="button"
+              className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full hover:bg-black/5 transition-colors"
+              aria-label="Open menu"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 7H20M4 12H20M4 17H20"
+                  stroke="#141414"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+
+            <div className="hidden lg:flex items-center gap-[30px]">
             {/* Navigation Links */}
             {/* <div className="flex items-center gap-8">
               {visibleMenuItems.map((item, idx) => (
@@ -522,6 +561,7 @@ function Navbar() {
                 </button>
               </div>
             </div>
+          </div>
           </div>
         </div>
 
@@ -673,96 +713,83 @@ function Navbar() {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-black/10 backdrop-blur-sm z-50">
-          <div className="bg-white w-full max-w-md h-full shadow-lg overflow-y-auto">
-            <div className="p-6">
-              {/* Mobile Header */}
-              <div className="flex justify-between items-center mb-8">
+        <div
+          className="lg:hidden fixed inset-0 z-50"
+          role="dialog"
+          aria-modal="true"
+        >
+          <button
+            type="button"
+            className="absolute inset-0 bg-black/30"
+            aria-label="Close menu"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+
+          <div className="absolute right-0 top-0 h-full w-full max-w-[380px] bg-[#FFF7E6] shadow-2xl overflow-y-auto">
+            <div className="px-6 pt-5 pb-6">
+              {/* Drawer Header */}
+              <div className="flex items-center justify-between">
                 <img src="/navbar/logo.svg" alt="NOLCHA" className="h-8" />
                 <button
+                  type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-3xl font-light cursor-pointer text-gray-600 hover:text-gray-800"
+                  aria-label="Close menu"
+                  className="w-10 h-10 inline-flex items-center justify-center text-[28px] leading-none text-black/70 hover:text-black"
                 >
                   ×
                 </button>
               </div>
 
-              {/* Mobile Search Bar */}
-              <div className="mb-6">
-                <form
-                  onSubmit={handleSearchSubmit}
-                  className="flex items-center w-full h-[44px] rounded-[10px] border border-black px-3 mb-4"
-                >
-                  <div className="flex items-center gap-1 mr-2">
-                    <svg
-                      className="w-4 h-4 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 bg-transparent outline-none text-sm"
-                  />
-                  <button type="submit" className="ml-2">
-                    <svg
-                      className="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-800"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </button>
-                </form>
-              </div>
-
-              {/* Mobile Menu Items */}
-              <nav className="mb-8">
-                {allMenuItems.map((item, idx) => (
-                  <div key={idx}>{renderMobileMenuItem(item, idx)}</div>
+              {/* Menu Items */}
+              <nav className="mt-6">
+                {visibleMenuItems.map((item, idx) => (
+                  <div key={item.key ?? idx}>{renderMobileMenuItem(item, idx)}</div>
                 ))}
               </nav>
 
-              {/* Social Icons */}
-              <div className="flex gap-3 mb-8">
-                <img src="/x.png" alt="X" className="cursor-pointer w-[21px] h-[21px]" onClick={() => window.open("https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.nolcha.com%2Fcontent-for-swiper-with-popup%2Fart-basel-2025-xw6ct", "_blank")} />
-                <img src="/insta.png" alt="Instagram" className="cursor-pointer w-[20px] h-[21px]" onClick={() => window.open("https://instagram.com", "_blank")} />
-                <img src="/linkedIn.png" alt="LinkedIn" className="cursor-pointer w-[21px] h-[21px]" onClick={() => window.open("https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.nolcha.com%2Fcontent-for-swiper-with-popup%2Fart-basel-2025-xw6ct", "_blank")} />
-              </div>
-
-              {/* Mobile Buttons */}
-              <div className="space-y-3">
-                <Link
-                  href="/lets-talk"
-                  className="block text-center py-3 px-6 border border-black rounded-xl hover:bg-gray-50 transition-colors "
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Let's Talk
-                </Link>
-                <Link
-                  href="/membership"
-                  className="block text-center py-3 px-6 bg-[#E7F0D3] rounded-xl hover:bg-[#a4af8d] transition-colors "
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Membership
-                </Link>
+              {/* Bottom CTA */}
+              <div className="sticky bottom-0 pt-6 pb-4 bg-[#FFF7E6] border-t border-black/10">
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const el = document.getElementById("contact");
+                      if (!el) return;
+                      const nav = document.querySelector('[data-navbar="main"]');
+                      const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+                      const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
+                      window.scrollTo({ top: y, behavior: "smooth" });
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="flex-1 h-[52px] rounded-full bg-[#FF6813] text-white text-[18px] font-[700] hover:opacity-95 transition-opacity"
+                  >
+                    Lets Talk
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const el = document.getElementById("contact");
+                      if (!el) return;
+                      const nav = document.querySelector('[data-navbar="main"]');
+                      const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+                      const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
+                      window.scrollTo({ top: y, behavior: "smooth" });
+                      setIsMobileMenuOpen(false);
+                    }}
+                    aria-label="Lets Talk"
+                    className="w-[52px] h-[52px] rounded-full bg-[#FF6813] inline-flex items-center justify-center hover:opacity-95 transition-opacity"
+                  >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M7 17L17 7M17 7H9M17 7V15"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
