@@ -471,7 +471,7 @@ function Navbar() {
 
             {/* Right Side - Buttons and Social Icons */}
             <div className="flex items-center gap-[30px]">
-              <div className="flex items-center">
+            <div className="flex items-center group relative">
                 {/* Lets Talk Button */}
                 <button
                   onClick={() => {
@@ -482,7 +482,7 @@ function Navbar() {
                     const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
-                  className="px-[18.5px] 2xl:px-[40px] py-[7.5px] 2xl:py-[15px] bg-[#FF6813] text-xl 2xl:text-[35px] text-white font-medium rounded-full hover:bg-[#FF9640] transition-colors"
+                  className="px-[18.5px] 2xl:px-[40px] py-[7.5px] 2xl:py-[15px] bg-[#FF6813] text-xl 2xl:text-[35px] text-white font-medium rounded-full transition-colors"
                 >
                   Lets Talk
                 </button>
@@ -497,7 +497,7 @@ function Navbar() {
                     const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
-                  className="hidden lg:flex w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-[#FF6813] rounded-full items-center justify-center hover:bg-[#FF9640] transition-colors"
+                className="hidden lg:flex w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-[#FF6813] rounded-full items-center justify-center transition-all duration-300 opacity-0 -translate-x-2 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto ml-2"
                 >
                   {/* Default SVG for smaller screens */}
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" className="block 2xl:hidden">
