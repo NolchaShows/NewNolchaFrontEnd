@@ -151,7 +151,6 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
                     <div className="px-[16px] lg:px-[24px] 2xl:px-[32px] pb-[16px] lg:pb-[20px] 2xl:pb-[24px]">
                       <p
                         className="text-black text-[14px] lg:text-[16px] 2xl:text-[18px] leading-relaxed font-normal"
-                        style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
                       >
                         {section.content}
                       </p>

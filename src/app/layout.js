@@ -1,11 +1,16 @@
 import "./globals.css";
 import ConditionalLayout from "./ConditionalLayout";
-import { Orbitron } from "next/font/google";
+import localFont from "next/font/local";
 
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"], 
-  variable: "--font-orbitron",
+const tomorrow = localFont({
+  src: [
+    { path: "../../public/font/Tomorrow/Tomorrow-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../../public/font/Tomorrow/Tomorrow-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../../public/font/Tomorrow/Tomorrow-Bold.ttf", weight: "700", style: "normal" },
+    { path: "../../public/font/Tomorrow/Tomorrow-ExtraBold.ttf", weight: "800", style: "normal" },
+  ],
+  variable: "--font-tomorrow",
+  display: "swap",
 });
 
 
@@ -16,8 +21,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={orbitron.variable}>
-      <body>
+    <html lang="en" className={tomorrow.variable}>
+      <body className="font-sans">
         <ConditionalLayout>
           {children}
         </ConditionalLayout>

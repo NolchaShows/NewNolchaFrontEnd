@@ -2,7 +2,7 @@ import React from 'react';
 
 const CookiePolicy = () => {
   return (
-    <div className="mx-auto p-5 md:py-20 md:px-30 bg-white font-['Neue Haas Grotesk Text Pro', sans-serif]">
+    <div className="mx-auto p-5 md:py-20 md:px-30 bg-white">
       <div className="py-[60px] px-[30px] 2xl:px-[60px] bg-[#F4F4F4]">
         <h1 className="text-[36px] xl:text-[64px] 2xl:text-[70px] font-bold text-black mb-6">Cookie Policy</h1>
         

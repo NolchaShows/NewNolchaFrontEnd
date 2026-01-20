@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-orbitron)", "sans-serif"],
+        sans: ["var(--font-tomorrow)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       keyframes: {
         slideLeft: {
@@ -16,9 +16,6 @@ module.exports = {
       },
       animation: {
         slideLeft: "slideLeft 30s linear infinite",
-      },
-      fontFamily: {
-        "neue-haas": ['"Neue Haas Grotesk Text Pro"', "sans-serif"],
       },
     },
   },

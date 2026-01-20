@@ -51,8 +51,7 @@ export default function Hero({ heroData, loading }) {
 
 
           {/* Description */}
-          <p style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
-            className=" text-[16px] md:text-[24px] 2xl:text-3xl font-normal opacity-90 leading-relaxed">
+          <p className=" text-[16px] md:text-[24px] 2xl:text-3xl font-normal opacity-90 leading-relaxed">
             {description}
           </p>
 

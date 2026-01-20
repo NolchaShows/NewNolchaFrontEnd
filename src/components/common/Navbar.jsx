@@ -349,7 +349,6 @@ function Navbar() {
           </div>
           <div
             className="mt-1 text-[13px] text-black/60"
-            style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
           >
             {item.subtitle}
           </div>
@@ -645,7 +644,6 @@ function Navbar() {
                         </div>
                         <div
                           className="text-[14px] text-[#141414] 2xl:text-2xl"
-                          style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
                         >
                           {item.subtitle}
                         </div>
@@ -666,7 +664,6 @@ function Navbar() {
                         </div>
                         <div
                           className="text-[14px] text-[#141414] 2xl:text-2xl"
-                          style={{ fontFamily: "'Neue Haas Grotesk Text Pro', sans-serif" }}
                         >
                           {item.subtitle}
                         </div>
