@@ -37,7 +37,7 @@ const UpcomingEventsList = ({
   };
 
   return (
-    <section className="w-full bg-white page-container relative">
+    <section className="w-full bg-black page-container relative">
       <SectionTitle className="mb-[20px] lg:mb-[30px] 2xl:mb-[50px]">{title}</SectionTitle>
 
       <div className="flex flex-col gap-[6px] lg:gap-[10px] 2xl:gap-[18px]">
@@ -63,7 +63,7 @@ const UpcomingEventsList = ({
               }}
             >
               {isOpen ? (
-                <div className="bg-[#D1FFE9] px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] flex flex-col lg:flex-row gap-5 lg:gap-[30px] 2xl:gap-[50px] items-center">
+                <div className="bg-[var(--accent-open)] px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] flex flex-col lg:flex-row gap-5 lg:gap-[30px] 2xl:gap-[50px] items-center text-black">
                   <div className="flex-1 flex flex-row items-center gap-[10px] lg:gap-[30px] 2xl:gap-[50px]">
                     {/* Left */}
                     {display.image && (
@@ -86,13 +86,13 @@ const UpcomingEventsList = ({
                       <span className="font-bold">Date:</span> {display.date}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 2xl:gap-5">
-                      <button 
+                      <button
                         onClick={(e) => e.stopPropagation()}
                         className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-black text-white rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-800 transition-colors"
                       >
                         Learn more
                       </button>
-                      <button 
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
                           setModalContext({
@@ -101,7 +101,7 @@ const UpcomingEventsList = ({
                           });
                           setIsModalOpen(true);
                         }}
-                        className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-transparent border border-black text-black rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-50 transition-colors"
+                        className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-transparent border border-black text-black rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-black hover:text-[var(--accent-open)] transition-colors"
                       >
                         Request details
                       </button>
@@ -109,8 +109,8 @@ const UpcomingEventsList = ({
                   </div>
                 </div>
               ) : (
-                <div className="bg-[#F3F3F3] px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px]">
-                  <h3 className="text-h3 text-black">
+                <div className="bg-[var(--accent-closed)] px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px]">
+                  <h3 className="text-h3 text-white">
                     {ev.title}
                   </h3>
                 </div>

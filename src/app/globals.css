@@ -11,6 +11,8 @@
   --secondary-text-color:#141414;
   --tertiary-text-color:#909090;
   --brown2:#EBE2D7;
+  --accent-open:#BEFD6F;
+  --accent-closed:#1D1C1E;
 
   /* Typography variables (375 default) */
   --h1-size: 28px; --h1-lh: 120%;
