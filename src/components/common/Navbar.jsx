@@ -321,7 +321,7 @@ function Navbar() {
     const RightChevron = (
       <svg
         className={[
-          "w-5 h-5 text-black/70 transition-transform duration-200",
+          "w-5 h-5 text-white/80 transition-transform duration-200",
           isExpanded ? "rotate-180" : "",
         ].join(" ")}
         viewBox="0 0 20 20"
@@ -344,11 +344,11 @@ function Navbar() {
     const RowHeader = ({ showChevron, onChevronClick }) => (
       <div className="py-4 flex items-start justify-between gap-4">
         <div className="flex-1">
-          <div className="font-[700] text-[20px] leading-[1.1] text-black">
+          <div className="font-[700] text-[20px] leading-[1.1] text-white">
             {item.label}
           </div>
           <div
-            className="mt-1 text-[13px] text-black/60"
+            className="mt-1 text-[13px] text-white/60"
           >
             {item.subtitle}
           </div>
@@ -359,7 +359,7 @@ function Navbar() {
             aria-label={isExpanded ? "Collapse section" : "Expand section"}
             aria-expanded={Boolean(isExpanded)}
             onClick={onChevronClick}
-            className="pt-1 w-10 h-10 -mr-2 inline-flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+            className="pt-1 w-10 h-10 -mr-2 inline-flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
           >
             {RightChevron}
           </button>
@@ -369,7 +369,7 @@ function Navbar() {
 
     if (item.isModal) {
       return (
-        <div className="border-b border-black/10">
+        <div className="border-b border-white/10">
           <button
             type="button"
             onClick={handleModalClick(item.modalType)}
@@ -383,7 +383,7 @@ function Navbar() {
 
     if (item.hasDropdown) {
       return (
-        <div className="border-b border-black/10">
+        <div className="border-b border-white/10">
           <RowHeader
             showChevron={true}
             onChevronClick={() => toggleMobileDropdown(item.key)}
@@ -397,13 +397,13 @@ function Navbar() {
           >
             <div className="overflow-hidden">
               <div className="pb-4">
-                <div className="mt-1 bg-white rounded-[14px] border border-black/10 p-4">
+                <div className="mt-1 bg-[#0E0E0E] rounded-[14px] border border-white/10 p-4">
                   <div className="space-y-3">
                     {mobileDropdownItems.map((dropdownItem, dropdownIdx) => (
                       <Link
                         key={dropdownIdx}
                         href={dropdownItem.href}
-                        className="block text-[16px] text-black/90 hover:text-[#FF6813] transition-colors"
+                        className="block text-[16px] text-white/90 hover:text-[#FF6813] transition-colors"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {dropdownItem.label}
@@ -419,7 +419,7 @@ function Navbar() {
     }
 
     return (
-      <div className="border-b border-black/10">
+      <div className="border-b border-white/10">
         <button
           type="button"
           className="w-full text-left"
@@ -442,8 +442,8 @@ function Navbar() {
       <div
         data-navbar="main"
         className={[
-          "sticky top-0 left-0 right-0 w-full bg-[#FFF7E6]",
-          "lg:fixed lg:bg-transparent lg:hover:bg-[#FFF7E6]",
+          "sticky top-0 left-0 right-0 w-full bg-black",
+          "lg:fixed lg:bg-transparent lg:hover:bg-black",
           "transition-colors duration-300 z-40 group",
           "lg:transition-transform lg:duration-300 lg:ease-[cubic-bezier(0.22,1,0.36,1)]",
           isDesktopHidden ? "lg:-translate-y-full" : "lg:translate-y-0",
@@ -464,7 +464,7 @@ function Navbar() {
             <Link href="/" className="flex items-center">
               <img
                 src="/navbar/logo.svg"
-                className="h-10 lg:h-12 2xl:h-20 transition-[filter] duration-300 lg:filter lg:brightness-0 lg:invert lg:group-hover:invert-0 lg:group-hover:brightness-100"
+                className="h-10 lg:h-12 2xl:h-20 transition-[filter] duration-300 filter brightness-0 invert"
                 alt="NOLCHA"
               />
             </Link>
@@ -474,14 +474,14 @@ function Navbar() {
             {/* Mobile menu icon (right of logo) */}
             <button
               type="button"
-              className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full hover:bg-black/5 transition-colors"
+              className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors"
               aria-label="Open menu"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M4 7H20M4 12H20M4 17H20"
-                  stroke="#141414"
+                  stroke="#FFFFFF"
                   strokeWidth="2"
                   strokeLinecap="round"
                 />
@@ -503,10 +503,10 @@ function Navbar() {
                 onMouseEnter={() => setIsMoreDropdownOpen(true)}
                 onMouseLeave={() => setIsMoreDropdownOpen(false)}
               >
-                <div className="flex items-center text-black hover:opacity-80 transition-opacity gap-2">
+                <div className="flex items-center text-white hover:opacity-80 transition-opacity gap-2">
                   <span className="text-lg font-normal">More</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none">
-                    <path d="M5.61531 8.5L0.945312 0.5H10.2753L5.60531 8.5H5.61531Z" fill="black" />
+                    <path d="M5.61531 8.5L0.945312 0.5H10.2753L5.60531 8.5H5.61531Z" fill="white" />
                   </svg>
                 </div>
 
@@ -630,11 +630,11 @@ function Navbar() {
                   >
                     {item.href && item.href !== "#" ? (
                       <Link href={item.href} className="hover:opacity-80 transition-opacity">
-                        <div className="flex items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
+                        <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-3xl">
                           {item.label}
                           {item.hasDropdown && (
                             <svg
-                              className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-black"
+                              className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-white"
                               fill="currentColor"
                               viewBox="0 0 24 24"
                             >
@@ -643,18 +643,18 @@ function Navbar() {
                           )}
                         </div>
                         <div
-                          className="text-[14px] text-[#141414] 2xl:text-2xl"
+                          className="text-[14px] text-white/70 2xl:text-2xl"
                         >
                           {item.subtitle}
                         </div>
                       </Link>
                     ) : (
                       <div className="cursor-pointer">
-                        <div className="flex items-center font-bold text-[18px] text-black mb-1 2xl:text-3xl">
+                        <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-3xl">
                           {item.label}
                           {item.hasDropdown && (
                             <svg
-                              className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-black"
+                              className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-white"
                               fill="currentColor"
                               viewBox="0 0 24 24"
                             >
@@ -663,7 +663,7 @@ function Navbar() {
                           )}
                         </div>
                         <div
-                          className="text-[14px] text-[#141414] 2xl:text-2xl"
+                          className="text-[14px] text-white/70 2xl:text-2xl"
                         >
                           {item.subtitle}
                         </div>
@@ -696,10 +696,10 @@ function Navbar() {
             if (!cfg) return null;
             return (
               <div className="pt-3">
-                <div className="w-[746px] h-[427px] rounded-[20px] bg-[#FFF7E6] overflow-hidden">
+                <div className="w-[746px] h-[427px] rounded-[20px] bg-black overflow-hidden">
                   <div className="grid grid-cols-[1fr_400px] gap-6 p-6 h-full">
                     <div>
-                      <div className="text-[16px] text-black/70 mb-4">
+                      <div className="text-[16px] text-white/70 mb-4">
                         {cfg.sectionLabel}
                       </div>
                       <div className="space-y-[14px] max-h-[calc(427px-32px-32px-18px-32px)] overflow-auto">
@@ -707,7 +707,7 @@ function Navbar() {
                           <Link
                             key={`${it.href}-${i}`}
                             href={it.href}
-                            className="block text-[20px] leading-[1.15] font-[500] text-black hover:text-[#FF6813] transition-opacity"
+                            className="block text-[20px] leading-[1.15] font-[500] text-white hover:text-[#FF6813] transition-opacity"
                             onClick={() => setActiveDesktopMegaMenu(null)}
                           >
                             {it.label}
@@ -717,14 +717,14 @@ function Navbar() {
                     </div>
 
                     <div>
-                      <div className="bg-white rounded-[20px] p-6 shadow-sm h-full flex flex-col w-[400px]">
-                        <div className="text-[20px] leading-[1.05] font-[700] text-black">
+                      <div className="bg-[#0E0E0E] border border-white/10 rounded-[20px] p-6 shadow-sm h-full flex flex-col w-[400px]">
+                        <div className="text-[20px] leading-[1.05] font-[700] text-white">
                           {cfg.cta.title}
                         </div>
-                        <div className="mt-3 text-[16px] text-black/80">
+                        <div className="mt-3 text-[16px] text-white/80">
                           {cfg.cta.description}
                         </div>
-                        <div className="mt-5 flex-1 rounded-[24px] overflow-hidden bg-[#F2F2F2]">
+                        <div className="mt-5 flex-1 rounded-[24px] overflow-hidden bg-[#1A1A1A]">
                           <img
                             src={cfg.imageSrc}
                             alt={`${cfg.sectionLabel} preview`}
@@ -755,16 +755,20 @@ function Navbar() {
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
-          <div className="absolute right-0 top-0 h-full w-full max-w-[380px] bg-[#FFF7E6] shadow-2xl overflow-y-auto">
+          <div className="absolute right-0 top-0 h-full w-full max-w-[380px] bg-black shadow-2xl overflow-y-auto">
             <div className="px-6 pt-5 pb-6">
               {/* Drawer Header */}
               <div className="flex items-center justify-between">
-                <img src="/navbar/logo.svg" alt="NOLCHA" className="h-8" />
+                <img
+                  src="/navbar/logo.svg"
+                  alt="NOLCHA"
+                  className="h-8 filter brightness-0 invert"
+                />
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-label="Close menu"
-                  className="w-10 h-10 inline-flex items-center justify-center text-[28px] leading-none text-black/70 hover:text-black"
+                  className="w-10 h-10 inline-flex items-center justify-center text-[28px] leading-none text-white/80 hover:text-white"
                 >
                   ×
                 </button>
@@ -778,7 +782,7 @@ function Navbar() {
               </nav>
 
               {/* Bottom CTA */}
-              <div className="sticky bottom-0 pt-6 pb-4 bg-[#FFF7E6] border-t border-black/10">
+              <div className="sticky bottom-0 pt-6 pb-4 bg-black border-t border-white/10">
                 <div className="flex items-center gap-3">
                   <button
                     type="button"
