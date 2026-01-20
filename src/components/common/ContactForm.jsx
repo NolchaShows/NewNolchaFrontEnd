@@ -206,17 +206,16 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
                 onClick={handleSubmit}
                 disabled={isLoading}
                 className={`
-                border-[1px] border-[#FF6813]
+                border-[1px] border-primary
                 rounded-full
                 w-full
                 py-3 px-6 2xl:py-6 2xl:px-12
                 text-[16px]
                 2xl:text-[24px]
-                font-['Neue_Haas_Grotesk_Text_Pro',sans-serif]
                 font-medium
-                bg-[#FF6813]
+                bg-primary
                 hover:bg-[#BFC943]
-                text-[#fff]
+                text-black
                 transition-colors duration-200
                 flex justify-center items-center
               `}
