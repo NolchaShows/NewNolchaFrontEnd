@@ -99,10 +99,10 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
     
     const currentBackgroundColor = isHovered
       ? isDefaultBlack
-        ? "#FEF991" // If default is black, hover becomes light green/cream
-        : "#000000" // If default is light green/cream, hover becomes black
+        ? "#FEF991" // If default is secondary, hover becomes light green/cream
+        : "#1D1C1E" // If default is light green/cream, hover becomes secondary
       : isDefaultBlack
-      ? "#000000" // Default black background
+      ? "#1D1C1E" // Default secondary background
       : "#FEF991"; // Default light green/cream background
     
     // Simple hover logic: show primary image normally, secondary on hover
@@ -206,14 +206,14 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
   return (
     <section
       className={`w-full ${
-        bg ? bg : "bg-[#FFFEE8]"
+        bg ? bg : "bg-black"
       } page-container ${
         responsiveClasses.containerPadding
       } overflow-hidden`}
     >
       <div className="max-w-[818px] 2xl:max-w-[1454px] mx-auto flex flex-col items-center">
         {/* Header Section */}
-        <SectionTitle className="text-black lg:text-center tracking-[-0.84px] lg:tracking-none">{partnersTitle}</SectionTitle>
+        <SectionTitle className="text-white lg:text-center tracking-[-0.84px] lg:tracking-none">{partnersTitle}</SectionTitle>
 
         {/* Dynamic Partners Grid */}
         <div className="w-full">
