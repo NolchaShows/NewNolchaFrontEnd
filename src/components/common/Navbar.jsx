@@ -403,7 +403,7 @@ function Navbar() {
                       <Link
                         key={dropdownIdx}
                         href={dropdownItem.href}
-                        className="block text-[16px] text-white/90 hover:text-[#FF6813] transition-colors"
+                        className="block text-[16px] text-white/90 hover:text-primary transition-colors"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {dropdownItem.label}
@@ -556,7 +556,7 @@ function Navbar() {
                   }}
                   className={[
                     "py-[7.5px] 2xl:py-[15px]",
-                    "bg-[#FF6813] text-xl 2xl:text-[35px] text-white font-medium rounded-full",
+                    "bg-primary text-xl 2xl:text-[35px] text-black font-medium rounded-full",
                     // Desktop: keep only arrow visible initially; reveal this button on hover (no absolute -> shape stays identical)
                     "hidden lg:inline-flex",
                     "overflow-hidden whitespace-nowrap",
@@ -580,15 +580,15 @@ function Navbar() {
                     const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
-                  className="hidden lg:flex w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-[#FF6813] rounded-full items-center justify-center ml-2"
+                  className="hidden lg:flex w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-primary rounded-full items-center justify-center ml-2"
                 >
                   {/* Default SVG for smaller screens */}
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" className="block 2xl:hidden">
-                    <path d="M4.99662 5.55025L4.99662 7.29504L11.9077 7.30123L4.3779 14.831L5.61534 16.0685L13.1451 8.53866L13.1513 15.4497L14.8961 15.4497V5.55025H4.99662Z" fill="#fff" />
+                    <path d="M4.99662 5.55025L4.99662 7.29504L11.9077 7.30123L4.3779 14.831L5.61534 16.0685L13.1451 8.53866L13.1513 15.4497L14.8961 15.4497V5.55025H4.99662Z" fill="#000" />
                   </svg>
                   {/* Larger SVG for 2xl screens */}
                   <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" className="hidden 2xl:block">
-                    <path d="M9.09643 9.42701V12.5289L21.3828 12.5399L7.99648 25.9262L10.1964 28.1261L23.5827 14.7397L23.5937 27.0261L26.6955 27.0261V9.42701H9.09643Z" fill="#fff" />
+                    <path d="M9.09643 9.42701V12.5289L21.3828 12.5399L7.99648 25.9262L10.1964 28.1261L23.5827 14.7397L23.5937 27.0261L26.6955 27.0261V9.42701H9.09643Z" fill="#000" />
                   </svg>
                 </button>
               </div>
@@ -707,7 +707,7 @@ function Navbar() {
                           <Link
                             key={`${it.href}-${i}`}
                             href={it.href}
-                            className="block text-[20px] leading-[1.15] font-[500] text-white hover:text-[#FF6813] transition-opacity"
+                            className="block text-[20px] leading-[1.15] font-[500] text-white hover:text-primary transition-opacity"
                             onClick={() => setActiveDesktopMegaMenu(null)}
                           >
                             {it.label}
@@ -795,7 +795,7 @@ function Navbar() {
                       window.scrollTo({ top: y, behavior: "smooth" });
                       setIsMobileMenuOpen(false);
                     }}
-                    className="flex-1 h-[52px] rounded-full bg-[#FF6813] text-white text-[18px] font-[700] hover:opacity-95 transition-opacity"
+                    className="flex-1 h-[52px] rounded-full bg-primary text-black text-[18px] font-[700] hover:opacity-95 transition-opacity"
                   >
                     Lets Talk
                   </button>
@@ -811,12 +811,12 @@ function Navbar() {
                       setIsMobileMenuOpen(false);
                     }}
                     aria-label="Lets Talk"
-                    className="w-[52px] h-[52px] rounded-full bg-[#FF6813] inline-flex items-center justify-center hover:opacity-95 transition-opacity"
+                    className="w-[52px] h-[52px] rounded-full bg-primary inline-flex items-center justify-center hover:opacity-95 transition-opacity"
                   >
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                       <path
                         d="M7 17L17 7M17 7H9M17 7V15"
-                        stroke="white"
+                        stroke="black"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
