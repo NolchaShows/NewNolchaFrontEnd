@@ -63,7 +63,7 @@ const UpcomingEventsList = ({
               }}
             >
               {isOpen ? (
-                <div className="bg-[var(--accent-open)] px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] flex flex-col lg:flex-row gap-5 lg:gap-[30px] 2xl:gap-[50px] items-center text-black">
+                <div className="bg-primary px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] flex flex-col lg:flex-row gap-5 lg:gap-[30px] 2xl:gap-[50px] items-center text-black">
                   <div className="flex-1 flex flex-row items-center gap-[10px] lg:gap-[30px] 2xl:gap-[50px]">
                     {/* Left */}
                     {display.image && (
@@ -101,7 +101,7 @@ const UpcomingEventsList = ({
                           });
                           setIsModalOpen(true);
                         }}
-                        className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-transparent border border-black text-black rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-black hover:text-[var(--accent-open)] transition-colors"
+                        className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-transparent border border-black text-black rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-black hover:text-primary transition-colors"
                       >
                         Request details
                       </button>
@@ -109,7 +109,7 @@ const UpcomingEventsList = ({
                   </div>
                 </div>
               ) : (
-                <div className="bg-[var(--accent-closed)] px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px]">
+                <div className="bg-secondary px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px]">
                   <h3 className="text-h3 text-white">
                     {ev.title}
                   </h3>

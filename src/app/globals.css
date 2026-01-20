@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Define Tailwind theme colors */
+@theme {
+  --color-primary: #BEFD6F;
+  --color-secondary: #1D1C1E;
+}
+
 /* globals.css */
 :root {
   --surface-color: #E2E2E2;
@@ -13,6 +19,8 @@
   --brown2:#EBE2D7;
   --accent-open:#BEFD6F;
   --accent-closed:#1D1C1E;
+  --primary: var(--accent-open);
+  --secondary: var(--accent-closed);
 
   /* Typography variables (375 default) */
   --h1-size: 28px; --h1-lh: 120%;
