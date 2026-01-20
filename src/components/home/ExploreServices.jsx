@@ -227,7 +227,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
                               12;
                             window.scrollTo({ top: y, behavior: "smooth" });
                           }}
-                          className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-[#FF6813] hover:bg-[#FF9640] text-white font-medium rounded-full text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
+                          className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-full text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
                         >
                           <span>Lets Talk</span>
                         </button>
