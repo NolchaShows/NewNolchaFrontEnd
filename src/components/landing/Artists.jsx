@@ -38,7 +38,7 @@ function VideoGridZigZag({ videos }) {
               className={`flex ${i % 2 === 0 ? "items-start" : "items-end"}`}
               style={{ height: "600px" }}
             >
-              <div className="w-[250px] h-[450px] 2xl:w-[400px] 2xl:h-[600px] border-6 2xl:border-8 border-black rounded-[16px] flex items-center justify-center text-gray-400 text-lg 2xl:text-xl bg-gray-100">
+              <div className="w-[250px] h-[450px] 2xl:w-[400px] 2xl:h-[600px] border-6 2xl:border-8 border-black rounded-[16px] flex items-center justify-center text-white text-lg 2xl:text-xl bg-gray-100">
                 Empty
               </div>
             </div>
@@ -109,7 +109,7 @@ function VideoGrid({ videos }) {
   if (!videos || videos.length === 0) {
     return (
       <div className="flex items-center justify-center py-12">
-        <p className="text-gray-500">No images available</p>
+        <p className="text-white">No images available</p>
       </div>
     );
   }
@@ -241,11 +241,11 @@ function Artists({ artistData, loading, textColor, backgroundColor, isFade, vide
           carouselArtists={carouselArtists}
         />
       )}
-      <div className="bg-[#D1FFE9] page-container rounded-[8px] flex flex-col gap-[30px] lg:gap-[40px] 2xl:gap-[0]">
-        <div className="flex w-[80%] mx-auto justify-center xl:flex-row flex-col gap-[20px] text-[var(--secondary-text-color)]">
+      <div className="bg-black page-container flex flex-col gap-[30px] lg:gap-[40px] 2xl:gap-[0]">
+        <div className="flex w-[80%] mx-auto justify-center xl:flex-row flex-col gap-[20px] text-white">
           <div className={`flex flex-col gap-[20px] 2xl:gap-[30px] font-bold lg:items-center lg:text-center ${isTextLeft ? 'text-lefwt lg:text-center' : 'text-center'}`}>
-            <SectionTitle disableTitleSpacing={true}>{title}</SectionTitle>
-            <p className="font-normal text-[16px] md:text-[20px] 2xl:text-4xl text-black">
+            <SectionTitle disableTitleSpacing={true} className="text-white">{title}</SectionTitle>
+            <p className="font-normal text-[16px] md:text-[20px] 2xl:text-4xl text-white">
               {description}
             </p>
           </div>
