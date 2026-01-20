@@ -14,13 +14,13 @@ const BuildMomentumSection = () => {
   ];
 
   return (
-    <section className="w-full bg-[#FFF7E6] page-container">
+    <section className="w-full bg-black text-white page-container">
       {/* Heading */}
       <SectionTitle>We Build Cultural Momentum</SectionTitle>
 
       {/* Paragraphs */}
       <div className="flex flex-col gap-[10px] lg:gap-5 2xl:gap-[35px] mb-5 lg:mb-10 2xl:mb-[70px]">
-        <p className="text-[16px] lg:text-[28px] 2xl:text-[48px] text-[#000000] leading-relaxed">
+        <p className="text-[16px] lg:text-[28px] 2xl:text-[48px] text-white leading-relaxed">
           For Over 15 Years, Nolcha Has Been At The Forefront Of{" "}
           <span className="font-bold">
             Technology, Culture, And Immersive Experiences
@@ -29,7 +29,7 @@ const BuildMomentumSection = () => {
           Brands And The World's Leading Blockchain, AI, And Crypto
           Conferences.
         </p>
-        <p className="text-[16px] lg:text-[28px] 2xl:text-[48px] text-[#000000] leading-relaxed">
+        <p className="text-[16px] lg:text-[28px] 2xl:text-[48px] text-white leading-relaxed">
           We Unite Communities, Spark Collaboration, And Create Business
           Through Creativity, Innovation, And Human Connection.
         </p>
@@ -46,10 +46,10 @@ const BuildMomentumSection = () => {
               <img
                 src={partner.logo}
                 alt={partner.name}
-                className="h-full w-auto max-w-[140px] lg:max-w-[160px] 2xl:max-w-[200px] object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                className="h-full w-auto max-w-[140px] lg:max-w-[160px] 2xl:max-w-[200px] object-contain transition-all duration-300 filter brightness-0 invert opacity-90 hover:opacity-100"
               />
             ) : (
-              <span className="text-[#1A1A1A] text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-medium">
+              <span className="text-white/80 text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-medium">
                 {partner.name}
               </span>
             )}
