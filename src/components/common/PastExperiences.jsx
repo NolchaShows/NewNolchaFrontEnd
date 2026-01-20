@@ -77,9 +77,9 @@ const PastExperiences = ({
   }
 
   return (
-    <div className="py-[60px] lg:py-[100px] 2xl:py-[180px] overflow-hidden bg-[#F4F4F4]">
+    <div className="py-[60px] lg:py-[100px] 2xl:py-[180px] overflow-hidden bg-secondary">
       <div className="px-[20px] lg:px-[140px] 2xl:px-[250px] title-spacing flex flex-row items-center justify-between">
-        <SectionTitle disableTitleSpacing >Past experience</SectionTitle>
+        <SectionTitle disableTitleSpacing className="text-white">Past experience</SectionTitle>
 
         {/* Navigation Arrows - Desktop Only */}
         <div className="hidden lg:flex gap-4">
@@ -148,10 +148,10 @@ const PastExperiences = ({
       {experiences.length > 1 && (
         <div className="flex justify-center gap-[12px] lg:hidden mt-8">
           <button onClick={prevSlide} className="cursor-pointer hover:opacity-80 transition-opacity">
-            <img src="/icons/left-black-button.svg" alt="Previous" className="h-[36px] w-[36px]" />
+            <img src="/icons/left-black-button.svg" alt="Previous" className="h-[36px] w-[36px] filter brightness-0 invert" />
           </button>
           <button onClick={nextSlide} className="cursor-pointer hover:opacity-80 transition-opacity">
-            <img src="/icons/right-black-button.svg" alt="Next" className="h-[36px] w-[36px]" />
+            <img src="/icons/right-black-button.svg" alt="Next" className="h-[36px] w-[36px] filter brightness-0 invert" />
           </button>
         </div>
       )}

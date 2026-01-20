@@ -113,9 +113,9 @@ const TweetCarousel = ({
   }
 
   return (
-    <div className={`py-[60px] lg:py-[100px] 2xl:py-[180px] overflow-hidden bg-[#FFF7E6] ${padding}`}>
+    <div className={`py-[60px] lg:py-[100px] 2xl:py-[180px] overflow-hidden bg-black ${padding}`}>
       <div className="px-[20px] lg:px-[140px] 2xl:px-[250px] title-spacing flex flex-row items-center justify-between">
-        <SectionTitle disableTitleSpacing >{carouselTitle}</SectionTitle>
+        <SectionTitle disableTitleSpacing className="text-white">{carouselTitle}</SectionTitle>
 
         {/* Navigation Arrows - Desktop Only */}
         <div className="hidden lg:flex gap-4">
@@ -160,8 +160,8 @@ const TweetCarousel = ({
                 key={idx}
                 className="w-full sm:w-1/2 lg:w-1/3 2xl:w-1/4 flex-shrink-0 px-2 mt-[-10px]"
               >
-                <div className="w-full max-h-[450px] lg:max-h-[640px] 2xl:max-h-[800px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
-                  <blockquote className="twitter-tweet" data-theme="light">
+                <div className="w-full max-h-[450px] lg:max-h-[640px] 2xl:max-h-[800px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+                  <blockquote className="twitter-tweet" data-theme="dark">
                     <a href={`https://twitter.com/x/status/${tweetId}`}></a>
                   </blockquote>
                 </div>
