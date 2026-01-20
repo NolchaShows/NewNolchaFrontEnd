@@ -115,27 +115,27 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-4">
-      <div className="bg-[#D1FFE9] rounded-2xl max-w-3xl w-full max-h-[96vh] relative shadow-lg overflow-hidden flex flex-col">
+    <div className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-black rounded-2xl max-w-3xl w-full max-h-[96vh] relative shadow-lg overflow-hidden flex flex-col border border-white/10">
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 z-10 p-2 cursor-pointer bg-white rounded-full shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200"
+          className="absolute top-4 right-4 z-10 p-2 cursor-pointer bg-secondary rounded-full shadow-lg hover:bg-secondary/80 hover:scale-105 transition-all duration-200"
           aria-label="Close modal"
         >
-          <RxCross2 className="w-5 h-5" />
+          <RxCross2 className="w-5 h-5 text-white" />
         </button>
 
         {/* Scrollable content */}
-        <div className="p-4 lg:p-6 overflow-y-auto overflow-x-hidden flex-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <div className="p-4 lg:p-6 overflow-y-auto overflow-x-hidden flex-1 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
           {/* Logo and Title */}
           <div className="mb-6 flex flex-col items-center">
             <img
               src="/navbar/logo.svg"
               alt="NOLCHA"
-              className="h-5 lg:h-8 w-auto mb-1"
+              className="h-5 lg:h-8 w-auto mb-1 filter brightness-0 invert"
             />
-            <h2 className="text-[18px] lg:text-[28px] font-bold text-gray-800">
+            <h2 className="text-[18px] lg:text-[28px] font-bold text-white">
               Request Sponsorship Details
             </h2>
           </div>
@@ -155,7 +155,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
             <div>
               <label
                 htmlFor="fullName"
-                className="block text-sm lg:text-base font-medium text-gray-800 mb-1.5"
+                className="block text-sm lg:text-base font-medium text-white mb-1.5"
               >
                 Full Name
               </label>
@@ -166,7 +166,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
                 value={formData.fullName}
                 onChange={handleInputChange}
                 placeholder="Enter your full Name"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all duration-200 bg-white"
+                className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 bg-secondary text-white placeholder:text-white/60"
                 required
               />
             </div>
@@ -177,7 +177,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm lg:text-base font-medium text-gray-800 mb-1.5"
+                  className="block text-sm lg:text-base font-medium text-white mb-1.5"
                 >
                   Email
                 </label>
@@ -188,7 +188,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Enter your email"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all duration-200 bg-white"
+                  className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 bg-secondary text-white placeholder:text-white/60"
                   required
                 />
               </div>
@@ -197,7 +197,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
               <div>
                 <label
                   htmlFor="company"
-                  className="block text-sm lg:text-base font-medium text-gray-800 mb-1.5"
+                  className="block text-sm lg:text-base font-medium text-white mb-1.5"
                 >
                   Company
                 </label>
@@ -208,7 +208,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
                   value={formData.company}
                   onChange={handleInputChange}
                   placeholder="Search for company"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all duration-200 bg-white"
+                  className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 bg-secondary text-white placeholder:text-white/60"
                   required
                 />
               </div>
@@ -216,22 +216,22 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
 
             {/* Event(s) of interest */}
             <div>
-              <label className="block text-sm lg:text-base font-medium text-gray-800 mb-3">
+              <label className="block text-sm lg:text-base font-medium text-white mb-3">
                 Event(s) of interest
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-[5px]">
                 {eventsList.map((eventName) => (
                   <label
                     key={eventName}
-                    className="flex items-center space-x-2 cursor-pointer hover:bg-white/50 rounded-lg transition-colors"
+                    className="flex items-center space-x-2 cursor-pointer hover:bg-secondary/50 rounded-lg transition-colors p-2"
                   >
                     <input
                       type="checkbox"
                       checked={formData.events[eventName]}
                       onChange={() => handleEventToggle(eventName)}
-                      className="w-4 h-4 text-black border-gray-300 rounded focus:ring-2 focus:ring-black cursor-pointer"
+                      className="w-4 h-4 text-primary border-white/30 rounded focus:ring-2 focus:ring-primary cursor-pointer accent-primary"
                     />
-                    <span className="text-sm lg:text-base text-gray-800">
+                    <span className="text-sm lg:text-base text-white">
                       {eventName}
                     </span>
                   </label>
@@ -242,7 +242,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
             {/* Send Button */}
             <button
               type="submit"
-              className="w-full bg-[#FF6813] hover:bg-[#FF9640] text-white font-medium py-4 px-6 rounded-full transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-orange-400 focus:outline-none"
+              className="w-full bg-primary hover:opacity-90 text-black font-medium py-4 px-6 rounded-full transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:outline-none"
             >
               Send
             </button>
