@@ -53,7 +53,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   // Loading state
   if (loading) {
     return (
-      <div className="bg-white page-container py-[60px] lg:py-[100px] 2xl:py-[140px]">
+      <div className="bg-secondary page-container py-[60px] lg:py-[100px] 2xl:py-[140px]">
         <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[60px] 2xl:gap-[80px] items-start">
           {/* Left side - Image skeleton */}
           <div className="relative w-full lg:w-[435px] 2xl:w-[580px] flex-shrink-0">
@@ -63,7 +63,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
           <div className="flex-1 flex flex-col">
             <div className="h-[60px] lg:h-[80px] 2xl:h-[100px] bg-gray-300 animate-pulse rounded mb-[30px] lg:mb-[40px] 2xl:mb-[50px]"></div>
             {[...Array(3)].map((_, index) => (
-              <div key={index} className="bg-[#F3F3F3] rounded-[6px] lg:rounded-[12px] 2xl:rounded-[20px] p-4 mb-3">
+              <div key={index} className="bg-black rounded-[6px] lg:rounded-[12px] 2xl:rounded-[20px] p-4 mb-3">
                 <div className="h-6 bg-gray-300 animate-pulse rounded"></div>
               </div>
             ))}
@@ -74,7 +74,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   }
 
   return (
-    <div className="bg-white page-container py-[60px] lg:py-[100px] 2xl:py-[140px]">
+    <div className="bg-secondary page-container py-[60px] lg:py-[100px] 2xl:py-[140px]">
       <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[50px] 2xl:gap-[80px] items-start">
         {/* Left side - Image with gradient overlay */}
         <div className="relative w-full lg:w-[513px] h-auto lg:h-[531px] flex-shrink-0">
@@ -105,7 +105,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
         {/* Right side - Content */}
         <div className="flex-1 flex flex-col">
           {/* Main heading */}
-          <h1 className="text-[28px] lg:text-[36px] 2xl:text-[48px] font-bold text-black leading-tight mb-[30px] lg:mb-[40px] 2xl:mb-[50px]">
+          <h1 className="text-[28px] lg:text-[36px] 2xl:text-[48px] font-bold text-white leading-tight mb-[30px] lg:mb-[40px] 2xl:mb-[50px]">
             {heading}
           </h1>
 
@@ -116,20 +116,20 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
               return (
                 <div
                   key={section.id}
-                  className="bg-[#F3F3F3] rounded-[6px] lg:rounded-[12px] 2xl:rounded-[20px] overflow-hidden"
+                  className="bg-black rounded-[6px] lg:rounded-[12px] 2xl:rounded-[20px] overflow-hidden"
                 >
                   {/* Accordion Header */}
                   <button
                     onClick={() => toggleSection(section.id)}
-                    className="w-full flex justify-between items-center px-[16px] lg:px-[24px] 2xl:px-[32px] py-[16px] lg:py-[20px] 2xl:py-[24px] text-left transition-colors hover:bg-[#E8E8E8]"
+                    className="w-full flex justify-between items-center px-[16px] lg:px-[24px] 2xl:px-[32px] py-[16px] lg:py-[20px] 2xl:py-[24px] text-left transition-colors hover:bg-black/80"
                   >
-                    <h2 className="text-[18px] lg:text-[24px] 2xl:text-[32px] font-bold text-black leading-tight pr-4">
+                    <h2 className="text-[18px] lg:text-[24px] 2xl:text-[32px] font-bold text-white leading-tight pr-4">
                       {section.title}
                     </h2>
                     {/* Chevron Icon */}
                     <div className="flex-shrink-0">
                       <svg
-                        className={`w-6 h-6 lg:w-8 lg:h-8 2xl:w-10 2xl:h-10 text-black transition-transform duration-300 ${
+                        className={`w-6 h-6 lg:w-8 lg:h-8 2xl:w-10 2xl:h-10 text-white transition-transform duration-300 ${
                           isExpanded ? "rotate-180" : ""
                         }`}
                         fill="none"
@@ -150,7 +150,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
                   {isExpanded && (
                     <div className="px-[16px] lg:px-[24px] 2xl:px-[32px] pb-[16px] lg:pb-[20px] 2xl:pb-[24px]">
                       <p
-                        className="text-black text-[14px] lg:text-[16px] 2xl:text-[18px] leading-relaxed font-normal"
+                        className="text-white text-[14px] lg:text-[16px] 2xl:text-[18px] leading-relaxed font-normal"
                       >
                         {section.content}
                       </p>
