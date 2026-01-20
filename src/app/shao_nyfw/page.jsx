@@ -44,6 +44,7 @@ function page() {
                 size="large"
                 overlayOpacity={20}
                 isGoogleDrive={false}
+                className="-mt-[88px] 2xl:-mt-[120px]"
             />
             <ThreeImageRow
                 images={["/shao_nyfw/image 1.jpg", "/shao_nyfw/image 2.jpg", "/shao_nyfw/image 3.jpg"]}
