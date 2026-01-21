@@ -21,7 +21,7 @@ type PageParams = {
 };
 
 type PageProps = {
-  params: Promise<PageParams> | PageParams;
+  params: Promise<PageParams>;
 };
 
 export async function generateMetadata({
