@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const FashionGrid = ({ 
   leftVideo = "", 
@@ -6,10 +6,6 @@ const FashionGrid = ({
   images = [],
   background = "#FEF991" 
 }) => {
-  const [leftVideoError, setLeftVideoError] = useState(false);
-  const [rightVideoError, setRightVideoError] = useState(false);
-  const [leftVideoLoading, setLeftVideoLoading] = useState(true);
-  const [rightVideoLoading, setRightVideoLoading] = useState(true);
   return (
     <section className="w-full" style={{ backgroundColor: background }}>
       <div className="">
@@ -17,33 +13,17 @@ const FashionGrid = ({
           <div className="grid grid-cols-1 md:grid-cols-5 bg-[#FEF991]">
             {/* Left Video */}
             <div className="hidden md:block relative h-[300px] lg:h-[1008px] 2xl:h-[1792px] bg-white">
-              {leftVideo && !leftVideoError ? (
-                <>
-                  {leftVideoLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-                    </div>
-                  )}
-                  <video
-                    src={leftVideo}
-                    className="w-full h-full object-cover"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    onLoadStart={() => setLeftVideoLoading(true)}
-                    onCanPlay={() => setLeftVideoLoading(false)}
-                    onError={() => {
-                      setLeftVideoError(true);
-                      setLeftVideoLoading(false);
-                    }}
-                    preload="metadata"
-                  />
-                </>
-              ) : leftVideoError ? (
-                <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                  <p className="text-gray-500 text-sm">Video unavailable</p>
-                </div>
+              {leftVideo ? (
+                <video
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                >
+                  <source src={leftVideo} type="video/mp4" />
+                </video>
               ) : null}
             </div>
 
@@ -93,33 +73,17 @@ const FashionGrid = ({
 
             {/* Right Video */}
             <div className="hidden md:block relative h-[300px] lg:h-[1008px] 2xl:h-[1792px] bg-white">
-              {rightVideo && !rightVideoError ? (
-                <>
-                  {rightVideoLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-                    </div>
-                  )}
-                  <video
-                    src={rightVideo}
-                    className="w-full h-full object-cover"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    onLoadStart={() => setRightVideoLoading(true)}
-                    onCanPlay={() => setRightVideoLoading(false)}
-                    onError={() => {
-                      setRightVideoError(true);
-                      setRightVideoLoading(false);
-                    }}
-                    preload="metadata"
-                  />
-                </>
-              ) : rightVideoError ? (
-                <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                  <p className="text-gray-500 text-sm">Video unavailable</p>
-                </div>
+              {rightVideo ? (
+                <video
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                >
+                  <source src={rightVideo} type="video/mp4" />
+                </video>
               ) : null}
             </div>
           </div>
