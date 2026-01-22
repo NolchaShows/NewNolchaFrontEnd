@@ -213,7 +213,7 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
     >
       <div className="max-w-[818px] 2xl:max-w-[1454px] mx-auto flex flex-col items-center">
         {/* Header Section */}
-        <SectionTitle className="text-white lg:text-center tracking-[-0.84px] lg:tracking-none">{partnersTitle}</SectionTitle>
+        <SectionTitle className="text-white lg:text-center mb-[30px] lg:mb-[50px] 2xl:mb-[70px] tracking-[-0.84px] lg:tracking-none">{partnersTitle}</SectionTitle>
 
         {/* Dynamic Partners Grid */}
         <div className="w-full">
