@@ -139,7 +139,7 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
   const getResponsiveClasses = () => {
     // Use consistent responsive classes for all breakpoints to ensure gaps always exist
       const baseClasses = {
-        columnGap: "gap-1 sm:gap-2 md:gap-2 xl:gap-3 2xl:gap-4", // Always has gap on all screens
+        columnGap: "gap-1 sm:gap-2 md:gap-2 xl:gap-3 2xl:gap-10", // Always has gap on all screens
         cardGap: "gap-1.5 sm:gap-2 md:gap-2.5", // Cards gap
       };
 

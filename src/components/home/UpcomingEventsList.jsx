@@ -109,8 +109,8 @@ const UpcomingEventsList = ({
                   </div>
                 </div>
               ) : (
-                <div className="bg-secondary px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px]">
-                  <h3 className="text-h3 text-white">
+                <div className="bg-secondary hover:bg-primary px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] group">
+                  <h3 className="text-h3 text-white group-hover:text-black">
                     {ev.title}
                   </h3>
                 </div>
