@@ -118,6 +118,19 @@ body {
   animation: marquee 15s linear infinite;
 }
 
+@keyframes press-slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-1 * var(--press-slide-distance, 0px)));
+  }
+}
+
+.press-animate-slide {
+  animation: press-slide-left 30s linear infinite;
+}
+
 /* Featured Speakers Navigation Button Styles */
 .slider-navigation-button {
   display: flex;

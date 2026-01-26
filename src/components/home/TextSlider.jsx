@@ -55,21 +55,6 @@ export default function LogoSlider({ logoSliderData, loading }) {
 
   return (
     <>
-      <style jsx>{`
-        @keyframes slideLeft {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-${logos.length * 200}px);
-          }
-        }
-
-        .animate-slide {
-          animation: slideLeft 30s linear infinite;
-        }
-      `}</style>
-
       <div className="w-full">
         <div className="flex h-[60px] md:h-[116px] 2xl:h-[130px] items-center">
           {/* Fixed "AS SEEN IN" section */}
@@ -83,9 +68,10 @@ export default function LogoSlider({ logoSliderData, loading }) {
           <div className="flex-1 relative overflow-hidden h-full">
             <div className="absolute inset-0 flex items-center">
               <div
-                className="flex items-center animate-slide"
+                className="flex items-center press-animate-slide"
                 style={{
                   width: `${duplicatedLogos.length * 350}px`, // adjust total width
+                  "--press-slide-distance": `${logos.length * 200}px`,
                 }}
               >
                 {duplicatedLogos.map((logo, index) => (
