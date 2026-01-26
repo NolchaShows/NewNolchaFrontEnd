@@ -103,10 +103,10 @@ function TextHero({ textHeroData, loading, images = [] }) {
               <img
                 src={'/home/forbes/forbes.png'}
                 alt="Forbes"
-                className="relative w-[230px] lg:w-[340px] 2xl:w-[600px] z-10"
+                className="relative w-[230px] lg:w-[340px] 2xl:w-[550px] z-10"
               />
             </div>
-            <div className="text-white text-[16px] lg:text-[20px] 2xl:text-[36px] font-bold">
+            <div className="text-white text-[16px] lg:text-[20px] 2xl:text-[30px] font-bold">
               {currentSlide?.description}
             </div>
           </div>
