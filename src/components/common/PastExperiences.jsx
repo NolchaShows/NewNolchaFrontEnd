@@ -71,6 +71,22 @@ const PastExperiences = ({
     }
   };
 
+  const handleDragEnd = (event, info) => {
+    const threshold = 50; // Minimum drag distance to trigger slide change
+    const velocity = info.velocity.x;
+
+    // Determine slide change based on drag distance and velocity
+    if (Math.abs(info.offset.x) > threshold || Math.abs(velocity) > 500) {
+      if (info.offset.x > 0 || velocity > 0) {
+        // Swiped right (dragged left) - go to previous
+        prevSlide();
+      } else {
+        // Swiped left (dragged right) - go to next
+        nextSlide();
+      }
+    }
+  };
+
   // If no data available, don't render the component
   if (!experiences || experiences.length === 0) {
     return null;
@@ -107,12 +123,21 @@ const PastExperiences = ({
       </div>
 
       <div className="relative overflow-hidden px-[20px] lg:px-[140px] 2xl:px-[250px]">
-        <div
-          className="flex transition-transform duration-500"
-          style={{
-            transform: isDesktop
-              ? `translateX(-${currentIndex * (CARD_W + CARD_GUTTER)}px)`
-              : `translateX(-${(currentIndex / itemsPerSlide) * 100}%)`,
+        <motion.div
+          className="flex cursor-grab active:cursor-grabbing"
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.2}
+          onDragEnd={handleDragEnd}
+          animate={{
+            x: isDesktop
+              ? -currentIndex * (CARD_W + CARD_GUTTER)
+              : `-${(currentIndex / itemsPerSlide) * 100}%`,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
           }}
         >
           {experiences.map((experience, idx) => {
@@ -141,7 +166,7 @@ const PastExperiences = ({
               </div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
 
       {/* Mobile arrows */}
