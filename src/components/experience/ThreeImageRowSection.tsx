@@ -20,6 +20,22 @@ const getBestImageUrl = (media: any): string | null => {
   );
 };
 
+const isVideoMedia = (media: any): boolean => {
+  if (!media) return false;
+  const mime = media.mime || "";
+  const ext = (media.ext || "").toLowerCase();
+  return mime.startsWith("video/") || [".mp4", ".mov", ".webm"].includes(ext);
+};
+
+const normalizeMedia = (media: any) => {
+  if (!media) return null;
+  if (isVideoMedia(media)) {
+    return { type: "video", url: media.url };
+  }
+  const imageUrl = getBestImageUrl(media);
+  return imageUrl ? { type: "image", url: imageUrl } : null;
+};
+
 export default async function ThreeImageRowSection({
   slug,
 }: {
@@ -33,17 +49,17 @@ export default async function ThreeImageRowSection({
 
   if (!block) return null;
 
-  const images = [
-    getBestImageUrl(block.firstImage),
-    getBestImageUrl(block.secondImage),
-    getBestImageUrl(block.thirdImage),
-  ].filter(Boolean) as string[];
+  const mediaItems = [
+    normalizeMedia(block.firstMedia),
+    normalizeMedia(block.secondMedia),
+    normalizeMedia(block.thirdMedia),
+  ].filter(Boolean) as Array<{ type: string; url: string }>;
 
-  if (!images.length) return null;
+  if (!mediaItems.length) return null;
 
   return (
     <ThreeImageRow
-      images={images}
+      mediaItems={mediaItems}
       line1="360 Projection"
       line2="Mapped Venue"
       background="#D1FFE9"

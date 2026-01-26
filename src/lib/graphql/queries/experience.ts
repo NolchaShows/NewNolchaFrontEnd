@@ -38,14 +38,14 @@ export const MEDIA_FILE_FIELDS = gql`
 export const EXPERIENCE_BLOCK_THREE_IMAGE_ROW = gql`
   fragment ExperienceBlockThreeImageRow on ComponentBlocksThreeImageRow {
     __typename
-    firstImage {
-      ...MediaImageFields
+    firstMedia {
+      ...MediaFileFields
     }
-    secondImage {
-      ...MediaImageFields
+    secondMedia {
+      ...MediaFileFields
     }
-    thirdImage {
-      ...MediaImageFields
+    thirdMedia {
+      ...MediaFileFields
     }
   }
 `;
