@@ -12,7 +12,7 @@ const VideoHeroSection = ({
     size = "large",
     overlayOpacity = 20,
     className = "",
-    children,
+    children = null,
     isGoogleDrive = false,
     isSticky = false
 }) => {

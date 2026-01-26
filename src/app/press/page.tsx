@@ -101,7 +101,6 @@ export default async function PressPage() {
         size="large"
         overlayOpacity={20}
         isGoogleDrive={false}
-        children={null}
       />
       <div className="relative z-10">
         <div className="bg-[#EBE2D7]">
