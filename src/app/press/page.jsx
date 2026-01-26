@@ -7,6 +7,7 @@ import CardSlider from "@/components/press/CardSlider";
 import Hero from "@/components/press/Hero";
 import React from "react";
 import { usePressPageData } from "@/utils/pressPageUtils";
+import VideoHeroSection from "@/components/common/VideoHeroSection";
 
 function page() {
   const { pressData, loading, error } = usePressPageData();
@@ -36,7 +37,7 @@ function page() {
       id: 2,
       newsPaper: "/press/card/2n.png",
       image: "/press/card/2.png",
-      
+
       title:
         "Bitcoin Ordinals Take Center Stage With Nolcha Shows, Miami Art Week",
       link: "https://www.forbes.com/sites/zengernews/2023/12/01/bitcoin-ordinals-take-center-stage-with-nolcha-shows-miami-art-week/",
@@ -45,7 +46,7 @@ function page() {
       id: 3,
       newsPaper: "/press/card/3n.png",
       image: "/press/card/3.png",
-      
+
       title:
         "Bitcoin Ordinals Take Center Stage With Nolcha Shows, Miami Art Week",
       link: "https://www.forbes.com/sites/zengernews/2023/12/01/bitcoin-ordinals-take-center-stage-with-nolcha-shows-miami-art-week/",
@@ -54,7 +55,7 @@ function page() {
       id: 4,
       newsPaper: "/press/card/4n.png",
       image: "/press/card/4.png",
-      
+
       title:
         "Bitcoin Ordinals Take Center Stage With Nolcha Shows, Miami Art Week",
       link: "https://www.forbes.com/sites/zengernews/2023/12/01/bitcoin-ordinals-take-center-stage-with-nolcha-shows-miami-art-week/",
@@ -63,7 +64,7 @@ function page() {
       id: 5,
       newsPaper: "/press/card/5n.png",
       image: "/press/card/5.png",
-      
+
       title:
         "Bitcoin Ordinals Take Center Stage With Nolcha Shows, Miami Art Week",
       link: "https://www.forbes.com/sites/zengernews/2023/12/01/bitcoin-ordinals-take-center-stage-with-nolcha-shows-miami-art-week/",
@@ -72,7 +73,7 @@ function page() {
       id: 6,
       newsPaper: "/press/card/6n.png",
       image: "/press/card/6.png",
-      
+
       title:
         "Bitcoin Ordinals Take Center Stage With Nolcha Shows, Miami Art Week",
       link: "https://www.forbes.com/sites/zengernews/2023/12/01/bitcoin-ordinals-take-center-stage-with-nolcha-shows-miami-art-week/",
@@ -81,7 +82,7 @@ function page() {
       id: 7,
       newsPaper: "/press/card/7n.png",
       image: "/press/card/7.png",
-      
+
       title:
         "Bitcoin Ordinals Take Center Stage With Nolcha Shows, Miami Art Week",
       link: "https://www.forbes.com/sites/zengernews/2023/12/01/bitcoin-ordinals-take-center-stage-with-nolcha-shows-miami-art-week/",
@@ -90,7 +91,7 @@ function page() {
       id: 8,
       newsPaper: "/press/card/8n.png",
       image: "/press/card/8.png",
-      
+
       title:
         "Bitcoin Ordinals Take Center Stage With Nolcha Shows, Miami Art Week",
       link: "https://www.forbes.com/sites/zengernews/2023/12/01/bitcoin-ordinals-take-center-stage-with-nolcha-shows-miami-art-week/",
@@ -99,7 +100,7 @@ function page() {
       id: 9,
       newsPaper: "/press/card/9n.png",
       image: "/press/card/9.png",
-      
+
       title:
         "Bitcoin Ordinals Take Center Stage With Nolcha Shows, Miami Art Week",
       link: "https://www.forbes.com/sites/zengernews/2023/12/01/bitcoin-ordinals-take-center-stage-with-nolcha-shows-miami-art-week/",
@@ -119,12 +120,12 @@ function page() {
   console.log('🎯 Press data received:', pressData);
   console.log('🏷️ Logos from pressData:', pressData?.logos);
   console.log('📋 Default logos:', logos);
-  
+
   const heroTitle = pressData?.heroTitle || "Press";
-  const heroVideo = pressData?.heroVideo || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+  const heroVideo = "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4";
   const dynamicLogos = (pressData?.logos && pressData.logos.length > 0) ? pressData.logos : logos;
   const cards = (pressData?.cards && pressData.cards.length > 0) ? pressData.cards : defaultCards;
-  
+
   console.log('✅ Final logos to use:', dynamicLogos);
   const aboutSection = pressData?.aboutSection || {
     title: "Media Coverage",
@@ -139,41 +140,21 @@ function page() {
 
   return (
     <div>
-      <div className="relative w-full h-screen overflow-hidden">
-        {/* Video Background */}
-        <div className="absolute inset-0 z-0">
-          <video
-            className="w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            style={{ minWidth: "100%", minHeight: "100%" }}
-          >
-            <source
-              src={heroVideo}
-              type="video/mp4"
-            />
-            Your browser does not support the video tag.
-          </video>
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-opacity-50"></div>
-        </div>
-
-        {/* Content Overlay */}
-        <div className="relative z-10 flex items-center justify-center h-full px-6">
-          <div className="text-center text-white max-w-4xl">
-            {/* Main Heading */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
-              {heroTitle}
-            </h1>
-          </div>
-        </div>
-      </div>
-      
-      <LogoSlider logoSliderData={{ title: "AS SEEN IN", logos: dynamicLogos }} loading={loading} />
-      
-      <div className="bg-[#EBE2D7]">
+      <VideoHeroSection
+        videoSrc={heroVideo}
+        isSticky={true}
+        className="-mt-[88px] 2xl:-mt-[120px]"
+        firstPart="Press"
+        secondPart=""
+        strokeColor="#000000"
+        fillColor="#FEF991"
+        textColor="#FFFFFF"
+        size="large"
+        overlayOpacity={20}
+        isGoogleDrive={false}
+      />
+      <div className="relative z-10 bg-[#EBE2D7]">
+        <LogoSlider logoSliderData={[]} loading={loading} />
         <About
           title={aboutSection.title}
           paragraphs={aboutSection.paragraphs}
@@ -182,10 +163,10 @@ function page() {
           image={aboutSection.image}
           loading={loading}
         />
-      </div>
 
-      <div className="my-10">
-        <CardSlider cards={cards} loading={loading} />
+        <div className="my-10">
+          <CardSlider cards={cards} loading={loading} />
+        </div>
       </div>
     </div>
   );
