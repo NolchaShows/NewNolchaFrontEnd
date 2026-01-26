@@ -35,7 +35,7 @@ const CardSlider = ({ cards = [], loading }) => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-black text-white page-container">
       {/* Mobile Slider */}
       <div className="block md:hidden">
         <div className="relative overflow-hidden py-5">

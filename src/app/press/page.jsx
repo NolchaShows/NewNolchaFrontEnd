@@ -154,7 +154,7 @@ function page() {
 
         <About
           title={aboutSection.title}
-          paragraphText ={aboutSection.paragraphText}
+          paragraphText={aboutSection.paragraphText}
           link={aboutSection.link}
           linkText={aboutSection.linkText}
           image={aboutSection.image}
@@ -162,11 +162,7 @@ function page() {
           variant="press"
         />
 
-        <section className="bg-black py-12 sm:py-16 lg:py-[100px]">
-          <div className="w-full max-w-[1170px] mx-auto px-5 sm:px-8">
-            <CardSlider cards={cards} loading={loading} />
-          </div>
-        </section>
+        <CardSlider cards={cards} loading={loading} />
       </div>
     </div>
   );
