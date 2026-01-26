@@ -20,6 +20,7 @@ import { tweetsData } from "@/data/tweetsData";
 import PastExperiences from "@/components/common/PastExperiences";
 import NolchaExperience from "@/components/home/Collaboration";
 import HomeWideVideoBanner from "@/components/home/HomeWideVideoBanner";
+import Image from "next/image";
 
 export default function Home() {
   const [heroData, setHeroData] = useState(null);
@@ -597,7 +598,14 @@ export default function Home() {
         partners={press}
         bg={"bg-white"}
       /> */}
-      <img src="/home/press-and-media-recognition/press-and-media-recognition.jpg" />
+      <Image
+        src="/home/press-and-media-recognition/press-and-media-recognition.jpg"
+        alt="Press and media recognition"
+        width={4309}
+        height={2224}
+        sizes="100vw"
+        className="w-full h-auto"
+      />
       <Artists
         artistData={artistData}
         loading={loading}
