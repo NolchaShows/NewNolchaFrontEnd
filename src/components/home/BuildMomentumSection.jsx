@@ -1,5 +1,6 @@
 import React from "react";
 import SectionTitle from "../common/SectionTitle";
+import RoundedCtaButton from "../common/RoundedCtaButton";
 
 const BuildMomentumSection = () => {
   // Partner logos data - update paths when logos are added
@@ -58,7 +59,8 @@ const BuildMomentumSection = () => {
       </div>
 
       {/* Let's Talk Button */}
-      <button
+      <RoundedCtaButton
+        label="Let's Talk"
         onClick={() => {
           const el = document.getElementById("contact");
           if (!el) return;
@@ -71,25 +73,7 @@ const BuildMomentumSection = () => {
             12;
           window.scrollTo({ top: y, behavior: "smooth" });
         }}
-        className="group flex items-center gap-3 md:gap-4 pl-[16px] lg:pl-[27px] 2xl:pl-[48px] pr-[8px] lg:pr-2 2xl:pr-[12px] py-[9px] lg:py-2 2xl:py-[12px] bg-primary hover:bg-[#FF9640] text-black font-medium rounded-full transition-all duration-300 text-[14px] lg:text-[20px] 2xl:text-[36px]"
-      >
-        <span>Let's Talk</span>
-        <div className="flex items-center justify-center w-[23px] h-[23px] lg:w-[44px] lg:h-[44px] 2xl:w-[80px] 2xl:h-[80px] bg-[#fff] rounded-full group-hover:bg-[#fff] transition-colors">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="100%"
-            height="100%"
-            viewBox="0 0 20 21"
-            fill="none"
-            className="w-4 h-4 lg:w-6 lg:h-6 2xl:w-12 2xl:h-12"
-          >
-            <path
-              d="M4.99662 5.55025L4.99662 7.29504L11.9077 7.30123L4.3779 14.831L5.61534 16.0685L13.1451 8.53866L13.1513 15.4497L14.8961 15.4497V5.55025H4.99662Z"
-              fill="#000000"
-            />
-          </svg>
-        </div>
-      </button>
+      />
     </section>
   );
 };

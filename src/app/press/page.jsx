@@ -1,10 +1,7 @@
 "use client";
-import Companies from "@/components/common/Companies";
 import LogoSlider from "@/components/home/TextSlider";
 import About from "@/components/landing/About";
-import Card from "@/components/press/Card";
 import CardSlider from "@/components/press/CardSlider";
-import Hero from "@/components/press/Hero";
 import React from "react";
 import { usePressPageData } from "@/utils/pressPageUtils";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
@@ -127,15 +124,12 @@ function page() {
   const cards = (pressData?.cards && pressData.cards.length > 0) ? pressData.cards : defaultCards;
 
   console.log('✅ Final logos to use:', dynamicLogos);
-  const aboutSection = pressData?.aboutSection || {
+  const aboutSection = {
     title: "Media Coverage",
-    paragraphs: [
-      "Nolcha Events has garnered notable media recognition as the premier destination for brands and organizations to connect and enhance their presence during major conferences in Blockchain, Art, and Crypto.",
-      "Nolcha Events has garnered notable media recognition as the premier destination for brands and organizations to connect and enhance their presence during major conferences in Blockchain, Art, and Crypto."
-    ],
+    paragraphText: "Nolcha Events has garnered notable media recognition as the premier destination for brands and organizations to connect and enhance their presence during major conferences in Blockchain, Art, and Crypto.",
     link: "#",
-    linkText: "Learn More",
-    image: "/home/about.png"
+    linkText: "Co-Host An Event With Us",
+    image: "/press/press.png"
   };
 
   return (
@@ -153,20 +147,26 @@ function page() {
         overlayOpacity={20}
         isGoogleDrive={false}
       />
-      <div className="relative z-10 bg-[#EBE2D7]">
-        <LogoSlider logoSliderData={[]} loading={loading} />
+      <div className="relative z-10">
+        <div className="bg-[#EBE2D7]">
+          <LogoSlider logoSliderData={[]} loading={loading} />
+        </div>
+
         <About
           title={aboutSection.title}
-          paragraphs={aboutSection.paragraphs}
+          paragraphText ={aboutSection.paragraphText}
           link={aboutSection.link}
           linkText={aboutSection.linkText}
           image={aboutSection.image}
           loading={loading}
+          variant="press"
         />
 
-        <div className="my-10">
-          <CardSlider cards={cards} loading={loading} />
-        </div>
+        <section className="bg-black py-12 sm:py-16 lg:py-[100px]">
+          <div className="w-full max-w-[1170px] mx-auto px-5 sm:px-8">
+            <CardSlider cards={cards} loading={loading} />
+          </div>
+        </section>
       </div>
     </div>
   );

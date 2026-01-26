@@ -58,28 +58,27 @@ const CardSlider = ({ cards = [], loading }) => {
 
         {/* Navigation Buttons - Centered at bottom */}
         <div className="flex justify-center items-center gap-4 pb-6">
-          <button onClick={prevSlide} disabled={currentSlide === 0}>
-            <img
-              src="/left_dark.png"
-              className="w-12 h-12 text-gray-600 cursor-pointer"
-            />
+          <button
+            onClick={prevSlide}
+            disabled={currentSlide === 0}
+            className="p-2 rounded-full border border-white/20 text-white disabled:opacity-40"
+          >
+            <ChevronLeft className="w-6 h-6" />
           </button>
 
           <button
             onClick={nextSlide}
             disabled={currentSlide === totalSlides - 1}
+            className="p-2 rounded-full border border-white/20 text-white disabled:opacity-40"
           >
-            <img
-              src="/right_dark.png"
-              className="w-12 h-12 text-gray-600 cursor-pointer"
-            />
+            <ChevronRight className="w-6 h-6" />
           </button>
         </div>
       </div>
 
       {/* Desktop Grid - Hidden on mobile */}
       <div className="hidden md:block">
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-[24px] lg:gap-[40px] xl:gap-[60px] 2xl:gap-[80px] max-w-none mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-[30px] max-w-none mx-auto">
           {cards.map((card, index) => (
             <Card
               key={card.id || index}

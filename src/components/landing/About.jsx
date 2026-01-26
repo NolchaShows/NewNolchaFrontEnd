@@ -1,7 +1,17 @@
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
+import RoundedCtaButton from "../common/RoundedCtaButton";
 
-function About({ title, paragraphs = [], image, link, linkText, imageStyle, loading }) {
+function About({
+  title,
+  paragraphText,
+  image,
+  link,
+  linkText,
+  imageStyle,
+  loading,
+  variant = "default",
+}) {
   // Don't render until we have data or confirmed no data
   if (loading) {
     return (
@@ -10,6 +20,43 @@ function About({ title, paragraphs = [], image, link, linkText, imageStyle, load
       </div>
     );
   }
+  if (variant === "press") {
+    return (
+      <section className="w-full bg-[#171717] text-white page-container">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12">
+          <div className="flex flex-col gap-8 max-w-[460px]">
+            {title && (
+              <h2 className="font-['Tomorrow',sans-serif] text-[32px] sm:text-[40px] lg:text-[50px] leading-[1.2] tracking-[-1.5px] font-extrabold">
+                {title}
+              </h2>
+            )}
+            <div className="flex flex-col gap-4 text-[16px] sm:text-[18px] lg:text-[20px] leading-[1.5] tracking-[-0.6px]">
+              <p className="font-['Tomorrow',sans-serif]">
+                {paragraphText}
+              </p>
+            </div>
+            {link && linkText && (
+              <RoundedCtaButton
+                href={link}
+                label={linkText}
+                className="self-start"
+              />
+            )}
+          </div>
+          {image && (
+            <div className="w-full lg:w-[659px]">
+              <img
+                src={image}
+                className="w-full h-[280px] sm:h-[360px] lg:h-[487px] rounded-[16px] object-cover"
+                alt="About section"
+              />
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <div className="py-[20px] px-[16px] sm:py-[40px] sm:px-[24px] md:py-[60px] md:px-[35px] lg:py-[75px] lg:px-[45px] xl:py-[80px] xl:px-[50px] 2xl:py-[100px] 2xl:px-[60px] w-full max-w-none mx-auto flex md:flex-row flex-col gap-[23px] md:gap-[32px] 2xl:gap-[45px] md:justify-between md:items-center">
       {/* Image */}
@@ -27,26 +74,20 @@ function About({ title, paragraphs = [], image, link, linkText, imageStyle, load
       <div className="flex flex-col gap-[24px] sm:gap-[28px] md:gap-[32px] lg:gap-[40px] xl:gap-[48px] 2xl:gap-[64px] text-[#000000] mt-8 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-20 2xl:mt-30 flex-1 md:max-w-[50%] md:order-1">
         <div className="flex flex-col gap-[16px] sm:gap-[18px] md:gap-[20px] lg:gap-[28px] xl:gap-[36px] 2xl:gap-[48px]">
           {title && (
-            <h1
-              className="text-[26px] sm:text-[26px] md:text-[32px] lg:text-[36px] xl:text-[52px] 2xl:text-[66px] font-bold uppercase">
+            <h1 className="text-[26px] sm:text-[26px] md:text-[32px] lg:text-[36px] xl:text-[52px] 2xl:text-[66px] font-bold uppercase">
               {title}
             </h1>
           )}
 
           {/* Paragraphs */}
           <div className="flex flex-col gap-[12px] sm:gap-[8px] md:gap-[4px] lg:gap-[8px] xl:gap-[16px] 2xl:gap-[20px] md:mr-10">
-            {paragraphs.map((text, i) => (
-              <p
-                key={i}
-
-                className="font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] text-[16px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[36px] leading-[1.5] sm:leading-[1.55] md:leading-[1.6] lg:leading-[1.65] xl:leading-[1.7]"
-              >
-                {text}
-              </p>
-            ))}
+            <p
+              className="font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] text-[16px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[36px] leading-[1.5] sm:leading-[1.55] md:leading-[1.6] lg:leading-[1.65] xl:leading-[1.7]"
+            >
+              {paragraphText}
+            </p>
           </div>
         </div>
-
 
         {/* Desktop Button */}
         <Link
