@@ -20,9 +20,20 @@ const getBestImageUrl = (media: any): string | null => {
   );
 };
 
-const getVideoUrl = (media: any): string | null => {
+const isVideoMedia = (media: any): boolean => {
+  if (!media) return false;
+  const mime = media.mime || "";
+  const ext = (media.ext || "").toLowerCase();
+  return mime.startsWith("video/") || [".mp4", ".mov", ".webm"].includes(ext);
+};
+
+const normalizeMedia = (media: any) => {
   if (!media) return null;
-  return media.url ?? null;
+  if (isVideoMedia(media)) {
+    return { type: "video", url: media.url };
+  }
+  const imageUrl = getBestImageUrl(media);
+  return imageUrl ? { type: "image", url: imageUrl } : null;
 };
 
 export default async function FashionGridSection({
@@ -38,19 +49,19 @@ export default async function FashionGridSection({
 
   if (!block) return null;
 
-  const images = [
-    getBestImageUrl(block.topImage),
-    getBestImageUrl(block.middleImage1),
-    getBestImageUrl(block.middleImage2),
-    getBestImageUrl(block.middleImage3),
-    getBestImageUrl(block.bottomImage),
-  ].filter(Boolean) as string[];
+  const mediaItems = [
+    normalizeMedia(block.topMedia),
+    normalizeMedia(block.middleMedia1),
+    normalizeMedia(block.middleMedia2),
+    normalizeMedia(block.middleMedia3),
+    normalizeMedia(block.bottomMedia),
+  ].filter(Boolean) as Array<{ type: string; url: string }>;
 
   return (
     <FashionGrid
-      leftVideo={getVideoUrl(block.leftVideo) || ""}
-      rightVideo={getVideoUrl(block.rightVideo) || ""}
-      images={images}
+      leftMedia={normalizeMedia(block.leftMedia)}
+      rightMedia={normalizeMedia(block.rightMedia)}
+      mediaItems={mediaItems}
       background="#FEF991"
     />
   );

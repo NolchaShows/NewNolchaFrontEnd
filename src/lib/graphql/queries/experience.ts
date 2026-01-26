@@ -23,6 +23,18 @@ export const MEDIA_VIDEO_FIELDS = gql`
   }
 `;
 
+export const MEDIA_FILE_FIELDS = gql`
+  fragment MediaFileFields on UploadFile {
+    url
+    name
+    width
+    height
+    mime
+    ext
+    formats
+  }
+`;
+
 export const EXPERIENCE_BLOCK_THREE_IMAGE_ROW = gql`
   fragment ExperienceBlockThreeImageRow on ComponentBlocksThreeImageRow {
     __typename
@@ -41,26 +53,26 @@ export const EXPERIENCE_BLOCK_THREE_IMAGE_ROW = gql`
 export const EXPERIENCE_BLOCK_FASHION_GRID_SECTION = gql`
   fragment ExperienceBlockFashionGridSection on ComponentBlocksFashionGridSection {
     __typename
-    leftVideo {
-      ...MediaVideoFields
+    leftMedia {
+      ...MediaFileFields
     }
-    rightVideo {
-      ...MediaVideoFields
+    rightMedia {
+      ...MediaFileFields
     }
-    topImage {
-      ...MediaImageFields
+    topMedia {
+      ...MediaFileFields
     }
-    middleImage1 {
-      ...MediaImageFields
+    middleMedia1 {
+      ...MediaFileFields
     }
-    middleImage2 {
-      ...MediaImageFields
+    middleMedia2 {
+      ...MediaFileFields
     }
-    middleImage3 {
-      ...MediaImageFields
+    middleMedia3 {
+      ...MediaFileFields
     }
-    bottomImage {
-      ...MediaImageFields
+    bottomMedia {
+      ...MediaFileFields
     }
   }
 `;
@@ -126,6 +138,7 @@ export const GET_EXPERIENCE_BY_SLUG = gql`
 
   ${MEDIA_IMAGE_FIELDS}
   ${MEDIA_VIDEO_FIELDS}
+  ${MEDIA_FILE_FIELDS}
   ${EXPERIENCE_BLOCK_THREE_IMAGE_ROW}
   ${EXPERIENCE_BLOCK_FASHION_GRID_SECTION}
   ${EXPERIENCE_BLOCK_IMAGE_TEXT_SECTION}
