@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import SectionTitle from "../common/SectionTitle";
 import SponsorshipDetailsModal from "../Modals/SponsorshipDetailsModal";
+import EventDetailsModal from "../Modals/EventDetailsModal";
 
 const UpcomingEventsList = ({
   title = "Upcoming Events",
@@ -10,6 +11,8 @@ const UpcomingEventsList = ({
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContext, setModalContext] = useState({ title: "", image: "" });
+  const [isEventDetailsModalOpen, setIsEventDetailsModalOpen] = useState(false);
+  const [eventDetailsContext, setEventDetailsContext] = useState(null);
 
   const safeEvents = events && events.length > 0 ? events : [
     {
@@ -87,7 +90,20 @@ const UpcomingEventsList = ({
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 2xl:gap-5">
                       <button
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEventDetailsContext({
+                            title: display.title || ev.title || "",
+                            date: display.date || "",
+                            venue: display.venue || display.location || "",
+                            whatToExpect: display.whatToExpect || display.description || "",
+                            rsvpLink: display.rsvpLink || display.rsvp_url || "#",
+                            logo: display.logo || display.logoUrl || "",
+                            mainImage: display.mainImage || display.image || "",
+                            galleryImages: display.galleryImages || display.gallery || [],
+                          });
+                          setIsEventDetailsModalOpen(true);
+                        }}
                         className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-black text-white rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-800 transition-colors"
                       >
                         Learn more
@@ -126,6 +142,13 @@ const UpcomingEventsList = ({
         onClose={() => setIsModalOpen(false)}
         headerImageSrc={modalContext.image}
         selectedEventTitle={modalContext.title}
+      />
+
+      {/* Event Details Modal */}
+      <EventDetailsModal
+        isOpen={isEventDetailsModalOpen}
+        onClose={() => setIsEventDetailsModalOpen(false)}
+        eventData={eventDetailsContext}
       />
     </section>
   );
