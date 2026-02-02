@@ -29,7 +29,7 @@ function page() {
         videoSrc={heroVideo}
         isSticky={true}
         className="-mt-[88px] 2xl:-mt-[120px]"
-        firstPart="Press"
+        firstPart="Speakers"
         secondPart=""
         strokeColor="#000000"
         fillColor="#FEF991"
