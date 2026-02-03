@@ -49,7 +49,7 @@ const page = () => {
         />
         {/* <ArtistGallery /> */}
         {galleryImages && galleryImages.length > 0 && (
-          <DynamicGallery imagesGallery={galleryImages} />
+          <DynamicGallery imagesGallery={galleryImages} title={'Featured Artists'} />
         )}
       </div>
     </div>
