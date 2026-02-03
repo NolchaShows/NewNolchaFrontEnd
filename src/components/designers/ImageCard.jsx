@@ -4,7 +4,7 @@ const ImageCard = ({
     image, text, onClick = null
 }) => {
     return (
-        <div className="max-w-none bg-[#1A1A1A] p-5 cursor-pointer rounded-[17px] mb-10" onClick={onClick}>
+        <div className="max-w-none bg-[#1A1A1A] p-5 cursor-pointer rounded-[17px]" onClick={onClick}>
             <div className="space-y-5">
                 <div
                     className="relative overflow-hidden rounded-[16px] shadow-md 2xl:m-5"
