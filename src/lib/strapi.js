@@ -536,6 +536,90 @@ export async function getDesignerBySlug(slug) {
 }
 
 /**
+ * Fetch all featured artists from Strapi (for listing page)
+ * @returns {Promise} - Array of featured artists with listing image
+ */
+export async function getFeaturedArtists() {
+  try {
+    console.log('🎨 Fetching all featured artists...');
+
+    const populateQuery = 'populate[0]=listingImage';
+    const data = await fetchFromStrapi(`featured-artists?${populateQuery}`);
+
+    console.log('📊 Featured Artists API Response:', JSON.stringify(data, null, 2));
+
+    if (!data || !data.data) {
+      console.log('❌ No featured artists received from API');
+      return null;
+    }
+
+    console.log(`✅ Found ${data.data.length} featured artists`);
+    return data;
+
+  } catch (error) {
+    console.error('❌ Error fetching featured artists:', error);
+    return null;
+  }
+}
+
+/**
+ * Fetch single featured artist by slug from Strapi (for detail page)
+ * @param {string} slug - The featured artist's slug
+ * @returns {Promise} - Full featured artist data with all relations
+ */
+export async function getFeaturedArtistBySlug(slug) {
+  try {
+    console.log(`🎨 Fetching featured artist by slug: ${slug}`);
+
+    const populateQuery = [
+      'populate[0]=heroImage',
+      'populate[1]=listingImage',
+      'populate[2]=paragraphs',
+      'populate[3]=sliderImages',
+      'populate[4]=sliderImages.image',
+      'populate[5]=socialImages',
+      'populate[6]=socialImages.image',
+      'populate[7]=sections',
+      'populate[8]=sections.image'
+    ].join('&');
+
+    // Try the custom by-slug endpoint first
+    try {
+      const data = await fetchFromStrapi(`featured-artists/by-slug/${slug}?${populateQuery}`);
+
+      console.log('📊 Featured artist by slug API Response:', JSON.stringify(data, null, 2));
+
+      if (data?.data) {
+        console.log(`✅ Found featured artist: ${data.data.name}`);
+        return data;
+      }
+    } catch (customEndpointError) {
+      console.log('⚠️ Custom by-slug endpoint not available, trying filter...');
+    }
+
+    // Fallback to filter by slug
+    const filterQuery = `filters[slug][$eq]=${encodeURIComponent(slug)}`;
+    const data = await fetchFromStrapi(`featured-artists?${filterQuery}&${populateQuery}`);
+
+    console.log('📊 Featured artist filter API Response:', JSON.stringify(data, null, 2));
+
+    if (!data || !data.data || data.data.length === 0) {
+      console.log(`❌ No featured artist found with slug: ${slug}`);
+      return null;
+    }
+
+    const featuredArtist = Array.isArray(data.data) ? data.data[0] : data.data;
+    console.log(`✅ Found featured artist: ${featuredArtist.name}`);
+
+    return { data: featuredArtist };
+
+  } catch (error) {
+    console.error(`❌ Error fetching featured artist by slug (${slug}):`, error);
+    return null;
+  }
+}
+
+/**
  * Fetch gallery page data from Strapi
  * @returns {Promise} - The gallery page data
  */

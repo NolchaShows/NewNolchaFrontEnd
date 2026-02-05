@@ -4,13 +4,13 @@ import ImageCard from './ImageCard';
 import { useRouter } from 'next/navigation';
 import SectionTitle from '../common/SectionTitle';
 
-const DynamicGallery = ({ imagesGallery, title, loading }) => {
+const DynamicGallery = ({ imagesGallery, title, loading, basePath = '/designers' }) => {
     const router = useRouter();
 
     const handleClick = (item) => {
         // Use slug if available, otherwise fallback to a default
         const slug = item.slug || 'jeremy';
-        router.push(`/designers/${slug}`);
+        router.push(`${basePath}/${slug}`);
     };
 
     if (loading) {
