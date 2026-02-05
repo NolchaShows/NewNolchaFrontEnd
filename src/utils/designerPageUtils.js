@@ -315,3 +315,243 @@ export const useDesignerPageData = () => {
 
   return { designerData, loading, error };
 };
+
+// ============================================
+// DESIGNERS COLLECTION (List + Detail Pages)
+// ============================================
+
+/**
+ * Helper function to make URLs from Strapi media
+ */
+const makeMediaUrl = (media) => {
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+
+  if (!media) return null;
+
+  let url = null;
+
+  // Strapi v4 format with data.attributes
+  if (media.data?.attributes?.url) {
+    url = media.data.attributes.url;
+  }
+  // Strapi v5 format - direct object with url
+  else if (media.url) {
+    url = media.url;
+  }
+  // Simple string URL
+  else if (typeof media === 'string') {
+    url = media;
+  }
+
+  if (!url) return null;
+
+  return url && !url.startsWith('http') ? `${baseUrl}${url}` : url;
+};
+
+/**
+ * Transform Strapi designers list data for DynamicGallery
+ * @param {Array} designers - Array of designers from Strapi
+ * @returns {Array} - Transformed data for DynamicGallery component
+ */
+export const transformDesignersListData = (designers) => {
+  console.log('👗 Transforming designers list data:', designers);
+
+  if (!designers || !Array.isArray(designers)) {
+    console.log('⚠️ No designers array provided');
+    return [];
+  }
+
+  const transformed = designers.map((designer, index) => ({
+    image: makeMediaUrl(designer.listingImage) || `/designers/${index + 6}.png`,
+    text: designer.name || 'Designer',
+    slug: designer.slug || `designer-${index + 1}`
+  }));
+
+  console.log('✅ Transformed designers list:', transformed);
+  return transformed;
+};
+
+/**
+ * Transform Strapi designer detail data for Designer component
+ * @param {Object} designer - Single designer data from Strapi
+ * @returns {Object} - Transformed data for Designer detail component
+ */
+export const transformDesignerDetailData = (designer) => {
+  console.log('👗 Transforming designer detail data:', designer);
+
+  if (!designer) {
+    console.log('⚠️ No designer data provided');
+    return getDefaultDesignerDetailData();
+  }
+
+  // Transform paragraphs
+  const paragraphs = (designer.paragraphs && Array.isArray(designer.paragraphs))
+    ? designer.paragraphs.map(p => p.text || p).filter(Boolean)
+    : [];
+
+  // Transform slider images
+  const sliderImages = (designer.sliderImages && Array.isArray(designer.sliderImages))
+    ? designer.sliderImages.map(item => makeMediaUrl(item.image) || makeMediaUrl(item)).filter(Boolean)
+    : [];
+
+  // Transform social images
+  const socialImages = (designer.socialImages && Array.isArray(designer.socialImages))
+    ? designer.socialImages.map(item => makeMediaUrl(item.image) || makeMediaUrl(item)).filter(Boolean)
+    : [];
+
+  // Transform sections (magazines)
+  const sections = (designer.sections && Array.isArray(designer.sections))
+    ? designer.sections.map((section, index) => ({
+        title: section.title || `Section ${index + 1}`,
+        image: makeMediaUrl(section.image) || `/designers/jeremy/${index + 8}.png`,
+        description: section.description || ''
+      }))
+    : [];
+
+  const defaultData = getDefaultDesignerDetailData();
+
+  const result = {
+    name: designer.name || defaultData.name,
+    slug: designer.slug || defaultData.slug,
+    heading: designer.heading || defaultData.heading,
+    heroImage: makeMediaUrl(designer.heroImage) || defaultData.heroImage,
+    source: designer.source || defaultData.source,
+    paragraphs: paragraphs.length > 0 ? paragraphs : defaultData.paragraphs,
+    sliderImages: sliderImages.length > 0 ? sliderImages : defaultData.sliderImages,
+    socialImages: socialImages.length > 0 ? socialImages : defaultData.socialImages,
+    sections: sections.length > 0 ? sections : defaultData.sections
+  };
+
+  console.log('✅ Transformed designer detail:', result);
+  return result;
+};
+
+/**
+ * Get default designer detail data for fallback
+ * @returns {Object} - Default designer detail data
+ */
+export const getDefaultDesignerDetailData = () => {
+  return {
+    name: "Jeremy Cowart",
+    slug: "jeremy-cowart",
+    heading: "Jeremy Cowart's Career Has Often Been Called A Forrest Gump Art Career.",
+    heroImage: "/designers/jeremy/1.png",
+    source: "Instagram",
+    paragraphs: [
+      "He Just Chases Ideas In Whichever Direction They Lead Him, Finding Himself In The Most Random Of New Situations, Moments Of Success And Failure All While Dealing With His Own Life's Hardships (Raising 4 Kids - One With Special Needs - And Managing His Own Neurological Disease).",
+      "From Being Named The Internet's Most Influential Photographer At One Point To Speaking In Stadiums To Kickstarting A Hotel Chain To Launching A Worldwide Give-Back Initiative To Being Featured At An Art Auction Alongside The Greatest Artists That Have Ever Lived... It's Always Something Wildly Surprising, Even For Cowart Himself.",
+      "\"I Don't Set Goals Or Plan Ahead And Money Never Motivates Me. It's Always About The Idea, Always Has Been And Always Will Be. Some Of The Ideas Fail Miserably But The Lessons Learned Are Invaluable So I Immediately Go Chase The Next One. I've Done It For 20 Years And I'll Do It For The Rest Of My Life. My Hope Is That The Public Sees My Love For Art And Love For People Throughout All Of It.\""
+    ],
+    sliderImages: [
+      "/designers/jeremy/4.png",
+      "/designers/jeremy/9.png",
+      "/designers/jeremy/8.png",
+      "/designers/jeremy/9.png"
+    ],
+    socialImages: ["/designers/jeremy/2.png"],
+    sections: [
+      {
+        title: "Portraits / Celebrities",
+        image: "/designers/jeremy/8.png",
+        description: "Emma Stone, Taylor Swift, The Killers, Gwyneth Paltrow, Barack Obama, The Kardashians, Chris Stapleton, Britney Spears, Maggie Gyllenhaal, Sting, Ryan Seacrest, Zachary Levi, Garth Brooks, Hayden Panettiere, Miley Cyrus, Minnie Driver, Courtney Cox, Carrie Underwood, Taylor Swift, Tyler Perry, Denise Richards, Dolly Parton, Jewel, Luke Combs, Blake Shelton, Joel McHale, Nathan Fillion, Chelsea Handler, Brad Paisley, Hank Williams Jr., One Republic, Dierks Bentley, George Strait, Miranda Lambert, Switchfoot, Imogen Heap, Iron and Wine, Feist, Holly Williams, Brandi Carlile, Christopher Guest, Eugene Levy."
+      },
+      {
+        title: "Clients",
+        image: "/designers/jeremy/9.png",
+        description: "Nike, Sports Illustrated, GAP, ABC, FOX, F/X, A&E, Discovery Channel, The Style Network, E!, CNN, The Travel Channel, CMT, MTV, ESPN, NFL, People Magazine, US Weekly, VIBE Magazine, Fortune Magazine, Fast Company, Paste Magazine, Relevant Magazine, CBS Records, EMI, Word Records, Warner Brothers Records, Universal Records, Interscope Records, Blue Note Records, Sony Music"
+      }
+    ]
+  };
+};
+
+/**
+ * Custom hook for fetching designers list (for DynamicGallery)
+ * @returns {Object} - { designers, loading, error }
+ */
+export const useDesignersList = () => {
+  const [designers, setDesigners] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log('👗 useDesignersList fetching...');
+        const { getDesigners } = await import('@/lib/strapi');
+        const data = await getDesigners();
+
+        console.log('📦 Received designers list in hook:', data);
+
+        if (data?.data && Array.isArray(data.data)) {
+          const transformedData = transformDesignersListData(data.data);
+          setDesigners(transformedData);
+        } else {
+          console.log('⚠️ No valid designers list received, using empty array');
+          setDesigners([]);
+        }
+
+        setError(null);
+      } catch (err) {
+        console.error('❌ Error fetching designers list:', err);
+        setError(err.message);
+        setDesigners([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { designers, loading, error };
+};
+
+/**
+ * Custom hook for fetching single designer by slug (for detail page)
+ * @param {string} slug - The designer's slug
+ * @returns {Object} - { designerDetail, loading, error }
+ */
+export const useDesignerDetail = (slug) => {
+  const [designerDetail, setDesignerDetail] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!slug) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        console.log(`👗 useDesignerDetail fetching for slug: ${slug}`);
+        const { getDesignerBySlug } = await import('@/lib/strapi');
+        const data = await getDesignerBySlug(slug);
+
+        console.log('📦 Received designer detail in hook:', data);
+
+        if (data?.data) {
+          const transformedData = transformDesignerDetailData(data.data);
+          setDesignerDetail(transformedData);
+        } else {
+          console.log('⚠️ No valid designer detail received, using fallback');
+          const defaultData = getDefaultDesignerDetailData();
+          setDesignerDetail(defaultData);
+        }
+
+        setError(null);
+      } catch (err) {
+        console.error(`❌ Error fetching designer detail for ${slug}:`, err);
+        setError(err.message);
+        const defaultData = getDefaultDesignerDetailData();
+        setDesignerDetail(defaultData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [slug]);
+
+  return { designerDetail, loading, error };
+};

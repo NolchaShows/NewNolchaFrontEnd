@@ -2,11 +2,12 @@
 import VideoHeroSection from "@/components/common/VideoHeroSection";
 import DynamicGallery from "@/components/designers/DynamicGallery";
 import Artists from "@/components/landing/Artists";
-import { useDesignerPageData } from "@/utils/designerPageUtils";
+import { useDesignerPageData, useDesignersList } from "@/utils/designerPageUtils";
 import React from "react";
 
 const page = () => {
-  const { designerData, loading, error } = useDesignerPageData();
+  const { designerData, loading: pageLoading } = useDesignerPageData();
+  const { designers, loading: designersLoading } = useDesignersList();
 
   const heroVideo = "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4";
 
@@ -18,12 +19,12 @@ const page = () => {
   ];
 
   // Debug logging
-  console.log('🎭 Designer component received data:', designerData);
+  console.log('🎭 Designer page received data:', designerData);
+  console.log('👗 Designers list received:', designers);
 
-  // Use data from hook or fallback to empty object
-  const {
-    galleryImages = [],
-  } = designerData || {};
+  // Use designers from collection API, fallback to galleryImages from page data
+  const { galleryImages = [] } = designerData || {};
+  const galleryData = designers.length > 0 ? designers : galleryImages;
 
   return (
     <div>
@@ -42,14 +43,17 @@ const page = () => {
       />
       <div className="relative z-10">
         <Artists
-          loading={loading}
+          loading={pageLoading}
           textColor={"text-[var(--tertiary-text-color)]"}
           videos={videos}
           isDesktop={true}
         />
-        {/* <ArtistGallery /> */}
-        {galleryImages && galleryImages.length > 0 && (
-          <DynamicGallery imagesGallery={galleryImages} title={'Featured Artists'} />
+        {galleryData && galleryData.length > 0 && (
+          <DynamicGallery
+            imagesGallery={galleryData}
+            title={'Featured Artists'}
+            loading={designersLoading}
+          />
         )}
       </div>
     </div>

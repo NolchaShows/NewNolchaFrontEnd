@@ -450,6 +450,92 @@ export async function getDesignerPageData() {
 }
 
 /**
+ * Fetch all designers from Strapi (for listing page)
+ * @returns {Promise} - Array of designers with listing image
+ */
+export async function getDesigners() {
+  try {
+    console.log('👗 Fetching all designers...');
+
+    const populateQuery = 'populate[0]=listingImage';
+    const data = await fetchFromStrapi(`designers?${populateQuery}`);
+
+    console.log('📊 Designers API Response:', JSON.stringify(data, null, 2));
+
+    if (!data || !data.data) {
+      console.log('❌ No designers received from API');
+      return null;
+    }
+
+    console.log(`✅ Found ${data.data.length} designers`);
+    return data;
+
+  } catch (error) {
+    console.error('❌ Error fetching designers:', error);
+    return null;
+  }
+}
+
+/**
+ * Fetch single designer by slug from Strapi (for detail page)
+ * @param {string} slug - The designer's slug
+ * @returns {Promise} - Full designer data with all relations
+ */
+export async function getDesignerBySlug(slug) {
+  try {
+    console.log(`👗 Fetching designer by slug: ${slug}`);
+
+    // Use deep population for all nested components
+    const populateQuery = [
+      'populate[0]=heroImage',
+      'populate[1]=listingImage',
+      'populate[2]=paragraphs',
+      'populate[3]=sliderImages',
+      'populate[4]=sliderImages.image',
+      'populate[5]=socialImages',
+      'populate[6]=socialImages.image',
+      'populate[7]=sections',
+      'populate[8]=sections.image'
+    ].join('&');
+
+    // Try the custom by-slug endpoint first
+    try {
+      const data = await fetchFromStrapi(`designers/by-slug/${slug}?${populateQuery}`);
+
+      console.log('📊 Designer by slug API Response:', JSON.stringify(data, null, 2));
+
+      if (data?.data) {
+        console.log(`✅ Found designer: ${data.data.name}`);
+        return data;
+      }
+    } catch (customEndpointError) {
+      console.log('⚠️ Custom by-slug endpoint not available, trying filter...');
+    }
+
+    // Fallback to filter by slug
+    const filterQuery = `filters[slug][$eq]=${encodeURIComponent(slug)}`;
+    const data = await fetchFromStrapi(`designers?${filterQuery}&${populateQuery}`);
+
+    console.log('📊 Designer filter API Response:', JSON.stringify(data, null, 2));
+
+    if (!data || !data.data || data.data.length === 0) {
+      console.log(`❌ No designer found with slug: ${slug}`);
+      return null;
+    }
+
+    // Return the first matching designer
+    const designer = Array.isArray(data.data) ? data.data[0] : data.data;
+    console.log(`✅ Found designer: ${designer.name}`);
+
+    return { data: designer };
+
+  } catch (error) {
+    console.error(`❌ Error fetching designer by slug (${slug}):`, error);
+    return null;
+  }
+}
+
+/**
  * Fetch gallery page data from Strapi
  * @returns {Promise} - The gallery page data
  */
