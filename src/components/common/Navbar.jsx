@@ -41,7 +41,7 @@ function Navbar() {
 
   const visibleMenuItems = [
     {
-      label: "Bitcoin Vegas",
+      label: "White Label",
       href: "#",
       subtitle: "Flagship Event",
       key: "btcVegas",
@@ -134,7 +134,7 @@ function Navbar() {
       label: "Vv raching with Jack Butcher",
       href: "/experiences/vv_raching_with_jack_butcher",
     },
-    { label: "Bitcoin conferance", href: "/experiences/bitcoin_conferance" },
+    { label: "White Label conferance", href: "/experiences/bitcoin_conferance" },
     {
       label: "Opening night consensus",
       href: "/experiences/opening_night_consensus",
