@@ -23,10 +23,15 @@ export default async function EveningRecapSection({
   const videoUrl = getVideoUrl(block.video) || "";
   if (!videoUrl) return null;
 
+  const hideEveningRecapTitle = slug === "cerebral-palsy-foundation";
+  const title = hideEveningRecapTitle
+    ? ""
+    : block.title || "Watch the show";
+
   return (
     <EveningRecap
       year="2024"
-      title={block.title || "Watch the show"}
+      title={title}
       videoUrl={videoUrl}
       paddingTop={undefined}
     />
