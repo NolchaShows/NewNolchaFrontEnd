@@ -152,11 +152,17 @@ function Navbar() {
 
   const charityPartnersDropdown = [
     {
-      label: "Cerebral palsy foundation",
+      label: "St. Jude Children's Research Hospital",
+      href: "/charity_partners/st_jude",
+    },
+    {
+      label: "Cerebral Palsy Foundation",
       href: "/charity_partners/cerebral_palsy_foundation",
     },
-    { label: "Make-a-wish", href: "/charity_partners/make_a_wish" },
-    { label: "St. Jude", href: "/charity_partners/st_jude" },
+    {
+      label: "Make-A-Wish Foundation",
+      href: "/charity_partners/make_a_wish",
+    },
   ];
 
   const getDropdownItems = (dropdownType) => {
@@ -211,7 +217,7 @@ function Navbar() {
           cta: {
             title: "View All Charity Partners",
             description: "Learn how we give back and support meaningful causes.",
-            href: "/charity_partners/cerebral_palsy_foundation",
+            href: "/charity_partners/st_jude",
           },
           imageSrc: "/homepage/menu_dropdown/dropdown2.jpg",
         };
