@@ -457,7 +457,10 @@ export async function getDesigners() {
   try {
     console.log('👗 Fetching all designers...');
 
-    const populateQuery = 'populate[0]=listingImage';
+    const populateQuery = [
+      'populate[0]=listingImage',
+      'pagination[pageSize]=100',
+    ].join('&');
     const data = await fetchFromStrapi(`designers?${populateQuery}`);
 
     console.log('📊 Designers API Response:', JSON.stringify(data, null, 2));

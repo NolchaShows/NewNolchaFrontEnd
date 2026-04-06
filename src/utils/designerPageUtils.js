@@ -2,6 +2,31 @@
 import { useState, useEffect } from 'react';
 
 /**
+ * Resolve a public URL from Strapi media (v4/v5, nested data, formats).
+ */
+export const resolveStrapiMediaUrl = (
+  media,
+  baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337"
+) => {
+  if (!media) return null;
+  if (typeof media === "string") {
+    return media.startsWith("http") ? media : `${baseUrl}${media}`;
+  }
+  if (media.url && typeof media.url === "string") {
+    return media.url.startsWith("http") ? media.url : `${baseUrl}${media.url}`;
+  }
+  if (media.attributes?.url) {
+    const u = media.attributes.url;
+    return u.startsWith("http") ? u : `${baseUrl}${u}`;
+  }
+  if (media.data !== undefined && media.data !== null) {
+    const inner = Array.isArray(media.data) ? media.data[0] : media.data;
+    return resolveStrapiMediaUrl(inner, baseUrl);
+  }
+  return null;
+};
+
+/**
  * Transform Strapi designer page data to component props
  * @param {Object} data - Strapi designer page data
  * @returns {Object} - Transformed data for designer page components
@@ -10,30 +35,7 @@ export const transformDesignerData = (data) => {
   console.log('🎨 Starting designer data transformation with:', data);
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
   
-  const makeUrl = (media) => {
-    if (!media) return null;
-    
-    // Handle different Strapi data formats
-    let url = null;
-    
-    // Strapi v4 format with data.attributes
-    if (media.data?.attributes?.url) {
-      url = media.data.attributes.url;
-    }
-    // Strapi v5 format - direct object with url
-    else if (media.url) {
-      url = media.url;
-    }
-    // Simple string URL
-    else if (typeof media === 'string') {
-      url = media;
-    }
-    
-    if (!url) return null;
-    
-    // Add base URL if it's a relative path
-    return url && !url.startsWith('http') ? `${baseUrl}${url}` : url;
-  };
+  const makeUrl = (media) => resolveStrapiMediaUrl(media, baseUrl);
 
   // Transform videos
   console.log('🎥 Videos data:', data.videos);
@@ -43,10 +45,15 @@ export const transformDesignerData = (data) => {
 
   // Transform gallery images
   console.log('🖼️ Gallery images data:', data.galleryImages);
-  const galleryImages = (data.galleryImages && data.galleryImages.length > 0) ? data.galleryImages.map((item, index) => ({
-    image: makeUrl(item.image) || `/designers/${index + 6}.png`,
-    text: item.text || "YUE MINJUN"
-  })) : [];
+  const galleryImages =
+    data.galleryImages && data.galleryImages.length > 0
+      ? data.galleryImages
+          .map((item) => ({
+            image: makeUrl(item.image),
+            text: (item.text && String(item.text).trim()) || "",
+          }))
+          .filter((item) => item.image)
+      : [];
 
   // Transform press partners - only use actual Strapi images, no hardcoded fallbacks
   console.log('📰 Press partners data:', data.pressPartners);
@@ -79,7 +86,8 @@ export const transformDesignerData = (data) => {
     subtitle: data.subtitle || defaultData.subtitle,
     heroImage: makeUrl(data.heroImage) || defaultData.heroImage,
     videos: videos.length > 0 ? videos : defaultData.videos,
-    galleryImages: galleryImages.length > 0 ? galleryImages : defaultData.galleryImages,
+    // Never fall back to bundled placeholder grid — that caused 12 duplicate cards on prod when CMS gallery was empty
+    galleryImages: galleryImages.length > 0 ? galleryImages : [],
     pressPartners: pressPartners, // Only use Strapi press partners, no default fallback
     companies: defaultData.companies, // Always use default companies for now
     // Artist data for the Artists component
@@ -116,20 +124,7 @@ export const getDefaultDesignerData = () => {
       "/home/artists/3.png",
       "/home/artists/4.png",
     ],
-    galleryImages: [
-      { image: "/designers/6.png", text: "YUE MINJUN" },
-      { image: "/designers/7.png", text: "YUE MINJUN" },
-      { image: "/designers/8.png", text: "YUE MINJUN" },
-      { image: "/designers/9.png", text: "YUE MINJUN" },
-      { image: "/designers/10.png", text: "YUE MINJUN" },
-      { image: "/designers/11.png", text: "YUE MINJUN" },
-      { image: "/designers/12.png", text: "YUE MINJUN" },
-      { image: "/designers/13.png", text: "YUE MINJUN" },
-      { image: "/designers/14.png", text: "YUE MINJUN" },
-      { image: "/designers/15.png", text: "YUE MINJUN" },
-      { image: "/designers/16.png", text: "YUE MINJUN" },
-      { image: "/designers/17.png", text: "YUE MINJUN" },
-    ],
+    galleryImages: [],
     pressPartners: [
       {
         id: 1,
@@ -325,27 +320,7 @@ export const useDesignerPageData = () => {
  */
 const makeMediaUrl = (media) => {
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
-
-  if (!media) return null;
-
-  let url = null;
-
-  // Strapi v4 format with data.attributes
-  if (media.data?.attributes?.url) {
-    url = media.data.attributes.url;
-  }
-  // Strapi v5 format - direct object with url
-  else if (media.url) {
-    url = media.url;
-  }
-  // Simple string URL
-  else if (typeof media === 'string') {
-    url = media;
-  }
-
-  if (!url) return null;
-
-  return url && !url.startsWith('http') ? `${baseUrl}${url}` : url;
+  return resolveStrapiMediaUrl(media, baseUrl);
 };
 
 /**
@@ -361,11 +336,31 @@ export const transformDesignersListData = (designers) => {
     return [];
   }
 
-  const transformed = designers.map((designer, index) => ({
-    image: makeMediaUrl(designer.listingImage) || `/designers/${index + 6}.png`,
-    text: designer.name || 'Designer',
-    slug: designer.slug || `designer-${index + 1}`
-  }));
+  const seen = new Set();
+  const transformed = designers
+    .filter((designer) => {
+      if (!designer || typeof designer !== "object") return false;
+      const key =
+        designer.documentId ||
+        designer.id ||
+        designer.slug ||
+        JSON.stringify(designer);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .map((designer, index) => {
+      const image =
+        makeMediaUrl(designer.listingImage) ||
+        makeMediaUrl(designer.image) ||
+        makeMediaUrl(designer.coverImage);
+      return {
+        image,
+        text: designer.name || "Designer",
+        slug: designer.slug || `designer-${index + 1}`,
+      };
+    })
+    .filter((row) => row.image);
 
   console.log('✅ Transformed designers list:', transformed);
   return transformed;
@@ -493,8 +488,14 @@ export const useDesignersList = () => {
 
         console.log('📦 Received designers list in hook:', data);
 
-        if (data?.data && Array.isArray(data.data)) {
-          const transformedData = transformDesignersListData(data.data);
+        const rawList = data?.data;
+        const list = Array.isArray(rawList)
+          ? rawList
+          : rawList && typeof rawList === "object"
+            ? [rawList]
+            : [];
+        if (list.length > 0) {
+          const transformedData = transformDesignersListData(list);
           setDesigners(transformedData);
         } else {
           console.log('⚠️ No valid designers list received, using empty array');
