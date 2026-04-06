@@ -61,10 +61,12 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
 
     return (
         <div className="page-container-fluid bg-black">
-            <SectionTitle className="text-white text-center">{title}</SectionTitle>
-            
+            {title ? (
+                <SectionTitle className="text-white text-center">{title}</SectionTitle>
+            ) : null}
+
             {/* Video Container */}
-            <div className="relative overflow-hidden mt-5 lg:mt-10 2xl:mt-15">
+            <div className={`relative overflow-hidden ${title ? "mt-5 lg:mt-10 2xl:mt-15" : "mt-0"}`}>
                 <AnimatePresence mode="wait">
                     {isGoogleDriveVideo ? (
                         <motion.div

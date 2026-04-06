@@ -23,10 +23,13 @@ export default async function EveningRecapSection({
   const videoUrl = getVideoUrl(block.video) || "";
   if (!videoUrl) return null;
 
+  const title =
+    typeof block.title === "string" ? block.title.trim() : "";
+
   return (
     <EveningRecap
       year="2024"
-      title={block.title || "Watch the show"}
+      title={title}
       videoUrl={videoUrl}
       paddingTop={undefined}
     />
