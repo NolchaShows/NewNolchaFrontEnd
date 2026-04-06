@@ -24,6 +24,7 @@ function Navbar() {
   const prevBodyOverflowRef = useRef("");
   const [isDesktopHidden, setIsDesktopHidden] = useState(false);
   const [megaDropdownLeft, setMegaDropdownLeft] = useState(null);
+  const [hoveredMegaItemImage, setHoveredMegaItemImage] = useState(null);
 
   const router = useRouter();
   // Mobile dropdown states
@@ -244,16 +245,28 @@ function Navbar() {
         return {
           sectionLabel: "Alumni",
           items: [
-            { label: "Speakers", href: "/speakers" },
-            { label: "Artists", href: "/artists" },
-            { label: "Designers", href: "/designers" },
+            {
+              label: "Speakers",
+              href: "/speakers",
+              imageSrc: "/homepage/menu_dropdown/Speakers.jpg",
+            },
+            {
+              label: "Artists",
+              href: "/artists",
+              imageSrc: "/homepage/menu_dropdown/Artists.jpg",
+            },
+            {
+              label: "Designers",
+              href: "/designers",
+              imageSrc: "/homepage/menu_dropdown/Designers.jpg",
+            },
           ],
           cta: {
             title: "View Alumni",
             description: "Explore our speakers, artists, and designers.",
             href: "/speakers",
           },
-          imageSrc: "/homepage/menu_dropdown/dropdown5.jpg",
+          imageSrc: "/homepage/menu_dropdown/Speakers.jpg",
         };
       default:
         return null;
@@ -317,6 +330,10 @@ function Navbar() {
       else if (typeof mq.removeListener === "function") mq.removeListener(update);
     };
   }, []);
+
+  useEffect(() => {
+    setHoveredMegaItemImage(null);
+  }, [activeDesktopMegaMenu, isDesktopSecondRowOpen]);
 
   const renderMobileMenuItem = (item, idx) => {
     const isExpanded = item.key && mobileDropdowns[item.key];
@@ -719,6 +736,8 @@ function Navbar() {
               FORCE_DESKTOP_MEGA_OPEN ? FORCED_DESKTOP_MEGA_KEY : activeDesktopMegaMenu
             );
             if (!cfg) return null;
+            const previewImageSrc =
+              hoveredMegaItemImage || cfg.items?.[0]?.imageSrc || cfg.imageSrc;
             return (
               <div className="pt-3">
                 <div className="w-[746px] h-[427px] rounded-[20px] bg-black overflow-hidden">
@@ -733,6 +752,7 @@ function Navbar() {
                             key={`${it.href}-${i}`}
                             href={it.href}
                             className="block text-[20px] leading-[1.15] font-[500] text-white hover:text-primary transition-opacity"
+                            onMouseEnter={() => setHoveredMegaItemImage(it.imageSrc || null)}
                             onClick={() => setActiveDesktopMegaMenu(null)}
                           >
                             {it.label}
@@ -753,7 +773,7 @@ function Navbar() {
                         )}
                         <div className="mt-5 flex-1 rounded-[24px] overflow-hidden bg-[#1A1A1A]">
                           <img
-                            src={cfg.imageSrc}
+                            src={previewImageSrc}
                             alt={`${cfg.sectionLabel} preview`}
                             className="w-full h-full object-cover"
                           />
