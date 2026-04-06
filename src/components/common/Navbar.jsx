@@ -19,9 +19,11 @@ function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const shareRef = useRef(null);
   const mobileShareRef = useRef(null);
+  const desktopNavbarRef = useRef(null);
   const [isShareDropdownOpen, setIsShareDropdownOpen] = useState(false);
   const prevBodyOverflowRef = useRef("");
   const [isDesktopHidden, setIsDesktopHidden] = useState(false);
+  const [megaDropdownLeft, setMegaDropdownLeft] = useState(null);
 
   const router = useRouter();
   // Mobile dropdown states
@@ -70,15 +72,15 @@ function Navbar() {
     {
       label: "Press",
       href: "/press",
-      subtitle: "News + Coverage",
+      subtitle: "‎",
       hasDropdown: true,
       dropdownType: "press",
       key: "press",
     },
     {
-      label: "Creative Circle",
-      href: "/creative-circle",
-      subtitle: "‎",
+      label: "Alumni",
+      href: "/speakers",
+      subtitle: "Speakers + Artists",
       hasDropdown: true,
       dropdownType: "creativeCircle",
       key: "creativeCircle",
@@ -169,8 +171,9 @@ function Navbar() {
         ];
       case "creativeCircle":
         return [
-          { label: "Membership", href: "/membership" },
-          { label: "Apply", href: "/membership" },
+          { label: "Speakers", href: "/speakers" },
+          { label: "Artists", href: "/artists" },
+          { label: "Designers", href: "/designers" },
         ];
       default:
         return [];
@@ -239,16 +242,16 @@ function Navbar() {
         };
       case "creativeCircle":
         return {
-          sectionLabel: "Creative Circle",
+          sectionLabel: "Alumni",
           items: [
-            { label: "Membership", href: "/membership" },
-            { label: "Why Join", href: "/membership" },
-            { label: "Apply", href: "/membership" },
+            { label: "Speakers", href: "/speakers" },
+            { label: "Artists", href: "/artists" },
+            { label: "Designers", href: "/designers" },
           ],
           cta: {
-            title: "View Creative Circle",
-            description: "Join our community of creators and collaborators.",
-            href: "/creative-circle",
+            title: "View Alumni",
+            description: "Explore our speakers, artists, and designers.",
+            href: "/speakers",
           },
           imageSrc: "/homepage/menu_dropdown/dropdown5.jpg",
         };
@@ -441,6 +444,7 @@ function Navbar() {
       {/* Fixed Navbar (overlays hero/video) */}
       <div
         data-navbar="main"
+        ref={desktopNavbarRef}
         className={[
           "sticky top-0 left-0 right-0 w-full bg-black",
           "lg:fixed lg:bg-transparent lg:hover:bg-black",
@@ -456,6 +460,7 @@ function Navbar() {
           if (FORCE_DESKTOP_MEGA_OPEN) return;
           setIsDesktopSecondRowOpen(false);
           setActiveDesktopMegaMenu(null);
+          setMegaDropdownLeft(null);
         }}
       >
         <div className="w-full mx-auto flex justify-between items-center px-4 py-4 lg:px-10 lg:py-5 relative">
@@ -619,11 +624,28 @@ function Navbar() {
                   <div
                     key={item.key ?? idx}
                     className="relative"
-                    onMouseEnter={() => {
+                    onMouseEnter={(e) => {
                       if (FORCE_DESKTOP_MEGA_OPEN) return;
                       if (idx === 0) {
                         setActiveDesktopMegaMenu(null);
                         return;
+                      }
+                      const targetRect = e.currentTarget.getBoundingClientRect();
+                      const navRect = desktopNavbarRef.current?.getBoundingClientRect();
+                      const panelWidth = 746;
+                      const edgePadding = 20;
+
+                      if (!navRect) {
+                        setMegaDropdownLeft(
+                          e.currentTarget.offsetLeft + e.currentTarget.offsetWidth / 2
+                        );
+                      } else {
+                        const desiredLeft =
+                          targetRect.left - navRect.left + targetRect.width / 2;
+                        const minLeft = panelWidth / 2 + edgePadding;
+                        const maxLeft = navRect.width - panelWidth / 2 - edgePadding;
+                        const clampedLeft = Math.min(Math.max(desiredLeft, minLeft), maxLeft);
+                        setMegaDropdownLeft(clampedLeft);
                       }
                       setActiveDesktopMegaMenu(item.key);
                     }}
@@ -679,7 +701,7 @@ function Navbar() {
         {/* Mega dropdown panel (desktop only) */}
         <div
           className={[
-            "hidden lg:block absolute left-1/2 -translate-x-1/2",
+            "hidden lg:block absolute -translate-x-1/2",
             "transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
             (FORCE_DESKTOP_MEGA_OPEN
               ? true
@@ -687,7 +709,10 @@ function Navbar() {
               ? "opacity-100 translate-y-0 pointer-events-auto"
               : "opacity-0 -translate-y-2 pointer-events-none",
           ].join(" ")}
-          style={{ top: "100%" }}
+          style={{
+            top: "100%",
+            left: megaDropdownLeft != null ? `${megaDropdownLeft}px` : "50%",
+          }}
         >
           {(() => {
             const cfg = getMegaMenuConfig(
