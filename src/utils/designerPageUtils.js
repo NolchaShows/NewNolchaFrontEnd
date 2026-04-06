@@ -408,6 +408,13 @@ export const transformDesignerDetailData = (designer) => {
       }))
     : [];
 
+  // Transform social links
+  const socialLinks = {
+    linkedin: designer.linkedin || "",
+    instagram: designer.instagram || "",
+    twitter: designer.twitter || ""
+  };
+
   const defaultData = getDefaultDesignerDetailData();
 
   const result = {
@@ -415,7 +422,7 @@ export const transformDesignerDetailData = (designer) => {
     slug: designer.slug || defaultData.slug,
     heading: designer.heading || defaultData.heading,
     heroImage: makeMediaUrl(designer.heroImage) || defaultData.heroImage,
-    source: designer.source || defaultData.source,
+    socialLinks: (socialLinks.linkedin || socialLinks.instagram || socialLinks.twitter) ? socialLinks : defaultData.socialLinks,
     paragraphs: paragraphs.length > 0 ? paragraphs : defaultData.paragraphs,
     sliderImages: sliderImages.length > 0 ? sliderImages : defaultData.sliderImages,
     socialImages: socialImages.length > 0 ? socialImages : defaultData.socialImages,
@@ -436,7 +443,11 @@ export const getDefaultDesignerDetailData = () => {
     slug: "jeremy-cowart",
     heading: "Jeremy Cowart's Career Has Often Been Called A Forrest Gump Art Career.",
     heroImage: "/designers/jeremy/1.png",
-    source: "Instagram",
+    socialLinks: {
+      linkedin: "#",
+      instagram: "#",
+      twitter: "#"
+    },
     paragraphs: [
       "He Just Chases Ideas In Whichever Direction They Lead Him, Finding Himself In The Most Random Of New Situations, Moments Of Success And Failure All While Dealing With His Own Life's Hardships (Raising 4 Kids - One With Special Needs - And Managing His Own Neurological Disease).",
       "From Being Named The Internet's Most Influential Photographer At One Point To Speaking In Stadiums To Kickstarting A Hotel Chain To Launching A Worldwide Give-Back Initiative To Being Featured At An Art Auction Alongside The Greatest Artists That Have Ever Lived... It's Always Something Wildly Surprising, Even For Cowart Himself.",

@@ -10,7 +10,7 @@ const Designer = ({
   name = "Jeremy Cowart",
   heading = "Jeremy Cowart's Career Has Often Been Called A Forrest Gump Art Career.",
   heroImage = "/designers/jeremy/1.png",
-  source = "Instagram",
+  socialLinks = {},
   paragraphs = [],
   sliderImages = [],
   socialImages = [],
@@ -46,11 +46,18 @@ const Designer = ({
     }
   ];
 
+  const defaultSocialLinks = {
+    linkedin: "#",
+    instagram: "#",
+    twitter: "#"
+  };
+
   // Use props or fallback to defaults
   const displayParagraphs = paragraphs.length > 0 ? paragraphs : defaultParagraphs;
   const displaySliderImages = sliderImages.length > 0 ? sliderImages : defaultSliderImages;
   const displaySocialImages = socialImages.length > 0 ? socialImages : defaultSocialImages;
   const displaySections = sections.length > 0 ? sections : defaultSections;
+  const displaySocialLinks = (socialLinks && Object.keys(socialLinks).length > 0) ? socialLinks : defaultSocialLinks;
 
   // For heading slider - just show the current designer name
   const headings = [name];
@@ -76,7 +83,7 @@ const Designer = ({
             heading={heading}
             paragraphs={displayParagraphs}
             image={heroImage}
-            source={source}
+            socialLinks={displaySocialLinks}
           />
         </div>
         <div>
@@ -98,7 +105,7 @@ const Designer = ({
               heading={heading}
               paragraphs={displayParagraphs}
               image={heroImage}
-              source={source}
+              socialLinks={displaySocialLinks}
             />
           </div>
         </div>

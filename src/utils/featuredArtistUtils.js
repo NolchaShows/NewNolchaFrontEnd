@@ -80,6 +80,13 @@ export const transformFeaturedArtistDetailData = (artist) => {
       }))
     : [];
 
+  // Transform social links
+  const socialLinks = {
+    linkedin: artist.linkedin || "",
+    instagram: artist.instagram || "",
+    twitter: artist.twitter || ""
+  };
+
   const defaultData = getDefaultFeaturedArtistDetailData();
 
   const result = {
@@ -87,7 +94,7 @@ export const transformFeaturedArtistDetailData = (artist) => {
     slug: artist.slug || defaultData.slug,
     heading: artist.heading || defaultData.heading,
     heroImage: makeMediaUrl(artist.heroImage) || defaultData.heroImage,
-    source: artist.source || defaultData.source,
+    socialLinks: (socialLinks.linkedin || socialLinks.instagram || socialLinks.twitter) ? socialLinks : defaultData.socialLinks,
     paragraphs: paragraphs.length > 0 ? paragraphs : defaultData.paragraphs,
     sliderImages: sliderImages.length > 0 ? sliderImages : defaultData.sliderImages,
     socialImages: socialImages.length > 0 ? socialImages : defaultData.socialImages,
@@ -108,7 +115,11 @@ export const getDefaultFeaturedArtistDetailData = () => {
     slug: "jeremy-cowart",
     heading: "Jeremy Cowart's Career Has Often Been Called A Forrest Gump Art Career.",
     heroImage: "/designers/jeremy/1.png",
-    source: "Instagram",
+    socialLinks: {
+      linkedin: "#",
+      instagram: "#",
+      twitter: "#"
+    },
     paragraphs: [
       "He Just Chases Ideas In Whichever Direction They Lead Him, Finding Himself In The Most Random Of New Situations, Moments Of Success And Failure All While Dealing With His Own Life's Hardships (Raising 4 Kids - One With Special Needs - And Managing His Own Neurological Disease).",
       "From Being Named The Internet's Most Influential Photographer At One Point To Speaking In Stadiums To Kickstarting A Hotel Chain To Launching A Worldwide Give-Back Initiative To Being Featured At An Art Auction Alongside The Greatest Artists That Have Ever Lived... It's Always Something Wildly Surprising, Even For Cowart Himself.",
