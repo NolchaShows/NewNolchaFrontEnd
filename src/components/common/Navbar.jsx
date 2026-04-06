@@ -746,9 +746,11 @@ function Navbar() {
                         <div className="text-[20px] leading-[1.05] font-[700] text-white">
                           {cfg.cta.title}
                         </div>
-                        <div className="mt-3 text-[16px] text-white/80">
-                          {cfg.cta.description}
-                        </div>
+                        {cfg.sectionLabel !== "Alumni" && cfg.sectionLabel !== "Charity" && (
+                          <div className="mt-3 text-[16px] text-white/80">
+                            {cfg.cta.description}
+                          </div>
+                        )}
                         <div className="mt-5 flex-1 rounded-[24px] overflow-hidden bg-[#1A1A1A]">
                           <img
                             src={cfg.imageSrc}
