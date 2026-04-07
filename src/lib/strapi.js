@@ -785,3 +785,47 @@ export async function getServicesPageData() {
     return null;
   }
 }
+
+/**
+ * Fetch white-label page data from Strapi
+ * @returns {Promise} - The white-label page data
+ */
+export async function getWhiteLabelPageData() {
+  try {
+    console.log("🟡 Fetching white-label page data...");
+
+    const populateQuery = [
+      "populate[0]=hero_section",
+      "populate[1]=hero_section.video",
+      "populate[2]=intro_section",
+      "populate[3]=intro_section.image",
+      "populate[4]=intro_section.paragraphs",
+      "populate[5]=infrastructure_section",
+      "populate[6]=infrastructure_section.tiles",
+      "populate[7]=partner_section",
+      "populate[8]=partner_section.partners",
+      "populate[9]=partner_section.partners.primary",
+      "populate[10]=partner_section.partners.secondary",
+      "populate[11]=cta_section",
+      "populate[12]=cta_section.backgroundImage",
+      "populate[13]=cta_section.background_image"
+    ].join("&");
+
+    const data = await fetchFromStrapi(`white-label-pages?${populateQuery}`);
+
+    console.log("📊 White-label Page API Response:", JSON.stringify(data, null, 2));
+
+    if (!data || !data.data || data.data.length === 0) {
+      console.log("❌ No white-label page data received from API");
+      return null;
+    }
+
+    const whiteLabelPageData = Array.isArray(data.data) ? data.data[0] : data.data;
+    console.log("✅ White-label page data processed successfully");
+
+    return { data: { attributes: whiteLabelPageData } };
+  } catch (error) {
+    console.error("❌ Error fetching white-label page data:", error);
+    return null;
+  }
+}

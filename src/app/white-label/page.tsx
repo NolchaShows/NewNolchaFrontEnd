@@ -1,15 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
 import Partners from "@/components/home/Partners";
 import WhiteLabelCtaSection from "@/components/white-label/WhiteLabelCtaSection";
 import WhiteLabelInfrastructureSection from "@/components/white-label/WhiteLabelInfrastructureSection";
 import WhiteLabelIntroSection from "@/components/white-label/WhiteLabelIntroSection";
-import { getLandingPageData } from "@/lib/strapi";
-
-const heroVideo =
-  "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4";
+import { useWhiteLabelPageData } from "@/utils/whiteLabelPageUtils";
 
 const partners = [
   {
@@ -155,47 +152,35 @@ const partners = [
 ];
 
 export default function WhiteLabelPage() {
-  const [partnerData, setPartnerData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPartnerData = async () => {
-      try {
-        const data = await getLandingPageData();
-
-        if (data?.data?.length) {
-          setPartnerData(data.data[0].partner_section ?? null);
-        }
-      } catch (error) {
-        console.error("Failed to fetch white-label partner data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPartnerData();
-  }, []);
+  const { whiteLabelData, loading } = useWhiteLabelPageData();
+  const {
+    heroSection,
+    introSection,
+    infrastructureSection,
+    partnerSection,
+    ctaSection,
+  } = whiteLabelData;
 
   return (
     <div className="bg-[var(--surface-color2)]">
       <VideoHeroSection
-        videoSrc={heroVideo}
+        videoSrc={heroSection.videoSrc}
         isSticky={true}
         className="-mt-[88px] 2xl:-mt-[120px]"
-        firstPart="White Label Global Event Partner"
-        secondPart=""
-        strokeColor="#000000"
-        fillColor="#FEF991"
-        textColor="#FFFFFF"
+        firstPart={heroSection.firstPart}
+        secondPart={heroSection.secondPart}
+        strokeColor={heroSection.strokeColor}
+        fillColor={heroSection.fillColor}
+        textColor={heroSection.textColor}
         size="large"
-        overlayOpacity={20}
-        isGoogleDrive={false}
+        overlayOpacity={heroSection.overlayOpacity}
+        isGoogleDrive={heroSection.isGoogleDrive}
       />
-      <WhiteLabelIntroSection />
-      <WhiteLabelInfrastructureSection />
+      <WhiteLabelIntroSection introSection={introSection} />
+      <WhiteLabelInfrastructureSection sectionData={infrastructureSection} />
       <div className="relative z-10">
         <Partners
-          partnerData={partnerData}
+          partnerData={partnerSection}
           loading={loading}
           title="Selected by global brands, protocols, and institutions to design high-impact industry experiences."
           description="From cutting-edge tech startups and rapidly expanding businesses to impactful charities"
@@ -204,7 +189,7 @@ export default function WhiteLabelPage() {
           logo={null}
         />
       </div>
-      <WhiteLabelCtaSection />
+      <WhiteLabelCtaSection sectionData={ctaSection} />
     </div>
   );
 }
