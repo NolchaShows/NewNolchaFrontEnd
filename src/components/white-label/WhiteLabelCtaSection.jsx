@@ -39,7 +39,7 @@ const WhiteLabelCtaSection = ({ sectionData }) => {
         <RoundedCtaButton
           href={section.ctaUrl}
           label={section.ctaLabel}
-          className="mt-6 self-center sm:mt-8 2xl:mt-10"
+          className="mt-6 self-center sm:mt-8 2xl:mt-10 mx-auto"
         />
       </div>
     </section>

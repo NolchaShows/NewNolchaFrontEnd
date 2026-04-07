@@ -25,7 +25,9 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
     if (!strapiPartners || !Array.isArray(strapiPartners)) return [];
     
     return strapiPartners.map((partner, index) => {
-      const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+      const baseUrl =
+        process.env.NEXT_PUBLIC_STRAPI_URL || "https://new-nolcha-strapi.onrender.com";
+      const fallbackPartner = partners?.[index] || {};
       
       // Get image URLs from Strapi
       let primaryImage = partner.primary?.url;
@@ -39,16 +41,19 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
         secondaryImage = `${baseUrl}${secondaryImage}`;
       }
       
-      // Map color field to backgroundColor for compatibility with existing logic
-      const bgColor = partner.color === 'black' ? 'bg-black' : 'bg-[#E7F0D3]';
-      
       return {
         id: partner.id || index + 1,
-        imageWhite: primaryImage || "/home/partners/1w.png", // Default/non-hover image (primary)
-        imageBlack: secondaryImage || primaryImage || "/home/partners/1b.png", // Hover image (secondary, fallback to primary)
-        altText: partner.alt_text || `Partner ${index + 1}`,
-        backgroundColor: bgColor,
-        color: partner.color || 'black' // Store original color value
+        imageWhite: primaryImage || fallbackPartner.imageWhite || "/home/partners/1w.png",
+        imageBlack:
+          secondaryImage ||
+          primaryImage ||
+          fallbackPartner.imageBlack ||
+          fallbackPartner.imageWhite ||
+          "/home/partners/1b.png",
+        altText: fallbackPartner.altText || `Partner ${index + 1}`,
+        backgroundColor: fallbackPartner.backgroundColor || "bg-black",
+        color:
+          fallbackPartner.backgroundColor === "bg-[#E7F0D3]" ? "light" : "black",
       };
     });
   };

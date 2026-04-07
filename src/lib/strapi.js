@@ -799,16 +799,15 @@ export async function getWhiteLabelPageData() {
       "populate[1]=hero_section.video",
       "populate[2]=intro_section",
       "populate[3]=intro_section.image",
-      "populate[4]=intro_section.paragraphs",
-      "populate[5]=infrastructure_section",
-      "populate[6]=infrastructure_section.tiles",
-      "populate[7]=partner_section",
-      "populate[8]=partner_section.partners",
-      "populate[9]=partner_section.partners.primary",
-      "populate[10]=partner_section.partners.secondary",
-      "populate[11]=cta_section",
-      "populate[12]=cta_section.backgroundImage",
-      "populate[13]=cta_section.background_image"
+      "populate[4]=infrastructure_section",
+      "populate[5]=infrastructure_section.tiles",
+      "populate[6]=partner_section",
+      "populate[7]=partner_section.partners",
+      "populate[8]=partner_section.partners.primary",
+      "populate[9]=partner_section.partners.secondary",
+      "populate[10]=cta_section",
+      "populate[11]=cta_section.backgroundImage",
+      "populate[12]=cta_section.background_image"
     ].join("&");
 
     const data = await fetchFromStrapi(`white-label-pages?${populateQuery}`);

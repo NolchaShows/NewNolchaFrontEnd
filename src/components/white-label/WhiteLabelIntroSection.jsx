@@ -5,21 +5,14 @@ import React from "react";
 const defaultIntroSection = {
   image: "/white-label/white-label.jpg",
   heading: "Your Event. Your Brand. Our Infrastructure.",
-  paragraphs: [
+  paragraph:
     "We don't just produce events. We design strategic environments that elevate brand positioning and facilitate real business outcomes, supported by the scale, network, and operational discipline developed across 280+ global events.",
-    "We've built a high-impact community of over 40,000 founders, investors, artists, and leaders defining what's next in Web3, AI, culture, and tech - and every event we produce activates that network.",
-  ],
-  byline: "Co-Founder Arthur Mandel",
 };
 
 const WhiteLabelIntroSection = ({ introSection }) => {
   const section = {
     ...defaultIntroSection,
     ...introSection,
-    paragraphs:
-      introSection?.paragraphs?.length > 0
-        ? introSection.paragraphs
-        : defaultIntroSection.paragraphs,
   };
 
   return (
@@ -38,10 +31,7 @@ const WhiteLabelIntroSection = ({ introSection }) => {
             {section.heading}
           </h2>
           <div className="mt-5 flex max-w-[485px] flex-col gap-4 font-['Tomorrow',sans-serif] text-[15px] leading-[1.5] tracking-[-0.45px] sm:mt-6 sm:text-[16px] sm:tracking-[-0.48px] md:gap-5 md:text-[18px] md:tracking-[-0.54px] lg:text-[20px] lg:tracking-[-0.6px] 2xl:max-w-[620px] 2xl:gap-7 2xl:text-[28px] 2xl:tracking-[-0.84px]">
-            {section.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-            <p className="pt-1 sm:pt-2">{section.byline}</p>
+            <p>{section.paragraph}</p>
           </div>
         </div>
       </div>
