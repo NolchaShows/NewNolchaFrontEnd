@@ -12,6 +12,7 @@ export default function LogoSlider({ logoSliderData, loading }) {
     { name: "NFT.NYC", url: "/home/slider6.jpg" },
     { name: "Bitcoin Vegas", url: "/home/slider7.jpg" },
     { name: "Bitcoin Nashville", url: "/home/slider8.jpg" },
+    { name: "AdWeek", url: "/home/slider9.jpg" },
   ];
 
   // Use data from props if available, otherwise use defaults
