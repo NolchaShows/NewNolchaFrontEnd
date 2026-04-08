@@ -121,20 +121,19 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-center justify-center z-[100] p-4">
       {/* Outer Black Box Wrapper - for close button positioning */}
       <div className="relative max-w-[1240px] w-full max-h-[100vh]">
-        {/* Close Button - on corner of black box */}
-        <button
-          onClick={handleClose}
-          className="absolute -top-3 -right-3 z-30 p-2 cursor-pointer bg-black rounded-full shadow-lg hover:bg-[#333] hover:scale-105 transition-all duration-200 border border-white/30"
-          aria-label="Close modal"
-        >
-          <RxCross2 className="w-5 h-5 text-white" />
-        </button>
 
         {/* Outer Black Box */}
         <div className="bg-black rounded-[20px] p-10 w-full max-h-[88vh] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+          <button
+            onClick={handleClose}
+            className="sticky top-0 ml-auto mb-4 z-30 p-2 cursor-pointer bg-black rounded-full shadow-lg hover:bg-[#333] hover:scale-105 transition-all duration-200 border border-white/30 flex items-center justify-center"
+            aria-label="Close modal"
+          >
+            <RxCross2 className="w-5 h-5 text-white" />
+          </button>
 
           {/* Inner Modal Content */}
           <div className="bg-[#1A1A1A] rounded-[15px] w-full relative flex flex-col border-2 border-white/10"
