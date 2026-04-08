@@ -12,8 +12,10 @@ const useScreenSize = () => {
         setScreenSize("sm");
       } else if (window.innerWidth < 1024) {
         setScreenSize("md");
-      } else if (window.innerWidth < 2560) {
+      } else if (window.innerWidth < 1920) {
         setScreenSize("lg");
+      } else if (window.innerWidth < 2560) {
+        setScreenSize("xxl");
       } else {
         setScreenSize("3xl");
       }
@@ -50,10 +52,10 @@ const PastExperiences = ({
   const itemsPerSlide = getItemsPerSlide();
   const isDesktop = screenSize === "lg";
   // Card sizing (requested)
-  const CARD_W = screenSize === "3xl" ? 500 : 345;
-  const CARD_H = screenSize === "3xl" ? 580 : 397;
+  const CARD_W = screenSize === "3xl" ? 500 : screenSize === "xxl" ? 420 : 345;
+  const CARD_H = screenSize === "3xl" ? 580 : screenSize === "xxl" ? 480 : 397;
   // Matches `px-2` on each card container (8px left + 8px right)
-  const CARD_GUTTER = screenSize === "3xl" ? 24 : 16;
+  const CARD_GUTTER = screenSize === "3xl" ? 24 : screenSize === "xxl" ? 20 : 16;
 
   const nextSlide = () => {
     if (currentIndex + itemsPerSlide < experiences.length) {
@@ -95,19 +97,19 @@ const PastExperiences = ({
   }
 
   return (
-    <div className="py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[180px] 3xl:py-[250px] overflow-hidden bg-secondary">
-      <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[250px] 3xl:px-[400px] title-spacing flex flex-row items-center justify-between">
+    <div className="py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-secondary">
+      <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] title-spacing flex flex-row items-center justify-between">
         <SectionTitle disableTitleSpacing className="text-white">Past experience</SectionTitle>
 
         {/* Navigation Arrows - Desktop Only */}
-        <div className="hidden lg:flex gap-4 xl:gap-6 3xl:gap-10">
+        <div className="hidden lg:flex gap-4 xl:gap-6 2xl:gap-8 xxl:gap-10">
           <button
             onClick={prevSlide}
             aria-label="Scroll left"
           >
             <motion.img
               src="/icons/left-black-button.svg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] xl:w-[60px] xl:h-[60px] 2xl:h-[70px] 2xl:w-[70px] 3xl:w-[100px] 3xl:h-[100px]"
+              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] xl:w-[60px] xl:h-[60px] 2xl:w-[65px] 2xl:h-[65px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px]"
               whileTap={{ scale: 0.9 }}
             />
           </button>
@@ -117,14 +119,14 @@ const PastExperiences = ({
           >
             <motion.img
               src="/icons/right-black-button.svg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] xl:w-[60px] xl:h-[60px] 2xl:h-[70px] 2xl:w-[70px] 3xl:w-[100px] 3xl:h-[100px]"
+              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] xl:w-[60px] xl:h-[60px] 2xl:w-[65px] 2xl:h-[65px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px]"
               whileTap={{ scale: 0.9 }}
             />
           </button>
         </div>
       </div>
 
-      <div className="relative overflow-hidden px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[250px] 3xl:px-[400px]">
+      <div className="relative overflow-hidden px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]">
         <motion.div
           className="flex cursor-grab active:cursor-grabbing"
           drag="x"

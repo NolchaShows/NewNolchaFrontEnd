@@ -486,13 +486,13 @@ function Navbar() {
           setMegaDropdownLeft(null);
         }}
       >
-        <div className="w-full mx-auto flex justify-between items-center px-4 py-4 lg:px-10 lg:py-5 relative">
+        <div className="w-full mx-auto flex justify-between items-center px-4 py-4 lg:px-10 lg:py-5 xxl:px-16 xxl:py-8 3xl:px-24 3xl:py-12 relative">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <img
                 src="/navbar/logo.svg"
-                className="h-10 lg:h-12 2xl:h-20 transition-[filter] duration-300 filter brightness-0 invert"
+                className="h-10 lg:h-12 xxl:h-16 2xl:h-20 3xl:h-32 transition-[filter] duration-300 filter brightness-0 invert"
                 alt="NOLCHA"
               />
             </Link>
@@ -516,7 +516,7 @@ function Navbar() {
               </svg>
             </button>
 
-            <div className="hidden lg:flex items-center gap-[30px]">
+            <div className="hidden lg:flex items-center gap-[30px] xxl:gap-[40px] 3xl:gap-[60px]">
             {/* Navigation Links */}
             {/* <div className="flex items-center gap-8">
               {visibleMenuItems.map((item, idx) => (
@@ -570,7 +570,7 @@ function Navbar() {
             {/* </div> */}
 
             {/* Right Side - Buttons and Social Icons */}
-            <div className="flex items-center gap-[30px]">
+            <div className="flex items-center gap-[30px] xxl:gap-[40px] 3xl:gap-[60px]">
               <div className="flex items-center group relative">
                 {/* Lets Talk Button */}
                 <button
@@ -583,15 +583,15 @@ function Navbar() {
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
                   className={[
-                    "py-[7.5px] 2xl:py-[15px]",
-                    "bg-primary text-xl 2xl:text-[35px] text-black font-medium rounded-full",
+                    "py-[7.5px] 2xl:py-[15px] 3xl:py-[25px]",
+                    "bg-primary text-xl xxl:text-2xl 2xl:text-[35px] 3xl:text-[50px] text-black font-medium rounded-full",
                     // Desktop: keep only arrow visible initially; reveal this button on hover (no absolute -> shape stays identical)
                     "hidden lg:inline-flex",
                     "overflow-hidden whitespace-nowrap",
                     "lg:max-w-0 lg:px-0 lg:opacity-0 lg:translate-x-2 lg:pointer-events-none",
                     "lg:transition-[max-width,opacity,transform,padding] lg:duration-300",
-                    "lg:group-hover:max-w-[240px] 2xl:group-hover:max-w-[360px]",
-                    "lg:group-hover:px-[18.5px] 2xl:group-hover:px-[40px]",
+                    "lg:group-hover:max-w-[240px] xxl:group-hover:max-w-[300px] 2xl:group-hover:max-w-[360px] 3xl:group-hover:max-w-[500px]",
+                    "lg:group-hover:px-[18.5px] xxl:group-hover:px-[30px] 2xl:group-hover:px-[40px] 3xl:group-hover:px-[60px]",
                     "lg:group-hover:opacity-100 lg:group-hover:translate-x-0 lg:group-hover:pointer-events-auto",
                   ].join(" ")}
                 >
@@ -608,16 +608,28 @@ function Navbar() {
                     const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
-                  className="hidden lg:flex w-11 h-11 2xl:w-[78px] 2xl:h-[78px] bg-primary rounded-full items-center justify-center ml-2"
+                  className="hidden lg:flex w-11 h-11 xxl:w-14 xxl:h-14 2xl:w-[78px] 2xl:h-[78px] 3xl:w-[120px] 3xl:h-[120px] bg-primary rounded-full items-center justify-center ml-2"
                 >
-                  {/* Default SVG for smaller screens */}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" className="block 2xl:hidden">
-                    <path d="M4.99662 5.55025L4.99662 7.29504L11.9077 7.30123L4.3779 14.831L5.61534 16.0685L13.1451 8.53866L13.1513 15.4497L14.8961 15.4497V5.55025H4.99662Z" fill="#000" />
-                  </svg>
-                  {/* Larger SVG for 2xl screens */}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" className="hidden 2xl:block">
-                    <path d="M9.09643 9.42701V12.5289L21.3828 12.5399L7.99648 25.9262L10.1964 28.1261L23.5827 14.7397L23.5937 27.0261L26.6955 27.0261V9.42701H9.09643Z" fill="#000" />
-                  </svg>
+                  <div className="2xl:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                      <path d="M4.99662 5.55025L4.99662 7.29504L11.9077 7.30123L4.3779 14.831L5.61534 16.0685L13.1451 8.53866L13.1513 15.4497L14.8961 15.4497V5.55025H4.99662Z" fill="#000" />
+                    </svg>
+                  </div>
+                  <div className="hidden 2xl:block xxl:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                      <path d="M7.075 7.332V9.744L16.631 9.753L6.22 20.164L7.931 21.875L18.342 11.464L18.351 21.02V21.02H20.763V7.332H7.075Z" fill="#000" />
+                    </svg>
+                  </div>
+                  <div className="hidden xxl:block 3xl:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                      <path d="M9.09643 9.42701V12.5289L21.3828 12.5399L7.99648 25.9262L10.1964 28.1261L23.5827 14.7397L23.5937 27.0261L26.6955 27.0261V9.42701H9.09643Z" fill="#000" />
+                    </svg>
+                  </div>
+                  <div className="hidden 3xl:block">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56" fill="none">
+                      <path d="M14.15 14.664V19.488L33.262 19.506L12.439 40.329L15.861 43.751L36.684 22.928L36.702 42.04V42.04H41.526V14.664H14.15Z" fill="#000" />
+                    </svg>
+                  </div>
                 </button>
               </div>
             </div>
@@ -633,7 +645,7 @@ function Navbar() {
         */}
         <div
           className={[
-            "hidden lg:grid mx-8 transform-gpu",
+            "hidden lg:grid mx-8 xxl:mx-16 3xl:mx-24 transform-gpu",
             "transition-[grid-template-rows,opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
             (FORCE_DESKTOP_MEGA_OPEN ? true : isDesktopSecondRowOpen)
               ? "grid-rows-[1fr] opacity-100 translate-y-0 border-t border-[#C9C9C9] pointer-events-auto"
@@ -641,7 +653,7 @@ function Navbar() {
           ].join(" ")}
         >
           <div className="overflow-hidden">
-            <div className="w-full max-w-none mx-auto px-6 py-4">
+            <div className="w-full max-w-none mx-auto px-6 xxl:px-10 3xl:px-16 py-4 xxl:py-6 3xl:py-10">
               <div className="flex items-center justify-between">
                 {visibleMenuItems.map((item, idx) => (
                   <div
@@ -655,7 +667,7 @@ function Navbar() {
                       }
                       const targetRect = e.currentTarget.getBoundingClientRect();
                       const navRect = desktopNavbarRef.current?.getBoundingClientRect();
-                      const panelWidth = 746;
+                      const panelWidth = window.innerWidth >= 2560 ? 1200 : window.innerWidth >= 1920 ? 900 : 746;
                       const edgePadding = 20;
 
                       if (!navRect) {
@@ -675,11 +687,11 @@ function Navbar() {
                   >
                     {item.href && item.href !== "#" ? (
                       <Link href={item.href} className="hover:opacity-80 transition-opacity">
-                        <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-3xl">
+                        <div className="flex items-center font-bold text-[18px] text-white mb-1 xxl:text-[24px] 2xl:text-3xl 3xl:text-[48px]">
                           {item.label}
                           {item.hasDropdown && (
                             <svg
-                              className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-white"
+                              className="ml-2 w-[24px] h-[24px] xxl:w-[30px] xxl:h-[30px] 2xl:w-[36px] 2xl:h-[36px] 3xl:w-[54px] 3xl:h-[54px] text-white"
                               fill="currentColor"
                               viewBox="0 0 24 24"
                             >
@@ -688,18 +700,18 @@ function Navbar() {
                           )}
                         </div>
                         <div
-                          className="text-[14px] text-white/70 2xl:text-2xl"
+                          className="text-[14px] text-white/70 xxl:text-[18px] 2xl:text-2xl 3xl:text-[36px]"
                         >
                           {item.subtitle}
                         </div>
                       </Link>
                     ) : (
                       <div className="cursor-pointer">
-                        <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-3xl">
+                        <div className="flex items-center font-bold text-[18px] text-white mb-1 xxl:text-[24px] 2xl:text-3xl 3xl:text-[48px]">
                           {item.label}
                           {item.hasDropdown && (
                             <svg
-                              className="ml-2 w-[24px] h-[24px] 2xl:w-[36px] 2xl:h-[36px] text-white"
+                              className="ml-2 w-[24px] h-[24px] xxl:w-[30px] xxl:h-[30px] 2xl:w-[36px] 2xl:h-[36px] 3xl:w-[54px] 3xl:h-[54px] text-white"
                               fill="currentColor"
                               viewBox="0 0 24 24"
                             >
@@ -708,7 +720,7 @@ function Navbar() {
                           )}
                         </div>
                         <div
-                          className="text-[14px] text-white/70 2xl:text-2xl"
+                          className="text-[14px] text-white/70 xxl:text-[18px] 2xl:text-2xl 3xl:text-[36px]"
                         >
                           {item.subtitle}
                         </div>
@@ -746,18 +758,18 @@ function Navbar() {
               hoveredMegaItemImage || cfg.items?.[0]?.imageSrc || cfg.imageSrc;
             return (
               <div className="pt-3">
-                <div className="w-[746px] h-[427px] rounded-[20px] bg-black overflow-hidden">
-                  <div className="grid grid-cols-[1fr_400px] gap-6 p-6 h-full">
+                <div className="w-[746px] xxl:w-[900px] 3xl:w-[1200px] h-[427px] xxl:h-[550px] 3xl:h-[750px] rounded-[20px] 3xl:rounded-[40px] bg-black overflow-hidden">
+                  <div className="grid grid-cols-[1fr_400px] xxl:grid-cols-[1fr_500px] 3xl:grid-cols-[1fr_700px] gap-6 3xl:gap-12 p-6 xxl:p-10 3xl:p-16 h-full">
                     <div>
-                      <div className="text-[16px] text-white/70 mb-4">
+                      <div className="text-[16px] xxl:text-[20px] 3xl:text-[32px] text-white/70 mb-4 3xl:mb-8">
                         {cfg.sectionLabel}
                       </div>
-                      <div className="space-y-[14px] max-h-[calc(427px-32px-32px-18px-32px)] overflow-auto">
+                      <div className="space-y-[14px] xxl:space-y-[20px] 3xl:space-y-[30px] max-h-[calc(100%-40px)] overflow-auto">
                         {cfg.items.map((it, i) => (
                           <Link
                             key={`${it.href}-${i}`}
                             href={it.href}
-                            className="block text-[20px] leading-[1.15] font-[500] text-white hover:text-primary transition-opacity"
+                            className="block text-[20px] xxl:text-[26px] 3xl:text-[42px] leading-[1.15] font-[500] text-white hover:text-primary transition-opacity"
                             onMouseEnter={() => setHoveredMegaItemImage(it.imageSrc || null)}
                             onClick={() => setActiveDesktopMegaMenu(null)}
                           >
@@ -768,16 +780,16 @@ function Navbar() {
                     </div>
 
                     <div>
-                      <div className="bg-[#0E0E0E] border border-white/10 rounded-[20px] p-6 shadow-sm h-full flex flex-col w-[400px]">
-                        <div className="text-[20px] leading-[1.05] font-[700] text-white">
+                      <div className="bg-[#0E0E0E] border border-white/10 rounded-[20px] 3xl:rounded-[40px] p-6 xxl:p-10 3xl:p-16 shadow-sm h-full flex flex-col w-[400px] xxl:w-[500px] 3xl:w-[700px]">
+                        <div className="text-[20px] xxl:text-[28px] 3xl:text-[48px] leading-[1.05] font-[700] text-white">
                           {cfg.cta.title}
                         </div>
                         {cfg.sectionLabel !== "Alumni" && cfg.sectionLabel !== "Charity" && (
-                          <div className="mt-3 text-[16px] text-white/80">
+                          <div className="mt-3 xxl:mt-5 3xl:mt-8 text-[16px] xxl:text-[20px] 3xl:text-[32px] text-white/80">
                             {cfg.cta.description}
                           </div>
                         )}
-                        <div className="mt-5 flex-1 rounded-[24px] overflow-hidden bg-[#1A1A1A]">
+                        <div className="mt-5 xxl:mt-8 3xl:mt-12 flex-1 rounded-[24px] 3xl:rounded-[48px] overflow-hidden bg-[#1A1A1A]">
                           <img
                             src={previewImageSrc}
                             alt={`${cfg.sectionLabel} preview`}

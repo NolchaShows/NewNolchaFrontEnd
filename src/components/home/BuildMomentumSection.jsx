@@ -20,8 +20,8 @@ const BuildMomentumSection = () => {
       <SectionTitle>We Build Cultural Momentum</SectionTitle>
 
       {/* Paragraphs */}
-      <div className="flex flex-col gap-[10px] lg:gap-4 xl:gap-5 2xl:gap-[35px] 3xl:gap-[50px] mb-5 lg:mb-8 xl:mb-10 2xl:mb-[70px] 3xl:mb-[100px]">
-        <p className="text-[16px] lg:text-[22px] xl:text-[28px] 2xl:text-[48px] 3xl:text-[64px] text-white leading-relaxed">
+      <div className="flex flex-col gap-[10px] lg:gap-4 xl:gap-5 2xl:gap-6 xxl:gap-[35px] 3xl:gap-[50px] mb-5 lg:mb-8 xl:mb-10 2xl:mb-12 xxl:mb-[70px] 3xl:mb-[100px]">
+        <p className="text-[16px] lg:text-[22px] xl:text-[28px] 2xl:text-[36px] xxl:text-[48px] 3xl:text-[64px] text-white leading-relaxed">
           For Over 15 Years, Nolcha Has Been At The Forefront Of{" "}
           <span className="font-bold">
             Technology, Culture, And Immersive Experiences
@@ -30,14 +30,14 @@ const BuildMomentumSection = () => {
           Brands And The World's Leading Blockchain, AI, And Crypto
           Conferences.
         </p>
-        <p className="text-[16px] lg:text-[22px] xl:text-[28px] 2xl:text-[48px] 3xl:text-[64px] text-white leading-relaxed">
+        <p className="text-[16px] lg:text-[22px] xl:text-[28px] 2xl:text-[36px] xxl:text-[48px] 3xl:text-[64px] text-white leading-relaxed">
           We Unite Communities, Spark Collaboration, And Create Business
           Through Creativity, Innovation, And Human Connection.
         </p>
       </div>
 
       {/* Partner Logos */}
-      <div className="flex flex-wrap items-center justify-start gap-6 lg:gap-[48px] 2xl:gap-16 3xl:gap-24 mb-[30px] lg:mb-[60px] 2xl:mb-[100px] 3xl:mb-[150px]">
+      <div className="flex flex-wrap items-center justify-start gap-6 lg:gap-[48px] 2xl:gap-12 xxl:gap-16 3xl:gap-24 mb-[30px] lg:mb-[60px] 2xl:mb-[80px] xxl:mb-[100px] 3xl:mb-[150px]">
         {partnerLogos.map((partner, index) => (
           <div
             key={index}

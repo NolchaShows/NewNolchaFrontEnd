@@ -11,11 +11,11 @@ function VideoGridZigZag({ videos }) {
     <div className="w-full flex justify-center">
       {/* 🖥️ Desktop/Large screens */}
       {videos && videos.length > 0 ? (
-        <div className="hidden lg:flex lg:justify-center gap-4 xl:gap-6 2xl:gap-12 3xl:gap-20 lg:h-[450px] xl:h-[600px] 2xl:h-[900px] 3xl:h-[1300px] lg:items-end">
+        <div className="hidden lg:flex lg:justify-center gap-4 xl:gap-6 2xl:gap-8 xxl:gap-12 3xl:gap-20 lg:h-[450px] xl:h-[600px] 2xl:h-[750px] xxl:h-[900px] 3xl:h-[1300px] lg:items-end">
           {videos.map((src, i) => (
             <div
               key={i}
-              className={`flex ${i % 2 === 0 ? "items-start" : "items-end"} h-[450px] xl:h-[600px] 2xl:h-[800px] 3xl:h-[1100px]`}
+              className={`flex ${i % 2 === 0 ? "items-start" : "items-end"} h-[450px] xl:h-[600px] 2xl:h-[700px] xxl:h-[800px] 3xl:h-[1100px]`}
             >
               <video
                 src={src}
@@ -23,7 +23,7 @@ function VideoGridZigZag({ videos }) {
                 muted
                 loop
                 playsInline
-                className="w-[200px] h-[350px] xl:w-[275px] xl:h-[491px] 2xl:w-[450px] 2xl:h-[650px] 3xl:w-[600px] 3xl:h-[850px] object-cover rounded-[20px] 3xl:rounded-[40px] shadow-lg"
+                className="w-[200px] h-[350px] xl:w-[275px] xl:h-[491px] 2xl:w-[350px] 2xl:h-[550px] xxl:w-[450px] xxl:h-[650px] 3xl:w-[600px] 3xl:h-[850px] object-cover rounded-[20px] 3xl:rounded-[40px] shadow-lg"
                 style={{ border: `10px solid ${borderColors[i]}` }}
               />
             </div>
@@ -181,7 +181,7 @@ export function Carousel({
       )}
       <motion.div
         ref={marqueeRef}
-        className={`flex whitespace-nowrap font-medium gap-[40px] lg:gap-[60px] xl:gap-[80px] 2xl:gap-[200px] 3xl:gap-[300px] py-[20px] lg:py-[0px] ${textColor} text-[20px] lg:text-[23px] xl:text-[26px] 2xl:text-[44px] 3xl:text-[64px] uppercase helvetica`}
+        className={`flex whitespace-nowrap font-medium gap-[40px] lg:gap-[60px] xl:gap-[80px] 2xl:gap-[120px] xxl:gap-[200px] 3xl:gap-[300px] py-[20px] lg:py-[0px] ${textColor} text-[20px] lg:text-[23px] xl:text-[26px] 2xl:text-[32px] xxl:text-[44px] 3xl:text-[64px] uppercase helvetica`}
         animate={{ x: [0, -width] }}
         transition={{
           ease: "linear",

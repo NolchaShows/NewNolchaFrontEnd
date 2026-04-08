@@ -74,10 +74,10 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   }
 
   return (
-    <div className="bg-secondary page-container py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] 3xl:py-[200px]">
-      <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[40px] xl:gap-[50px] 2xl:gap-[80px] 3xl:gap-[120px] items-start">
+    <div className="bg-secondary page-container py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] xxl:py-[140px] 3xl:py-[200px]">
+      <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[40px] xl:gap-[50px] 2xl:gap-[60px] xxl:gap-[80px] 3xl:gap-[120px] items-start">
         {/* Left side - Image with gradient overlay */}
-        <div className="relative w-full lg:w-[420px] xl:w-[513px] 2xl:w-[650px] 3xl:w-[900px] h-auto lg:h-[435px] xl:h-[531px] 2xl:h-[680px] 3xl:h-[950px] flex-shrink-0">
+        <div className="relative w-full lg:w-[420px] xl:w-[513px] 2xl:w-[580px] xxl:w-[650px] 3xl:w-[900px] h-auto lg:h-[435px] xl:h-[531px] 2xl:h-[600px] xxl:h-[680px] 3xl:h-[950px] flex-shrink-0">
           <div className="rounded-[12px] overflow-hidden relative w-full h-full">
             <img
               src={getImageUrl()}
@@ -95,7 +95,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
 
             {/* Caption text (no box overlay) */}
             {imageCaption && (
-              <p className="absolute bottom-4 left-5 right-4 text-white text-[14px] lg:text-[16px] xl:text-[18px] leading-relaxed">
+              <p className="absolute bottom-4 left-5 right-4 text-white text-[14px] lg:text-[16px] xl:text-[18px] xxl:text-[20px] leading-relaxed">
                 {imageCaption}
               </p>
             )}
@@ -105,31 +105,31 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
         {/* Right side - Content */}
         <div className="flex-1 flex flex-col">
           {/* Main heading */}
-          <h1 className="text-[28px] lg:text-[32px] xl:text-[36px] 2xl:text-[48px] font-bold text-white leading-tight mb-[30px] lg:mb-[35px] xl:mb-[40px] 2xl:mb-[50px]">
+          <h1 className="text-[28px] lg:text-[32px] xl:text-[36px] 2xl:text-[40px] xxl:text-[48px] 3xl:text-[56px] font-bold text-white leading-tight mb-[30px] lg:mb-[35px] xl:mb-[40px] 2xl:mb-[45px] xxl:mb-[50px] 3xl:mb-[60px]">
             {heading}
           </h1>
 
           {/* Expandable accordion sections */}
-          <div className="flex flex-col gap-[10px] lg:gap-[11px] xl:gap-[12px] 2xl:gap-[14px]">
+          <div className="flex flex-col gap-[10px] lg:gap-[11px] xl:gap-[12px] 2xl:gap-[13px] xxl:gap-[14px]">
             {sections.map((section) => {
               const isExpanded = expandedSection === section.id;
               return (
                 <div
                   key={section.id}
-                  className="bg-black rounded-[6px] lg:rounded-[10px] xl:rounded-[12px] 2xl:rounded-[20px] overflow-hidden"
+                  className="bg-black rounded-[6px] lg:rounded-[10px] xl:rounded-[12px] 2xl:rounded-[16px] xxl:rounded-[20px] overflow-hidden"
                 >
                   {/* Accordion Header */}
                   <button
                     onClick={() => toggleSection(section.id)}
-                    className="w-full flex justify-between items-center px-[16px] lg:px-[20px] xl:px-[24px] 2xl:px-[32px] py-[16px] lg:py-[18px] xl:py-[20px] 2xl:py-[24px] text-left transition-colors hover:bg-black/80"
+                    className="w-full flex justify-between items-center px-[16px] lg:px-[20px] xl:px-[24px] 2xl:px-[28px] xxl:px-[32px] py-[16px] lg:py-[18px] xl:py-[20px] 2xl:py-[22px] xxl:py-[24px] text-left transition-colors hover:bg-black/80"
                   >
-                    <h2 className="text-[18px] lg:text-[21px] xl:text-[24px] 2xl:text-[32px] font-bold text-white leading-tight pr-4">
+                    <h2 className="text-[18px] lg:text-[21px] xl:text-[24px] 2xl:text-[28px] xxl:text-[32px] 3xl:text-[40px] font-bold text-white leading-tight pr-4">
                       {section.title}
                     </h2>
                     {/* Chevron Icon */}
                     <div className="flex-shrink-0">
                       <svg
-                        className={`w-6 h-6 lg:w-7 xl:w-8 2xl:w-10 lg:h-7 xl:h-8 2xl:h-10 text-white transition-transform duration-300 ${
+                        className={`w-6 h-6 lg:w-7 xl:w-8 2xl:w-9 xxl:w-10 lg:h-7 xl:h-8 2xl:h-9 xxl:h-10 text-white transition-transform duration-300 ${
                           isExpanded ? "rotate-180" : ""
                         }`}
                         fill="none"
@@ -148,9 +148,9 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
 
                   {/* Expandable Content */}
                   {isExpanded && (
-                    <div className="px-[16px] lg:px-[20px] xl:px-[24px] 2xl:px-[32px] pb-[16px] lg:pb-[18px] xl:pb-[20px] 2xl:pb-[24px]">
+                    <div className="px-[16px] lg:px-[20px] xl:px-[24px] 2xl:px-[28px] xxl:px-[32px] pb-[16px] lg:pb-[18px] xl:pb-[20px] 2xl:py-[22px] xxl:pb-[24px]">
                       <p
-                        className="text-white text-[14px] lg:text-[15px] xl:text-[16px] 2xl:text-[18px] leading-relaxed font-normal"
+                        className="text-white text-[14px] lg:text-[15px] xl:text-[16px] 2xl:text-[18px] xxl:text-[20px] leading-relaxed font-normal"
                       >
                         {section.content}
                       </p>

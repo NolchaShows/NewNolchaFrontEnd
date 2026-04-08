@@ -16,7 +16,7 @@ const FashionGrid3x3 = ({
         <div className="bg-[#D1FFE9]">
           {/* Row 1: 3 images */}
           <div className="grid grid-cols-3 gap-[5px] mb-[5px]">
-            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[854px] 3xl:h-[1200px] bg-white">
+            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[600px] xxl:h-[854px] 3xl:h-[1200px] bg-white">
               {paddedImages[0] ? (
                 <img
                   src={paddedImages[0]}
@@ -29,7 +29,7 @@ const FashionGrid3x3 = ({
                 </div>
               )}
             </div>
-            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[854px] 3xl:h-[1200px] bg-white">
+            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[600px] xxl:h-[854px] 3xl:h-[1200px] bg-white">
               {paddedImages[1] ? (
                 <img
                   src={paddedImages[1]}
@@ -42,7 +42,7 @@ const FashionGrid3x3 = ({
                 </div>
               )}
             </div>
-            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[854px] 3xl:h-[1200px] bg-white">
+            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[600px] xxl:h-[854px] 3xl:h-[1200px] bg-white">
               {paddedImages[2] ? (
                 <img
                   src={paddedImages[2]}
@@ -59,7 +59,7 @@ const FashionGrid3x3 = ({
 
           {/* Row 2: 2 images */}
           <div className="grid grid-cols-2 gap-[5px] mb-[5px]">
-            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[854px] 3xl:h-[1200px] bg-white">
+            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[600px] xxl:h-[854px] 3xl:h-[1200px] bg-white">
               {paddedImages[3] ? (
                 <img
                   src={paddedImages[3]}
@@ -72,7 +72,7 @@ const FashionGrid3x3 = ({
                 </div>
               )}
             </div>
-            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[854px] 3xl:h-[1200px] bg-white">
+            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[600px] xxl:h-[854px] 3xl:h-[1200px] bg-white">
               {paddedImages[4] ? (
                 <img
                   src={paddedImages[4]}
@@ -89,7 +89,7 @@ const FashionGrid3x3 = ({
 
           {/* Row 3: 3 images */}
           <div className="grid grid-cols-3 gap-[5px]">
-            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[854px] 3xl:h-[1200px] bg-white">
+            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[600px] xxl:h-[854px] 3xl:h-[1200px] bg-white">
               {paddedImages[5] ? (
                 <img
                   src={paddedImages[5]}
@@ -102,7 +102,7 @@ const FashionGrid3x3 = ({
                 </div>
               )}
             </div>
-            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[854px] 3xl:h-[1200px] bg-white">
+            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[600px] xxl:h-[854px] 3xl:h-[1200px] bg-white">
               {paddedImages[6] ? (
                 <img
                   src={paddedImages[6]}
@@ -115,7 +115,7 @@ const FashionGrid3x3 = ({
                 </div>
               )}
             </div>
-            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[854px] 3xl:h-[1200px] bg-white">
+            <div className="relative h-[166px] lg:h-[320px] xl:h-[480px] 2xl:h-[600px] xxl:h-[854px] 3xl:h-[1200px] bg-white">
               {paddedImages[7] ? (
                 <img
                   src={paddedImages[7]}

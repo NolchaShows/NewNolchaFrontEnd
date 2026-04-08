@@ -4,6 +4,8 @@
 @theme {
   --color-primary: #BEFD6F;
   --color-secondary: #1D1C1E;
+  --breakpoint-2xl: 1536px;
+  --breakpoint-xxl: 1920px;
   --breakpoint-3xl: 2560px;
   --breakpoint-4xl: 3840px;
 }
@@ -68,6 +70,16 @@
 
     --btn-l-size: 18px; --btn-l-lh: 100%;
     --btn-s-size: 16px; --btn-s-lh: 100%;
+  }
+}
+
+/* Override typography variables for ≥1920px */
+@media (min-width: 1920px) {
+  :root {
+    --h1-size: 72px;
+    --h3-size: 48px;
+    --para-xl-size: 28px;
+    --para-l-size: 24px;
   }
 }
 
@@ -202,11 +214,11 @@ body {
 
 /* Reusable section padding utility */
 .page-container {
-  @apply py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[180px] 3xl:py-[220px] px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[250px] 3xl:px-[400px];
+  @apply py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[220px] px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px];
 }
 
 .page-container-fluid {
-  @apply py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[180px] 3xl:py-[220px];
+  @apply py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[220px];
 }
 
 /* Reusable text style helpers using variables */

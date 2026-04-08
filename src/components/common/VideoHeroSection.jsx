@@ -45,7 +45,7 @@ const VideoHeroSection = ({
   return (
     <div
       className={[
-        "relative w-full overflow-hidden h-[505px] lg:h-[600px] xl:h-[725px] 2xl:h-[1000px] 3xl:h-[1400px] 4xl:h-[1800px]",
+        "relative w-full overflow-hidden h-[505px] lg:h-[600px] xl:h-[725px] 2xl:h-[850px] xxl:h-[1000px] 3xl:h-[1400px] 4xl:h-[1800px]",
         isSticky ? "sticky top-0 z-0" : "",
         className
       ].join(" ")}

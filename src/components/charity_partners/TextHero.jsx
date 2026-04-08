@@ -71,9 +71,9 @@ function TextHero({ textHeroData, loading, images = [] }) {
   return (
     <div className="page-container w-full max-w-none mx-auto bg-[#000]">
       <div className="flex flex-col">
-        <div className="relative flex flex-col lg:flex-row gap-[40px] lg:gap-[52px] 2xl:gap-[92px] 3xl:gap-[150px] items-center">
+        <div className="relative flex flex-col lg:flex-row gap-[40px] lg:gap-[52px] 2xl:gap-[70px] xxl:gap-[92px] 3xl:gap-[150px] items-center">
           {/* Media (Video or Image) */}
-          <div className="flex-1 w-full lg:max-w-[450px] xl:max-w-[656px] 2xl:max-w-[1165px] 3xl:max-w-[1600px]">
+          <div className="flex-1 w-full lg:max-w-[450px] xl:max-w-[656px] 2xl:max-w-[850px] xxl:max-w-[1165px] 3xl:max-w-[1600px]">
             {currentSlide?.video ? (
               <video
                 src={currentSlide.video}
@@ -94,7 +94,7 @@ function TextHero({ textHeroData, loading, images = [] }) {
 
           {/* Right side content */}
           <div className="flex-1 w-full lg:text-left">
-            <div className="mb-[25px] lg:mb-[30px] xl:mb-[40px] 2xl:mb-[72px] 3xl:mb-[120px] relative">
+            <div className="mb-[25px] lg:mb-[30px] xl:mb-[40px] 2xl:mb-[55px] xxl:mb-[72px] 3xl:mb-[120px] relative">
               {/* <img
                 src="/home/quote.png"
                 alt="Quote"
@@ -103,10 +103,10 @@ function TextHero({ textHeroData, loading, images = [] }) {
               <img
                 src={'/home/forbes/forbes.png'}
                 alt="Forbes"
-                className="relative w-[230px] lg:w-[280px] xl:w-[340px] 2xl:w-[550px] 3xl:w-[800px] z-10"
+                className="relative w-[230px] lg:w-[280px] xl:w-[340px] 2xl:w-[420px] xxl:w-[550px] 3xl:w-[800px] z-10"
               />
             </div>
-            <div className="text-white text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[30px] 3xl:text-[48px] font-bold">
+            <div className="text-white text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[24px] xxl:text-[30px] 3xl:text-[48px] font-bold">
               {currentSlide?.description}
             </div>
           </div>

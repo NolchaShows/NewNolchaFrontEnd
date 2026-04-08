@@ -235,19 +235,19 @@ const PastSpeakers = ({ speakers = [] }) => {
   }, [row2.length]);
 
   return (
-    <div className="py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[180px] 3xl:py-[250px] max-w-none w-full mx-auto bg-[#000000] overflow-hidden">
-      <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[250px] 3xl:px-[400px] title-spacing relative flex flex-row items-center justify-between">
+    <div className="py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] max-w-none w-full mx-auto bg-[#000000] overflow-hidden">
+      <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] title-spacing relative flex flex-row items-center justify-between">
         <SectionTitle disableTitleSpacing className="text-white">Featured Speakers</SectionTitle>
 
         {/* Navigation Arrows - Desktop Only */}
-        <div className="hidden lg:flex gap-4 xl:gap-6 3xl:gap-10">
+        <div className="hidden lg:flex gap-4 xl:gap-6 2xl:gap-8 xxl:gap-10">
           <button
             onClick={handleScrollLeft}
             aria-label="Scroll left"
           >
             <motion.img
               src="/left.jpg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[40px] lg:h-[40px] xl:w-[48px] xl:h-[48px] 2xl:h-[70px] 2xl:w-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[8px] xl:rounded-[10px] 2xl:rounded-[15px] 3xl:rounded-[20px]"
+              className="cursor-pointer w-[36px] h-[36px] lg:w-[40px] lg:h-[40px] xl:w-[48px] xl:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[8px] xl:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
               whileTap={{ scale: 0.9 }}
             />
           </button>
@@ -257,7 +257,7 @@ const PastSpeakers = ({ speakers = [] }) => {
           >
             <motion.img
               src="/right.jpg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[40px] lg:h-[40px] xl:w-[48px] xl:h-[48px] 2xl:h-[70px] 2xl:w-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[8px] xl:rounded-[10px] 2xl:rounded-[15px] 3xl:rounded-[20px]"
+              className="cursor-pointer w-[36px] h-[36px] lg:w-[40px] lg:h-[40px] xl:w-[48px] xl:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[8px] xl:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
               whileTap={{ scale: 0.9 }}
             />
           </button>
@@ -335,7 +335,7 @@ const PastSpeakers = ({ speakers = [] }) => {
           {/* Row 1 */}
           <div ref={row1Ref} className="flex gap-8 3xl:gap-12 overflow-x-hidden">
             {row1.map((speaker, index) => (
-              <div key={`row1-${speaker.id}-${index}`} className="group flex-shrink-0 w-[240px] h-[288px] xl:w-[299px] xl:h-[359px] 2xl:w-[532px] 2xl:h-[640px] 3xl:w-[750px] 3xl:h-[900px] perspective-[2000px]">
+              <div key={`row1-${speaker.id}-${index}`} className="group flex-shrink-0 w-[240px] h-[288px] xl:w-[299px] xl:h-[359px] 2xl:w-[400px] 2xl:h-[480px] xxl:w-[532px] xxl:h-[640px] 3xl:w-[750px] 3xl:h-[900px] perspective-[2000px]">
                 <div className="relative w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
                   {/* Front of card */}
                   <div className="absolute w-full h-full backface-hidden">
@@ -348,11 +348,11 @@ const PastSpeakers = ({ speakers = [] }) => {
                   </div>
 
                   {/* Back of card */}
-                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] 3xl:rounded-[30px] p-6 2xl:p-10 3xl:p-16 flex flex-col justify-start">
-                    <h3 className="text-black text-[1.2rem] xl:text-[1.4rem] 2xl:text-[2.4rem] 3xl:text-[3.6rem] font-extrabold uppercase mb-4 leading-tight">
+                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] 3xl:rounded-[30px] p-6 2xl:p-8 xxl:p-10 3xl:p-16 flex flex-col justify-start">
+                    <h3 className="text-black text-[1.2rem] xl:text-[1.4rem] 2xl:text-[1.8rem] xxl:text-[2.4rem] 3xl:text-[3.6rem] font-extrabold uppercase mb-4 leading-tight">
                       {speaker.name || 'Speaker Name'}
                     </h3>
-                    <p className="text-black text-[0.8rem] xl:text-[0.9rem] 2xl:text-[1.6rem] 3xl:text-[2.2rem] font-semibold leading-[1.4] mb-4 flex-grow overflow-y-auto">
+                    <p className="text-black text-[0.8rem] xl:text-[0.9rem] 2xl:text-[1.2rem] xxl:text-[1.6rem] 3xl:text-[2.2rem] font-semibold leading-[1.4] mb-4 flex-grow overflow-y-auto">
                       {speaker.description || 'Speaker description goes here'}
                     </p>
                     {speaker.twitter && (
@@ -366,9 +366,9 @@ const PastSpeakers = ({ speakers = [] }) => {
                           <img
                             src="https://upload.wikimedia.org/wikipedia/commons/5/57/X_logo_2023_%28white%29.png"
                             alt="X (Twitter) Logo"
-                            className="w-4 h-4 xl:w-5 xl:h-5 2xl:w-7 2xl:h-7 3xl:w-10 3xl:h-10 invert"
+                            className="w-4 h-4 xl:w-5 xl:h-5 2xl:w-6 2xl:h-6 xxl:w-7 xxl:h-7 3xl:w-10 3xl:h-10 invert"
                           />
-                          <h3 className="text-[0.9rem] xl:text-[1rem] 2xl:text-[1.8rem] 3xl:text-[2.4rem] font-bold">
+                          <h3 className="text-[0.9rem] xl:text-[1rem] 2xl:text-[1.4rem] xxl:text-[1.8rem] 3xl:text-[2.4rem] font-bold">
                             {speaker.name || 'Speaker Name'}
                           </h3>
                         </a>
@@ -383,7 +383,7 @@ const PastSpeakers = ({ speakers = [] }) => {
           {/* Row 2 */}
           <div ref={row2Ref} className="flex gap-8 3xl:gap-12 overflow-x-hidden">
             {row2.map((speaker, index) => (
-              <div key={`row2-${speaker.id}-${index}`} className="group flex-shrink-0 w-[240px] h-[288px] xl:w-[299px] xl:h-[359px] 2xl:w-[532px] 2xl:h-[640px] 3xl:w-[750px] 3xl:h-[900px] perspective-[2000px]">
+              <div key={`row2-${speaker.id}-${index}`} className="group flex-shrink-0 w-[240px] h-[288px] xl:w-[299px] xl:h-[359px] 2xl:w-[400px] 2xl:h-[480px] xxl:w-[532px] xxl:h-[640px] 3xl:w-[750px] 3xl:h-[900px] perspective-[2000px]">
                 <div className="relative w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
                   {/* Front of card */}
                   <div className="absolute w-full h-full backface-hidden">
@@ -396,11 +396,11 @@ const PastSpeakers = ({ speakers = [] }) => {
                   </div>
 
                   {/* Back of card */}
-                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] 3xl:rounded-[30px] p-6 2xl:p-10 3xl:p-16 flex flex-col justify-start">
-                    <h3 className="text-black text-[1.2rem] xl:text-[1.4rem] 2xl:text-[2.4rem] 3xl:text-[3.6rem] font-extrabold uppercase mb-4 leading-tight">
+                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] 3xl:rounded-[30px] p-6 2xl:p-8 xxl:p-10 3xl:p-16 flex flex-col justify-start">
+                    <h3 className="text-black text-[1.2rem] xl:text-[1.4rem] 2xl:text-[1.8rem] xxl:text-[2.4rem] 3xl:text-[3.6rem] font-extrabold uppercase mb-4 leading-tight">
                       {speaker.name || 'Speaker Name'}
                     </h3>
-                    <p className="text-black text-[0.8rem] xl:text-[0.9rem] 2xl:text-[1.6rem] 3xl:text-[2.2rem] font-semibold leading-[1.4] mb-4 flex-grow overflow-y-auto">
+                    <p className="text-black text-[0.8rem] xl:text-[0.9rem] 2xl:text-[1.2rem] xxl:text-[1.6rem] 3xl:text-[2.2rem] font-semibold leading-[1.4] mb-4 flex-grow overflow-y-auto">
                       {speaker.description || 'Speaker description goes here'}
                     </p>
                     {speaker.twitter && (
@@ -414,9 +414,9 @@ const PastSpeakers = ({ speakers = [] }) => {
                           <img
                             src="https://upload.wikimedia.org/wikipedia/commons/5/57/X_logo_2023_%28white%29.png"
                             alt="X (Twitter) Logo"
-                            className="w-4 h-4 xl:w-5 xl:h-5 2xl:w-7 2xl:h-7 3xl:w-10 3xl:h-10 invert"
+                            className="w-4 h-4 xl:w-5 xl:h-5 2xl:w-6 2xl:h-6 xxl:w-7 xxl:h-7 3xl:w-10 3xl:h-10 invert"
                           />
-                          <h3 className="text-[0.9rem] xl:text-[1rem] 2xl:text-[1.8rem] 3xl:text-[2.4rem] font-bold">
+                          <h3 className="text-[0.9rem] xl:text-[1rem] 2xl:text-[1.4rem] xxl:text-[1.8rem] 3xl:text-[2.4rem] font-bold">
                             {speaker.name || 'Speaker Name'}
                           </h3>
                         </a>
