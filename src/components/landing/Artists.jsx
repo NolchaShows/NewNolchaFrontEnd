@@ -11,11 +11,11 @@ function VideoGridZigZag({ videos }) {
     <div className="w-full flex justify-center">
       {/* 🖥️ Desktop/Large screens */}
       {videos && videos.length > 0 ? (
-        <div className="hidden lg:flex lg:justify-center gap-4 xl:gap-6 2xl:gap-12 lg:h-[450px] xl:h-[600px] 2xl:h-[900px] lg:items-end">
+        <div className="hidden lg:flex lg:justify-center gap-4 xl:gap-6 2xl:gap-12 3xl:gap-20 lg:h-[450px] xl:h-[600px] 2xl:h-[900px] 3xl:h-[1300px] lg:items-end">
           {videos.map((src, i) => (
             <div
               key={i}
-              className={`flex ${i % 2 === 0 ? "items-start" : "items-end"} h-[450px] xl:h-[600px] 2xl:h-[800px]`}
+              className={`flex ${i % 2 === 0 ? "items-start" : "items-end"} h-[450px] xl:h-[600px] 2xl:h-[800px] 3xl:h-[1100px]`}
             >
               <video
                 src={src}
@@ -23,7 +23,7 @@ function VideoGridZigZag({ videos }) {
                 muted
                 loop
                 playsInline
-                className="w-[200px] h-[350px] xl:w-[275px] xl:h-[491px] 2xl:w-[450px] 2xl:h-[650px] object-cover rounded-[20px] shadow-lg"
+                className="w-[200px] h-[350px] xl:w-[275px] xl:h-[491px] 2xl:w-[450px] 2xl:h-[650px] 3xl:w-[600px] 3xl:h-[850px] object-cover rounded-[20px] 3xl:rounded-[40px] shadow-lg"
                 style={{ border: `10px solid ${borderColors[i]}` }}
               />
             </div>
@@ -181,7 +181,7 @@ export function Carousel({
       )}
       <motion.div
         ref={marqueeRef}
-        className={`flex whitespace-nowrap font-medium gap-[40px] lg:gap-[60px] xl:gap-[80px] 2xl:gap-[200px] py-[20px] lg:py-[0px] ${textColor} text-[20px] lg:text-[23px] xl:text-[26px] 2xl:text-[44px] uppercase helvetica`}
+        className={`flex whitespace-nowrap font-medium gap-[40px] lg:gap-[60px] xl:gap-[80px] 2xl:gap-[200px] 3xl:gap-[300px] py-[20px] lg:py-[0px] ${textColor} text-[20px] lg:text-[23px] xl:text-[26px] 2xl:text-[44px] 3xl:text-[64px] uppercase helvetica`}
         animate={{ x: [0, -width] }}
         transition={{
           ease: "linear",
@@ -241,11 +241,11 @@ function Artists({ artistData, loading, textColor, backgroundColor, isFade, vide
           carouselArtists={carouselArtists}
         />
       )}
-      <div className="bg-black page-container flex flex-col gap-[30px] lg:gap-[35px] xl:gap-[40px] 2xl:gap-[0]">
-        <div className="flex w-[90%] lg:w-[85%] xl:w-[80%] mx-auto justify-center xl:flex-row flex-col gap-[20px] text-white">
-          <div className={`flex flex-col gap-[20px] 2xl:gap-[30px] font-bold lg:items-center lg:text-center ${isTextLeft ? 'text-lefwt lg:text-center' : 'text-center'}`}>
+      <div className="bg-black page-container flex flex-col gap-[30px] lg:gap-[35px] xl:gap-[40px] 2xl:gap-[0] 3xl:gap-[50px]">
+        <div className="flex w-[90%] lg:w-[85%] xl:w-[80%] 3xl:w-[75%] mx-auto justify-center xl:flex-row flex-col gap-[20px] 3xl:gap-[40px] text-white">
+          <div className={`flex flex-col gap-[20px] 2xl:gap-[30px] 3xl:gap-[50px] font-bold lg:items-center lg:text-center ${isTextLeft ? 'text-lefwt lg:text-center' : 'text-center'}`}>
             <SectionTitle disableTitleSpacing={true} className="text-white">{title}</SectionTitle>
-            <p className="font-normal text-[16px] md:text-[18px] xl:text-[20px] 2xl:text-4xl text-white">
+            <p className="font-normal text-[16px] md:text-[18px] xl:text-[20px] 2xl:text-4xl 3xl:text-5xl text-white">
               {description}
             </p>
           </div>

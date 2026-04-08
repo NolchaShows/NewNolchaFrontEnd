@@ -63,17 +63,17 @@ const ExploreServices = ({ title, image, caption, items }) => {
   };
 
   return (
-    <section className="page-container bg-black py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px]">
-      <SectionTitle className="text-white text-left mb-[30px] lg:mb-[40px] xl:mb-[50px] 2xl:mb-[70px]">{title}</SectionTitle>
+    <section className="page-container bg-black py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] 3xl:py-[200px]">
+      <SectionTitle className="text-white text-left mb-[30px] lg:mb-[40px] xl:mb-[50px] 2xl:mb-[70px] 3xl:mb-[100px]">{title}</SectionTitle>
 
-      <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[24px] xl:gap-[30px] 2xl:gap-[60px] items-center lg:items-start">
+      <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[24px] xl:gap-[30px] 2xl:gap-[60px] 3xl:gap-[100px] items-center lg:items-start">
         {/* Left video player with play button */}
-        <div className="relative w-[300px] lg:w-[380px] xl:w-[435px] 2xl:w-[580px]">
-          <div className="rounded-[14px] lg:rounded-[18px] xl:rounded-[22px] 2xl:rounded-[40px] overflow-hidden relative bg-black">
+        <div className="relative w-[300px] lg:w-[380px] xl:w-[435px] 2xl:w-[580px] 3xl:w-[800px]">
+          <div className="rounded-[14px] lg:rounded-[18px] xl:rounded-[22px] 2xl:rounded-[40px] 3xl:rounded-[60px] overflow-hidden relative bg-black">
             <video
               ref={videoRef}
               src={getVideoUrl(expandedIndex >= 0 ? expandedIndex : 0)}
-              className="w-full h-[340px] lg:h-[500px] xl:h-[570px] 2xl:h-[700px] object-cover"
+              className="w-full h-[340px] lg:h-[500px] xl:h-[570px] 2xl:h-[700px] 3xl:h-[1000px] object-cover"
               onPause={handleVideoPause}
               onPlay={handleVideoPlay}
               onEnded={() => {
@@ -143,7 +143,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
                   onClick={() => toggleItem(idx)}
                   className="w-full flex justify-between items-center text-left transition-colors"
                 >
-                  <h3 className="text-[18px] lg:text-[22px] xl:text-[28px] 2xl:text-[40px] text-white leading-[1.2] pr-4">
+                  <h3 className="text-[18px] lg:text-[22px] xl:text-[28px] 2xl:text-[40px] 3xl:text-[56px] text-white leading-[1.2] pr-4">
                     <span className="font-bold">{item.label}:</span>{" "}
                     <span className="font-normal">{item.text}</span>
                   </h3>

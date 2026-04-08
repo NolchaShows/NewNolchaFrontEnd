@@ -74,11 +74,11 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   }
 
   return (
-    <div className="bg-secondary page-container py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px]">
-      <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[40px] xl:gap-[50px] 2xl:gap-[80px] items-start">
+    <div className="bg-secondary page-container py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] 3xl:py-[200px]">
+      <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[40px] xl:gap-[50px] 2xl:gap-[80px] 3xl:gap-[120px] items-start">
         {/* Left side - Image with gradient overlay */}
-        <div className="relative w-full lg:w-[420px] xl:w-[513px] h-auto lg:h-[435px] xl:h-[531px] flex-shrink-0">
-          <div className="rounded-[12px] overflow-hidden relative w-full" style={{ aspectRatio: '513/531', maxHeight: '531px' }}>
+        <div className="relative w-full lg:w-[420px] xl:w-[513px] 2xl:w-[650px] 3xl:w-[900px] h-auto lg:h-[435px] xl:h-[531px] 2xl:h-[680px] 3xl:h-[950px] flex-shrink-0">
+          <div className="rounded-[12px] overflow-hidden relative w-full h-full">
             <img
               src={getImageUrl()}
               alt="Nolcha Shows collaboration event"

@@ -113,19 +113,19 @@ const TweetCarousel = ({
   }
 
   return (
-    <div className={`py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[180px] overflow-hidden bg-black ${padding}`}>
-      <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[250px] title-spacing flex flex-row items-center justify-between">
+    <div className={`py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[180px] 3xl:py-[250px] overflow-hidden bg-black ${padding}`}>
+      <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[250px] 3xl:px-[400px] title-spacing flex flex-row items-center justify-between">
         <SectionTitle disableTitleSpacing className="text-white">{carouselTitle}</SectionTitle>
 
         {/* Navigation Arrows - Desktop Only */}
-        <div className="hidden lg:flex gap-4">
+        <div className="hidden lg:flex gap-4 xl:gap-6 3xl:gap-10">
           <button
             onClick={prevPost}
             aria-label="Scroll left"
           >
             <motion.img
               src="/icons/left-black-button.svg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] xl:w-[60px] xl:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] xl:w-[60px] xl:h-[60px] 2xl:h-[70px] 2xl:w-[70px] 3xl:w-[100px] 3xl:h-[100px]"
               whileTap={{ scale: 0.9 }}
             />
           </button>
@@ -135,7 +135,7 @@ const TweetCarousel = ({
           >
             <motion.img
               src="/icons/right-black-button.svg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] xl:w-[60px] xl:h-[60px] 2xl:h-[70px] 2xl:w-[70px]"
+              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] xl:w-[60px] xl:h-[60px] 2xl:h-[70px] 2xl:w-[70px] 3xl:w-[100px] 3xl:h-[100px]"
               whileTap={{ scale: 0.9 }}
             />
           </button>
