@@ -3,6 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import InnerCircleModal from "../Modals/InnerCircleModal";
 import { useRouter } from "next/navigation";
+import {
+  getUpcomingEventHref,
+  upcomingListEvents,
+} from "@/data/upcomingEvents";
 
 function Navbar() {
   // Testing helper: keep one mega dropdown open
@@ -27,9 +31,34 @@ function Navbar() {
   const [hoveredMegaItemImage, setHoveredMegaItemImage] = useState(null);
 
   const router = useRouter();
+  const defaultExperiencesDropdown = [
+    {
+      label: "VV Racing with Jack Butcher",
+      href: "/experiences/vv_raching_with_jack_butcher",
+    },
+    {
+      label: "Bitcoin Conference",
+      href: "/experiences/bitcoin_conferance",
+    },
+    {
+      label: "Opening Night Consensus",
+      href: "/experiences/opening_night_consensus",
+    },
+    {
+      label: "CTRL Ordinals Collection Launch",
+      href: "/experiences/ctrl_ordinals_collection_launch",
+    },
+    {
+      label: "New York Fashion Week",
+      href: "/experiences/new_york_fashion_week",
+    },
+  ];
+  const [experiencesDropdown, setExperiencesDropdown] = useState(
+    defaultExperiencesDropdown
+  );
   // Mobile dropdown states
   const [mobileDropdowns, setMobileDropdowns] = useState({
-    btcVegas: false,
+    whiteLabel: false,
     upcoming: false,
     charityPartners: false,
     experiences: false,
@@ -43,9 +72,9 @@ function Navbar() {
   const visibleMenuItems = [
     {
       label: "White Label",
-      href: "#",
-      subtitle: "Flagship Event",
-      key: "btcVegas",
+      href: "/white-label",
+      subtitle: "Your Brand + Infrastructure",
+      key: "whiteLabel",
     },
     {
       label: "Upcoming",
@@ -130,26 +159,6 @@ function Navbar() {
 
   const allMenuItems = [...visibleMenuItems, ...moreMenuItems];
 
-  const experiencesDropdown = [
-    {
-      label: "Vv raching with Jack Butcher",
-      href: "/experiences/vv_raching_with_jack_butcher",
-    },
-    { label: "White Label conferance", href: "/experiences/bitcoin_conferance" },
-    {
-      label: "Opening night consensus",
-      href: "/experiences/opening_night_consensus",
-    },
-    {
-      label: "Ctrl ordinals collection launch",
-      href: "/experiences/ctrl_ordinals_collection_launch",
-    },
-    {
-      label: "New York Fashion Week",
-      href: "/experiences/new_york_fashion_week",
-    },
-  ];
-
   const charityPartnersDropdown = [
     {
       label: "St. Jude Children's Research Hospital",
@@ -179,7 +188,7 @@ function Navbar() {
       case "creativeCircle":
         return [
           { label: "Speakers", href: "/speakers" },
-          { label: "Artists", href: "/artists" },
+          { label: "Featured Artists", href: "/featured-artists" },
           { label: "Designers", href: "/designers" },
         ];
       default:
@@ -189,20 +198,17 @@ function Navbar() {
 
   const getMegaMenuConfig = (menuKey) => {
     // First item should NOT have a dropdown
-    if (!menuKey || menuKey === "btcVegas") return null;
+    if (!menuKey || menuKey === "whiteLabel") return null;
 
     switch (menuKey) {
       case "upcoming":
         return {
           sectionLabel: "Upcoming",
-          items: [
-            { label: "Art Basel Dec 4, 2025", href: "/upcoming" },
-            { label: "Consensus HK February 10-12, 2026", href: "/upcoming" },
-            { label: "BTC Vegas", href: "/upcoming" },
-            { label: "Consensus Miami", href: "/upcoming" },
-            { label: "Summer Series 2025", href: "/upcoming" },
-            { label: "Turnkey- White Label", href: "/upcoming" },
-          ],
+          items: upcomingListEvents.map((event) => ({
+            label: event.title,
+            href: getUpcomingEventHref(event.title),
+            imageSrc: event.image,
+          })),
           cta: {
             title: "View All Upcoming",
             description: "See the full calendar and join us at upcoming events.",
@@ -257,8 +263,8 @@ function Navbar() {
               imageSrc: "/homepage/menu_dropdown/Speakers.jpg",
             },
             {
-              label: "Artists",
-              href: "/artists",
+              label: "Featured Artists",
+              href: "/featured-artists",
               imageSrc: "/homepage/menu_dropdown/Artists.jpg",
             },
             {
@@ -269,7 +275,8 @@ function Navbar() {
           ],
           cta: {
             title: "View Alumni",
-            description: "Explore our speakers, artists, and designers.",
+            description:
+              "Explore our speakers, featured artists, and designers.",
             href: "/speakers",
           },
           imageSrc: "/homepage/menu_dropdown/Speakers.jpg",
@@ -340,6 +347,34 @@ function Navbar() {
   useEffect(() => {
     setHoveredMegaItemImage(null);
   }, [activeDesktopMegaMenu, isDesktopSecondRowOpen]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchExperiencePages = async () => {
+      try {
+        const { getExperiencePages } = await import("@/lib/strapi");
+        const pages = await getExperiencePages();
+
+        if (!isMounted || !Array.isArray(pages) || pages.length === 0) return;
+
+        setExperiencesDropdown(
+          pages.map((page) => ({
+            label: page.title,
+            href: `/experiences/${page.slug}`,
+          }))
+        );
+      } catch (error) {
+        console.error("Failed to fetch experience pages for navbar:", error);
+      }
+    };
+
+    fetchExperiencePages();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const renderMobileMenuItem = (item, idx) => {
     const isExpanded = item.key && mobileDropdowns[item.key];
@@ -667,7 +702,16 @@ function Navbar() {
                       }
                       const targetRect = e.currentTarget.getBoundingClientRect();
                       const navRect = desktopNavbarRef.current?.getBoundingClientRect();
-                      const panelWidth = window.innerWidth >= 2560 ? 1200 : window.innerWidth >= 1920 ? 900 : 746;
+                      const panelWidth =
+                        window.innerWidth >= 3840
+                          ? 1800
+                          : window.innerWidth >= 2560
+                            ? 1400
+                            : window.innerWidth >= 1920
+                              ? 900
+                              : window.innerWidth >= 1536
+                                ? 1000
+                                : 746;
                       const edgePadding = 20;
 
                       if (!navRect) {

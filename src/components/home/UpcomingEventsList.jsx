@@ -1,12 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SectionTitle from "../common/SectionTitle";
 import SponsorshipDetailsModal from "../Modals/SponsorshipDetailsModal";
 import EventDetailsModal from "../Modals/EventDetailsModal";
+import { slugifyUpcomingEventTitle } from "@/data/upcomingEvents";
 
 const UpcomingEventsList = ({
   title = "Upcoming Events",
   events = [],
+  openEventSlug = null,
+  onOpenEventHandled,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,8 +42,41 @@ const UpcomingEventsList = ({
     whiteLabelLocation: safeEvents[0]?.whiteLabelLocation || "--",
   };
 
+  useEffect(() => {
+    if (!openEventSlug) return;
+
+    const matchedIndex = safeEvents.findIndex(
+      (event) => slugifyUpcomingEventTitle(event.title) === openEventSlug
+    );
+
+    if (matchedIndex === -1) {
+      onOpenEventHandled?.();
+      return;
+    }
+
+    const matchedEvent = {
+      ...defaults,
+      ...safeEvents[matchedIndex],
+    };
+
+    setActiveIndex(matchedIndex);
+    setEventDetailsContext({
+      title: matchedEvent.title || "",
+      date: matchedEvent.date || "",
+      venue: matchedEvent.venue || matchedEvent.location || "",
+      whatToExpect:
+        matchedEvent.whatToExpect || matchedEvent.description || "",
+      rsvpLink: matchedEvent.rsvpLink || matchedEvent.rsvp_url || "#",
+      logo: matchedEvent.logo || matchedEvent.logoUrl || "",
+      mainImage: matchedEvent.mainImage || matchedEvent.image || "",
+      galleryImages: matchedEvent.galleryImages || matchedEvent.gallery || [],
+    });
+    setIsEventDetailsModalOpen(true);
+    onOpenEventHandled?.();
+  }, [defaults, onOpenEventHandled, openEventSlug, safeEvents]);
+
   return (
-    <section className="w-full bg-black page-container relative">
+    <section id="upcoming-events" className="w-full bg-black page-container relative">
       <SectionTitle className="mb-[20px] lg:mb-[30px] 2xl:mb-[50px]">{title}</SectionTitle>
 
       <div className="flex flex-col gap-[6px] lg:gap-[10px] 2xl:gap-[18px]">

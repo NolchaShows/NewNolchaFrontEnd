@@ -287,6 +287,32 @@ export async function getExperiencePageData(experiencePage) {
 }
 
 /**
+ * Fetch all experience pages for navigation/dropdowns
+ * @returns {Promise<Array>} - Array of experience pages
+ */
+export async function getExperiencePages() {
+  try {
+    const data = await fetchFromStrapi(
+      "experience-pages?fields[0]=title&fields[1]=slug&sort[0]=title:asc&pagination[pageSize]=100"
+    );
+
+    if (!data?.data || !Array.isArray(data.data)) {
+      return [];
+    }
+
+    return data.data
+      .map((item) => ({
+        title: item?.title || "",
+        slug: item?.slug || "",
+      }))
+      .filter((item) => item.title && item.slug);
+  } catch (error) {
+    console.error("❌ Error fetching experience pages:", error);
+    return [];
+  }
+}
+
+/**
  * Fetch speakers page data from Strapi
  * @returns {Promise} - The speakers page data
  */
