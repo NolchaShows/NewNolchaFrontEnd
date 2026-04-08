@@ -48,19 +48,19 @@ const ThreeImageRow = ({
             {resolvedItems.map((item, idx) => (
               <div
                 key={idx}
-                className="relative h-[375px] lg:h-[525px] 2xl:h-[933px] bg-white"
+                className="relative h-[375px] lg:h-[525px] 2xl:h-[700px] xxl:h-[933px] 3xl:h-[1200px] bg-white"
               >
                 {renderItem(item, `Visual ${idx + 1}`)}
                 {idx === overlayIndex && (line1 || line2) && (
-                  <div className="absolute inset-0 flex items-end justify-center pb-[18px] lg:pb-[48px] 2xl:pb-[86px]">
+                  <div className="absolute inset-0 flex items-end justify-center pb-[18px] lg:pb-[48px] 2xl:pb-[64px] xxl:pb-[86px] 3xl:pb-[120px]">
                     <div className="text-white text-center">
                       {line1 && (
-                        <div className="text-[18px] lg:text-[36px] 2xl:text-[65px] font-medium leading-tight">
+                        <div className="text-[18px] lg:text-[36px] 2xl:text-[48px] xxl:text-[65px] 3xl:text-[96px] font-medium leading-tight">
                           {line1}
                         </div>
                       )}
                       {line2 && (
-                        <div className="text-[18px] lg:text-[36px] 2xl:text-[65px] font-medium leading-tight">
+                        <div className="text-[18px] lg:text-[36px] 2xl:text-[48px] xxl:text-[65px] 3xl:text-[96px] font-medium leading-tight">
                           {line2}
                         </div>
                       )}

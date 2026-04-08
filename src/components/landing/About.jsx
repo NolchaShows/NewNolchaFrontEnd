@@ -23,14 +23,14 @@ function About({
   if (variant === "press") {
     return (
       <section className="w-full bg-[#171717] text-white page-container">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12">
-          <div className="flex flex-col gap-8 max-w-[460px]">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 xxl:gap-20 3xl:gap-32">
+          <div className="flex flex-col gap-8 xxl:gap-12 3xl:gap-20 max-w-[460px] xxl:max-w-[600px] 3xl:max-w-[900px]">
             {title && (
-              <h2 className="font-['Tomorrow',sans-serif] text-[32px] sm:text-[40px] lg:text-[50px] leading-[1.2] tracking-[-1.5px] font-extrabold">
+              <h2 className="font-['Tomorrow',sans-serif] text-[32px] sm:text-[40px] lg:text-[50px] xxl:text-[64px] 3xl:text-[96px] leading-[1.2] tracking-[-1.5px] font-extrabold">
                 {title}
               </h2>
             )}
-            <div className="flex flex-col gap-4 text-[16px] sm:text-[18px] lg:text-[20px] leading-[1.5] tracking-[-0.6px]">
+            <div className="flex flex-col gap-4 xxl:gap-6 3xl:gap-10 text-[16px] sm:text-[18px] lg:text-[20px] xxl:text-[28px] 3xl:text-[40px] leading-[1.5] tracking-[-0.6px]">
               <p className="font-['Tomorrow',sans-serif]">
                 {paragraphText}
               </p>
@@ -39,15 +39,15 @@ function About({
               <RoundedCtaButton
                 href={link}
                 label={linkText}
-                className="self-start"
+                className="self-start xxl:scale-125 3xl:scale-150 origin-left"
               />
             )}
           </div>
           {image && (
-            <div className="w-full lg:w-[659px]">
+            <div className="w-full lg:w-[659px] xxl:w-[850px] 3xl:w-[1200px]">
               <img
                 src={image}
-                className="w-full h-[280px] sm:h-[360px] lg:h-[487px] rounded-[16px] object-cover"
+                className="w-full h-[280px] sm:h-[360px] lg:h-[487px] xxl:h-[650px] 3xl:h-[900px] rounded-[16px] 3xl:rounded-[32px] object-cover"
                 alt="About section"
               />
             </div>

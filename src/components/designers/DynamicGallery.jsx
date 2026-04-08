@@ -28,8 +28,8 @@ const DynamicGallery = ({ imagesGallery, title, loading, basePath = '/designers'
 
     return (
         <div className="bg-black page-container mx-auto min-h-screen">
-            <SectionTitle className="mb-[20px] lg:mb-[30px] 2xl:mb-[50px]">{title}</SectionTitle>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 2xl:gap-[30px]">
+            <SectionTitle className="mb-[20px] lg:mb-[30px] 2xl:mb-[40px] xxl:mb-[50px] 3xl:mb-[80px]">{title}</SectionTitle>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 2xl:gap-[30px] xxl:gap-[40px] 3xl:gap-[60px]">
                 {imagesGallery.map((item, index) => (
                     <ImageCard
                         key={item.slug || index}

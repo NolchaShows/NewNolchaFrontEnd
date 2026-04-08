@@ -59,12 +59,12 @@ const FashionGrid = ({
         <div className="bg-[#FEF991]">
           <div className="grid grid-cols-1 md:grid-cols-5 bg-[#FEF991]">
             {/* Left Video */}
-            <div className="hidden md:block relative h-[300px] lg:h-[1008px] 2xl:h-[1792px] bg-white">
+            <div className="hidden md:block relative h-[300px] lg:h-[1008px] 2xl:h-[1300px] xxl:h-[1792px] 3xl:h-[2400px] bg-white">
               {renderSideMedia(resolvedLeft)}
             </div>
 
             {/* 5 Image Boxes - Arranged like the fashion collage */}
-            <div className="col-span-1 md:col-span-3 grid grid-cols-3 grid-rows-3 h-[438px] lg:h-[1008px] 2xl:h-[1792px]">
+            <div className="col-span-1 md:col-span-3 grid grid-cols-3 grid-rows-3 h-[438px] lg:h-[1008px] 2xl:h-[1300px] xxl:h-[1792px] 3xl:h-[2400px]">
               {/* Top row - 2 horizontal rectangles */}
               <div className="col-span-3 row-span-1 bg-white">
                 {renderItem(resolvedItems[0], "Fashion image 1")}
@@ -88,7 +88,7 @@ const FashionGrid = ({
             </div>
 
             {/* Right Video */}
-            <div className="hidden md:block relative h-[300px] lg:h-[1008px] 2xl:h-[1792px] bg-white">
+            <div className="hidden md:block relative h-[300px] lg:h-[1008px] 2xl:h-[1300px] xxl:h-[1792px] 3xl:h-[2400px] bg-white">
               {renderSideMedia(resolvedRight)}
             </div>
           </div>

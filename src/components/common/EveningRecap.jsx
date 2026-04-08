@@ -66,7 +66,7 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
             ) : null}
 
             {/* Video Container */}
-            <div className={`relative overflow-hidden ${title ? "mt-5 lg:mt-10 2xl:mt-15" : "mt-0"}`}>
+            <div className={`relative overflow-hidden ${title ? "mt-5 lg:mt-10 2xl:mt-12 xxl:mt-15 3xl:mt-24" : "mt-0"}`}>
                 <AnimatePresence mode="wait">
                     {isGoogleDriveVideo ? (
                         <motion.div
@@ -75,7 +75,7 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.5, ease: "easeInOut" }}
-                            className="w-full h-[400px] lg:h-[700px] 2xl:h-[1200px]"
+                            className="w-full h-[400px] lg:h-[700px] 2xl:h-[900px] xxl:h-[1200px] 3xl:h-[1800px]"
                         >
                             <iframe
                                 src={embedUrl}
@@ -92,7 +92,7 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.5, ease: "easeInOut" }}
                             src={videoUrlToUse}
-                            className="w-full h-[400px] lg:h-[700px] 2xl:h-[1200px] object-cover"
+                            className="w-full h-[400px] lg:h-[700px] 2xl:h-[900px] xxl:h-[1200px] 3xl:h-[1800px] object-cover"
                             controls
                             playsInline
                         >
@@ -104,18 +104,18 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
 
             {/* Navigation Arrows - Only show if multiple videos */}
             {videoList.length > 1 && (
-                <div className="flex justify-center gap-3 lg:gap-4 2xl:gap-5 py-4 lg:py-6 2xl:py-8">
+                <div className="flex justify-center gap-3 lg:gap-4 2xl:gap-6 xxl:gap-8 3xl:gap-12 py-4 lg:py-6 2xl:py-8 xxl:py-10 3xl:py-16">
                     <button onClick={handlePrev} aria-label="Previous video">
                         <motion.img
                             src="/left.jpg"
-                            className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] 2xl:h-[70px] 2xl:w-[70px] rounded-[5px] lg:rounded-[10px] 2xl:rounded-[15px]"
+                            className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:h-[70px] xxl:w-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
                             whileTap={{ scale: 0.9 }}
                         />
                     </button>
                     <button onClick={handleNext} aria-label="Next video">
                         <motion.img
                             src="/right.jpg"
-                            className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] 2xl:h-[70px] 2xl:w-[70px] rounded-[5px] lg:rounded-[10px] 2xl:rounded-[15px]"
+                            className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:h-[70px] xxl:w-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
                             whileTap={{ scale: 0.9 }}
                         />
                     </button>

@@ -43,7 +43,7 @@ const CardSlider = ({ cards = [], loading }) => {
 
       {/* Desktop Grid - Hidden on mobile */}
       <div className="hidden md:block">
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-[30px] max-w-none mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-[30px] xxl:gap-[50px] 3xl:gap-[80px] max-w-none mx-auto">
           {cards.map((card, index) => (
             <Card
               key={card.id || index}
