@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import SectionTitle from "../common/SectionTitle";
 import SponsorshipDetailsModal from "../Modals/SponsorshipDetailsModal";
 import EventDetailsModal from "../Modals/EventDetailsModal";
@@ -16,34 +16,45 @@ const UpcomingEventsList = ({
   const [modalContext, setModalContext] = useState({ title: "", image: "" });
   const [isEventDetailsModalOpen, setIsEventDetailsModalOpen] = useState(false);
   const [eventDetailsContext, setEventDetailsContext] = useState(null);
+  const lastAutoOpenedSlugRef = useRef(null);
 
-  const safeEvents = events && events.length > 0 ? events : [
-    {
-      title: "Art Basel",
-      image: "/landing/recent_event.png",
-      date: "07-07-2025",
-      location: "22908 Houston Texas Usa",
-      pastEventsLocation: "Houston Texas Usa",
-      letsTalkLocation: "Location:",
-      whiteLabelLocation: "Location:",
-    },
-    { title: "Consensus HK" },
-    { title: "Bitcoin Vegas" },
-    { title: "Consensus Miami" },
-  ];
+  const safeEvents = useMemo(
+    () =>
+      events && events.length > 0
+        ? events
+        : [
+            {
+              title: "Art Basel",
+              image: "/landing/recent_event.png",
+              date: "07-07-2025",
+              location: "22908 Houston Texas Usa",
+              pastEventsLocation: "Houston Texas Usa",
+              letsTalkLocation: "Location:",
+              whiteLabelLocation: "Location:",
+            },
+            { title: "Consensus HK" },
+            { title: "Bitcoin Vegas" },
+            { title: "Consensus Miami" },
+          ],
+    [events]
+  );
 
   // Defaults pulled from the first item so every opened card can render
-  const defaults = {
-    image: safeEvents[0]?.image || "/landing/recent_event.png",
-    date: safeEvents[0]?.date || "--",
-    location: safeEvents[0]?.location || "--",
-    pastEventsLocation: safeEvents[0]?.pastEventsLocation || "--",
-    letsTalkLocation: safeEvents[0]?.letsTalkLocation || "--",
-    whiteLabelLocation: safeEvents[0]?.whiteLabelLocation || "--",
-  };
+  const defaults = useMemo(
+    () => ({
+      image: safeEvents[0]?.image || "/landing/recent_event.png",
+      date: safeEvents[0]?.date || "--",
+      location: safeEvents[0]?.location || "--",
+      pastEventsLocation: safeEvents[0]?.pastEventsLocation || "--",
+      letsTalkLocation: safeEvents[0]?.letsTalkLocation || "--",
+      whiteLabelLocation: safeEvents[0]?.whiteLabelLocation || "--",
+    }),
+    [safeEvents]
+  );
 
   useEffect(() => {
     if (!openEventSlug) return;
+    if (lastAutoOpenedSlugRef.current === openEventSlug) return;
 
     const matchedIndex = safeEvents.findIndex(
       (event) => slugifyUpcomingEventTitle(event.title) === openEventSlug
@@ -53,6 +64,8 @@ const UpcomingEventsList = ({
       onOpenEventHandled?.();
       return;
     }
+
+    lastAutoOpenedSlugRef.current = openEventSlug;
 
     const matchedEvent = {
       ...defaults,
@@ -74,6 +87,12 @@ const UpcomingEventsList = ({
     setIsEventDetailsModalOpen(true);
     onOpenEventHandled?.();
   }, [defaults, onOpenEventHandled, openEventSlug, safeEvents]);
+
+  useEffect(() => {
+    if (!openEventSlug) {
+      lastAutoOpenedSlugRef.current = null;
+    }
+  }, [openEventSlug]);
 
   return (
     <section id="upcoming-events" className="w-full bg-black page-container relative">
