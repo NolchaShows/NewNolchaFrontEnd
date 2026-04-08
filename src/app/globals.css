@@ -40,6 +40,14 @@
   --btn-s-size: 16px; --btn-s-lh: 100%;
 }
 
+/* Override typography variables for ≥1024px */
+@media (min-width: 1024px) {
+  :root {
+    --h1-size: 44px; --h1-lh: 120%;
+    --h3-size: 28px; --h3-lh: 120%;
+  }
+}
+
 /* Override typography variables for ≥1440px */
 @media (min-width: 1440px) {
   :root {
@@ -183,11 +191,11 @@ body {
 
 /* Reusable section padding utility */
 .page-container {
-  @apply py-[60px] lg:py-[100px] 2xl:py-[180px] px-[20px] lg:px-[140px] 2xl:px-[250px];
+  @apply py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[180px] px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[250px];
 }
 
 .page-container-fluid {
-  @apply py-[60px] lg:py-[100px] 2xl:py-[180px];
+  @apply py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[180px];
 }
 
 /* Reusable text style helpers using variables */

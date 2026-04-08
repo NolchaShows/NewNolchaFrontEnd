@@ -71,7 +71,7 @@ const ImageGallerySlider = ({ images }) => {
 
   return (
     <div className="relative w-full">
-      <div className="relative w-full h-[100vw] md:h-[42vw]">
+      <div className="relative w-full h-[100vw] md:h-[42vw] lg:h-[40vw] xl:h-[42vw]">
         <img
           src={items[index]}
           alt={`image-${index}`}
