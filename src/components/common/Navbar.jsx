@@ -5,6 +5,7 @@ import InnerCircleModal from "../Modals/InnerCircleModal";
 import { useRouter } from "next/navigation";
 import {
   getUpcomingEventHref,
+  slugifyUpcomingEventTitle,
   upcomingListEvents,
 } from "@/data/upcomingEvents";
 
@@ -207,6 +208,7 @@ function Navbar() {
           items: upcomingListEvents.map((event) => ({
             label: event.title,
             href: getUpcomingEventHref(event.title),
+            upcomingSlug: slugifyUpcomingEventTitle(event.title),
             imageSrc: event.image,
           })),
           cta: {
@@ -291,6 +293,31 @@ function Navbar() {
     if (modalType === "innerCircle") {
       setIsInnerCircleModalOpen(true);
     }
+    setIsMobileMenuOpen(false);
+  };
+
+  const notifyUpcomingSelection = (slug) => {
+    if (typeof window === "undefined" || !slug) return;
+
+    try {
+      window.sessionStorage.setItem("nolcha:open-upcoming", slug);
+    } catch (error) {
+      console.error("Failed to persist upcoming event slug:", error);
+    }
+
+    window.dispatchEvent(
+      new CustomEvent("nolcha:open-upcoming", {
+        detail: { slug },
+      })
+    );
+  };
+
+  const handleDropdownLinkClick = (dropdownItem) => {
+    if (dropdownItem?.upcomingSlug) {
+      notifyUpcomingSelection(dropdownItem.upcomingSlug);
+    }
+
+    setActiveDesktopMegaMenu(null);
     setIsMobileMenuOpen(false);
   };
 
@@ -465,7 +492,7 @@ function Navbar() {
                         key={dropdownIdx}
                         href={dropdownItem.href}
                         className="block text-[16px] text-white/90 hover:text-primary transition-colors"
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={() => handleDropdownLinkClick(dropdownItem)}
                       >
                         {dropdownItem.label}
                       </Link>
@@ -815,7 +842,7 @@ function Navbar() {
                             href={it.href}
                             className="block text-[20px] xxl:text-[26px] 3xl:text-[42px] leading-[1.15] font-[500] text-white hover:text-primary transition-opacity"
                             onMouseEnter={() => setHoveredMegaItemImage(it.imageSrc || null)}
-                            onClick={() => setActiveDesktopMegaMenu(null)}
+                            onClick={() => handleDropdownLinkClick(it)}
                           >
                             {it.label}
                           </Link>

@@ -21,13 +21,10 @@ import PastExperiences from "@/components/common/PastExperiences";
 import NolchaExperience from "@/components/home/Collaboration";
 import HomeWideVideoBanner from "@/components/home/HomeWideVideoBanner";
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { upcomingListEvents } from "@/data/upcomingEvents";
 
 export default function Home() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [requestedUpcomingSlug, setRequestedUpcomingSlug] = useState(null);
   const [heroData, setHeroData] = useState(null);
   const [logoSliderData, setLogoSliderData] = useState(null);
   const [aboutData, setAboutData] = useState(null);
@@ -91,20 +88,65 @@ export default function Home() {
     fetchHeroData();
   }, []);
 
-  const requestedUpcomingSlug = searchParams.get("upcoming");
-
   const handleUpcomingEventHandled = useCallback(() => {
-    if (!requestedUpcomingSlug) return;
+    if (typeof window === "undefined" || !requestedUpcomingSlug) return;
 
-    const nextParams = new URLSearchParams(searchParams.toString());
+    const nextParams = new URLSearchParams(window.location.search);
     nextParams.delete("upcoming");
 
     const nextUrl = nextParams.toString()
-      ? `${pathname}?${nextParams.toString()}`
-      : pathname;
+      ? `${window.location.pathname}?${nextParams.toString()}`
+      : window.location.pathname;
 
-    router.replace(nextUrl, { scroll: false });
-  }, [pathname, requestedUpcomingSlug, router, searchParams]);
+    try {
+      window.sessionStorage.removeItem("nolcha:open-upcoming");
+    } catch (error) {
+      console.error("Failed to clear upcoming event selection:", error);
+    }
+
+    window.history.replaceState({}, "", nextUrl);
+    setRequestedUpcomingSlug(null);
+  }, [requestedUpcomingSlug]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const syncUpcomingSlug = (incomingSlug = null) => {
+      if (incomingSlug) {
+        setRequestedUpcomingSlug(incomingSlug);
+        return;
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const slugFromQuery = params.get("upcoming");
+
+      if (slugFromQuery) {
+        setRequestedUpcomingSlug(slugFromQuery);
+        return;
+      }
+
+      try {
+        const storedSlug = window.sessionStorage.getItem("nolcha:open-upcoming");
+        setRequestedUpcomingSlug(storedSlug || null);
+      } catch (error) {
+        console.error("Failed to read upcoming event selection:", error);
+        setRequestedUpcomingSlug(null);
+      }
+    };
+
+    const handlePopState = () => syncUpcomingSlug();
+    const handleUpcomingSelection = (event) =>
+      syncUpcomingSlug(event?.detail?.slug || null);
+
+    syncUpcomingSlug();
+    window.addEventListener("popstate", handlePopState);
+    window.addEventListener("nolcha:open-upcoming", handleUpcomingSelection);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("nolcha:open-upcoming", handleUpcomingSelection);
+    };
+  }, []);
 
   const buildParagraphs = (aboutData) => {
     if (!aboutData) return [];
