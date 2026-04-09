@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
@@ -35,7 +37,12 @@ const TweetCarousel = ({
 
   // Use dynamic data from Strapi if available, otherwise fallback to posts prop
   const carouselTitle = carousalData?.title || title;
-  const carouselItems = carousalData?.carousal_item || posts || [];
+  const carouselItems =
+    carousalData?.items ||
+    carousalData?.carousal_item ||
+    carousalData?.carousalItem ||
+    posts ||
+    [];
 
   console.log('TweetCarousel - carousalData:', carousalData);
   console.log('TweetCarousel - carouselItems:', carouselItems);

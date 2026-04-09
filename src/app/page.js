@@ -6,7 +6,7 @@ import ImageCarousel from "@/components/experiences/ImageCarousel";
 import ContactForm from "@/components/common/ContactForm";
 import LogoSlider from "@/components/home/TextSlider";
 import Partners from "@/components/home/Partners";
-import { getLandingPageData } from "@/lib/strapi";
+import { getLandingPageData, getSharedTweetCarouselByKey } from "@/lib/strapi";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
 import BuildMomentumSection from "@/components/home/BuildMomentumSection";
 import ImageGallerySlider from "@/components/common/ImageGallerySlider";
@@ -43,7 +43,10 @@ export default function Home() {
   useEffect(() => {
     const fetchHeroData = async () => {
       try {
-        const data = await getLandingPageData();
+        const [data, sharedTweetCarousel] = await Promise.all([
+          getLandingPageData(),
+          getSharedTweetCarouselByKey("community-moments"),
+        ]);
 
         // Extract hero_section data from the first landing page
         if (data?.data && data.data.length > 0) {
@@ -75,7 +78,7 @@ export default function Home() {
           setTextHeroData(data.data[0].texthero_section);
           setNolchaExperienceData(data.data[0].nolcha_experience_section);
           setArtistData(data.data[0].artist_section);
-          setCarousalData(data.data[0].carousal_section);
+          setCarousalData(sharedTweetCarousel || data.data[0].carousal_section || null);
           setContactData(data.data[0].contact_section);
         }
       } catch (error) {
@@ -637,7 +640,7 @@ export default function Home() {
       />
       <TweetCarousel
         posts={tweetsData}
-        carousalData={null}
+        carousalData={carousalData}
         padding=""
         title="Community Moments"
       />

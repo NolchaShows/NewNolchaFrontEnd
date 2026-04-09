@@ -204,6 +204,27 @@ export async function getLandingPageData() {
 }
 
 /**
+ * Fetch a reusable shared tweet carousel by key
+ * @param {string} key - UID key for the shared carousel
+ * @returns {Promise<Object|null>}
+ */
+export async function getSharedTweetCarouselByKey(key) {
+  try {
+    if (!key) return null;
+    const query = [
+      `filters[key][$eq]=${encodeURIComponent(key)}`,
+      "populate[0]=items",
+    ].join("&");
+    const data = await fetchFromStrapi(`shared-tweet-carousels?${query}`);
+    if (!data?.data || data.data.length === 0) return null;
+    return Array.isArray(data.data) ? data.data[0] : data.data;
+  } catch (error) {
+    console.error("Error fetching shared tweet carousel:", error);
+    return null;
+  }
+}
+
+/**
  * Fetch press page data from Strapi
  * @returns {Promise} - The press page data
  */

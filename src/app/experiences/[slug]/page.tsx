@@ -9,6 +9,7 @@ import FashionGridSection from "@/components/experience/FashionGridSection";
 import ImageTextSectionServer from "@/components/experience/ImageTextSection";
 import EveningRecapSection from "@/components/experience/EveningRecapSection";
 import GallerySection from "@/components/experience/GallerySection";
+import SharedTweetCarouselSection from "@/components/experience/SharedTweetCarouselSection";
 import type {
   GetExperienceBySlugQuery,
   GetExperienceBySlugQueryVariables,
@@ -84,6 +85,7 @@ export default async function Page({ params }: PageProps) {
         <FashionGridSection slug={slug} />
         <ImageTextSectionServer slug={slug} />
         <EveningRecapSection slug={slug} />
+        <SharedTweetCarouselSection slug={slug} />
         <GallerySection slug={slug} />
       </>
     );
