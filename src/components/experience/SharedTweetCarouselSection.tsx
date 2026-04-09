@@ -11,15 +11,21 @@ export default async function SharedTweetCarouselSection({
   if (!slug) return null;
 
   try {
+    const query = [
+      `filters[slug][$eq]=${encodeURIComponent(slug)}`,
+      "populate[0]=shared_tweet_carousel",
+      "populate[1]=shared_tweet_carousel.items",
+    ].join("&");
     const response = await fetch(
-      `${STRAPI_BASE_URL}/api/experience-pages/by-slug/${encodeURIComponent(slug)}`,
+      `${STRAPI_BASE_URL}/api/experience-pages?${query}`,
       { next: { revalidate: 60 } }
     );
 
     if (!response.ok) return null;
 
     const json = await response.json();
-    const page = json?.data?.attributes || json?.data || null;
+    const rawPage = Array.isArray(json?.data) ? json.data[0] : json?.data || null;
+    const page = rawPage?.attributes || rawPage || null;
     const carousel = page?.shared_tweet_carousel || page?.sharedTweetCarousel || null;
 
     if (!carousel?.items?.length) return null;
