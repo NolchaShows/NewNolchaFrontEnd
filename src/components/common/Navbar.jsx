@@ -184,7 +184,7 @@ function Navbar() {
       case "press":
         return [
           { label: "Press Highlights", href: "/press" },
-          { label: "Media Coverage", href: "/press" },
+          { label: "Press", href: "/press" },
         ];
       case "creativeCircle":
         return [
@@ -245,8 +245,7 @@ function Navbar() {
           sectionLabel: "Press",
           items: [
             { label: "Press Highlights", href: "/press" },
-            { label: "Media Coverage", href: "/press" },
-            { label: "Press Page", href: "/press" },
+            { label: "Press", href: "/press" },
           ],
           cta: {
             title: "View All Press",
