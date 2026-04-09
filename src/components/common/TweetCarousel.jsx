@@ -1,39 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import SectionTitle from "./SectionTitle";
-
-const useScreenSize = () => {
-  const [screenSize, setScreenSize] = useState("lg");
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      if (window.innerWidth < 640) {
-        setScreenSize("sm");
-      } else if (window.innerWidth < 1024) {
-        setScreenSize("md");
-      } else {
-        setScreenSize("lg");
-      }
-    };
-
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
-
-  return screenSize;
-};
 
 const TweetCarousel = ({
   posts,
   carousalData,
-  padding = "px-4 md:px-8 mb-6",
+  padding = "",
   title = "Trusted by",
 }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
-  const screenSize = useScreenSize();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
   // Use dynamic data from Strapi if available, otherwise fallback to posts prop
   const carouselTitle = carousalData?.title || title;
@@ -44,24 +23,6 @@ const TweetCarousel = ({
     posts ||
     [];
 
-  console.log('TweetCarousel - carousalData:', carousalData);
-  console.log('TweetCarousel - carouselItems:', carouselItems);
-
-  const getPostsPerSlide = () => {
-    switch (screenSize) {
-      case "sm":
-        return 1;
-      case "md":
-        return 2;
-      case "lg":
-        return 3;
-      default:
-        return 3;
-    }
-  };
-
-  const postsPerSlide = getPostsPerSlide();
-
   // Load Twitter embed script
   useEffect(() => {
     const script = document.createElement('script');
@@ -70,65 +31,53 @@ const TweetCarousel = ({
     script.charset = 'utf-8';
     document.body.appendChild(script);
 
+    const timer = setTimeout(() => setIsLoaded(true), 1500);
+
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+
     return () => {
-      // Clean up script when component unmounts
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
   const nextPost = () => {
-    if (currentPostIndex + postsPerSlide < carouselItems.length) {
-      setCurrentPostIndex((prev) => prev + postsPerSlide);
-    } else {
-      // Fade animation when reaching the end - go back to first tweet
-      const carouselElement = document.querySelector('.tweet-carousel');
-      if (carouselElement) {
-        carouselElement.style.opacity = '0';
-        setTimeout(() => {
-          setCurrentPostIndex(0);
-          carouselElement.style.opacity = '1';
-        }, 300);
-      } else {
-        setCurrentPostIndex(0);
-      }
-    }
+    setCurrentPostIndex((prev) => (prev + 1) % carouselItems.length);
   };
 
   const prevPost = () => {
-    if (currentPostIndex - postsPerSlide >= 0) {
-      setCurrentPostIndex((prev) => prev - postsPerSlide);
-    } else {
-      // Fade animation when reaching the beginning - go to last tweet
-      const carouselElement = document.querySelector('.tweet-carousel');
-      if (carouselElement) {
-        carouselElement.style.opacity = '0';
-        setTimeout(() => {
-          setCurrentPostIndex(Math.max(0, carouselItems.length - postsPerSlide));
-          carouselElement.style.opacity = '1';
-        }, 300);
-      } else {
-        setCurrentPostIndex(Math.max(0, carouselItems.length - postsPerSlide));
-      }
-    }
+    setCurrentPostIndex((prev) => (prev - 1 + carouselItems.length) % carouselItems.length);
   };
 
-  // If no data available, don't render the component
   if (!carouselItems || carouselItems.length === 0) {
     return null;
   }
 
+  // Determine items per view based on window width
+  const getItemsPerView = () => {
+    if (windowWidth < 768) return 1;
+    if (windowWidth < 1024) return 2;
+    return 3;
+  };
+
+  const itemsPerView = getItemsPerView();
+  const gap = windowWidth < 768 ? 24 : windowWidth < 1024 ? 32 : 40;
+
   return (
-    <div className={`py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-black ${padding}`}>
-      <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] title-spacing flex flex-row items-center justify-between">
+    <div className={`py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-black ${padding} relative`}>
+      <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] mb-12 flex flex-row items-center justify-between">
         <SectionTitle disableTitleSpacing className="text-white">{carouselTitle}</SectionTitle>
 
-        {/* Navigation Arrows - Desktop Only */}
-        <div className="hidden lg:flex gap-4 xl:gap-6 2xl:gap-8 xxl:gap-10">
+        {/* Navigation Arrows */}
+        <div className="flex gap-4 xl:gap-6 2xl:gap-8 xxl:gap-10">
           <button
             onClick={prevPost}
             aria-label="Scroll left"
+            className="group"
           >
             <motion.img
               src="/icons/left-black-button.svg"
@@ -139,6 +88,7 @@ const TweetCarousel = ({
           <button
             onClick={nextPost}
             aria-label="Scroll right"
+            className="group"
           >
             <motion.img
               src="/icons/right-black-button.svg"
@@ -149,32 +99,41 @@ const TweetCarousel = ({
         </div>
       </div>
 
-      <div className="relative overflow-hidden">
-        <div
-          className="flex transition-transform duration-500 tweet-carousel"
-          style={{
-            transform: `translateX(-${(currentPostIndex / postsPerSlide) * 100
-              }%)`,
-            transition: 'transform 0.5s ease-in-out, opacity 0.3s ease-in-out'
-          }}
-        >
-          {carouselItems.map((item, idx) => {
-            // Handle tweet IDs for Twitter embeds
-            const tweetId = typeof item === 'string' ? item : item.tweetId || item.id;
-
-            return (
-              <div
-                key={idx}
-                className="w-full sm:w-1/2 lg:w-1/3 2xl:w-1/4 flex-shrink-0 px-2 mt-[-10px]"
-              >
-                <div className="w-full max-h-[450px] lg:max-h-[640px] 2xl:max-h-[800px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
-                  <blockquote className="twitter-tweet" data-theme="dark">
-                    <a href={`https://twitter.com/x/status/${tweetId}`}></a>
-                  </blockquote>
-                </div>
-              </div>
-            );
-          })}
+      <div className="relative">
+        <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]">
+          <div className="overflow-visible">
+            <motion.div
+              className="flex"
+              style={{ gap: `${gap}px` }}
+              animate={{
+                x: `calc(-${currentPostIndex * (100 / itemsPerView)}% - ${currentPostIndex * (gap / itemsPerView)}px)`,
+              }}
+              transition={{ type: "spring", stiffness: 150, damping: 25 }}
+            >
+              {carouselItems.map((item, idx) => {
+                const tweetId = typeof item === 'string' ? item : item.tweetId || item.id;
+                return (
+                  <div
+                    key={`${tweetId}-${idx}`}
+                    className="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-26.666px)] flex-shrink-0"
+                  >
+                    <div className="bg-[#111] rounded-3xl p-4 min-h-[450px] lg:min-h-[550px] flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500">
+                      {!isLoaded && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-10 h-10 border-4 border-white/10 border-t-white rounded-full animate-spin"></div>
+                        </div>
+                      )}
+                      <div className="w-full h-full overflow-y-auto scrollbar-hide">
+                        <blockquote className="twitter-tweet" data-theme="dark" data-chrome="noheader nofooter noborders transparent">
+                          <a href={`https://twitter.com/x/status/${tweetId}`}></a>
+                        </blockquote>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </motion.div>
+          </div>
         </div>
       </div>
     </div>

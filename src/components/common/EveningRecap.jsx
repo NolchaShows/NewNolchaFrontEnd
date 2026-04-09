@@ -60,7 +60,7 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
     const isGoogleDriveVideo = embedUrl.includes('drive.google.com');
 
     return (
-        <div className="page-container-fluid bg-black">
+        <div className="page-container-fluid bg-black !pb-0">
             {title ? (
                 <SectionTitle className="text-white text-center">{title}</SectionTitle>
             ) : null}
