@@ -72,6 +72,7 @@ export const transformWhiteLabelPageData = (data) => {
   const heroSection = data?.hero_section || {};
   const introSection = data?.intro_section || {};
   const infrastructureSection = data?.infrastructure_section || {};
+  const sharedPartnerSection = data?.shared_partner_section || null;
   const ctaSection = data?.cta_section || {};
   const infrastructureTiles = Array.isArray(infrastructureSection.tiles)
     ? infrastructureSection.tiles
@@ -106,7 +107,7 @@ export const transformWhiteLabelPageData = (data) => {
           : defaults.infrastructureSection.items,
       paragraph: infrastructureSection.paragraph || defaults.infrastructureSection.paragraph,
     },
-    partnerSection: data?.partner_section || defaults.partnerSection,
+    partnerSection: sharedPartnerSection || defaults.partnerSection,
     ctaSection: {
       heading: ctaSection.heading || defaults.ctaSection.heading,
       description: ctaSection.description || defaults.ctaSection.description,

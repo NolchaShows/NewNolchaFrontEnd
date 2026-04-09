@@ -30,8 +30,16 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
       const fallbackPartner = partners?.[index] || {};
       
       // Get image URLs from Strapi
-      let primaryImage = partner.primary?.url;
-      let secondaryImage = partner.secondary?.url;
+      let primaryImage =
+        partner.primary?.url ||
+        partner.primary?.formats?.large?.url ||
+        partner.primary?.formats?.medium?.url ||
+        partner.primary?.formats?.thumbnail?.url;
+      let secondaryImage =
+        partner.secondary?.url ||
+        partner.secondary?.formats?.large?.url ||
+        partner.secondary?.formats?.medium?.url ||
+        partner.secondary?.formats?.thumbnail?.url;
       
       // Add base URL if needed
       if (primaryImage && !primaryImage.startsWith('http')) {
@@ -50,10 +58,16 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
           fallbackPartner.imageBlack ||
           fallbackPartner.imageWhite ||
           "/home/partners/1b.png",
-        altText: fallbackPartner.altText || `Partner ${index + 1}`,
-        backgroundColor: fallbackPartner.backgroundColor || "bg-black",
+        altText: partner.alt_text || partner.altText || fallbackPartner.altText || `Partner ${index + 1}`,
+        backgroundColor:
+          partner.color === "light"
+            ? "bg-[#E7F0D3]"
+            : partner.color === "black"
+              ? "bg-black"
+              : fallbackPartner.backgroundColor || "bg-black",
         color:
-          fallbackPartner.backgroundColor === "bg-[#E7F0D3]" ? "light" : "black",
+          partner.color ||
+          (fallbackPartner.backgroundColor === "bg-[#E7F0D3]" ? "light" : "black"),
       };
     });
   };
