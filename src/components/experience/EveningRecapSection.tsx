@@ -1,6 +1,6 @@
 // @ts-nocheck
 import EveningRecap from "@/components/common/EveningRecap";
-import { fetchExperiencePage } from "@/lib/graphql/fetchExperiencePage";
+import { fetchStructuredPageBySlug, type StructuredPageType } from "@/lib/fetchStructuredPageBySlug";
 
 const getVideoUrl = (media: any): string | null => {
   if (!media) return null;
@@ -9,13 +9,15 @@ const getVideoUrl = (media: any): string | null => {
 
 export default async function EveningRecapSection({
   slug,
+  pageType = "experience",
 }: {
   slug: string;
+  pageType?: StructuredPageType;
 }) {
-  const page = await fetchExperiencePage(slug);
+  const page = await fetchStructuredPageBySlug(pageType, slug);
   const blocks = page?.blocks || [];
   const block = blocks.find(
-    (b) => b?.__typename === "ComponentBlocksEveningRecapSection"
+    (b) => b?.__typename === "ComponentBlocksEveningRecapSection" || b?.__component === "blocks.evening-recap-section"
   ) as any;
 
   if (!block) return null;

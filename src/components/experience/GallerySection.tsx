@@ -1,5 +1,6 @@
 // @ts-nocheck
 import ProgressiveFashionGridGallery from "@/components/experience/ProgressiveFashionGridGallery";
+import type { StructuredPageType } from "@/lib/fetchStructuredPageBySlug";
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
@@ -22,9 +23,16 @@ const getBestImageUrl = (media: any): string | null => {
   );
 };
 
-export default async function GallerySection({ slug }: { slug: string }) {
+export default async function GallerySection({
+  slug,
+  pageType = "experience",
+}: {
+  slug: string;
+  pageType?: StructuredPageType;
+}) {
+  const resource = pageType === "charity" ? "charity-pages" : "experience-pages";
   const response = await fetch(
-    `${STRAPI_BASE_URL}/api/experience-pages/by-slug/${encodeURIComponent(slug)}`,
+    `${STRAPI_BASE_URL}/api/${resource}/by-slug/${encodeURIComponent(slug)}`,
     { next: { revalidate: 60 } }
   );
 

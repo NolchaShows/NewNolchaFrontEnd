@@ -1,6 +1,6 @@
 // @ts-nocheck
 import VideoHeroSection from "@/components/common/VideoHeroSection";
-import { fetchExperiencePage } from "@/lib/graphql/fetchExperiencePage";
+import { fetchStructuredPageBySlug, type StructuredPageType } from "@/lib/fetchStructuredPageBySlug";
 
 const splitTitle = (title?: string | null) => {
   if (!title) return { first: "SHAO", second: "NYFW" };
@@ -14,8 +14,14 @@ const getVideoUrl = (media: any): string | null => {
   return media.url ?? null;
 };
 
-export default async function HeroSection({ slug }: { slug: string }) {
-  const page = await fetchExperiencePage(slug);
+export default async function HeroSection({
+  slug,
+  pageType = "experience",
+}: {
+  slug: string;
+  pageType?: StructuredPageType;
+}) {
+  const page = await fetchStructuredPageBySlug(pageType, slug);
   if (!page?.hero) return null;
 
   const { first, second } = splitTitle(page.hero.title || page.title);

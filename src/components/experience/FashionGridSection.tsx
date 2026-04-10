@@ -1,6 +1,6 @@
 // @ts-nocheck
 import FashionGrid from "@/components/shao/FashionGrid";
-import { fetchExperiencePage } from "@/lib/graphql/fetchExperiencePage";
+import { fetchStructuredPageBySlug, type StructuredPageType } from "@/lib/fetchStructuredPageBySlug";
 
 const getBestImageUrl = (media: any): string | null => {
   if (!media) return null;
@@ -38,13 +38,15 @@ const normalizeMedia = (media: any) => {
 
 export default async function FashionGridSection({
   slug,
+  pageType = "experience",
 }: {
   slug: string;
+  pageType?: StructuredPageType;
 }) {
-  const page = await fetchExperiencePage(slug);
+  const page = await fetchStructuredPageBySlug(pageType, slug);
   const blocks = page?.blocks || [];
   const block = blocks.find(
-    (b) => b?.__typename === "ComponentBlocksFashionGridSection"
+    (b) => b?.__typename === "ComponentBlocksFashionGridSection" || b?.__component === "blocks.fashion-grid-section"
   ) as any;
 
   if (!block) return null;

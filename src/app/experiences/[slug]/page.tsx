@@ -1,8 +1,7 @@
 // @ts-nocheck
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import client from "@/lib/graphql/apollo-client";
-import { GET_EXPERIENCE_BY_SLUG } from "@/lib/graphql/queries/experience";
+import { fetchExperiencePage } from "@/lib/graphql/fetchExperiencePage";
 import HeroSection from "@/components/experience/HeroSection";
 import ThreeImageRowSection from "@/components/experience/ThreeImageRowSection";
 import FashionGridSection from "@/components/experience/FashionGridSection";
@@ -10,10 +9,6 @@ import ImageTextSectionServer from "@/components/experience/ImageTextSection";
 import EveningRecapSection from "@/components/experience/EveningRecapSection";
 import GallerySection from "@/components/experience/GallerySection";
 import SharedTweetCarouselSection from "@/components/experience/SharedTweetCarouselSection";
-import type {
-  GetExperienceBySlugQuery,
-  GetExperienceBySlugQueryVariables,
-} from "@/lib/graphql/__generated__/graphql";
 
 export const revalidate = 60;
 
@@ -32,15 +27,7 @@ export async function generateMetadata({
   const { slug } = resolvedParams;
 
   try {
-    const { data } = await client().query<
-      GetExperienceBySlugQuery,
-      GetExperienceBySlugQueryVariables
-    >({
-      query: GET_EXPERIENCE_BY_SLUG,
-      variables: { slug },
-    });
-
-    const page = data.experiencePageBySlug;
+    const page = await fetchExperiencePage(slug);
 
     if (!page) {
       return {
@@ -63,15 +50,7 @@ export default async function Page({ params }: PageProps) {
   const { slug } = resolvedParams;
 
   try {
-    const { data } = await client().query<
-      GetExperienceBySlugQuery,
-      GetExperienceBySlugQueryVariables
-    >({
-      query: GET_EXPERIENCE_BY_SLUG,
-      variables: { slug },
-    });
-
-    const page = data.experiencePageBySlug;
+    const page = await fetchExperiencePage(slug);
 
     if (!page) {
       notFound();

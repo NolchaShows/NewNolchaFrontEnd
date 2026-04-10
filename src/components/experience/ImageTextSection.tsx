@@ -1,6 +1,6 @@
 // @ts-nocheck
 import ImageTextSection from "@/components/shao/ImageTextSection";
-import { fetchExperiencePage } from "@/lib/graphql/fetchExperiencePage";
+import { fetchStructuredPageBySlug, type StructuredPageType } from "@/lib/fetchStructuredPageBySlug";
 
 const getBestImageUrl = (media: any): string | null => {
   if (!media) return null;
@@ -34,13 +34,15 @@ const htmlToParagraphs = (html?: string | null): string[] => {
 
 export default async function ImageTextSectionServer({
   slug,
+  pageType = "experience",
 }: {
   slug: string;
+  pageType?: StructuredPageType;
 }) {
-  const page = await fetchExperiencePage(slug);
+  const page = await fetchStructuredPageBySlug(pageType, slug);
   const blocks = page?.blocks || [];
   const block = blocks.find(
-    (b) => b?.__typename === "ComponentBlocksImageTextSection"
+    (b) => b?.__typename === "ComponentBlocksImageTextSection" || b?.__component === "blocks.image-text-section"
   ) as any;
 
   if (!block) return null;

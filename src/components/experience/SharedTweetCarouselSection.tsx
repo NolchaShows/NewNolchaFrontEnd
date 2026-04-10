@@ -1,23 +1,27 @@
 import TweetCarousel from "@/components/common/TweetCarousel";
+import type { StructuredPageType } from "@/lib/fetchStructuredPageBySlug";
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
 
 export default async function SharedTweetCarouselSection({
   slug,
+  pageType = "experience",
 }: {
   slug: string;
+  pageType?: StructuredPageType;
 }) {
   if (!slug) return null;
 
   try {
+    const resource = pageType === "charity" ? "charity-pages" : "experience-pages";
     const query = [
       `filters[slug][$eq]=${encodeURIComponent(slug)}`,
       "populate[0]=shared_tweet_carousel",
       "populate[1]=shared_tweet_carousel.items",
     ].join("&");
     const response = await fetch(
-      `${STRAPI_BASE_URL}/api/experience-pages?${query}`,
+      `${STRAPI_BASE_URL}/api/${resource}?${query}`,
       { next: { revalidate: 60 } }
     );
 
