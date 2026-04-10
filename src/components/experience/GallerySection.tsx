@@ -22,6 +22,12 @@ const getBestImageUrl = (media: any): string | null => {
   );
 };
 
+const normalizeMediaList = (value: any): any[] => {
+  if (Array.isArray(value)) return value;
+  if (Array.isArray(value?.data)) return value.data;
+  return [];
+};
+
 export default async function GallerySection({ slug }: { slug: string }) {
   const response = await fetch(
     `${STRAPI_BASE_URL}/api/experience-pages/by-slug/${encodeURIComponent(slug)}`,
@@ -32,17 +38,14 @@ export default async function GallerySection({ slug }: { slug: string }) {
 
   const json = await response.json();
   const page = json?.data?.attributes || json?.data || null;
-  const blocks = page?.blocks || [];
-  const block = blocks.find(
-    (b) => b?.__typename === "ComponentBlocksGallery" || b?.__component === "blocks.gallery"
-  ) as any;
-
-  if (!block) return null;
-
-  const images =
-    (block.items || [])
-      .map((item: any) => getBestImageUrl(item?.image))
-      .filter(Boolean) || [];
+  const gallery = page?.gallery?.attributes || page?.gallery || null;
+  const images = Array.from(
+    new Set(
+      normalizeMediaList(gallery?.images)
+        .map((image: any) => getBestImageUrl(image?.attributes || image))
+        .filter(Boolean)
+    )
+  );
 
   if (!images.length) return null;
 
