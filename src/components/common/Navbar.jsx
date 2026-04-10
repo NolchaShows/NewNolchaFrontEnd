@@ -57,11 +57,12 @@ function Navbar() {
   const [experiencesDropdown, setExperiencesDropdown] = useState(
     defaultExperiencesDropdown
   );
+  const [charityDropdown, setCharityDropdown] = useState([]);
   // Mobile dropdown states
   const [mobileDropdowns, setMobileDropdowns] = useState({
     whiteLabel: false,
     upcoming: false,
-    charityPartners: false,
+    charity: false,
     experiences: false,
   });
 
@@ -88,9 +89,9 @@ function Navbar() {
       label: "Charity",
       href: "#",
       hasDropdown: true,
-      dropdownType: "charityPartners",
+      dropdownType: "charity",
       subtitle: "Giving Back + Purpose",
-      key: "charityPartners",
+      key: "charity",
     },
     {
       label: "Experiences",
@@ -160,27 +161,12 @@ function Navbar() {
 
   const allMenuItems = [...visibleMenuItems, ...moreMenuItems];
 
-  const charityPartnersDropdown = [
-    {
-      label: "St. Jude Children's Research Hospital",
-      href: "/charity_partners/st_jude",
-    },
-    {
-      label: "Cerebral Palsy Foundation",
-      href: "/charity_partners/cerebral_palsy_foundation",
-    },
-    {
-      label: "Make-A-Wish Foundation",
-      href: "/charity_partners/make_a_wish",
-    },
-  ];
-
   const getDropdownItems = (dropdownType) => {
     switch (dropdownType) {
       case "experiences":
         return experiencesDropdown;
-      case "charityPartners":
-        return charityPartnersDropdown;
+      case "charity":
+        return charityDropdown;
       case "press":
         return [
           { label: "Press Highlights", href: "/press" },
@@ -218,14 +204,14 @@ function Navbar() {
           },
           imageSrc: "/homepage/menu_dropdown/dropdown1.jpg",
         };
-      case "charityPartners":
+      case "charity":
         return {
           sectionLabel: "Charity",
-          items: charityPartnersDropdown,
+          items: charityDropdown,
           cta: {
-            title: "View All Charity Partners",
-            description: "Learn how we give back and support meaningful causes.",
-            href: "/charity_partners/st_jude",
+            title: "View Charity Pages",
+            description: "Explore our charity initiatives and impact stories.",
+            href: charityDropdown[0]?.href || "#",
           },
           imageSrc: "/homepage/menu_dropdown/dropdown2.jpg",
         };
@@ -377,25 +363,39 @@ function Navbar() {
   useEffect(() => {
     let isMounted = true;
 
-    const fetchExperiencePages = async () => {
+    const fetchNavigationPages = async () => {
       try {
-        const { getExperiencePages } = await import("@/lib/strapi");
-        const pages = await getExperiencePages();
+        const { getExperiencePages, getCharityPages } = await import("@/lib/strapi");
+        const [experiencePages, charityPages] = await Promise.all([
+          getExperiencePages(),
+          getCharityPages(),
+        ]);
 
-        if (!isMounted || !Array.isArray(pages) || pages.length === 0) return;
+        if (!isMounted) return;
 
-        setExperiencesDropdown(
-          pages.map((page) => ({
-            label: page.title,
-            href: `/experiences/${page.slug}`,
-          }))
-        );
+        if (Array.isArray(experiencePages) && experiencePages.length > 0) {
+          setExperiencesDropdown(
+            experiencePages.map((page) => ({
+              label: page.title,
+              href: `/experiences/${page.slug}`,
+            }))
+          );
+        }
+
+        if (Array.isArray(charityPages) && charityPages.length > 0) {
+          setCharityDropdown(
+            charityPages.map((page) => ({
+              label: page.title,
+              href: `/charity/${page.slug}`,
+            }))
+          );
+        }
       } catch (error) {
-        console.error("Failed to fetch experience pages for navbar:", error);
+        console.error("Failed to fetch navbar pages from Strapi:", error);
       }
     };
 
-    fetchExperiencePages();
+    fetchNavigationPages();
 
     return () => {
       isMounted = false;
