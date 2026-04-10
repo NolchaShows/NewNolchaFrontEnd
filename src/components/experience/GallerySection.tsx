@@ -7,25 +7,19 @@ const STRAPI_BASE_URL =
 const getBestImageUrl = (media: any): string | null => {
   if (!media) return null;
   const formats = media.formats || {};
+  const large = formats.large;
   const medium = formats.medium;
   const small = formats.small;
-  const large = formats.large;
   const thumbnail = formats.thumbnail;
 
   return (
-    (medium && medium.url) ||
-    (small && small.url) ||
     (large && large.url) ||
     media.url ||
+    (medium && medium.url) ||
+    (small && small.url) ||
     (thumbnail && thumbnail.url) ||
     null
   );
-};
-
-const normalizeMediaList = (value: any): any[] => {
-  if (Array.isArray(value)) return value;
-  if (Array.isArray(value?.data)) return value.data;
-  return [];
 };
 
 export default async function GallerySection({ slug }: { slug: string }) {
@@ -38,11 +32,17 @@ export default async function GallerySection({ slug }: { slug: string }) {
 
   const json = await response.json();
   const page = json?.data?.attributes || json?.data || null;
-  const gallery = page?.gallery?.attributes || page?.gallery || null;
+  const blocks = page?.blocks || [];
+  const galleryBlock = blocks.find(
+    (b: any) => b?.__typename === "ComponentBlocksGallery" || b?.__component === "blocks.gallery"
+  ) as any;
+
+  if (!galleryBlock) return null;
+
   const images = Array.from(
     new Set(
-      normalizeMediaList(gallery?.images)
-        .map((image: any) => getBestImageUrl(image?.attributes || image))
+      (galleryBlock.images || [])
+        .map((image: any) => getBestImageUrl(image))
         .filter(Boolean)
     )
   );
