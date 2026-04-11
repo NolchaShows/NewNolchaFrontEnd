@@ -1,11 +1,12 @@
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
 
-export type StructuredPageType = "experience" | "charity";
+export type StructuredPageType = "experience" | "charity" | "home";
 
 const RESOURCE_BY_TYPE: Record<StructuredPageType, string> = {
   experience: "experience-pages",
   charity: "charity-pages",
+  home: "home-pages",
 };
 
 export async function fetchStructuredPageBySlug(

@@ -2,12 +2,20 @@
 import React from "react";
 
 function TextHero({ textHeroData, loading, images = [] }) {
+  const toAbsoluteUrl = (url) => {
+    if (!url) return null;
+    if (url.startsWith("http")) return url;
+    return `${process.env.NEXT_PUBLIC_STRAPI_URL || "https://new-nolcha-strapi-uiai.onrender.com"}${url}`;
+  };
+
   const mapStrapiSlides = (strapiSlides) => {
     if (!strapiSlides || !Array.isArray(strapiSlides)) return [];
     
     return strapiSlides.map((slide, index) => {
-      let mainImageUrl = slide.main_image?.url;
-      let secondImageUrl = slide.second_image?.url;
+      let mainImageUrl = toAbsoluteUrl(slide.main_image?.url);
+      let secondImageUrl = toAbsoluteUrl(
+        slide.second_image?.url || slide.logo_image?.url
+      );
       
       return {
         image: mainImageUrl || "/home/hero.png",
@@ -101,7 +109,7 @@ function TextHero({ textHeroData, loading, images = [] }) {
                 className="absolute pl-[40px] lg:px-0 -left-[35px] bottom-[40px] lg:bottom-[30px] 2xl:bottom-[60px] w-[140px] lg:w-[160px] 2xl:w-[283px] z-0"
               /> */}
               <img
-                src={'/home/forbes/forbes.png'}
+                src={currentSlide?.title || '/home/forbes/forbes.png'}
                 alt="Forbes"
                 className="relative w-[230px] lg:w-[280px] xl:w-[340px] 2xl:w-[420px] xxl:w-[550px] 3xl:w-[800px] z-10"
               />

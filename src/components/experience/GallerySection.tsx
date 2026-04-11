@@ -1,9 +1,9 @@
 // @ts-nocheck
 import ProgressiveFashionGridGallery from "@/components/experience/ProgressiveFashionGridGallery";
-import type { StructuredPageType } from "@/lib/fetchStructuredPageBySlug";
-
-const STRAPI_BASE_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
+import {
+  fetchStructuredPageBySlug,
+  type StructuredPageType,
+} from "@/lib/fetchStructuredPageBySlug";
 
 const getBestImageUrl = (media: any): string | null => {
   if (!media) return null;
@@ -26,21 +26,14 @@ const getBestImageUrl = (media: any): string | null => {
 export default async function GallerySection({
   slug,
   pageType = "experience",
+  page,
 }: {
   slug: string;
   pageType?: StructuredPageType;
+  page?: any;
 }) {
-  const resource = pageType === "charity" ? "charity-pages" : "experience-pages";
-  const response = await fetch(
-    `${STRAPI_BASE_URL}/api/${resource}/by-slug/${encodeURIComponent(slug)}`,
-    { next: { revalidate: 60 } }
-  );
-
-  if (!response.ok) return null;
-
-  const json = await response.json();
-  const page = json?.data?.attributes || json?.data || null;
-  const blocks = page?.blocks || [];
+  const resolvedPage = page ?? (await fetchStructuredPageBySlug(pageType, slug));
+  const blocks = resolvedPage?.blocks || [];
   const galleryBlock = blocks.find(
     (b: any) => b?.__typename === "ComponentBlocksGallery" || b?.__component === "blocks.gallery"
   ) as any;

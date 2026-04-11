@@ -4,6 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import SectionTitle from "../common/SectionTitle";
 
 const ExploreServices = ({ title, image, caption, items }) => {
+  const resolvedTitle = title || "How Brands Work With Nolcha";
+  const resolvedItems =
+    items && items.length > 0
+      ? items
+      : [];
   const [expandedIndex, setExpandedIndex] = useState(0); // First item expanded by default
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
@@ -64,7 +69,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
 
   return (
     <section className="page-container bg-black py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] xxl:py-[140px] 3xl:py-[200px]">
-      <SectionTitle className="text-white text-left mb-[30px] lg:mb-[40px] xl:mb-[50px] 2xl:mb-[60px] xxl:mb-[70px] 3xl:mb-[100px]">{title}</SectionTitle>
+      <SectionTitle className="text-white text-left mb-[30px] lg:mb-[40px] xl:mb-[50px] 2xl:mb-[60px] xxl:mb-[70px] 3xl:mb-[100px]">{resolvedTitle}</SectionTitle>
 
       <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[24px] xl:gap-[30px] 2xl:gap-[40px] xxl:gap-[60px] 3xl:gap-[100px] items-center lg:items-start">
         {/* Left video player with play button */}
@@ -115,7 +120,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
 
         {/* Right accordion list */}
         <div className="flex-1 flex flex-col">
-          {items.map((item, idx) => {
+          {resolvedItems.map((item, idx) => {
             const isExpanded = expandedIndex === idx;
             const itemTitle = `${item.label}: ${item.text}`;
             const rawDescription = item.description || "Fluent in innovation, tech, and crypto culture — we bridge creative vision with operational precision. From concept to completion, our team delivers full-scale event strategy, talent and programming, logistics, venue sourcing, art direction, and guest list curation. We handle every detail so your brand can own the moment — seamlessly merging storytelling, design, and experience.";

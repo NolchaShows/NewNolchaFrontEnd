@@ -1,11 +1,67 @@
+"use client";
+
 import React from "react";
 import SectionTitle from "../common/SectionTitle";
 import RoundedCtaButton from "../common/RoundedCtaButton";
 
-const BuildMomentumSection = () => {
-  // Partner logos data - update paths when logos are added
-  // Based on the image: Mercedes-Benz, Bullish, Galaxy, OKX, Coca-Cola, CoinDesk
-  const partnerLogos = [
+const STRAPI_BASE_URL =
+  process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
+
+const resolveMediaUrl = (media) => {
+  if (!media) return null;
+
+  const rawUrl =
+    media?.formats?.large?.url ||
+    media?.formats?.medium?.url ||
+    media?.formats?.small?.url ||
+    media?.formats?.thumbnail?.url ||
+    media?.url ||
+    (typeof media === "string" ? media : null);
+
+  if (!rawUrl) return null;
+  return rawUrl.startsWith("http") ? rawUrl : `${STRAPI_BASE_URL}${rawUrl}`;
+};
+
+const renderParagraph = (paragraph, index) => {
+  if (!paragraph) return null;
+
+  if (typeof paragraph === "string") {
+    return (
+      <p
+        key={index}
+        className="text-[16px] lg:text-[22px] xl:text-[28px] 2xl:text-[36px] xxl:text-[48px] 3xl:text-[64px] text-white leading-relaxed"
+      >
+        {paragraph}
+      </p>
+    );
+  }
+
+  const fullText = paragraph.text || "";
+  const hasHighlightedParts =
+    paragraph.text_before || paragraph.highlight || paragraph.text_after;
+
+  return (
+    <p
+      key={paragraph.id || index}
+      className="text-[16px] lg:text-[22px] xl:text-[28px] 2xl:text-[36px] xxl:text-[48px] 3xl:text-[64px] text-white leading-relaxed"
+    >
+      {hasHighlightedParts ? (
+        <>
+          {paragraph.text_before}
+          {paragraph.highlight ? (
+            <span className="font-bold">{paragraph.highlight}</span>
+          ) : null}
+          {paragraph.text_after}
+        </>
+      ) : (
+        fullText
+      )}
+    </p>
+  );
+};
+
+const BuildMomentumSection = ({ buildMomentumData }) => {
+  const defaultPartnerLogos = [
     { name: "Mercedes-Benz", logo: 'homepage/build_momentum_section/mercedes.png' }, // Add logo path when available
     { name: "Bullish", logo: 'homepage/build_momentum_section/bullish.png' }, // Add logo path when available
     { name: "Galaxy", logo: 'homepage/build_momentum_section/galaxy.png' }, // Add logo path when available
@@ -14,26 +70,42 @@ const BuildMomentumSection = () => {
     { name: "CoinDesk", logo: 'homepage/build_momentum_section/coindesk.png' }, // Add logo path when available
   ];
 
+  const defaultParagraphs = [
+    <>
+      For Over 15 Years, Nolcha Has Been At The Forefront Of{" "}
+      <span className="font-bold">
+        Technology, Culture, And Immersive Experiences
+      </span>{" "}
+      Producing High-Impact Events, Summits, And Activations For Visionary
+      Brands And The World's Leading Blockchain, AI, And Crypto Conferences.
+    </>,
+    "We Unite Communities, Spark Collaboration, And Create Business Through Creativity, Innovation, And Human Connection.",
+  ];
+
+  const heading =
+    buildMomentumData?.heading || "We Build Cultural Momentum";
+
+  const paragraphs =
+    buildMomentumData?.paragraphs?.length > 0
+      ? buildMomentumData.paragraphs
+      : defaultParagraphs;
+
+  const partnerLogos =
+    buildMomentumData?.logos?.length > 0
+      ? buildMomentumData.logos.map((logo, index) => ({
+          name: logo?.name || `Logo ${index + 1}`,
+          logo: resolveMediaUrl(logo?.image || logo),
+        }))
+      : defaultPartnerLogos;
+
   return (
     <section className="w-full bg-black text-white page-container">
       {/* Heading */}
-      <SectionTitle>We Build Cultural Momentum</SectionTitle>
+      <SectionTitle>{heading}</SectionTitle>
 
       {/* Paragraphs */}
       <div className="flex flex-col gap-[10px] lg:gap-4 xl:gap-5 2xl:gap-6 xxl:gap-[35px] 3xl:gap-[50px] mb-5 lg:mb-8 xl:mb-10 2xl:mb-12 xxl:mb-[70px] 3xl:mb-[100px]">
-        <p className="text-[16px] lg:text-[22px] xl:text-[28px] 2xl:text-[36px] xxl:text-[48px] 3xl:text-[64px] text-white leading-relaxed">
-          For Over 15 Years, Nolcha Has Been At The Forefront Of{" "}
-          <span className="font-bold">
-            Technology, Culture, And Immersive Experiences
-          </span>{" "}
-          Producing High-Impact Events, Summits, And Activations For Visionary
-          Brands And The World's Leading Blockchain, AI, And Crypto
-          Conferences.
-        </p>
-        <p className="text-[16px] lg:text-[22px] xl:text-[28px] 2xl:text-[36px] xxl:text-[48px] 3xl:text-[64px] text-white leading-relaxed">
-          We Unite Communities, Spark Collaboration, And Create Business
-          Through Creativity, Innovation, And Human Connection.
-        </p>
+        {paragraphs.map((paragraph, index) => renderParagraph(paragraph, index))}
       </div>
 
       {/* Partner Logos */}

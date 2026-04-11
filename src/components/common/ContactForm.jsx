@@ -38,13 +38,19 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
     });
   };
 
+  const buildMediaUrl = (url) => {
+    if (!url) return null;
+    if (url.startsWith("http")) return url;
+    return `${process.env.NEXT_PUBLIC_STRAPI_URL || "https://new-nolcha-strapi-uiai.onrender.com"}${url}`;
+  };
+
   // Dynamic data from Strapi or props fallback
   const dynamicHeading = contactData?.heading || heading || "Lets Talk";
   const dynamicDescription = contactData?.description || desc;
   const dynamicBackgroundImage = contactData?.background_image?.url
-    ? `${process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337"
-    }${contactData.background_image.url}`
+    ? buildMediaUrl(contactData.background_image.url)
     : bg || "/landing/background2.jpg";
+  const dynamicVideoSrc = buildMediaUrl(contactData?.video?.url) || videoSrc;
 
   const firstNamePlaceholder =
     contactData?.first_name_placeholder || "First Name";
@@ -76,16 +82,17 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
 
   return (
     <div
+      id="contact"
       className="bg-cover bg-center bg-no-repeat relative flex justify-center page-container"
       style={{
-        backgroundImage: videoSrc ? undefined : `url("${dynamicBackgroundImage}")`,
+        backgroundImage: dynamicVideoSrc ? undefined : `url("${dynamicBackgroundImage}")`,
         backgroundColor: "#1a1a1a", // fallback dark color
       }}
     >
-      {videoSrc && (
+      {dynamicVideoSrc && (
         <video
           className="absolute inset-0 h-full w-full object-cover"
-          src={videoSrc}
+          src={dynamicVideoSrc}
           autoPlay
           loop
           muted

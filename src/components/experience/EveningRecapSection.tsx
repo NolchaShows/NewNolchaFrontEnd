@@ -10,12 +10,14 @@ const getVideoUrl = (media: any): string | null => {
 export default async function EveningRecapSection({
   slug,
   pageType = "experience",
+  page,
 }: {
   slug: string;
   pageType?: StructuredPageType;
+  page?: any;
 }) {
-  const page = await fetchStructuredPageBySlug(pageType, slug);
-  const blocks = page?.blocks || [];
+  const resolvedPage = page ?? (await fetchStructuredPageBySlug(pageType, slug));
+  const blocks = resolvedPage?.blocks || [];
   const block = blocks.find(
     (b) => b?.__typename === "ComponentBlocksEveningRecapSection" || b?.__component === "blocks.evening-recap-section"
   ) as any;

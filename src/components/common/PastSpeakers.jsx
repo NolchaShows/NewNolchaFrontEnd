@@ -4,7 +4,25 @@ import StyledHeading from './StyledHeading';
 import { motion } from "framer-motion";
 import SectionTitle from './SectionTitle';
 
-const PastSpeakers = ({ speakers = [] }) => {
+const STRAPI_BASE_URL =
+  process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
+
+const resolveSpeakerImage = (image) => {
+  if (!image) return null;
+
+  const rawUrl =
+    image?.formats?.large?.url ||
+    image?.formats?.medium?.url ||
+    image?.formats?.small?.url ||
+    image?.formats?.thumbnail?.url ||
+    image?.url ||
+    (typeof image === "string" ? image : null);
+
+  if (!rawUrl) return null;
+  return rawUrl.startsWith("http") ? rawUrl : `${STRAPI_BASE_URL}${rawUrl}`;
+};
+
+const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
   const carouselRef = useRef(null);
   const animationRef = useRef(null);
   const [flippedCards, setFlippedCards] = useState(new Set());
@@ -29,14 +47,29 @@ const PastSpeakers = ({ speakers = [] }) => {
     { id: 13, image: '/homepage/past_speakers/13.png', name: 'Jack Butcher', description: 'Jack Butcher is a pioneering digital artist and entrepreneur at the forefront of the NFT revolution. As the founder of Visualize Value, Butcher has established himself as a master of minimalist design, translating complex philosophical and economic concepts into striking visual metaphors.', twitter: 'https://x.com/jackbutcher' },
   ];
 
-  const displaySpeakers = speakers.length > 0 ? speakers : [...defaultSpeakersRow1, ...defaultSpeakersRow2];
+  const defaultSpeakers = [...defaultSpeakersRow1, ...defaultSpeakersRow2];
+  const displaySpeakers =
+    speakers.length > 0
+      ? speakers.map((speaker, index) => ({
+          id: speaker.id || index + 1,
+          name: speaker.name,
+          description: speaker.description,
+          twitter: speaker.twitter,
+          image: resolveSpeakerImage(speaker.image) || speaker.image,
+        }))
+      : defaultSpeakers;
 
-  // Duplicate speakers for infinite scroll effect (mobile) - always use default data
-  const duplicatedSpeakers = [...defaultSpeakersRow1, ...defaultSpeakersRow2, ...defaultSpeakersRow1, ...defaultSpeakersRow2];
+  const mobileSource =
+    displaySpeakers.length > 0 ? displaySpeakers : defaultSpeakers;
+  const duplicatedSpeakers = [...mobileSource, ...mobileSource];
 
-  // Split speakers into two rows for desktop with different images
-  const row1 = [...defaultSpeakersRow1, ...defaultSpeakersRow1]; // Duplicate for infinite scroll
-  const row2 = [...defaultSpeakersRow2, ...defaultSpeakersRow2]; // Duplicate for infinite scroll
+  const halfIndex = Math.ceil(displaySpeakers.length / 2);
+  const row1Source = displaySpeakers.slice(0, halfIndex);
+  const row2Source = displaySpeakers.slice(halfIndex);
+  const row1Base = row1Source.length > 0 ? row1Source : defaultSpeakersRow1;
+  const row2Base = row2Source.length > 0 ? row2Source : defaultSpeakersRow2;
+  const row1 = [...row1Base, ...row1Base];
+  const row2 = [...row2Base, ...row2Base];
 
   const row1Ref = useRef(null);
   const row2Ref = useRef(null);
@@ -237,7 +270,7 @@ const PastSpeakers = ({ speakers = [] }) => {
   return (
     <div className="py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] max-w-none w-full mx-auto bg-[#000000] overflow-hidden">
       <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] title-spacing relative flex flex-row items-center justify-between">
-        <SectionTitle disableTitleSpacing className="text-white">Featured Speakers</SectionTitle>
+        <SectionTitle disableTitleSpacing className="text-white">{title}</SectionTitle>
 
         {/* Navigation Arrows - Desktop Only */}
         <div className="hidden lg:flex gap-4 xl:gap-6 2xl:gap-8 xxl:gap-10">

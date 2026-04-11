@@ -20,7 +20,15 @@ export default function LogoSlider({ logoSliderData, loading }) {
   const title = logoSliderData?.title || defaultTitle;
   const logos = logoSliderData?.logos?.length > 0 ? logoSliderData.logos.map(logo => {
    
-    let imageUrl = logo.url || (logo.formats?.medium?.url || logo.formats?.small?.url || logo.formats?.thumbnail?.url);
+    let imageUrl =
+      logo.url ||
+      logo.image?.url ||
+      logo.image?.formats?.medium?.url ||
+      logo.image?.formats?.small?.url ||
+      logo.image?.formats?.thumbnail?.url ||
+      logo.formats?.medium?.url ||
+      logo.formats?.small?.url ||
+      logo.formats?.thumbnail?.url;
     
     // Ensure we use the full Strapi URL if it's a relative path
     if (imageUrl && !imageUrl.startsWith('http')) {

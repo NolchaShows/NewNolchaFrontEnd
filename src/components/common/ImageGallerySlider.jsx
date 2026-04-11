@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 
 const DEFAULT_IMAGES = [
