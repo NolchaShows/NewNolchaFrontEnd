@@ -33,8 +33,10 @@ export default async function GallerySection({
   page?: any;
 }) {
   const resolvedPage = page ?? (await fetchStructuredPageBySlug(pageType, slug));
+  const explicitBlock =
+    pageType === "home" ? (resolvedPage?.gallery_section as any) : null;
   const blocks = resolvedPage?.blocks || [];
-  const galleryBlock = blocks.find(
+  const galleryBlock = explicitBlock || blocks.find(
     (b: any) => b?.__typename === "ComponentBlocksGallery" || b?.__component === "blocks.gallery"
   ) as any;
 

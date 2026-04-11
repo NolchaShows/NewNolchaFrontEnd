@@ -93,7 +93,11 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
   const partnerLogos =
     buildMomentumData?.logos?.length > 0
       ? buildMomentumData.logos.map((logo, index) => ({
-          name: logo?.name || `Logo ${index + 1}`,
+          name:
+            logo?.name ||
+            logo?.alternativeText ||
+            logo?.caption ||
+            `Logo ${index + 1}`,
           logo: resolveMediaUrl(logo?.image || logo),
         }))
       : defaultPartnerLogos;

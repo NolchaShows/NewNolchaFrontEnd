@@ -17,8 +17,10 @@ export default async function EveningRecapSection({
   page?: any;
 }) {
   const resolvedPage = page ?? (await fetchStructuredPageBySlug(pageType, slug));
+  const explicitBlock =
+    pageType === "home" ? (resolvedPage?.evening_recap_section as any) : null;
   const blocks = resolvedPage?.blocks || [];
-  const block = blocks.find(
+  const block = explicitBlock || blocks.find(
     (b) => b?.__typename === "ComponentBlocksEveningRecapSection" || b?.__component === "blocks.evening-recap-section"
   ) as any;
 

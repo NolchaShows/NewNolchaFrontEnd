@@ -159,7 +159,6 @@ const mapImageGallerySliderImages = (imageGallerySlider) =>
 
 export default async function Home() {
   const homePage = await fetchHomePage("home");
-  const homeBlocks = homePage?.blocks || [];
   const buildMomentumData = homePage?.build_momentum_section || null;
   const imageGallerySliderImages = mapImageGallerySliderImages(
     homePage?.image_gallery_slider
@@ -433,7 +432,7 @@ export default async function Home() {
             title={homePage?.upcoming_events_section?.title || "Upcoming Events"}
             events={upcomingEvents}
           />
-          {getBlockByType(homeBlocks, "blocks.evening-recap-section") ? (
+          {homePage?.evening_recap_section ? (
             <EveningRecapSection slug="home" pageType="home" page={homePage} />
           ) : (
             <EveningRecap
@@ -529,7 +528,7 @@ export default async function Home() {
           "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-3.mp4"
         }
       />
-      {getBlockByType(homeBlocks, "blocks.gallery") ? (
+      {homePage?.gallery_section ? (
         <GallerySection slug="home" pageType="home" page={homePage} />
       ) : (
         <FashionGrid3x3
