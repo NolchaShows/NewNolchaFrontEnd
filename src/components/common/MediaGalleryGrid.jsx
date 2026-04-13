@@ -1,7 +1,6 @@
 import React from "react";
 
 const DEFAULT_ITEM_HEIGHT = "h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px]";
-const COMPACT_ITEM_HEIGHT = "h-[150px] md:h-[200px] lg:h-[250px] xl:h-[300px]";
 const FULL_WIDTH_HEIGHT = "h-[320px] md:h-[560px] lg:h-[760px] xl:h-[960px]";
 
 const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
@@ -40,14 +39,11 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
       <div className="mx-auto max-w-[1800px]">
         <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
           {items.map((item, index) => {
-            const isCompact = index === 1 || index === 2;
             const isFullWidth = Boolean(item.fullWidth);
 
             const colSpan = isFullWidth ? "md:col-span-3" : "col-span-1";
             const height = isFullWidth
               ? FULL_WIDTH_HEIGHT
-              : isCompact
-              ? COMPACT_ITEM_HEIGHT
               : DEFAULT_ITEM_HEIGHT;
 
             return (
