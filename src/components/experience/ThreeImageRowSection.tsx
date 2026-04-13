@@ -62,8 +62,8 @@ export default async function ThreeImageRowSection({
   return (
     <ThreeImageRow
       mediaItems={mediaItems}
-      line1="360 Projection"
-      line2="Mapped Venue"
+      line1=""
+      line2=""
       background="#D1FFE9"
     />
   );
