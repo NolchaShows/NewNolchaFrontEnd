@@ -1,11 +1,37 @@
 import React from "react";
 
-const DEFAULT_ITEM_HEIGHT = "h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px]";
+const DEFAULT_ASPECT_RATIO = "2 / 3";
+const GRID_TILE_RATIO = 2 / 3;
+
 const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
+  const getItemStyle = (item) => {
+    if (item.fullWidth) {
+      return undefined;
+    }
+
+    return { aspectRatio: DEFAULT_ASPECT_RATIO };
+  };
+
+  const getMediaClassName = (item) => {
+    if (item.fullWidth) {
+      return "w-full h-auto object-contain";
+    }
+
+    if (!item.width || !item.height) {
+      return "w-full h-full object-cover";
+    }
+
+    const mediaRatio = item.width / item.height;
+
+    if (mediaRatio < GRID_TILE_RATIO) {
+      return "w-full h-full object-cover";
+    }
+
+    return "w-full h-full object-cover";
+  };
+
   const renderMedia = (item) => {
-    const mediaClassName = item.fullWidth
-      ? "w-full h-auto object-contain"
-      : "w-full h-full object-cover";
+    const mediaClassName = getMediaClassName(item);
 
     if (item.type === "video") {
       return (
@@ -36,21 +62,21 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
 
   return (
     <section
-      className="w-full px-2 py-4 lg:px-4 lg:py-8"
+      className="w-full px-0 py-4 md:px-1 lg:px-2 lg:py-8"
       style={{ backgroundColor: background }}
     >
-      <div className="mx-auto max-w-[1800px]">
+      <div className="w-full">
         <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
           {items.map((item, index) => {
             const isFullWidth = Boolean(item.fullWidth);
 
             const colSpan = isFullWidth ? "md:col-span-3" : "col-span-1";
-            const height = isFullWidth ? "h-auto" : DEFAULT_ITEM_HEIGHT;
 
             return (
               <div
                 key={`${item.url}-${index}`}
-                className={`${colSpan} ${height} relative overflow-hidden bg-white`}
+                className={`${colSpan} relative overflow-hidden bg-white`}
+                style={getItemStyle(item)}
                 data-width={item.width || undefined}
                 data-height={item.height || undefined}
               >
