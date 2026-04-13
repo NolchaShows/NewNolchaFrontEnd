@@ -13,6 +13,29 @@ const tomorrow = localFont({
   display: "swap",
 });
 
+const helvetica = localFont({
+  src: [
+    { path: "../../public/font/Helvetica/HelveticaNeueLight.otf", weight: "400", style: "normal" },
+  ],
+  variable: "--font-helvetica",
+  display: "swap",
+});
+
+const rmMono = localFont({
+  src: [
+    { path: "../../public/font/RM/RMMono-Light.ttf", weight: "300", style: "normal" },
+  ],
+  variable: "--font-rm-mono",
+  display: "swap",
+});
+
+const SchibstedGrotesk = localFont({
+  src: [
+    { path: "../../public/font/Schibsted/SchibstedGrotesk-Regular.ttf", weight: "400", style: "normal" },
+  ],
+  variable: "--font-schibsted-grotesk",
+  display: "swap",
+});
 
 export const metadata = {
   title: "Nolcha",
@@ -25,7 +48,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={tomorrow.variable}>
+    <html lang="en" className={`${tomorrow.variable} ${helvetica.variable} ${rmMono.variable} ${SchibstedGrotesk.variable}`}>
       <body className="font-sans">
         <ConditionalLayout>
           {children}
