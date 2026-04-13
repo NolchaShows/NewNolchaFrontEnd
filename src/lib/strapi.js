@@ -879,8 +879,7 @@ export async function getWhiteLabelPageData() {
       "populate[8]=shared_partner_section.partners.primary",
       "populate[9]=shared_partner_section.partners.secondary",
       "populate[10]=cta_section",
-      "populate[11]=cta_section.backgroundImage",
-      "populate[12]=cta_section.background_image"
+      "populate[11]=cta_section.backgroundImage"
     ].join("&");
 
     const data = await fetchFromStrapi(`white-label-pages?${populateQuery}`);
