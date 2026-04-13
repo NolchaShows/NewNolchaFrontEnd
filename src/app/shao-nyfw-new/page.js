@@ -166,7 +166,7 @@ const buildGalleryItems = (gallery) => {
 };
 
 export default async function MarcJacobsAW25Page() {
-  const projectPage = await fetchProjectPage("marc-jacobs-aw25");
+  const projectPage = await fetchProjectPage();
 
   const title = projectPage?.title || "MARC JACOBS AW25";
   const heroVideo = getMediaUrl(projectPage?.hero?.video) || FALLBACK_HERO_VIDEO;
