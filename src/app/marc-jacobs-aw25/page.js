@@ -60,7 +60,7 @@ const FALLBACK_FEATURED_MEDIA = [
   },
   {
     type: "image",
-    url: "/shao_nyfw/image 28.png",
+    url: "/shao_nyfw/image 24.png",
     width: 1800,
     height: 1000,
     fullWidth: true,

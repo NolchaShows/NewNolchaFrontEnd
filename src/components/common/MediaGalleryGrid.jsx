@@ -1,14 +1,16 @@
 import React from "react";
 
 const DEFAULT_ITEM_HEIGHT = "h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px]";
-const FULL_WIDTH_HEIGHT = "h-[320px] md:h-[560px] lg:h-[760px] xl:h-[960px]";
-
 const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
   const renderMedia = (item) => {
+    const mediaClassName = item.fullWidth
+      ? "w-full h-auto object-contain"
+      : "w-full h-full object-cover";
+
     if (item.type === "video") {
       return (
         <video
-          className="w-full h-full object-cover"
+          className={mediaClassName}
           autoPlay
           muted
           loop
@@ -24,7 +26,7 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
       <img
         src={item.url}
         alt={item.alt || "Gallery content"}
-        className="w-full h-full object-cover"
+        className={mediaClassName}
         width={item.width || undefined}
         height={item.height || undefined}
       />
@@ -42,9 +44,7 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
             const isFullWidth = Boolean(item.fullWidth);
 
             const colSpan = isFullWidth ? "md:col-span-3" : "col-span-1";
-            const height = isFullWidth
-              ? FULL_WIDTH_HEIGHT
-              : DEFAULT_ITEM_HEIGHT;
+            const height = isFullWidth ? "h-auto" : DEFAULT_ITEM_HEIGHT;
 
             return (
               <div
