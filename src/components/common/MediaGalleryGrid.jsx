@@ -10,6 +10,7 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
     if (item.type === "video") {
       return (
         <video
+          src={item.url}
           className={mediaClassName}
           autoPlay
           muted
@@ -17,7 +18,7 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
           playsInline
           preload="metadata"
         >
-          <source src={item.url} type={item.mime || "video/mp4"} />
+          <source src={item.url} />
         </video>
       );
     }
