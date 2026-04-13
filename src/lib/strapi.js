@@ -339,9 +339,7 @@ export async function getExperiencePages() {
  */
 export async function getCharityPages() {
   try {
-    const data = await fetchFromStrapi(
-      "charity-pages?fields[0]=title&fields[1]=slug&sort[0]=title:asc&pagination[pageSize]=100"
-    );
+    const data = await fetchFromStrapi("charity-pages/navigation");
 
     if (!data?.data || !Array.isArray(data.data)) {
       return [];
