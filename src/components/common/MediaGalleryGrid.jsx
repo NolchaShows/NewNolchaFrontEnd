@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const DEFAULT_ASPECT_RATIO = "2 / 3";
 const GRID_TILE_RATIO = 2 / 3;
@@ -88,31 +89,48 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
 
   return (
     <section
-      className="w-full"
+      className="w-full pb-4 lg:pb-8"
       style={{ backgroundColor: background }}
     >
       <div className="w-full">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {items.map((item, index) => {
             if (item.type === "contentSection") {
-              return <React.Fragment key={`${item.label || "content"}-${index}`}>{renderContentSection(item)}</React.Fragment>;
+              return (
+                <motion.div
+                  key={`${item.label || "content"}-${index}`}
+                  className="md:col-span-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  {renderContentSection(item)}
+                </motion.div>
+              );
             }
 
             const isFullWidth = Boolean(item.fullWidth);
-
             const colSpan = isFullWidth ? "md:col-span-3" : "col-span-1";
 
             return (
-              <React.Fragment key={`${item.url}-${index}`}>
-                <div
-                  className={`${colSpan} relative overflow-hidden bg-white`}
-                  style={getItemStyle(item)}
-                  data-width={item.width || undefined}
-                  data-height={item.height || undefined}
-                >
-                  {renderMedia(item)}
-                </div>
-              </React.Fragment>
+              <motion.div
+                key={`${item.url}-${index}`}
+                className={`${colSpan} relative overflow-hidden bg-white`}
+                style={getItemStyle(item)}
+                data-width={item.width || undefined}
+                data-height={item.height || undefined}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{
+                  duration: 0.8,
+                  ease: "easeOut",
+                  delay: isFullWidth ? 0 : (index % 3) * 0.1,
+                }}
+              >
+                {renderMedia(item)}
+              </motion.div>
             );
           })}
         </div>
