@@ -2,38 +2,13 @@ import "./globals.css";
 import ConditionalLayout from "./ConditionalLayout";
 import localFont from "next/font/local";
 
-const tomorrow = localFont({
+const ibmPlexSans = localFont({
   src: [
-    { path: "../../public/font/Tomorrow/Tomorrow-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../../public/font/Tomorrow/Tomorrow-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../../public/font/Tomorrow/Tomorrow-Bold.ttf", weight: "700", style: "normal" },
-    { path: "../../public/font/Tomorrow/Tomorrow-ExtraBold.ttf", weight: "800", style: "normal" },
+    { path: "../../public/font/IBMPlexSans/IBMPlexSans-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../../public/font/IBMPlexSans/IBMPlexSans-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../../public/font/IBMPlexSans/IBMPlexSans-Bold.ttf", weight: "700", style: "normal" },
   ],
-  variable: "--font-tomorrow",
-  display: "swap",
-});
-
-const helvetica = localFont({
-  src: [
-    { path: "../../public/font/Helvetica/HelveticaNeueRoman.otf", weight: "500", style: "normal" },
-  ],
-  variable: "--font-helvetica",
-  display: "swap",
-});
-
-const rmMono = localFont({
-  src: [
-    { path: "../../public/font/RM/RMMono-Light.ttf", weight: "300", style: "normal" },
-  ],
-  variable: "--font-rm-mono",
-  display: "swap",
-});
-
-const SchibstedGrotesk = localFont({
-  src: [
-    { path: "../../public/font/Schibsted/SchibstedGrotesk-Regular.ttf", weight: "400", style: "normal" },
-  ],
-  variable: "--font-schibsted-grotesk",
+  variable: "--font-ibm-plex-sans",
   display: "swap",
 });
 
@@ -48,8 +23,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${tomorrow.variable} ${helvetica.variable} ${rmMono.variable} ${SchibstedGrotesk.variable}`}>
-      <body className="font-sans">
+    <html lang="en" className={`${ibmPlexSans.variable}`}>
+      <body className="font-ibm-plex-sans">
         <ConditionalLayout>
           {children}
         </ConditionalLayout>

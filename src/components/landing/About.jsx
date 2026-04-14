@@ -26,12 +26,12 @@ function About({
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 xxl:gap-20 3xl:gap-32">
           <div className="flex flex-col gap-8 xxl:gap-12 3xl:gap-20 max-w-[460px] xxl:max-w-[600px] 3xl:max-w-[900px]">
             {title && (
-              <h2 className="font-['Tomorrow',sans-serif] text-[32px] sm:text-[40px] lg:text-[50px] xxl:text-[64px] 3xl:text-[96px] leading-[1.2] tracking-[-1.5px] font-extrabold">
+              <h2 className="text-[32px] sm:text-[40px] lg:text-[50px] xxl:text-[64px] 3xl:text-[96px] leading-[1.2] tracking-[-1.5px] font-bold">
                 {title}
               </h2>
             )}
             <div className="flex flex-col gap-4 xxl:gap-6 3xl:gap-10 text-[16px] sm:text-[18px] lg:text-[20px] xxl:text-[28px] 3xl:text-[40px] leading-[1.5] tracking-[-0.6px]">
-              <p className="font-['Tomorrow',sans-serif]">
+              <p>
                 {paragraphText}
               </p>
             </div>

@@ -123,7 +123,7 @@
 
 html,
 body {
-  font-family: var(--font-tomorrow), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 @keyframes marquee {

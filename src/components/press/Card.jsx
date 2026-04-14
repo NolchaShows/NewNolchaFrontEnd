@@ -17,7 +17,7 @@ function Card({ newsPaper, image, title, link }) {
           className="w-full h-[220px] sm:h-[258px] xxl:h-[350px] 3xl:h-[500px] object-cover transition-transform duration-700 hover:scale-105"
         />
       </div>
-      <h1 className="font-['Tomorrow',sans-serif] text-[16px] sm:text-[18px] xxl:text-[24px] 3xl:text-[36px] text-center leading-[1.5] tracking-[-0.54px]">
+      <h1 className="text-[16px] sm:text-[18px] xxl:text-[24px] 3xl:text-[36px] text-center leading-[1.5] tracking-[-0.54px]">
         {title}
       </h1>
       <a
