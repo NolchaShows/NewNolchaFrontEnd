@@ -68,22 +68,45 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
       style={{ backgroundColor: background }}
     >
       <div className="w-full">
-        <div className="grid grid-cols-1 gap-11 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {items.map((item, index) => {
             const isFullWidth = Boolean(item.fullWidth);
 
             const colSpan = isFullWidth ? "md:col-span-3" : "col-span-1";
 
             return (
-              <div
-                key={`${item.url}-${index}`}
-                className={`${colSpan} relative overflow-hidden bg-white`}
-                style={getItemStyle(item)}
-                data-width={item.width || undefined}
-                data-height={item.height || undefined}
-              >
-                {renderMedia(item)}
-              </div>
+              <React.Fragment key={`${item.url}-${index}`}>
+                <div
+                  className={`${colSpan} relative overflow-hidden bg-white`}
+                  style={getItemStyle(item)}
+                  data-width={item.width || undefined}
+                  data-height={item.height || undefined}
+                >
+                  {renderMedia(item)}
+                </div>
+                {isFullWidth && (
+                  <div className="md:col-span-3">
+                    <div className="grid grid-cols-12 items-start gap-x-10">
+                      <div className="col-span-12 md:col-span-5">
+                        <span className="text-[16px] font-bold uppercase text-[#1d1d1d]">
+                          COURAGE
+                        </span>
+                      </div>
+                      <div className="col-span-12 md:col-span-7">
+                        <p
+                          className="max-w-[900px] text-[15px] text-[#4a4a4a] lg:text-[16px]"
+                          style={{ fontFamily: "var(--font-schibsted-grotesk)" }}
+                        >
+                          Behind our lens at Marc Jacobs Runway 2025—making visual
+                          Marc's theme of unflinching fashion. "Fear is not my
+                          enemy," Marc writes in the show's notes, "it is a
+                          necessary companion to creativity."
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </React.Fragment>
             );
           })}
         </div>
