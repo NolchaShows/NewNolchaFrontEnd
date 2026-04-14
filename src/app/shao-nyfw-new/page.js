@@ -351,7 +351,7 @@ export default function MarcJacobsAW25Page() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1.2 }}
         >
-          <MediaGalleryGrid items={galleryItems} background="#F3F3F3" />
+          <MediaGalleryGrid items={galleryItems} />
         </motion.div>
       </div>
     </SmoothScroll>
