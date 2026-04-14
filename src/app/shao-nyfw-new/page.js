@@ -67,6 +67,14 @@ const FALLBACK_FEATURED_MEDIA = [
   },
 ];
 
+const FALLBACK_FEATURED_CONTENT_SECTIONS = [
+  {
+    label: "COURAGE",
+    description:
+      'Behind our lens at Marc Jacobs Runway 2025-making visual Marc\'s theme of unflinching fashion. "Fear is not my enemy," Marc writes in the show\'s notes, "it is a necessary companion to creativity."',
+  },
+];
+
 const getMediaUrl = (media) => {
   if (!media?.url) return null;
   return media.url.startsWith("http") ? media.url : `${STRAPI_BASE_URL}${media.url}`;
@@ -120,22 +128,62 @@ const normalizeMediaItem = (media, options = {}) => {
   };
 };
 
-const interleaveGalleryMedia = (standardMedia = [], featuredMedia = [], featuredInterval = 6) => {
+const normalizeFeaturedContentSection = (section) => {
+  if (!section) return null;
+
+  const label = section.label || section.title || "";
+  const description = section.description || section.body || "";
+
+  if (!label && !description) {
+    return null;
+  }
+
+  return {
+    type: "contentSection",
+    fullWidth: true,
+    label,
+    description,
+  };
+};
+
+const interleaveGalleryMedia = (
+  standardMedia = [],
+  featuredMedia = [],
+  featuredContentSections = [],
+  featuredInterval = 6
+) => {
   const result = [];
   const safeInterval = Math.max(1, featuredInterval || 6);
   let featuredIndex = 0;
+
+  const appendFeaturedMediaWithContent = () => {
+    if (featuredIndex >= featuredMedia.length) {
+      return;
+    }
+
+    result.push({ ...featuredMedia[featuredIndex], fullWidth: true });
+
+    if (featuredContentSections[featuredIndex]) {
+      result.push(featuredContentSections[featuredIndex]);
+    }
+
+    featuredIndex += 1;
+  };
 
   standardMedia.forEach((item, index) => {
     result.push(item);
 
     if ((index + 1) % safeInterval === 0 && featuredIndex < featuredMedia.length) {
-      result.push({ ...featuredMedia[featuredIndex], fullWidth: true });
-      featuredIndex += 1;
+      appendFeaturedMediaWithContent();
     }
   });
 
   while (featuredIndex < featuredMedia.length) {
-    result.push({ ...featuredMedia[featuredIndex], fullWidth: true });
+    appendFeaturedMediaWithContent();
+  }
+
+  while (featuredIndex < featuredContentSections.length) {
+    result.push(featuredContentSections[featuredIndex]);
     featuredIndex += 1;
   }
 
@@ -157,10 +205,18 @@ const buildGalleryItems = (gallery) => {
   const featuredMedia = (gallery?.featured_media || [])
     .map((media) => normalizeMediaItem(media, { fullWidth: true }))
     .filter(Boolean);
+  const featuredContentSections = (
+    gallery?.featured_content_sections ||
+    gallery?.featured_content_blocks ||
+    []
+  )
+    .map((section) => normalizeFeaturedContentSection(section))
+    .filter(Boolean);
 
   return interleaveGalleryMedia(
     standardMedia,
     featuredMedia,
+    featuredContentSections,
     gallery?.featured_interval || 6
   );
 };
@@ -177,7 +233,12 @@ export default async function MarcJacobsAW25Page() {
   const projectGalleryItems = projectPage?.gallery ? buildGalleryItems(projectPage.gallery) : [];
   const galleryItems = projectGalleryItems.length
     ? projectGalleryItems
-    : interleaveGalleryMedia(FALLBACK_STANDARD_MEDIA, FALLBACK_FEATURED_MEDIA, 6);
+    : interleaveGalleryMedia(
+        FALLBACK_STANDARD_MEDIA,
+        FALLBACK_FEATURED_MEDIA,
+        FALLBACK_FEATURED_CONTENT_SECTIONS,
+        6
+      );
 
   return (
     <div className="min-h-screen bg-[#F3F3F3] lg:px-11 px-5" style={{ fontFamily: "var(--font-rm-mono)" }}>

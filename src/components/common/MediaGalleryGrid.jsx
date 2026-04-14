@@ -62,6 +62,30 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
     );
   };
 
+  const renderContentSection = (item) => (
+    <div className="md:col-span-3">
+      <div className="grid grid-cols-12 items-start gap-x-10 gap-y-4">
+        <div className="col-span-12 md:col-span-5">
+          {item.label ? (
+            <span className="text-[16px] font-bold uppercase text-[#1d1d1d]">
+              {item.label}
+            </span>
+          ) : null}
+        </div>
+        <div className="col-span-12 md:col-span-7">
+          {item.description ? (
+            <p
+              className="max-w-[900px] text-[15px] text-[#4a4a4a] lg:text-[16px]"
+              style={{ fontFamily: "var(--font-schibsted-grotesk)" }}
+            >
+              {item.description}
+            </p>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <section
       className="w-full"
@@ -70,6 +94,10 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
       <div className="w-full">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {items.map((item, index) => {
+            if (item.type === "contentSection") {
+              return <React.Fragment key={`${item.label || "content"}-${index}`}>{renderContentSection(item)}</React.Fragment>;
+            }
+
             const isFullWidth = Boolean(item.fullWidth);
 
             const colSpan = isFullWidth ? "md:col-span-3" : "col-span-1";
@@ -84,28 +112,6 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
                 >
                   {renderMedia(item)}
                 </div>
-                {isFullWidth && (
-                  <div className="md:col-span-3">
-                    <div className="grid grid-cols-12 items-start gap-x-10">
-                      <div className="col-span-12 md:col-span-5">
-                        <span className="text-[16px] font-bold uppercase text-[#1d1d1d]">
-                          COURAGE
-                        </span>
-                      </div>
-                      <div className="col-span-12 md:col-span-7">
-                        <p
-                          className="max-w-[900px] text-[15px] text-[#4a4a4a] lg:text-[16px]"
-                          style={{ fontFamily: "var(--font-schibsted-grotesk)" }}
-                        >
-                          Behind our lens at Marc Jacobs Runway 2025—making visual
-                          Marc's theme of unflinching fashion. "Fear is not my
-                          enemy," Marc writes in the show's notes, "it is a
-                          necessary companion to creativity."
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </React.Fragment>
             );
           })}
