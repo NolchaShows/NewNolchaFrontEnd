@@ -1,7 +1,10 @@
+"use client";
 import React from "react";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
 import MediaGalleryGrid from "@/components/common/MediaGalleryGrid";
 import { fetchProjectPage } from "@/lib/graphql/fetchProjectPage";
+import SmoothScroll from "@/components/common/SmoothScroll";
+import { motion } from "framer-motion";
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
@@ -221,8 +224,16 @@ const buildGalleryItems = (gallery) => {
   );
 };
 
-export default async function MarcJacobsAW25Page() {
-  const projectPage = await fetchProjectPage();
+export default function MarcJacobsAW25Page() {
+  const [projectPage, setProjectPage] = React.useState(null);
+
+  React.useEffect(() => {
+    const loadData = async () => {
+      const data = await fetchProjectPage();
+      setProjectPage(data);
+    };
+    loadData();
+  }, []);
 
   const title = projectPage?.title || "MARC JACOBS AW25";
   const heroVideo = getMediaUrl(projectPage?.hero?.video) || FALLBACK_HERO_VIDEO;
@@ -241,80 +252,109 @@ export default async function MarcJacobsAW25Page() {
       );
 
   return (
-    <div className="min-h-screen bg-[#F3F3F3] lg:px-11 px-5" style={{ fontFamily: "var(--font-rm-mono)" }}>
-      <VideoHeroSection
-        videoSrc={heroVideo}
-        firstPart=""
-        secondPart=""
-        strokeColor="#000000"
-        fillColor="#000000"
-        textColor="#000000"
-        size="large"
-        overlayOpacity={0}
-        showControls={true}
-      />
-
-      <section className="py-10 lg:py-20">
-        <h1
-          className="mb-5 text-5xl uppercase leading-none tracking-tight text-[#1A1A1A] lg:text-[100px]"
-          style={{ fontFamily: "var(--font-helvetica)" }}
+    <SmoothScroll>
+      <div
+        className="min-h-screen bg-[#F3F3F3] lg:px-11 px-5"
+        style={{ fontFamily: "var(--font-rm-mono)" }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          {title}
-        </h1>
+          <VideoHeroSection
+            videoSrc={heroVideo}
+            firstPart=""
+            secondPart=""
+            strokeColor="#000000"
+            fillColor="#000000"
+            textColor="#000000"
+            size="large"
+            overlayOpacity={0}
+            showControls={true}
+          />
+        </motion.div>
 
-        <div className="flex flex-col gap-y-6">
-          {detailRows.map((item, index) => (
-            <div
-              key={`${item.label}-${index}`}
-              className="grid grid-cols-[120px_1fr] items-start gap-x-10 md:grid-cols-[200px_1fr]"
-            >
-              <span className="text-[16px] font-bold uppercase text-[#1d1d1d]">
-                {item.label}
-              </span>
+        <motion.section
+          className="py-10 lg:py-20"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          <h1
+            className="mb-5 text-5xl uppercase leading-none tracking-tight text-[#1A1A1A] lg:text-[100px]"
+            style={{ fontFamily: "var(--font-helvetica)" }}
+          >
+            {title}
+          </h1>
 
-              <div className="flex flex-col gap-y-3">
-                {item.tags?.length ? (
-                  <div className="flex flex-wrap gap-3">
-                    {item.tags.map((tag, tagIndex) => (
-                      <span
-                        key={`${tag}-${tagIndex}`}
-                        className={`border border-black px-5 py-1.5 text-[12px] uppercase ${
-                          tagIndex !== 0 ? "rounded-full" : ""
-                        }`}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-y-1.5">
-                    {item.title ? (
-                      <span
-                        className={`text-[15px] font-bold uppercase tracking-widest lg:text-[16px] ${
-                          item.description ? "text-[#818181]" : "text-[#1d1d1d]"
-                        }`}
-                      >
-                        {item.title}
-                      </span>
-                    ) : null}
+          <div className="flex flex-col gap-y-6">
+            {detailRows.map((item, index) => (
+              <motion.div
+                key={`${item.label}-${index}`}
+                className="grid grid-cols-[120px_1fr] items-start gap-x-10 md:grid-cols-[200px_1fr]"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <span className="text-[16px] font-bold uppercase text-[#1d1d1d]">
+                  {item.label}
+                </span>
 
-                    {item.description ? (
-                      <p
-                        className="max-w-[900px] text-[15px] text-[#4a4a4a] lg:text-[16px]"
-                        style={{ fontFamily: "var(--font-schibsted-grotesk)" }}
-                      >
-                        {item.description}
-                      </p>
-                    ) : null}
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+                <div className="flex flex-col gap-y-3">
+                  {item.tags?.length ? (
+                    <div className="flex flex-wrap gap-3">
+                      {item.tags.map((tag, tagIndex) => (
+                        <span
+                          key={`${tag}-${tagIndex}`}
+                          className={`border border-black px-5 py-1.5 text-[12px] uppercase ${
+                            tagIndex !== 0 ? "rounded-full" : ""
+                          }`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-y-1.5">
+                      {item.title ? (
+                        <span
+                          className={`text-[15px] font-bold uppercase tracking-widest lg:text-[16px] ${
+                            item.description ? "text-[#818181]" : "text-[#1d1d1d]"
+                          }`}
+                        >
+                          {item.title}
+                        </span>
+                      ) : null}
 
-      <MediaGalleryGrid items={galleryItems} background="#F3F3F3" />
-    </div>
+                      {item.description ? (
+                        <p
+                          className="max-w-[900px] text-[15px] text-[#4a4a4a] lg:text-[16px]"
+                          style={{ fontFamily: "var(--font-schibsted-grotesk)" }}
+                        >
+                          {item.description}
+                        </p>
+                      ) : null}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1.2 }}
+        >
+          <MediaGalleryGrid items={galleryItems} background="#F3F3F3" />
+        </motion.div>
+      </div>
+    </SmoothScroll>
   );
 }
