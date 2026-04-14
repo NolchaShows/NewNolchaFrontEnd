@@ -180,7 +180,7 @@ export default async function MarcJacobsAW25Page() {
     : interleaveGalleryMedia(FALLBACK_STANDARD_MEDIA, FALLBACK_FEATURED_MEDIA, 6);
 
   return (
-    <div className="min-h-screen bg-[#F3F3F3]" style={{ fontFamily: "var(--font-rm-mono)" }}>
+    <div className="min-h-screen bg-[#F3F3F3] lg:px-11 px-5" style={{ fontFamily: "var(--font-rm-mono)" }}>
       <VideoHeroSection
         videoSrc={heroVideo}
         firstPart=""
@@ -190,9 +190,10 @@ export default async function MarcJacobsAW25Page() {
         textColor="#000000"
         size="large"
         overlayOpacity={0}
+        showControls={true}
       />
 
-      <section className="max-w-[1400px] px-6 py-12 lg:px-20 lg:py-24">
+      <section className="py-10 lg:py-20">
         <h1
           className="mb-5 text-5xl uppercase leading-none tracking-tight text-[#1A1A1A] lg:text-[100px]"
           style={{ fontFamily: "var(--font-helvetica)" }}

@@ -15,7 +15,7 @@ const tomorrow = localFont({
 
 const helvetica = localFont({
   src: [
-    { path: "../../public/font/Helvetica/HelveticaNeueLight.otf", weight: "400", style: "normal" },
+    { path: "../../public/font/Helvetica/HelveticaNeueRoman.otf", weight: "500", style: "normal" },
   ],
   variable: "--font-helvetica",
   display: "swap",

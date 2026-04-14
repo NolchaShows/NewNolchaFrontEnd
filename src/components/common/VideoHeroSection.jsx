@@ -14,6 +14,7 @@ const VideoHeroSection = ({
     className = "",
     children = null,
     isGoogleDrive = false,
+    showControls = false,
     isSticky = false
 }) => {
     // Helper function to convert Google Drive link to embed URL
@@ -63,9 +64,10 @@ const VideoHeroSection = ({
                 ) : (
                     <video
                         className="w-full h-full object-cover"
-                        autoPlay
-                        muted
-                        loop
+                        autoPlay={!showControls}
+                        muted={!showControls}
+                        loop={!showControls}
+                        controls={showControls}
                         playsInline
                         style={{ minWidth: "100%", minHeight: "100%" }}
                     >

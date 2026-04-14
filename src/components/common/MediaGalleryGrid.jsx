@@ -34,13 +34,15 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
     const mediaClassName = getMediaClassName(item);
 
     if (item.type === "video") {
+      const showControls = Boolean(item.fullWidth);
       return (
         <video
           src={item.url}
           className={mediaClassName}
-          autoPlay
-          muted
-          loop
+          autoPlay={!showControls}
+          muted={!showControls}
+          loop={!showControls}
+          controls={showControls}
           playsInline
           preload="metadata"
         >
@@ -62,11 +64,11 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
 
   return (
     <section
-      className="w-full px-0 py-4 md:px-1 lg:px-2 lg:py-8"
+      className="w-full"
       style={{ backgroundColor: background }}
     >
       <div className="w-full">
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-11 md:grid-cols-3">
           {items.map((item, index) => {
             const isFullWidth = Boolean(item.fullWidth);
 
