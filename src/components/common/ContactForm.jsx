@@ -221,7 +221,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
                 2xl:text-[24px]
                 font-medium
                 bg-primary
-                hover:bg-[#BFC943]
+                hover:bg-primary/80
                 text-black
                 transition-colors duration-200
                 flex justify-center items-center

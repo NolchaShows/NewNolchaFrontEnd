@@ -110,8 +110,8 @@ const PastExperiences = ({
             aria-label="Scroll left"
           >
             <motion.img
-              src="/icons/left-black-button.svg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] xl:w-[60px] xl:h-[60px] 2xl:w-[65px] 2xl:h-[65px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px]"
+              src="/left.jpg"
+              className="cursor-pointer w-[36px] h-[36px] lg:w-[40px] lg:h-[40px] xl:w-[48px] xl:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[8px] xl:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
               whileTap={{ scale: 0.9 }}
             />
           </button>
@@ -120,8 +120,8 @@ const PastExperiences = ({
             aria-label="Scroll right"
           >
             <motion.img
-              src="/icons/right-black-button.svg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] xl:w-[60px] xl:h-[60px] 2xl:w-[65px] 2xl:h-[65px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px]"
+              src="/right.jpg"
+              className="cursor-pointer w-[36px] h-[36px] lg:w-[40px] lg:h-[40px] xl:w-[48px] xl:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[8px] xl:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
               whileTap={{ scale: 0.9 }}
             />
           </button>
