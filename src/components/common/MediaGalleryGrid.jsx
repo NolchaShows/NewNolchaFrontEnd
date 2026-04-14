@@ -89,7 +89,6 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
   return (
     <section
       className="w-full pb-4 lg:pb-8"
-      style={{ backgroundColor: background }}
     >
       <div className="w-full">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
