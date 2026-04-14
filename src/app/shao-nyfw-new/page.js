@@ -254,7 +254,7 @@ export default function MarcJacobsAW25Page() {
   return (
     <SmoothScroll>
       <div
-        className="min-h-screen bg-[#F3F3F3] lg:px-11 px-5"
+        className="min-h-screen bg-[#f0eee6] lg:px-11 px-5"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
