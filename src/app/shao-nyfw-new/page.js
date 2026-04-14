@@ -262,6 +262,7 @@ export default function MarcJacobsAW25Page() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          className="h-screen w-full"
         >
           <VideoHeroSection
             videoSrc={heroVideo}
@@ -273,6 +274,7 @@ export default function MarcJacobsAW25Page() {
             size="large"
             overlayOpacity={0}
             showControls={true}
+            className="!h-full"
           />
         </motion.div>
 
