@@ -77,7 +77,6 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
           {item.description ? (
             <p
               className="max-w-[900px] text-[15px] text-[#4a4a4a] lg:text-[16px]"
-              style={{ fontFamily: "var(--font-schibsted-grotesk)" }}
             >
               {item.description}
             </p>

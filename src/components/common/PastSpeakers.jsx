@@ -329,7 +329,7 @@ const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
 
                   {/* Back of card */}
                   <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] p-6 flex flex-col justify-start">
-                    <h3 className="text-black text-[1.4rem] font-extrabold uppercase mb-4 leading-tight">
+                    <h3 className="text-black text-[1.4rem] font-bold uppercase mb-4 leading-tight">
                       {speaker.name || 'Speaker Name'}
                     </h3>
                     <p className="text-black text-[0.85rem] font-semibold leading-[1.4] mb-4 flex-grow overflow-y-auto">
@@ -382,7 +382,7 @@ const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
 
                   {/* Back of card */}
                   <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] 3xl:rounded-[30px] p-6 2xl:p-8 xxl:p-10 3xl:p-16 flex flex-col justify-start">
-                    <h3 className="text-black text-[1.2rem] xl:text-[1.4rem] 2xl:text-[1.8rem] xxl:text-[2.4rem] 3xl:text-[3.6rem] font-extrabold uppercase mb-4 leading-tight">
+                    <h3 className="text-black text-[1.2rem] xl:text-[1.4rem] 2xl:text-[1.8rem] xxl:text-[2.4rem] 3xl:text-[3.6rem] font-bold uppercase mb-4 leading-tight">
                       {speaker.name || 'Speaker Name'}
                     </h3>
                     <p className="text-black text-[0.8rem] xl:text-[0.9rem] 2xl:text-[1.2rem] xxl:text-[1.6rem] 3xl:text-[2.2rem] font-semibold leading-[1.4] mb-4 flex-grow overflow-y-auto">
@@ -430,7 +430,7 @@ const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
 
                   {/* Back of card */}
                   <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#7FFFD4] rounded-[15px] 3xl:rounded-[30px] p-6 2xl:p-8 xxl:p-10 3xl:p-16 flex flex-col justify-start">
-                    <h3 className="text-black text-[1.2rem] xl:text-[1.4rem] 2xl:text-[1.8rem] xxl:text-[2.4rem] 3xl:text-[3.6rem] font-extrabold uppercase mb-4 leading-tight">
+                    <h3 className="text-black text-[1.2rem] xl:text-[1.4rem] 2xl:text-[1.8rem] xxl:text-[2.4rem] 3xl:text-[3.6rem] font-bold uppercase mb-4 leading-tight">
                       {speaker.name || 'Speaker Name'}
                     </h3>
                     <p className="text-black text-[0.8rem] xl:text-[0.9rem] 2xl:text-[1.2rem] xxl:text-[1.6rem] 3xl:text-[2.2rem] font-semibold leading-[1.4] mb-4 flex-grow overflow-y-auto">

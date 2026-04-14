@@ -255,7 +255,6 @@ export default function MarcJacobsAW25Page() {
     <SmoothScroll>
       <div
         className="min-h-screen bg-[#F3F3F3] lg:px-11 px-5"
-        style={{ fontFamily: "var(--font-rm-mono)" }}
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -287,7 +286,6 @@ export default function MarcJacobsAW25Page() {
         >
           <h1
             className="mb-5 text-5xl uppercase leading-none tracking-tight text-[#1A1A1A] lg:text-[100px]"
-            style={{ fontFamily: "var(--font-helvetica)" }}
           >
             {title}
           </h1>
@@ -335,7 +333,6 @@ export default function MarcJacobsAW25Page() {
                       {item.description ? (
                         <p
                           className="max-w-[900px] text-[15px] text-[#4a4a4a] lg:text-[16px]"
-                          style={{ fontFamily: "var(--font-schibsted-grotesk)" }}
                         >
                           {item.description}
                         </p>

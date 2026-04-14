@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-tomorrow)", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["var(--font-ibm-plex-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       keyframes: {
         slideLeft: {

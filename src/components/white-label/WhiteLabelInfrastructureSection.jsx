@@ -32,7 +32,7 @@ const WhiteLabelInfrastructureSection = ({ sectionData }) => {
   return (
     <section className="relative z-10 bg-white page-container">
       <div className="mx-auto flex max-w-[1280px] xxl:max-w-[1600px] 3xl:max-w-[2400px] flex-col items-center gap-[30px] sm:gap-10 lg:gap-[40px] 2xl:max-w-[1600px] 2xl:gap-[60px] xxl:gap-[80px] 3xl:gap-[120px]">
-        <h2 className="text-center font-['Tomorrow',sans-serif] text-[28px] font-extrabold leading-[1.08] tracking-[-0.84px] text-black sm:text-[34px] sm:tracking-[-1.02px] md:text-[42px] md:tracking-[-1.26px] lg:text-[60px] lg:tracking-[-1.8px] 2xl:text-[78px] xxl:text-[96px] 3xl:text-[144px] 2xl:tracking-[-2.34px]">
+        <h2 className="text-center text-[28px] font-bold leading-[1.08] tracking-[-0.84px] text-black sm:text-[34px] sm:tracking-[-1.02px] md:text-[42px] md:tracking-[-1.26px] lg:text-[60px] lg:tracking-[-1.8px] 2xl:text-[78px] xxl:text-[96px] 3xl:text-[144px] 2xl:tracking-[-2.34px]">
           {section.heading}
         </h2>
 
@@ -44,7 +44,7 @@ const WhiteLabelInfrastructureSection = ({ sectionData }) => {
                 className="flex min-h-[88px] items-center justify-center rounded-[12px] border border-[#FFF9AB] px-4 py-3 text-center shadow-sm sm:min-h-[96px] sm:px-5 lg:min-h-[100px] lg:py-[10px] 2xl:min-h-[130px] xxl:min-h-[160px] 3xl:min-h-[240px] 2xl:rounded-[16px] 3xl:rounded-[32px] 2xl:px-6"
                 style={{ backgroundColor: item.color }}
               >
-                <p className="font-['Tomorrow',sans-serif] text-[16px] font-semibold leading-[1.2] tracking-[-0.48px] text-black whitespace-pre-line sm:text-[17px] sm:tracking-[-0.51px] lg:text-[20px] lg:tracking-[-0.6px] 2xl:text-[26px] xxl:text-[32px] 3xl:text-[48px] 2xl:tracking-[-0.78px]">
+                <p className="text-[16px] font-semibold leading-[1.2] tracking-[-0.48px] text-black whitespace-pre-line sm:text-[17px] sm:tracking-[-0.51px] lg:text-[20px] lg:tracking-[-0.6px] 2xl:text-[26px] xxl:text-[32px] 3xl:text-[48px] 2xl:tracking-[-0.78px]">
                   {item.title}
                 </p>
               </div>
@@ -52,7 +52,7 @@ const WhiteLabelInfrastructureSection = ({ sectionData }) => {
           </div>
 
           <div className="rounded-[18px] bg-[#1A1A1A] px-5 py-6 text-[#D1EDDF] shadow-[0_1px_10px_rgba(0,0,0,0.1),0_22px_28px_rgba(0,0,0,0.4)] sm:px-6 sm:py-8 lg:min-h-[564px] lg:px-9 lg:py-10 2xl:min-h-[720px] xxl:min-h-[900px] 3xl:min-h-[1300px] 2xl:rounded-[24px] 3xl:rounded-[48px] 2xl:px-12 xxl:px-16 3xl:px-24 2xl:py-14 xxl:py-20 3xl:py-32">
-            <div className="flex h-full flex-col justify-center gap-5 font-['Tomorrow',sans-serif] text-[20px] font-semibold leading-[1.3] tracking-[-0.6px] sm:gap-6 sm:text-[22px] sm:tracking-[-0.66px] md:text-[24px] md:tracking-[-0.72px] lg:gap-8 lg:text-[30px] lg:tracking-[-0.9px] 2xl:gap-10 xxl:gap-14 3xl:gap-20 2xl:text-[40px] xxl:text-[50px] 3xl:text-[75px] 2xl:tracking-[-1.2px]">
+            <div className="flex h-full flex-col justify-center gap-5 text-[20px] font-semibold leading-[1.3] tracking-[-0.6px] sm:gap-6 sm:text-[22px] sm:tracking-[-0.66px] md:text-[24px] md:tracking-[-0.72px] lg:gap-8 lg:text-[30px] lg:tracking-[-0.9px] 2xl:gap-10 xxl:gap-14 3xl:gap-20 2xl:text-[40px] xxl:text-[50px] 3xl:text-[75px] 2xl:tracking-[-1.2px]">
               <div
                 className="[&_p]:m-0 [&_p]:leading-[inherit] [&_strong]:text-[#FEF991]"
                 dangerouslySetInnerHTML={{ __html: section.paragraph }}
