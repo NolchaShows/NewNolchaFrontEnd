@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import SectionTitle from "../common/SectionTitle";
 import RoundedCtaButton from "../common/RoundedCtaButton";
 
@@ -104,10 +105,10 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
       : defaultPartnerLogos;
 
   return (
-    <section className="w-full min-h-screen bg-[#F3F3F3] text-[#1A1A1A] py-20 lg:py-32 px-6 lg:px-20 flex items-center">
+    <section className="w-full bg-[#F3F3F3] text-[#1A1A1A] py-8 lg:py-16 lg:px-11 px-5 flex items-center">
       <div className="mx-auto text-center w-full">
         {/* Heading */}
-        <h2 className="text-[32px] lg:text-[56px] font-bold mb-12 lg:mb-20">
+        <h2 className="text-[34px] lg:text-[60px] font-medium mb-11 lg:mb-22">
           {heading}
         </h2>
 
@@ -116,7 +117,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
           {paragraphs.map((paragraph, index) => (
             <p
               key={index}
-              className="text-[18px] lg:text-[24px] text-[#1A1A1A]/80 font-medium"
+              className="text-[20px] lg:text-[36px] text-[#1A1A1A]/80 font-normal"
             >
               {typeof paragraph === "string" ? paragraph : (paragraph.text || paragraph)}
             </p>
@@ -124,21 +125,29 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
         </div>
 
         {/* Partner Logos */}
-        <div className="flex items-center justify-between gap-4 lg:gap-8 w-full overflow-x-auto scrollbar-hide">
+        <div className="flex items-center justify-between gap-4 lg:gap-8 mb-6 lg:mb-12 w-full overflow-x-auto scrollbar-hide">
           {partnerLogos.map((partner, index) => (
-            <div
+            <motion.div
               key={index}
               className="flex flex-col items-center gap-4 flex-1 min-w-[100px]"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ 
+                duration: 0.8, 
+                ease: "easeOut",
+                delay: index * 0.1 
+              }}
             >
-              <div className="h-10 lg:h-14 flex items-center justify-center w-full">
+              <div className="h-8 lg:h-12 flex items-center justify-center w-full">
                 {partner.logo ? (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="max-h-full w-auto object-contain filter grayscale brightness-0 opacity-80"
+                    className="max-h-full max-w-[80px] sm:max-w-[100px] lg:max-w-full w-auto object-contain filter grayscale brightness-0 opacity-80"
                   />
                 ) : (
-                  <span className="text-[12px] lg:text-[14px] font-bold uppercase tracking-wider whitespace-nowrap">
+                  <span className="text-[10px] lg:text-[14px] font-bold uppercase tracking-wider whitespace-nowrap">
                     {partner.name}
                   </span>
                 )}
@@ -148,7 +157,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
                   {partner.status}
                 </span>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
