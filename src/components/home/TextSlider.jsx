@@ -2,18 +2,16 @@ import React from "react";
 
 export default function LogoSlider({ logoSliderData, loading }) {
   // Default values in case data is not available
-  const defaultTitle = "As Seen As";
+  const defaultTitle = "AS SEEN IN";
   const defaultLogos = [
-    { name: "AdAge", url: "/home/slider1.jpg" },
-    { name: "VOGUE", url: "/home/slider2.jpg" },
-    { name: "Forbes", url: "/home/slider3.jpg" },
-    { name: "Consensus Miami", url: "/home/slider4.jpg" },
-    { name: "Consensus Hong Kong", url: "/home/slider5.jpg" },
-    { name: "NFT.NYC", url: "/home/slider6.jpg" },
-    { name: "Bitcoin Vegas", url: "/home/slider7.jpg" },
-    { name: "Bitcoin Nashville", url: "/home/slider8.jpg" },
-    { name: "AdWeek", url: "/home/slider9.jpg" },
-    { name: "AdAge", url: "/home/slider1.jpg" },
+    { name: "AdAge", url: "/home/logo-slider/adage.webp" },
+    { name: "CoinDesk", url: "/home/logo-slider/coindesk.webp" },
+    { name: "Cointale", url: "/home/logo-slider/cointale.webp" },
+    { name: "Forbes", url: "/home/logo-slider/forbes.webp" },
+    { name: "NFTNow", url: "/home/logo-slider/nftnow.webp" },
+    { name: "One37", url: "/home/logo-slider/one37.webp" },
+    { name: "VOGUE", url: "/home/logo-slider/vogue.webp" },
+    { name: "WWD", url: "/home/logo-slider/wwd.webp" },
   ];
 
   // Use data from props if available, otherwise use defaults
@@ -68,7 +66,7 @@ export default function LogoSlider({ logoSliderData, loading }) {
       <div className="w-full">
         <div className="flex h-[60px] md:h-[116px] 2xl:h-[130px] items-center">
           {/* Fixed "AS SEEN IN" section */}
-          <div className="flex-shrink-0 bg-black h-full flex items-center justify-center px-8 min-w-[180px] md:min-w-[350px] 2xl:min-w-[400px]">
+          <div className="flex-shrink-0 bg-[#141414] h-full flex items-center justify-center px-8 min-w-[180px] md:min-w-[350px] 2xl:min-w-[400px] border-y border-white">
             <h3 className="font-neue text-[16px] lg:text-[26px] font-bold text-white tracking-wide 2xl:text-[36px]">
               {title}
             </h3>
@@ -87,13 +85,13 @@ export default function LogoSlider({ logoSliderData, loading }) {
                 {duplicatedLogos.map((logo, index) => (
                   <div
                     key={`${logo.name}-${index}`}
-                    className="flex-shrink-0 flex bg-black items-center justify-center w-[180px] md:w-[350px] h-[60px] md:h-[116px] 2xl:min-h-[130px] border-r border-[#535353]"
+                    className="flex-shrink-0 flex bg-[#141414] items-center justify-center w-[180px] md:w-[350px] h-[60px] md:h-[116px] 2xl:min-h-[130px] border-y border-r border-white"
                   >
                     {logo.url ? (
                       <img
                         src={logo.url}
                         alt={logo.name}
-                        className="h-full w-full object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                        className="h-full w-full object-contain"
                       />
                     ) : (
                       <span className="text-lg font-semibold text-gray-600">
