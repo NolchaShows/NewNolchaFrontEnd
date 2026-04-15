@@ -62,12 +62,12 @@ const renderParagraph = (paragraph, index) => {
 
 const BuildMomentumSection = ({ buildMomentumData }) => {
   const defaultPartnerLogos = [
-    { name: "Mercedes-Benz", logo: 'homepage/build_momentum_section/mercedes.png' }, // Add logo path when available
-    { name: "Bullish", logo: 'homepage/build_momentum_section/bullish.png' }, // Add logo path when available
-    { name: "Galaxy", logo: 'homepage/build_momentum_section/galaxy.png' }, // Add logo path when available
-    { name: "OKX", logo: 'homepage/build_momentum_section/okx.png' }, // Add logo path when available
+    { name: "Mercedes-Benz", logo: 'homepage/build_momentum_section/mercedes.png' },
+    { name: "Bullish", logo: 'homepage/build_momentum_section/bullish.png' },
+    { name: "Galaxy", logo: 'homepage/build_momentum_section/galaxy.png' },
+    { name: "OKX", logo: 'homepage/build_momentum_section/okx.png' },
     { name: "Coca Cola", logo: 'homepage/build_momentum_section/cocacola.png' },
-    { name: "CoinDesk", logo: 'homepage/build_momentum_section/coindesk.png' }, // Add logo path when available
+    { name: "CoinDesk", logo: 'homepage/build_momentum_section/coindesk.png' },
   ];
 
   const defaultParagraphs = [
@@ -99,57 +99,59 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
             logo?.caption ||
             `Logo ${index + 1}`,
           logo: resolveMediaUrl(logo?.image || logo),
+          status: logo?.status || "",
         }))
       : defaultPartnerLogos;
 
   return (
-    <section className="w-full bg-black text-white page-container">
-      {/* Heading */}
-      <SectionTitle>{heading}</SectionTitle>
+    <section className="w-full min-h-screen bg-[#F3F3F3] text-[#1A1A1A] py-20 lg:py-32 px-6 lg:px-20 flex items-center">
+      <div className="mx-auto text-center w-full">
+        {/* Heading */}
+        <h2 className="text-[32px] lg:text-[56px] font-bold mb-12 lg:mb-20">
+          {heading}
+        </h2>
 
-      {/* Paragraphs */}
-      <div className="flex flex-col gap-[10px] lg:gap-4 xl:gap-5 2xl:gap-6 xxl:gap-[35px] 3xl:gap-[50px] mb-5 lg:mb-8 xl:mb-10 2xl:mb-12 xxl:mb-[70px] 3xl:mb-[100px]">
-        {paragraphs.map((paragraph, index) => renderParagraph(paragraph, index))}
+        {/* Paragraphs */}
+        <div className="mx-auto mb-16 lg:mb-24 flex flex-col gap-6">
+          {paragraphs.map((paragraph, index) => (
+            <p
+              key={index}
+              className="text-[18px] lg:text-[24px] text-[#1A1A1A]/80 font-medium"
+            >
+              {typeof paragraph === "string" ? paragraph : (paragraph.text || paragraph)}
+            </p>
+          ))}
+        </div>
+
+        {/* Partner Logos */}
+        <div className="flex items-center justify-between gap-4 lg:gap-8 w-full overflow-x-auto scrollbar-hide">
+          {partnerLogos.map((partner, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center gap-4 flex-1 min-w-[100px]"
+            >
+              <div className="h-10 lg:h-14 flex items-center justify-center w-full">
+                {partner.logo ? (
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    className="max-h-full w-auto object-contain filter grayscale brightness-0 opacity-80"
+                  />
+                ) : (
+                  <span className="text-[12px] lg:text-[14px] font-bold uppercase tracking-wider whitespace-nowrap">
+                    {partner.name}
+                  </span>
+                )}
+              </div>
+              {partner.status && (
+                <span className="text-[10px] lg:text-[12px] font-medium text-[#1A1A1A]/60 uppercase whitespace-nowrap">
+                  {partner.status}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-
-      {/* Partner Logos */}
-      <div className="flex flex-wrap items-center justify-start gap-6 lg:gap-[48px] 2xl:gap-12 xxl:gap-16 3xl:gap-24 mb-[30px] lg:mb-[60px] 2xl:mb-[80px] xxl:mb-[100px] 3xl:mb-[150px]">
-        {partnerLogos.map((partner, index) => (
-          <div
-            key={index}
-            className="flex items-center justify-center h-10 md:h-14 lg:h-16 xl:h-20 2xl:h-24 opacity-80 hover:opacity-100 transition-opacity"
-          >
-            {partner.logo ? (
-              <img
-                src={partner.logo}
-                alt={partner.name}
-                className="h-full w-auto max-w-[140px] lg:max-w-[160px] 2xl:max-w-[200px] 3xl:max-w-[300px] object-contain transition-all duration-300 filter brightness-0 invert opacity-90 hover:opacity-100"
-              />
-            ) : (
-              <span className="text-white/80 text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-medium">
-                {partner.name}
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Let's Talk Button */}
-      <RoundedCtaButton
-        label="Let's Talk"
-        onClick={() => {
-          const el = document.getElementById("contact");
-          if (!el) return;
-          const nav = document.querySelector(".sticky.top-0");
-          const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-          const y =
-            el.getBoundingClientRect().top +
-            window.pageYOffset -
-            navHeight -
-            12;
-          window.scrollTo({ top: y, behavior: "smooth" });
-        }}
-      />
     </section>
   );
 };
