@@ -8,7 +8,7 @@ import BuildMomentumSection from "@/components/home/BuildMomentumSection";
 import ImageGallerySlider from "@/components/common/ImageGallerySlider";
 import EveningRecap from "@/components/common/EveningRecap";
 import PastSpeakers from "@/components/common/PastSpeakers";
-import FashionGrid3x3 from "@/components/shao/FashionGrid3x3";
+import MediaGalleryGrid from "@/components/common/MediaGalleryGrid";
 import ExploreServices from "@/components/home/ExploreServices";
 import TweetCarousel from "@/components/common/TweetCarousel";
 import { tweetsData } from "@/data/tweetsData";
@@ -156,6 +156,110 @@ const mapUpcomingEvents = (upcomingSection) => {
 
 const mapImageGallerySliderImages = (imageGallerySlider) =>
   (imageGallerySlider?.images || []).map((image) => getMediaUrl(image)).filter(Boolean);
+
+const normalizeMediaItem = (media, options = {}) => {
+  if (!media) return null;
+
+  const url = getMediaUrl(media);
+  if (!url) return null;
+
+  const width = media.width || media.formats?.large?.width || null;
+  const height = media.height || media.formats?.large?.height || null;
+
+  return {
+    type: isVideoMedia(media) ? "video" : "image",
+    url,
+    mime: media.mime || null,
+    width,
+    height,
+    fullWidth: Boolean(options.fullWidth),
+  };
+};
+
+const normalizeFeaturedContentSection = (section) => {
+  if (!section) return null;
+
+  const label = section.label || section.title || "";
+  const description = section.description || section.body || "";
+
+  if (!label && !description) {
+    return null;
+  }
+
+  return {
+    type: "contentSection",
+    fullWidth: true,
+    label,
+    description,
+  };
+};
+
+const interleaveGalleryMedia = (
+  standardMedia = [],
+  featuredMedia = [],
+  featuredContentSections = [],
+  featuredInterval = 6
+) => {
+  const result = [];
+  const safeInterval = Math.max(1, featuredInterval || 6);
+  let featuredIndex = 0;
+
+  const appendFeaturedMediaWithContent = () => {
+    if (featuredIndex >= featuredMedia.length) {
+      return;
+    }
+
+    result.push({ ...featuredMedia[featuredIndex], fullWidth: true });
+
+    if (featuredContentSections[featuredIndex]) {
+      result.push(featuredContentSections[featuredIndex]);
+    }
+
+    featuredIndex += 1;
+  };
+
+  standardMedia.forEach((item, index) => {
+    result.push(item);
+
+    if ((index + 1) % safeInterval === 0 && featuredIndex < featuredMedia.length) {
+      appendFeaturedMediaWithContent();
+    }
+  });
+
+  while (featuredIndex < featuredMedia.length) {
+    appendFeaturedMediaWithContent();
+  }
+
+  while (featuredIndex < featuredContentSections.length) {
+    result.push(featuredContentSections[featuredIndex]);
+    featuredIndex += 1;
+  }
+
+  return result;
+};
+
+const buildGalleryItems = (gallery) => {
+  const standardMedia = (gallery?.standard_media || [])
+    .map((media) => normalizeMediaItem(media))
+    .filter(Boolean);
+  const featuredMedia = (gallery?.featured_media || [])
+    .map((media) => normalizeMediaItem(media, { fullWidth: true }))
+    .filter(Boolean);
+  const featuredContentSections = (
+    gallery?.featured_content_sections ||
+    gallery?.featured_content_blocks ||
+    []
+  )
+    .map((section) => normalizeFeaturedContentSection(section))
+    .filter(Boolean);
+
+  return interleaveGalleryMedia(
+    standardMedia,
+    featuredMedia,
+    featuredContentSections,
+    gallery?.featured_interval || 6
+  );
+};
 
 export default async function Home() {
   const homePage = await fetchHomePage("home");
@@ -528,23 +632,30 @@ export default async function Home() {
           "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-3.mp4"
         }
       />
-      {homePage?.gallery_section ? (
-        <GallerySection slug="home" pageType="home" page={homePage} />
-      ) : (
-        <FashionGrid3x3
-          images={[
-            "/shao_nyfw/image 21.png",
-            "/shao_nyfw/image 22.png",
-            "/shao_nyfw/image 23.png",
-            "/shao_nyfw/image 24.png",
-            "/shao_nyfw/image 25.png",
-            "/shao_nyfw/image 26.png",
-            "/shao_nyfw/image 27.png",
-            "/shao_nyfw/image 28.png",
-          ]}
-          background="#FEF991"
+      <div className="lg:px-11 px-5 pt-4 lg:pt-8">
+        <MediaGalleryGrid 
+          items={
+            homePage?.gallery_section?.gallery 
+              ? buildGalleryItems(homePage.gallery_section.gallery)
+              : interleaveGalleryMedia(
+                  [
+                    { type: "image", url: "/shao_nyfw/image 21.png", width: 1200, height: 1500 },
+                    { type: "image", url: "/shao_nyfw/image 22.png", width: 1200, height: 1500 },
+                    { type: "image", url: "/shao_nyfw/image 23.png", width: 1200, height: 1500 },
+                    { type: "image", url: "/shao_nyfw/image 24.png", width: 1200, height: 1500 },
+                    { type: "image", url: "/shao_nyfw/image 25.png", width: 1200, height: 1500 },
+                    { type: "image", url: "/shao_nyfw/image 26.png", width: 1200, height: 1500 },
+                    { type: "image", url: "/shao_nyfw/image 27.png", width: 1200, height: 1500 },
+                    { type: "image", url: "/shao_nyfw/image 28.png", width: 1200, height: 1500 },
+                    { type: "image", url: "/shao_nyfw/image 21.png", width: 1200, height: 1500 },
+                  ],
+                  [],
+                  [],
+                  6
+                )
+          } 
         />
-      )}
+      </div>
       {homeTweetCarousel?.items?.length ? (
         <SharedTweetCarouselSection slug="home" pageType="home" page={homePage} />
       ) : (

@@ -121,7 +121,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-center justify-center z-[100] p-4">
+    <div className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-start justify-center z-[100] pt-[60px] lg:pt-[140px] pb-10">
       {/* Outer Black Box Wrapper - for close button positioning */}
       <div className="relative max-w-[1240px] w-full max-h-[100vh]">
 
