@@ -665,7 +665,7 @@ function Navbar() {
                   }}
                   className={[
                     "py-[7.5px] 2xl:py-[12px] 3xl:py-[25px]",
-                    "bg-primary text-xl 2xl:text-[28px] xxl:text-2xl 3xl:text-[50px] text-black font-medium rounded-full",
+                    "bg-primary text-xl 2xl:text-[28px] xxl:text-2xl 3xl:text-[50px] text-black font-medium rounded-lg",
                     // Desktop: keep only arrow visible initially; reveal this button on hover (no absolute -> shape stays identical)
                     "hidden lg:inline-flex",
                     "overflow-hidden whitespace-nowrap",
@@ -689,7 +689,7 @@ function Navbar() {
                     const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }}
-                  className="hidden lg:flex w-11 h-11 2xl:w-[64px] 2xl:h-[64px] xxl:w-14 xxl:h-14 3xl:w-[120px] 3xl:h-[120px] bg-primary rounded-full items-center justify-center ml-2"
+                  className="hidden lg:flex w-11 h-11 2xl:w-[64px] 2xl:h-[64px] xxl:w-14 xxl:h-14 3xl:w-[120px] 3xl:h-[120px] bg-primary rounded-lg items-center justify-center ml-2"
                 >
                   <div className="2xl:hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -950,7 +950,7 @@ function Navbar() {
                       window.scrollTo({ top: y, behavior: "smooth" });
                       setIsMobileMenuOpen(false);
                     }}
-                    className="flex-1 h-[52px] rounded-full bg-primary text-black text-[18px] font-[700] hover:opacity-95 transition-opacity"
+                    className="flex-1 h-[52px] rounded-lg bg-primary text-black text-[18px] font-[700] hover:opacity-95 transition-opacity"
                   >
                     Lets Talk
                   </button>
@@ -966,7 +966,7 @@ function Navbar() {
                       setIsMobileMenuOpen(false);
                     }}
                     aria-label="Lets Talk"
-                    className="w-[52px] h-[52px] rounded-full bg-primary inline-flex items-center justify-center hover:opacity-95 transition-opacity"
+                    className="w-[52px] h-[52px] rounded-lg bg-primary inline-flex items-center justify-center hover:opacity-95 transition-opacity"
                   >
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                       <path

@@ -47,7 +47,7 @@ export default async function HeroSection({
       textColor="#FFFFFF"
       size="large"
       overlayOpacity={20}
-      className="-mt-[88px] 2xl:-mt-[120px]"
+      className="-mt-[88px] 2xl:-mt-[120px] h-screen"
       isGoogleDrive={false}
     />
   );

@@ -159,7 +159,7 @@ const UpcomingEventsList = ({
                           });
                           setIsEventDetailsModalOpen(true);
                         }}
-                        className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-black text-white rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-800 transition-colors"
+                        className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-black text-white rounded-lg text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-800 transition-colors"
                       >
                         Learn more
                       </button>
@@ -172,7 +172,7 @@ const UpcomingEventsList = ({
                           });
                           setIsModalOpen(true);
                         }}
-                        className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-transparent border border-black text-black rounded-full text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-black hover:text-primary transition-colors"
+                        className="px-[10px] lg:px-[18px] 2xl:px-[24px] py-[5px] lg:py-[10px] 2xl:py-[15px] bg-transparent border border-black text-black rounded-lg text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-black hover:text-primary transition-colors"
                       >
                         Request details
                       </button>

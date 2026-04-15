@@ -64,7 +64,7 @@ function Footer() {
           {/* Right - Email Input */}
           <div className="flex gap-0 items-center justify-center w-full lg:w-[427px]">
             <div className="flex flex-1 flex-col gap-[6px] items-start min-w-0 w-full">
-              <div className="bg-[#FAFAFA] border border-[#E9EAEB] border-solid flex gap-[8px] items-center pl-[16px] pr-[8px] py-[6px] rounded-[32px] w-full">
+              <div className="bg-[#FAFAFA] border border-[#E9EAEB] border-solid flex gap-[8px] items-center pl-[16px] pr-[8px] py-[6px] rounded-lg w-full">
                 <div className="flex flex-1 gap-0 items-center min-w-0">
                   <input
                     type="email"
@@ -80,7 +80,7 @@ function Footer() {
                   <button
                     onClick={handleSubmit}
                     disabled={isLoading}
-                    className={`bg-primary flex gap-0 items-center justify-center px-[16px] py-[8px] rounded-[32px] transition-colors ${isLoading
+                    className={`bg-primary flex gap-0 items-center justify-center px-[16px] py-[8px] rounded-lg transition-colors ${isLoading
                       ? 'opacity-50 cursor-not-allowed'
                       : 'hover:bg-primary/80'
                       }`}
@@ -127,7 +127,7 @@ function Footer() {
             {/* Social Media Icons */}
             <div className="flex gap-[12px] items-center">
               <div
-                className="bg-primary flex items-center p-[10px] rounded-[50px] cursor-pointer hover:bg-primary/80 transition-colors"
+                className="bg-primary flex items-center p-[10px] rounded-lg cursor-pointer hover:bg-primary/80 transition-colors"
                 onClick={() => window.open("https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.nolcha.com%2Fcontent-for-swiper-with-popup%2Fart-basel-2025-xw6ct", "_blank")}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -135,7 +135,7 @@ function Footer() {
                 </svg>
               </div>
               <div
-                className="bg-primary flex items-center p-[10px] rounded-[50px] cursor-pointer hover:bg-primary/80 transition-colors"
+                className="bg-primary flex items-center p-[10px] rounded-lg cursor-pointer hover:bg-primary/80 transition-colors"
                 onClick={() => window.open("https://www.instagram.com/nolchashows", "_blank")}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -144,7 +144,7 @@ function Footer() {
                 </svg>
               </div>
               <div
-                className="bg-primary flex items-center p-[10px] rounded-[50px] cursor-pointer hover:bg-primary/80 transition-colors"
+                className="bg-primary flex items-center p-[10px] rounded-lg cursor-pointer hover:bg-primary/80 transition-colors"
                 onClick={() => window.open("https://x.com/nolchashows", "_blank")}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

@@ -12,9 +12,9 @@ const RoundedCtaButton = ({
   ariaLabel,
 }) => {
   const baseClasses =
-    "group inline-flex self-start items-center gap-3 md:gap-4 pl-[16px] lg:pl-[27px] 2xl:pl-[48px] pr-[8px] lg:pr-2 2xl:pr-[12px] py-[9px] lg:py-2 2xl:py-[12px] bg-primary hover:bg-[#FF9640] text-black font-medium rounded-full transition-all duration-300 text-[14px] lg:text-[20px] 2xl:text-[36px]";
+    "group inline-flex self-start items-center gap-3 md:gap-4 pl-[16px] lg:pl-[27px] 2xl:pl-[48px] pr-[8px] lg:pr-2 2xl:pr-[12px] py-[9px] lg:py-2 2xl:py-[12px] bg-primary hover:bg-[#FF9640] text-black font-medium rounded-lg transition-all duration-300 text-[14px] lg:text-[20px] 2xl:text-[36px]";
   const iconCircleBase =
-    "flex items-center justify-center w-[23px] h-[23px] lg:w-[44px] lg:h-[44px] 2xl:w-[80px] 2xl:h-[80px] bg-[#fff] rounded-full group-hover:bg-[#fff] transition-colors";
+    "flex items-center justify-center w-[23px] h-[23px] lg:w-[44px] lg:h-[44px] 2xl:w-[80px] 2xl:h-[80px] bg-[#fff] rounded-lg group-hover:bg-[#fff] transition-colors";
   const iconBase = "w-4 h-4 lg:w-6 lg:h-6 2xl:w-12 2xl:h-12";
 
   const content = (

@@ -62,7 +62,7 @@ const EventModal = ({ setIsUpcomingModalOpen, eventModalData }) => {
       <div className="bg-[#EBE2D7] rounded-2xl w-full max-w-none max-h-[90vh] my-10 mx-3 md:mx-10 shadow-lg overflow-hidden flex flex-col relative">
         <div className="p-8 overflow-y-auto overflow-x-hidden flex-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 relative">
           <button
-            className="sticky top-0 ml-auto z-20 text-[#000000] hover:text-gray-800 text-xl 2xl:text-4xl cursor-pointer w-8 h-8 2xl:w-16 2xl:h-16 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-colors duration-200"
+            className="sticky top-0 ml-auto z-20 text-[#000000] hover:text-gray-800 text-xl 2xl:text-4xl cursor-pointer w-8 h-8 2xl:w-16 2xl:h-16 bg-white/90 hover:bg-white rounded-lg flex items-center justify-center shadow-sm transition-colors duration-200"
             onClick={() => setIsUpcomingModalOpen(false)}
           >
             <RxCross2 />

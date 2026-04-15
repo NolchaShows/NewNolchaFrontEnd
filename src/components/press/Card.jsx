@@ -24,7 +24,7 @@ function Card({ newsPaper, image, title, link }) {
         href={link}
         target="_blank"
         rel="noreferrer"
-        className="text-center cursor-pointer bg-primary py-[12px] sm:py-[16px] xxl:py-[20px] 3xl:py-[30px] px-[24px] w-full rounded-full hover:opacity-90 transition-opacity text-[16px] lg:text-[18px] xxl:text-[24px] 3xl:text-[36px] text-black font-medium"
+        className="text-center cursor-pointer bg-primary py-[12px] sm:py-[16px] xxl:py-[20px] 3xl:py-[30px] px-[24px] w-full rounded-lg hover:opacity-90 transition-opacity text-[16px] lg:text-[18px] xxl:text-[24px] 3xl:text-[36px] text-black font-medium"
       >
         View Article
       </a>
