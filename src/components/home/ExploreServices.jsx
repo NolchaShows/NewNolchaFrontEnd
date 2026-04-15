@@ -104,7 +104,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
                   }
                 }}
               >
-                <div className="w-[60px] h-[60px] lg:w-[70px] xl:w-[80px] 2xl:w-[100px] lg:h-[70px] xl:h-[80px] 2xl:h-[100px] bg-white/90 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                <div className="w-[60px] h-[60px] lg:w-[70px] xl:w-[80px] 2xl:w-[100px] lg:h-[70px] xl:h-[80px] 2xl:h-[100px] bg-white/90 rounded-lg flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
                   <svg
                     className="w-[30px] h-[30px] lg:w-[35px] xl:w-[40px] 2xl:w-[50px] lg:h-[35px] xl:h-[40px] 2xl:h-[50px] text-black ml-1"
                     fill="currentColor"
@@ -232,7 +232,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
                               12;
                             window.scrollTo({ top: y, behavior: "smooth" });
                           }}
-                          className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-full text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
+                          className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
                         >
                           <span>Lets Talk</span>
                         </button>

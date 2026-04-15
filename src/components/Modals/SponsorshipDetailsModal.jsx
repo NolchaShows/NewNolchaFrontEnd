@@ -242,7 +242,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
             {/* Send Button */}
             <button
               type="submit"
-              className="w-full bg-primary hover:opacity-90 text-black font-medium py-4 px-6 rounded-full transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full bg-primary hover:opacity-90 text-black font-medium py-4 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:outline-none"
             >
               Send
             </button>

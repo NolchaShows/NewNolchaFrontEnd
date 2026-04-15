@@ -25,7 +25,7 @@ const page = () => {
       <VideoHeroSection
         videoSrc={heroVideo}
         isSticky={true}
-        className="-mt-[88px] 2xl:-mt-[120px]"
+        className="-mt-[88px] 2xl:-mt-[120px] h-screen"
         firstPart="Featured Artists"
         secondPart=""
         strokeColor="#000000"
