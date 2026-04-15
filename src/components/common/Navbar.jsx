@@ -338,9 +338,25 @@ function Navbar() {
     const update = () => {
       if (!mq.matches) {
         setIsDesktopHidden(false);
+        setIsDesktopSecondRowOpen(false);
         return;
       }
-      setIsDesktopHidden(window.scrollY > 10);
+      
+      const isAtTop = window.scrollY <= 10;
+      const hasScrolledDown = window.scrollY > 100;
+      
+      // Show/hide the main navbar bar
+      setIsDesktopHidden(!isAtTop && !hasScrolledDown);
+      
+      // Auto-open the second row (links) when scrolled down
+      if (hasScrolledDown) {
+        setIsDesktopSecondRowOpen(true);
+        // Force the background to black when scrolled down and open
+        desktopNavbarRef.current?.classList.add('lg:!bg-black');
+      } else if (isAtTop) {
+        setIsDesktopSecondRowOpen(false);
+        desktopNavbarRef.current?.classList.remove('lg:!bg-black');
+      }
     };
 
     update();
@@ -542,7 +558,11 @@ function Navbar() {
         }}
         onMouseLeave={() => {
           if (FORCE_DESKTOP_MEGA_OPEN) return;
-          setIsDesktopSecondRowOpen(false);
+          // Only close on mouse leave if we're NOT scrolled down
+          if (window.scrollY <= 100) {
+            setIsDesktopSecondRowOpen(false);
+            desktopNavbarRef.current?.classList.remove('lg:!bg-black');
+          }
           setActiveDesktopMegaMenu(null);
           setMegaDropdownLeft(null);
         }}
