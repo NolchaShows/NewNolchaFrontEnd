@@ -113,7 +113,10 @@ const getMediaDimensions = (media) => {
   };
 };
 
-const normalizeMediaItem = (media, options = {}) => {
+const normalizeMediaItem = (
+  media,
+  options: { fullWidth?: boolean } = {}
+) => {
   if (!media) return null;
 
   const url = getMediaUrl(media);
