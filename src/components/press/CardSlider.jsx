@@ -1,8 +1,7 @@
 import React from "react";
 import Card from "./Card";
 
-const CardSlider = ({ cards = [], loading }) => {
-
+const CardSlider = ({ cards = [], loading, variant = "legacy" }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20 text-gray-500">
@@ -16,6 +15,52 @@ const CardSlider = ({ cards = [], loading }) => {
       <div className="flex items-center justify-center py-20 text-gray-500">
         No cards to display
       </div>
+    );
+  }
+
+  if (variant === "modern") {
+    return (
+      <section className="w-full bg-[#EEEEEE] px-5 py-8 lg:px-11 lg:py-10">
+        <div className="block overflow-x-auto lg:hidden">
+          <div className="flex min-w-max gap-5 pb-2">
+            {cards.map((card, index) => (
+              <div
+                key={card.id || index}
+                className="group relative w-[78vw] min-w-[280px] max-w-[360px] border-r border-[#B5B5B5] pr-5 last:border-r-0 last:pr-0 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
+              >
+                <Card
+                  newsPaper={card.newsPaper}
+                  image={card.image}
+                  title={card.title}
+                  link={card.link}
+                  dateLabel={card.date || card.dateLabel || ""}
+                  variant="modern"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-auto hidden w-full lg:block">
+          <div className="grid grid-cols-2 gap-x-0 gap-y-8 xl:grid-cols-4 xl:gap-y-10">
+            {cards.map((card, index) => (
+              <div
+                key={card.id || index}
+                className="group relative border-r border-[#B5B5B5] px-4 last:border-r-0 xl:px-5 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
+              >
+                <Card
+                  newsPaper={card.newsPaper}
+                  image={card.image}
+                  title={card.title}
+                  link={card.link}
+                  dateLabel={card.date || card.dateLabel || ""}
+                  variant="modern"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     );
   }
 
