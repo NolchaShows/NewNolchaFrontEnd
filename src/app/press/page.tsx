@@ -1,4 +1,5 @@
 import LogoSlider from "@/components/home/TextSlider";
+import PressStatementSection from "@/components/press/PressStatementSection";
 import About from "@/components/landing/About";
 import CardSlider from "@/components/press/CardSlider";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
@@ -106,6 +107,8 @@ export default async function PressPage() {
         <div className="bg-[#EBE2D7]">
           <LogoSlider logoSliderData={null} loading={false} />
         </div>
+
+        <PressStatementSection />
 
         {aboutSection && (
           <About
