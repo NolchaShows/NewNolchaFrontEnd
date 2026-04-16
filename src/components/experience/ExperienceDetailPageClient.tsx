@@ -158,7 +158,7 @@ const buildStructuredGalleryItems = (gallery: any) => {
 };
 
 export default function ExperienceDetailPageClient({ page }: { page: any }) {
-  const title = page?.title || "Experience";
+  const title = page?.title || "Page";
   const heroVideo = getMediaUrl(page?.hero?.video) || "";
   const detailRows = mapDetailRows(page);
   const galleryItems = buildStructuredGalleryItems(page?.gallery);

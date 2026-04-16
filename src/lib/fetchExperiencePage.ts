@@ -1,7 +1,7 @@
 import { fetchStructuredPageBySlug } from "@/lib/fetchStructuredPageBySlug";
 
-export async function fetchCharityPage(slug: string) {
-  const page = await fetchStructuredPageBySlug("charity", slug);
+export async function fetchExperiencePage(slug: string) {
+  const page = await fetchStructuredPageBySlug("experience", slug);
 
   if (!page) return null;
 
