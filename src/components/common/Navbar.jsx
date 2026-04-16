@@ -775,7 +775,7 @@ function Navbar() {
                       setActiveDesktopMegaMenu(item.key);
                     }}
                   >
-                    {item.href && item.href !== "#" ? (
+                    {!item.hasDropdown && item.href && item.href !== "#" ? (
                       <Link href={item.href} className="hover:opacity-80 transition-opacity">
                         <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px] 3xl:text-[48px]">
                           {item.label}
@@ -796,7 +796,9 @@ function Navbar() {
                         </div>
                       </Link>
                     ) : (
-                      <div className="cursor-pointer">
+                      <div
+                        className={item.hasDropdown ? "cursor-default" : "cursor-pointer"}
+                      >
                         <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px] 3xl:text-[48px]">
                           {item.label}
                           {item.hasDropdown && (
