@@ -33,6 +33,12 @@ export const GET_PRESS_PAGE = gql`
           ...PressMediaFields
         }
       }
+      statementSection {
+        label
+        headline
+        ctaText
+        ctaUrl
+      }
     }
   }
 

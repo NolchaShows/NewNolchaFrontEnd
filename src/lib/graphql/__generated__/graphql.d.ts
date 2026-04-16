@@ -52,6 +52,12 @@ declare module "@/lib/graphql/__generated__/graphql" {
           formats?: Record<string, any> | null;
         } | null;
       } | null> | null;
+      statementSection?: {
+        label?: string | null;
+        headline?: string | null;
+        ctaText?: string | null;
+        ctaUrl?: string | null;
+      } | null;
     } | null;
   };
 }

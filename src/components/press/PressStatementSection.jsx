@@ -11,12 +11,29 @@ const defaultHeadline =
  * Editorial statement block (MATTE-style grid) — light surface,
  * label column + headline + CTA. Used on the press page below the logo slider.
  */
+const isExternalHref = (href) =>
+  typeof href === "string" &&
+  (href.startsWith("http://") || href.startsWith("https://"));
+
 export default function PressStatementSection({
   label = "[ PROJECTS ]",
   headline = defaultHeadline,
   ctaText = "GET IN TOUCH",
   ctaHref = "/contact-us",
 }) {
+  const href = ctaHref || "/contact-us";
+  const ctaClassName =
+    "inline-flex w-fit items-center gap-1 text-[10px] lg:text-[16px] font-normal uppercase text-[#1D1D1D] underline-offset-4 transition-colors hover:text-[#1A1A1A] hover:underline";
+
+  const ctaInner = (
+    <>
+      <span>{ctaText}</span>
+      <span aria-hidden className="inline-block translate-y-px">
+        ↗
+      </span>
+    </>
+  );
+
   return (
     <section className="w-full bg-[#F3F3F3] py-12 lg:py-30 px-5 lg:px-11">
       <div className="mx-auto">
@@ -44,15 +61,20 @@ export default function PressStatementSection({
               {headline}
             </h2>
 
-            <Link
-              href={ctaHref}
-              className="inline-flex w-fit items-center gap-1 text-[10px] lg:text-[16px] font-normal uppercase text-[#1D1D1D] underline-offset-4 transition-colors hover:text-[#1A1A1A] hover:underline"
-            >
-              <span>{ctaText}</span>
-              <span aria-hidden className="inline-block translate-y-px">
-                ↗
-              </span>
-            </Link>
+            {isExternalHref(href) ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={ctaClassName}
+              >
+                {ctaInner}
+              </a>
+            ) : (
+              <Link href={href} className={ctaClassName}>
+                {ctaInner}
+              </Link>
+            )}
           </motion.div>
         </div>
       </div>
