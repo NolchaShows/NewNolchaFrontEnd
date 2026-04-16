@@ -9,8 +9,6 @@ import MediaGalleryGrid from "@/components/common/MediaGalleryGrid";
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
 
-const getBlockType = (block: any) => block?.__component || block?.__typename || "";
-
 const getMediaUrl = (media: any) => {
   if (!media?.url) return null;
   return media.url.startsWith("http") ? media.url : `${STRAPI_BASE_URL}${media.url}`;
@@ -127,79 +125,13 @@ const interleaveGalleryMedia = (
   return result;
 };
 
-const htmlToText = (html?: string | null) => {
-  if (!html) return "";
-
-  return html
-    .replace(/<\/p>/gi, "\n")
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<[^>]+>/g, "")
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .join(" ");
-};
-
 const mapDetailRows = (page: any) => {
-  if (page?.detail_rows?.length) {
-    return page.detail_rows.map((row: any) => ({
-      label: row?.label || "",
-      title: row?.title || "",
-      description: row?.description || "",
-      tags: (row?.tags || []).map((tag: any) => tag?.text).filter(Boolean),
-    }));
-  }
-
-  const rows: Array<{
-    label: string;
-    title?: string;
-    description?: string;
-    tags?: string[];
-  }> = [];
-
-  if (page?.hero?.subtitle) {
-    rows.push({
-      label: "SUBTITLE",
-      title: page.hero.subtitle,
-    });
-  }
-
-  const imageTextBlock = (page?.blocks || []).find((block: any) => {
-    const type = getBlockType(block);
-    return (
-      type === "blocks.image-text-section" ||
-      type === "ComponentBlocksImageTextSection"
-    );
-  });
-
-  const tags = (imageTextBlock?.tags || [])
-    .map((tag: any) => tag?.text)
-    .filter(Boolean);
-
-  if (tags.length) {
-    rows.push({
-      label: imageTextBlock?.tagsLabel || "TAGS",
-      tags,
-    });
-  }
-
-  const description = htmlToText(imageTextBlock?.description);
-  if (imageTextBlock?.title || description) {
-    rows.push({
-      label: "OVERVIEW",
-      title: imageTextBlock?.title || "",
-      description,
-    });
-  }
-
-  if (!rows.length && page?.title) {
-    rows.push({
-      label: "PROJECT",
-      title: page.title,
-    });
-  }
-
-  return rows;
+  return (page?.detail_rows || []).map((row: any) => ({
+    label: row?.label || "",
+    title: row?.title || "",
+    description: row?.description || "",
+    tags: (row?.tags || []).map((tag: any) => tag?.text).filter(Boolean),
+  }));
 };
 
 const buildStructuredGalleryItems = (gallery: any) => {
@@ -225,74 +157,11 @@ const buildStructuredGalleryItems = (gallery: any) => {
   );
 };
 
-const buildGalleryItems = (blocks: any[] = []) => {
-  const items: any[] = [];
-
-  blocks.forEach((block) => {
-    const type = getBlockType(block);
-
-    if (
-      type === "blocks.evening-recap-section" ||
-      type === "ComponentBlocksEveningRecapSection"
-    ) {
-      const videoItem = normalizeMediaItem(block?.video, { fullWidth: true });
-      if (videoItem) items.push(videoItem);
-      return;
-    }
-
-    if (
-      type === "blocks.three-image-row" ||
-      type === "ComponentBlocksThreeImageRow"
-    ) {
-      [block?.firstMedia, block?.secondMedia, block?.thirdMedia]
-        .map((media) => normalizeMediaItem(media))
-        .filter(Boolean)
-        .forEach((item) => items.push(item));
-      return;
-    }
-
-    if (
-      type === "blocks.fashion-grid-section" ||
-      type === "ComponentBlocksFashionGridSection"
-    ) {
-      [
-        block?.leftMedia,
-        block?.topMedia,
-        block?.middleMedia1,
-        block?.middleMedia2,
-        block?.middleMedia3,
-        block?.bottomMedia,
-        block?.rightMedia,
-      ]
-        .map((media) => normalizeMediaItem(media))
-        .filter(Boolean)
-        .forEach((item) => items.push(item));
-      return;
-    }
-
-    if (type === "blocks.gallery" || type === "ComponentBlocksGallery") {
-      const galleryMedia = [
-        ...(block?.images || []),
-        ...((block?.items || []).map((item: any) => item?.image).filter(Boolean)),
-      ];
-
-      galleryMedia
-        .map((media) => normalizeMediaItem(media))
-        .filter(Boolean)
-        .forEach((item) => items.push(item));
-    }
-  });
-
-  return items;
-};
-
 export default function ExperienceDetailPageClient({ page }: { page: any }) {
   const title = page?.title || "Experience";
   const heroVideo = getMediaUrl(page?.hero?.video) || "";
   const detailRows = mapDetailRows(page);
-  const galleryItems = page?.gallery
-    ? buildStructuredGalleryItems(page.gallery)
-    : buildGalleryItems(page?.blocks || []);
+  const galleryItems = buildStructuredGalleryItems(page?.gallery);
 
   return (
     <SmoothScroll>
