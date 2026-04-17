@@ -9,7 +9,7 @@ function Card({ newsPaper, image, title, link, variant = "legacy", dateLabel = "
     return (
       <article className="relative isolate flex h-full min-h-[480px] w-full flex-col overflow-hidden lg:min-h-[560px]">
         {/* Full card surface (border-to-border) so blur covers the entire box, not only image + text */}
-        <div className="press-card-blur-target absolute inset-0 flex min-h-0 flex-col transition-[filter] duration-300 ease-out will-change-[filter]">
+        <div className="flex min-h-0 flex-col">
           <div className="shrink-0 overflow-hidden bg-[#E7E7E7]">
             <img
               src={image}
@@ -19,16 +19,16 @@ function Card({ newsPaper, image, title, link, variant = "legacy", dateLabel = "
           </div>
 
           <div className="flex min-h-0 flex-1 flex-col bg-[#EEEEEE]">
-            <div className="mt-3 flex shrink-0 items-center justify-between text-[12px] italic text-[#636363] lg:text-[18px]">
+            <div className="mt-3 flex shrink-0 items-center justify-between text-[12px] italic text-[#636363] lg:text-[16px]">
               <span>Article</span>
               {dateLabel ? <span>{dateLabel}</span> : <span className="opacity-0">00/00/00</span>}
             </div>
 
-            <h3 className="mt-3 shrink-0 text-[14px] uppercase text-[#111111] lg:text-[18px]">
+            <h3 className="mt-3 shrink-0 text-[14px] uppercase text-[#111111] lg:text-[20px]">
               {title}
             </h3>
 
-            <div className="mt-5 flex shrink-0 items-center gap-4 text-[10px] uppercase text-[#1A1A1A] lg:text-[16px]">
+            <div className="mt-6 flex shrink-0 items-center gap-4 text-[10px] uppercase text-[#1A1A1A] lg:text-[16px]">
               <a
                 href={link}
                 {...(isExternalHref(link) ? { target: "_blank", rel: "noreferrer" } : {})}
@@ -42,7 +42,7 @@ function Card({ newsPaper, image, title, link, variant = "legacy", dateLabel = "
                 className="inline-flex items-center hover:opacity-75 transition-opacity"
                 aria-label={`Open ${title}`}
               >
-                ↗
+                <svg class="arrow-link__svg" width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.544922" y="0.5" width="10.4411" height="1.59609" fill="currentColor"></rect><rect width="10.4411" height="1.59609" transform="matrix(-6.40025e-08 1 1 6.40025e-08 9.4043 0.514771)" fill="currentColor"></rect><rect y="10.2979" width="13.7662" height="1.59609" transform="rotate(-45 0 10.2979)" fill="currentColor"></rect></svg>
               </a>
             </div>
 
