@@ -25,7 +25,7 @@ const CardSlider = ({ cards = [], loading }) => {
           {cards.map((card, index) => (
             <div
               key={card.id || index}
-              className="border-r-0 px-0 md:border-r md:border-[#1D1D1D] md:px-3 md:[&:nth-child(2n):not(:last-child)]:border-r-0 xl:[&:nth-child(2n):not(:last-child)]:border-r xl:[&:nth-child(4n):not(:last-child)]:border-r-0 last:!border-r-0 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
+              className="border-r-0 md:border-r md:border-[#1D1D1D] md:[&:nth-child(2n):not(:last-child)]:border-r-0 xl:[&:nth-child(2n):not(:last-child)]:border-r xl:[&:nth-child(4n):not(:last-child)]:border-r-0 last:!border-r-0 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
             >
               <div className="group">
                 <Card
