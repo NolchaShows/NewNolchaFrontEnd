@@ -46,7 +46,7 @@ export default async function PressPage() {
           variant="press"
         />
 
-        <CardSlider cards={cards} loading={false} variant="modern" />
+        <CardSlider cards={cards} loading={false} />
       </div>
     </div>
   );

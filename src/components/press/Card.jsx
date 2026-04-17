@@ -7,14 +7,14 @@ const isExternalHref = (href) =>
 function Card({ newsPaper, image, title, link, variant = "legacy", dateLabel = "" }) {
   if (variant === "modern") {
     return (
-      <article className="relative isolate flex h-full min-h-[480px] w-full flex-col overflow-hidden lg:min-h-[560px]">
+      <article className="relative isolate flex h-full min-h-[420px] w-full flex-col overflow-hidden lg:min-h-[560px] xl:min-h-[590px] 2xl:min-h-[640px]">
         {/* Full card surface (border-to-border) so blur covers the entire box, not only image + text */}
-        <div className="flex min-h-0 flex-col">
+        <div className="flex min-h-0 flex-col relative press-card-blur-target transition-[filter] duration-300 ease-out will-change-[filter]">
           <div className="shrink-0 overflow-hidden bg-[#E7E7E7]">
             <img
               src={image}
               alt={title || "Press card image"}
-              className="h-[260px] w-full object-cover sm:h-[300px] lg:h-[360px]"
+              className="h-[260px] w-full object-cover sm:h-[300px] lg:h-[360px] xl:h-[360px] 2xl:h-[600px]"
             />
           </div>
 
