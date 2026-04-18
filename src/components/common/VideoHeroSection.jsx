@@ -15,7 +15,10 @@ const VideoHeroSection = ({
     children = null,
     isGoogleDrive = false,
     showControls = false,
-    isSticky = false
+    isSticky = false,
+    autoPlay = undefined,
+    muted = undefined,
+    loop = undefined
 }) => {
     // Helper function to convert Google Drive link to embed URL
     const getGoogleDriveEmbedUrl = (url) => {
@@ -43,6 +46,9 @@ const VideoHeroSection = ({
         : videoSrc;
     
     const isGoogleDriveVideo = embedUrl.includes('drive.google.com');
+    const shouldAutoPlay = typeof autoPlay === "boolean" ? autoPlay : !showControls;
+    const shouldMute = typeof muted === "boolean" ? muted : !showControls;
+    const shouldLoop = typeof loop === "boolean" ? loop : !showControls;
   return (
     <div
       className={[
@@ -64,9 +70,9 @@ const VideoHeroSection = ({
                 ) : (
                     <video
                         className="w-full h-full object-cover"
-                        autoPlay={!showControls}
-                        muted={!showControls}
-                        loop={!showControls}
+                        autoPlay={shouldAutoPlay}
+                        muted={shouldMute}
+                        loop={shouldLoop}
                         controls={showControls}
                         playsInline
                         style={{ minWidth: "100%", minHeight: "100%" }}

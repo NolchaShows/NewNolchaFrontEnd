@@ -184,6 +184,8 @@ export default function ExperienceDetailPageClient({ page }: { page: any }) {
               size="large"
               overlayOpacity={0}
               showControls={true}
+              autoPlay={true}
+              muted={true}
               className="!h-full"
             />
           </motion.div>
