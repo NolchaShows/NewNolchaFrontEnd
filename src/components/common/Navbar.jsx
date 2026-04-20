@@ -74,7 +74,7 @@ function Navbar() {
   const visibleMenuItems = [
     {
       label: "White Label",
-      href: "/white-label",
+      href: "/about",
       subtitle: "Your Brand + Infrastructure",
       key: "whiteLabel",
     },
