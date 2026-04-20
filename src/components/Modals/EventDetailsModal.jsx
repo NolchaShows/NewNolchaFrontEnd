@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import { FaXTwitter, FaInstagram, FaDiscord, FaFacebookF, FaLinkedin, FaLink } from "react-icons/fa6";
 import { RiTelegram2Line } from "react-icons/ri";
 import EveningRecap from "../common/EveningRecap";
-import FashionGrid3x3 from "../shao/FashionGrid3x3";
+import MediaGalleryGrid from "../common/MediaGalleryGrid";
 
 const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -46,9 +46,41 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   const displayGalleryImages = galleryImages.length > 0
     ? galleryImages
     : [
-      "https://images.squarespace-cdn.com/content/6543e07afbb3360bba3e0b3b/246b8cf7-a337-4341-9952-803df9dc0834/2_215_Photagonist.ca.webp?content-type=image%2Fwebp",
-      "https://images.squarespace-cdn.com/content/6543e07afbb3360bba3e0b3b/e7f918d2-61b3-40ce-a0bd-560e37ddf0af/024_Photagonist.ca.webp?content-type=image%2Fwebp"
+      "/shao_nyfw/image 21.png",
+      "/shao_nyfw/image 22.png",
+      "/shao_nyfw/image 23.png",
+      "/shao_nyfw/image 24.png",
+      "/shao_nyfw/image 25.png",
+      "/shao_nyfw/image 26.png",
+      "/shao_nyfw/image 27.png",
+      "/shao_nyfw/image 28.png",
     ];
+
+  const modalGalleryItems = displayGalleryImages
+    .map((item) => {
+      if (!item) return null;
+
+      if (typeof item === "string") {
+        return { type: "image", url: item };
+      }
+
+      const itemUrl = item.url || item.src;
+      if (!itemUrl) return null;
+
+      const mime = item.mime || "";
+      const ext = (item.ext || "").toLowerCase();
+      const isVideo =
+        mime.startsWith("video/") || [".mp4", ".mov", ".webm"].includes(ext);
+
+      return {
+        type: isVideo ? "video" : "image",
+        url: itemUrl,
+        width: item.width || null,
+        height: item.height || null,
+        fullWidth: Boolean(item.fullWidth),
+      };
+    })
+    .filter(Boolean);
 
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
@@ -292,18 +324,6 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                   </div>
                 </div>
 
-                {/* Bottom Row: Gallery Images */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 mt-0">
-                  {displayGalleryImages.map((img, idx) => (
-                    <div key={idx} className="relative overflow-hidden rounded-none">
-                      <img
-                        src={img}
-                        alt={`${eventTitle} Gallery ${idx + 1}`}
-                        className="w-full h-auto object-contain transition-transform duration-300 hover:scale-105"
-                      />
-                    </div>
-                  ))}
-                </div>
               </div>
 
               <EveningRecap
@@ -312,20 +332,10 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                 videos={eveningRecap.videos}
                 videoUrl={eveningRecap.videoUrl}
               />
-
-              <FashionGrid3x3
-                images={[
-                  "/shao_nyfw/image 21.png",
-                  "/shao_nyfw/image 22.png",
-                  "/shao_nyfw/image 23.png",
-                  "/shao_nyfw/image 24.png",
-                  "/shao_nyfw/image 25.png",
-                  "/shao_nyfw/image 26.png",
-                  "/shao_nyfw/image 27.png",
-                  "/shao_nyfw/image 28.png",
-                ]}
-                background="#FEF991"
-              />
+              {/* Bottom Row: Experience-style Gallery */}
+              <div className="mt-8 bg-[#f0eee6] p-4 md:p-6">
+                <MediaGalleryGrid items={modalGalleryItems} />
+              </div>
             </div>
           </div>
         </div>
