@@ -169,7 +169,6 @@ function Navbar() {
         return charityDropdown;
       case "press":
         return [
-          { label: "Press Highlights", href: "/press" },
           { label: "Press", href: "/press" },
         ];
       case "creativeCircle":
@@ -230,7 +229,6 @@ function Navbar() {
         return {
           sectionLabel: "Press",
           items: [
-            { label: "Press Highlights", href: "/press" },
             { label: "Press", href: "/press" },
           ],
           cta: {
