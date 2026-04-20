@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 
-export default function OurServicesSection() {
-  const serviceStories = [
+export default function OurServicesSection({
+  label = "[ OUR SERVICES ]",
+  title = "MATTE HAS A MULTIDISCIPLINARY STUDIO THAT WORKS WITH TALENT AND BRANDS",
+  ctaText = "SEE ALL PROJECTS",
+  ctaHref = "/projects",
+  videoSrc = "/video.mp4",
+  serviceStories = [
     {
       title: "World Building",
       description:
@@ -30,7 +34,8 @@ export default function OurServicesSection() {
       description:
         "Where creativity meets efficiency. We produce high-quality content quickly and effectively, adaptable to any media. Our compelling visuals and narratives tell your brand's story across platforms.",
     }
-  ];
+  ],
+}) {
 
   return (
     <section className="relative w-full bg-[#F4F4F4] px-5 py-16 lg:px-11 lg:py-32 text-[#1D1D1D]">
@@ -38,18 +43,18 @@ export default function OurServicesSection() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(280px,500px)_1fr] lg:gap-10">
           <div className="relative z-0 space-y-6 lg:sticky lg:top-[140px] lg:self-start">
             <p className="text-[10px] uppercase tracking-[0.08em] lg:text-[14px] text-[#1D1D1D]">
-              [ OUR SERVICES ]
+              {label}
             </p>
 
             <h2 className="max-w-[650px] text-[42px] leading-[1] tracking-[-0.02em] uppercase text-[#1D1D1D] lg:text-[50px]">
-              MATTE HAS A MULTIDISCIPLINARY STUDIO THAT WORKS WITH TALENT AND BRANDS
+              {title}
             </h2>
 
             <Link
-              href="/projects"
+              href={ctaHref}
               className="inline-flex items-center gap-2 text-[14px] uppercase tracking-[0.08em] text-[#1D1D1D] transition-opacity hover:opacity-70 lg:text-[16px]"
             >
-              <span>SEE ALL PROJECTS</span>
+              <span>{ctaText}</span>
               <span aria-hidden>↗</span>
             </Link>
 
@@ -61,7 +66,7 @@ export default function OurServicesSection() {
               playsInline
               controls
             >
-              <source src="/video.mp4" type="video/mp4" />
+              <source src={videoSrc} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
@@ -69,9 +74,7 @@ export default function OurServicesSection() {
           <div className="space-y-10 lg:space-y-20">
             <div className="hidden lg:block lg:h-[100vh]" aria-hidden="true" />
             {serviceStories.map((story, index) => (
-              <div
-                className="max-w-[980px]"
-              >
+              <div key={`${story.title}-${index}`} className="max-w-[980px]">
                 <h3 className="text-[24px] font-medium leading-[1.1] tracking-[-0.015em] text-[#1D1D1D] lg:text-[30px]">
                   {story.title}
                 </h3>

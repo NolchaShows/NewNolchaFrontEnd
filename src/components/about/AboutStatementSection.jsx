@@ -4,7 +4,20 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-export default function AboutStatementSection() {
+const defaultRightItems = [
+  "WE BUILD WORLDS",
+  "WE CREATE CHARACTERS",
+  "WE ENTERTAIN THEM",
+];
+
+export default function AboutStatementSection({
+  label = "[ WHO WE ARE ]",
+  headline = "MATTE IS A CREATIVE COMPANY FROM NEW YORK",
+  description = "At the intersection of entertainment and advertising. MATTE is a brand of 10 years-serving its own audience whilst offering multidisciplinary strategic, creative, and production services for brands and artists, and exposing the opportunities in between.",
+  ctaText = "GET IN TOUCH",
+  ctaHref = "/contact-us",
+  rightItems = defaultRightItems,
+}) {
   return (
     <section className="w-full bg-[#F4F4F4] py-16 px-5 lg:py-32 lg:px-11 font-sans text-[#111111] overflow-hidden">
       <div className="mx-auto max-w-[1800px]">
@@ -17,7 +30,7 @@ export default function AboutStatementSection() {
           className="mb-2 lg:mb-4"
         >
           <p className="text-[10px] lg:text-[14px] font-mono font-medium uppercase tracking-wider text-[#333333]">
-            [ WHO WE ARE ]
+            {label}
           </p>
         </motion.div>
 
@@ -30,8 +43,7 @@ export default function AboutStatementSection() {
           className="mb-10 lg:mb-20"
         >
           <h2 className="text-[42px] sm:text-[56px] md:text-[72px] lg:text-[100px] leading-[0.95] tracking-[-0.04em] uppercase font-normal text-[#111111] m-0 p-0">
-            MATTE IS A CREATIVE
-            <br className="hidden sm:block" /> COMPANY FROM NEW YORK
+            {headline}
           </h2>
         </motion.div>
 
@@ -46,17 +58,14 @@ export default function AboutStatementSection() {
             className="lg:col-span-7 xl:col-span-6 flex flex-col gap-4 lg:gap-8"
           >
             <p className="text-[20px] sm:text-[22px] lg:text-[28px] leading-[1.3] font-normal text-[#1D1D1D] max-w-[850px] m-0">
-              At the intersection of entertainment and advertising. MATTE is a
-              brand of 10 years—serving its own audience whilst offering
-              multidisciplinary strategic, creative, and production services for
-              brands and artists, and exposing the opportunities in between.
+              {description}
             </p>
 
             <Link
-              href="/contact-us"
+              href={ctaHref}
               className="inline-flex items-center gap-2 text-[10px] lg:text-[16px] uppercase tracking-wider text-[#111111] hover:text-[#555555] transition-colors mt-auto"
             >
-              <span>GET IN TOUCH</span>
+              <span>{ctaText}</span>
               <span aria-hidden className="inline-block">
                 ↗
               </span>
@@ -72,9 +81,9 @@ export default function AboutStatementSection() {
             className="lg:col-span-5 xl:col-span-4 lg:col-start-9 flex lg:justify-end"
           >
             <div className="flex flex-col gap-[2px] text-[10px] sm:text-[12px] lg:text-[13px] uppercase tracking-wide text-[#111111] leading-[1.6]">
-              <span>WE BUILD WORLDS</span>
-              <span>WE CREATE CHARACTERS</span>
-              <span>WE ENTERTAIN THEM</span>
+              {(rightItems || []).map((item) => (
+                <span key={item}>{item}</span>
+              ))}
             </div>
           </motion.div>
         </div>

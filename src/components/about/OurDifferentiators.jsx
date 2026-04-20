@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 
-export default function AboutStatementSection() {
-  const differentiators = [
+export default function AboutStatementSection({
+  label = "[ OUR DIFFERENTIATORS ]",
+  differentiators = [
     {
       title: "BORN IN ENTERTAINMENT",
       description:
@@ -19,7 +20,8 @@ export default function AboutStatementSection() {
       description:
         "Providing strategic and creative expertise-as well as good taste-to category-leading brands. Shaping the mark they make on culture at large.",
     },
-  ];
+  ],
+}) {
 
   const typeIn = {
     hidden: { opacity: 0, clipPath: "inset(0 100% 0 0)" },
@@ -34,7 +36,7 @@ export default function AboutStatementSection() {
     <section className="w-full bg-[#F4F4F4] px-5 py-16 text-[#1A1A1A] lg:px-11 lg:py-32">
       <div className="mx-auto w-full max-w-[1800px]">
         <p className="mb-2 text-[10px] uppercase tracking-[0.08em] text-[#3A3A3A] lg:mb-5 lg:text-[14px]">
-          [ OUR DIFFERENTIATORS ]
+          {label}
         </p>
 
         <motion.div
