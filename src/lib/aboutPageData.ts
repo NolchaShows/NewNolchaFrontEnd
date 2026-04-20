@@ -247,28 +247,40 @@ function mapRest(json: any) {
 }
 
 async function fetchAboutPageRest() {
-  const url = `${STRAPI_BASE}/api/about-page?populate[heroVideo]=true&populate[statementSection]=true&populate[differentiatorsSection][populate][items]=true&populate[servicesSection][populate][0]=stories&populate[servicesSection][populate][1]=video&populate[ecosystemSection][populate]=image&populate[clientsSection][populate]=logos&populate[pressSection]=true`;
-  try {
-    const res = await fetch(url, {
-      next: { revalidate: 60 },
-      headers: { ...authHeaders() },
-    });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
+  const urls = [
+    `${STRAPI_BASE}/api/about-page?populate=*`,
+    `${STRAPI_BASE}/api/about-page?populate[heroVideo]=true&populate[statementSection][populate]=rightItems&populate[differentiatorsSection][populate][items]=true&populate[servicesSection][populate][0]=stories&populate[servicesSection][populate][1]=video&populate[ecosystemSection][populate]=image&populate[clientsSection][populate]=logos&populate[pressSection]=true`,
+  ];
+
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, {
+        next: { revalidate: 60 },
+        headers: { ...authHeaders() },
+      });
+      if (res.ok) return await res.json();
+    } catch {
+      /* try next url */
+    }
   }
+
+  return null;
 }
+
+const pickDefined = <T extends Record<string, any>>(source: T | null | undefined) =>
+  Object.fromEntries(
+    Object.entries(source || {}).filter(([, value]) => value !== undefined && value !== null)
+  );
 
 function mergeDeep(base: any, incoming: any) {
   if (!incoming) return base;
   return {
     ...base,
-    ...incoming,
-    statementSection: { ...base.statementSection, ...incoming.statementSection },
+    ...pickDefined(incoming),
+    statementSection: { ...base.statementSection, ...pickDefined(incoming.statementSection) },
     differentiators: {
       ...base.differentiators,
-      ...incoming.differentiators,
+      ...pickDefined(incoming.differentiators),
       items:
         incoming.differentiators?.items?.length > 0
           ? incoming.differentiators.items
@@ -276,17 +288,17 @@ function mergeDeep(base: any, incoming: any) {
     },
     services: {
       ...base.services,
-      ...incoming.services,
+      ...pickDefined(incoming.services),
       stories:
         incoming.services?.stories?.length > 0 ? incoming.services.stories : base.services.stories,
     },
-    ecosystem: { ...base.ecosystem, ...incoming.ecosystem },
+    ecosystem: { ...base.ecosystem, ...pickDefined(incoming.ecosystem) },
     clients: {
       ...base.clients,
-      ...incoming.clients,
+      ...pickDefined(incoming.clients),
       logos: incoming.clients?.logos?.length > 0 ? incoming.clients.logos : base.clients.logos,
     },
-    press: { ...base.press, ...incoming.press },
+    press: { ...base.press, ...pickDefined(incoming.press) },
   };
 }
 
