@@ -166,7 +166,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
                 value={formData.fullName}
                 onChange={handleInputChange}
                 placeholder="Enter your full Name"
-                className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 bg-secondary text-white placeholder:text-white/60"
+                className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] outline-none transition-all duration-200 bg-secondary text-white placeholder:text-white/60"
                 required
               />
             </div>
@@ -188,7 +188,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Enter your email"
-                  className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 bg-secondary text-white placeholder:text-white/60"
+                  className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] outline-none transition-all duration-200 bg-secondary text-white placeholder:text-white/60"
                   required
                 />
               </div>
@@ -208,7 +208,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
                   value={formData.company}
                   onChange={handleInputChange}
                   placeholder="Search for company"
-                  className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 bg-secondary text-white placeholder:text-white/60"
+                  className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] outline-none transition-all duration-200 bg-secondary text-white placeholder:text-white/60"
                   required
                 />
               </div>
@@ -229,7 +229,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
                       type="checkbox"
                       checked={formData.events[eventName]}
                       onChange={() => handleEventToggle(eventName)}
-                      className="w-4 h-4 text-primary border-white/30 rounded focus:ring-2 focus:ring-primary cursor-pointer accent-primary"
+                      className="w-4 h-4 border-white/30 rounded focus:ring-2 focus:ring-[var(--primary-color)] cursor-pointer accent-[var(--primary-color)]"
                     />
                     <span className="text-sm lg:text-base text-white">
                       {eventName}
@@ -242,7 +242,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
             {/* Send Button */}
             <button
               type="submit"
-              className="w-full bg-primary hover:opacity-90 text-black font-medium py-4 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:outline-none"
+              className="w-full bg-[var(--primary-color)] hover:opacity-90 text-black font-medium py-4 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-[var(--primary-color)] focus:outline-none"
             >
               Send
             </button>

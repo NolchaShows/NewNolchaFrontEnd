@@ -156,7 +156,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
             <div className="absolute top-5 right-5 z-10">
               <button
                 onClick={toggleShareDropdown}
-                className={`bg-[#333] border-none w-10 h-10 rounded-full cursor-pointer shadow-md flex items-center justify-center text-white transition-all duration-300 hover:bg-[#444] ${isShareOpen ? "text-[#9ef01a]" : ""}`}
+                className={`bg-[#333] border-none w-10 h-10 rounded-full cursor-pointer shadow-md flex items-center justify-center text-white transition-all duration-300 hover:bg-[#444] ${isShareOpen ? "text-[var(--primary-color)]" : ""}`}
                 aria-label="Share"
               >
                 <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
@@ -168,49 +168,49 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
               <div className={`absolute top-12 right-0 bg-transparent min-w-[40px] transition-all duration-300 ${isShareOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}>
                 <button
                   onClick={() => handleShare("twitter")}
-                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[#9ef01a] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
+                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[var(--primary-color)] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
                   title="Share on Twitter"
                 >
                   <FaXTwitter className="w-6 h-6" />
                 </button>
                 <button
                   onClick={() => handleShare("instagram")}
-                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[#9ef01a] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
+                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[var(--primary-color)] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
                   title="Share on Instagram"
                 >
                   <FaInstagram className="w-6 h-6" />
                 </button>
                 <button
                   onClick={() => handleShare("telegram")}
-                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[#9ef01a] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
+                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[var(--primary-color)] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
                   title="Share on Telegram"
                 >
                   <RiTelegram2Line className="w-6 h-6" />
                 </button>
                 <button
                   onClick={() => handleShare("discord")}
-                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[#9ef01a] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
+                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[var(--primary-color)] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
                   title="Share on Discord"
                 >
                   <FaDiscord className="w-6 h-6" />
                 </button>
                 <button
                   onClick={() => handleShare("facebook")}
-                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[#9ef01a] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
+                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[var(--primary-color)] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
                   title="Share on Facebook"
                 >
                   <FaFacebookF className="w-6 h-6" />
                 </button>
                 <button
                   onClick={() => handleShare("linkedin")}
-                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[#9ef01a] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
+                  className="flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[var(--primary-color)] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
                   title="Share on LinkedIn"
                 >
                   <FaLinkedin className="w-6 h-6" />
                 </button>
                 <button
                   onClick={copyLink}
-                  className="relative flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[#9ef01a] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
+                  className="relative flex items-center justify-center w-10 h-10 text-white bg-[#333] rounded-full mb-2.5 shadow-md hover:text-[var(--primary-color)] hover:bg-[#444] transition-all duration-300 transform hover:scale-110"
                   title="Copy Link"
                 >
                   {linkCopied ? (
@@ -245,28 +245,28 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                   <div className={`pr-5 self-start ${logoUrl ? "mt-9" : "mt-0"}`}>
                     <div className="mb-8">
                       <p className="text-white text-base mb-8">
-                        <span className="text-[#9ef01a] font-bold">DATES: </span>
+                        <span className="text-[var(--primary-color)] font-bold">DATES: </span>
                         {eventDate}
                       </p>
                     </div>
 
                     <div className="mb-4">
                       <p className="text-white">
-                        <span className="text-[#9ef01a] font-bold">VENUE: </span>
+                        <span className="text-[var(--primary-color)] font-bold">VENUE: </span>
                         {venue}
                       </p>
                     </div>
 
                     <div className="mb-4">
                       <p className="text-white">
-                        <span className="text-[#9ef01a] font-bold">WHAT TO EXPECT: </span>
+                        <span className="text-[var(--primary-color)] font-bold">WHAT TO EXPECT: </span>
                         {whatToExpect}
                       </p>
                     </div>
 
                     <div className="mb-16">
                       <p className="text-white">
-                        RSVP <a href={rsvpLink} target="_blank" rel="noopener noreferrer" className="text-[#9ef01a] underline">Link Here</a>.
+                        RSVP <a href={rsvpLink} target="_blank" rel="noopener noreferrer" className="text-[var(--primary-color)] underline">Link Here</a>.
                       </p>
                     </div>
 
@@ -275,7 +275,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                         href="mailto:partnerships@nolcha.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block bg-[#9ef01a] text-black font-bold text-base px-6 py-3 rounded-lg no-underline text-center transition-colors hover:bg-[#80c918] cursor-pointer"
+                        className="inline-block bg-[var(--primary-color)] text-black font-bold text-base px-6 py-3 rounded-lg no-underline text-center transition-opacity hover:opacity-90 cursor-pointer"
                       >
                         REQUEST PROSPECTUS
                       </a>
