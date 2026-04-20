@@ -1,27 +1,35 @@
 import PastSpeakers from "@/components/common/PastSpeakers";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
-import FashionGrid3x3 from "@/components/shao/FashionGrid3x3";
-import React from "react";
+import MediaGalleryGrid from "@/components/common/MediaGalleryGrid";
+import { fetchHomePage } from "@/lib/graphql/fetchHomePage";
 
-function page() {
+export const revalidate = 60;
+
+async function SpeakersPage() {
+  const homePage = await fetchHomePage("home");
+  const speakerData = homePage?.speaker_section || null;
 
   const heroVideo = "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4";
 
-  const pastSpeakers = [
-    { id: 1, image: '/homepage/past_speakers/1.png' },
-    { id: 2, image: '/homepage/past_speakers/2.png' },
-    { id: 3, image: '/homepage/past_speakers/3.png' },
-    { id: 4, image: '/homepage/past_speakers/4.png' },
-    { id: 5, image: '/homepage/past_speakers/5.png' },
-    { id: 6, image: '/homepage/past_speakers/6.png' },
-    { id: 7, image: '/homepage/past_speakers/7.png' },
-    { id: 8, image: '/homepage/past_speakers/8.png' },
-    { id: 9, image: '/homepage/past_speakers/9.png' },
-    { id: 10, image: '/homepage/past_speakers/10.png' },
-    { id: 11, image: '/homepage/past_speakers/11.png' },
-    { id: 12, image: '/homepage/past_speakers/12.png' },
-    { id: 13, image: '/homepage/past_speakers/13.png' },
-  ]
+  const galleryItems = [
+    { type: "image", url: "/shao_nyfw/image 21.png", width: 1200, height: 1500 },
+    { type: "image", url: "/shao_nyfw/image 22.png", width: 1200, height: 1500 },
+    { type: "image", url: "/shao_nyfw/image 23.png", width: 1200, height: 1500 },
+    { type: "image", url: "/shao_nyfw/image 24.png", width: 1200, height: 1500 },
+    { type: "image", url: "/shao_nyfw/image 25.png", width: 1200, height: 1500 },
+    { type: "image", url: "/shao_nyfw/image 26.png", width: 1200, height: 1500 },
+    { type: "image", url: "/shao_nyfw/image 27.png", width: 1200, height: 1500 },
+    { type: "image", url: "/shao_nyfw/image 28.png", width: 1200, height: 1500 },
+    { type: "image", url: "/shao_nyfw/image 21.png", width: 1200, height: 1500 },
+  ];
+
+  const hasCompleteStrapiSpeakers = (speakerData?.speakers || []).every(
+    (speaker) => speaker?.image?.url || speaker?.image?.data?.attributes?.url || speaker?.image
+  );
+  const speakersForSection =
+    speakerData?.speakers?.length && hasCompleteStrapiSpeakers
+      ? speakerData.speakers
+      : undefined;
 
   return (
     <div>
@@ -39,23 +47,16 @@ function page() {
         isGoogleDrive={false}
       />
       <div className="relative z-10">
-        <PastSpeakers speakers={pastSpeakers} />
-        <FashionGrid3x3
-          images={[
-            "/shao_nyfw/image 21.png",
-            "/shao_nyfw/image 22.png",
-            "/shao_nyfw/image 23.png",
-            "/shao_nyfw/image 24.png",
-            "/shao_nyfw/image 25.png",
-            "/shao_nyfw/image 26.png",
-            "/shao_nyfw/image 27.png",
-            "/shao_nyfw/image 28.png",
-          ]}
-          background="#FEF991"
+        <PastSpeakers
+          title={speakerData?.title || "Featured Speakers"}
+          speakers={speakersForSection}
         />
+        <div className="bg-[#f0eee6] px-5 pt-4 pb-8 lg:px-11 lg:pt-8 lg:pb-12">
+          <MediaGalleryGrid items={galleryItems} />
+        </div>
       </div>
     </div>
   );
 }
 
-export default page;
+export default SpeakersPage;
