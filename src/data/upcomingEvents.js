@@ -16,10 +16,7 @@ export const upcomingListEvents = [
     logo: "https://images.squarespace-cdn.com/content/6543e07afbb3360bba3e0b3b/36f8725a-8462-4311-ad4b-4d19fd9c4b26/Consensus+Hong+Kong+2026.webp?content-type=image%2Fwebp",
     mainImage:
       "https://images.squarespace-cdn.com/content/6543e07afbb3360bba3e0b3b/e5191464-6cdc-4f1b-9c00-9b8f9726dd08/049_Photagonist.ca.webp?content-type=image%2Fwebp",
-    galleryImages: [
-      "https://images.squarespace-cdn.com/content/6543e07afbb3360bba3e0b3b/246b8cf7-a337-4341-9952-803df9dc0834/2_215_Photagonist.ca.webp?content-type=image%2Fwebp",
-      "https://images.squarespace-cdn.com/content/6543e07afbb3360bba3e0b3b/e7f918d2-61b3-40ce-a0bd-560e37ddf0af/024_Photagonist.ca.webp?content-type=image%2Fwebp",
-    ],
+    galleryImages: [],
   },
   {
     title: "Bitcoin Conference Vegas",
