@@ -33,11 +33,11 @@ export default function OurServicesSection() {
   ];
 
   return (
-    <section className="relative w-full bg-[#F4F4F4] px-5 pt-16 pt-8 lg:px-11 lg:pt-32 lg:pb-14 text-[#1D1D1D]">
+    <section className="relative w-full bg-[#F4F4F4] px-5 py-16 lg:px-11 lg:py-32 text-[#1D1D1D]">
       <div className="mx-auto w-full">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(280px,500px)_1fr] lg:gap-10">
           <div className="relative z-0 space-y-6 lg:sticky lg:top-[140px] lg:self-start">
-            <p className="text-[10px] uppercase tracking-[0.08em] lg:text-[12px] text-[#1D1D1D]">
+            <p className="text-[10px] uppercase tracking-[0.08em] lg:text-[14px] text-[#1D1D1D]">
               [ OUR SERVICES ]
             </p>
 

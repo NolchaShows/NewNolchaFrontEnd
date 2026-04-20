@@ -16,7 +16,7 @@ export default function AboutStatementSection() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="mb-2 lg:mb-4"
         >
-          <p className="text-[10px] lg:text-[12px] font-mono font-medium uppercase tracking-wider text-[#333333]">
+          <p className="text-[10px] lg:text-[14px] font-mono font-medium uppercase tracking-wider text-[#333333]">
             [ WHO WE ARE ]
           </p>
         </motion.div>
