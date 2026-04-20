@@ -6,6 +6,7 @@ import OurEcosystemSection from "@/components/about/OurEcosystemSection";
 import OurClientsSection from "@/components/about/OurClientsSection";
 import OurPressSection from "@/components/about/OurPressSection";
 import { getAboutPageContent } from "@/lib/aboutPageData";
+import { getPressPageContent } from "@/lib/pressPageData";
 
 export const metadata = {
   title: "About Us | New Nolcha",
@@ -18,8 +19,16 @@ const defaultHeroVideo =
 export const revalidate = 60;
 
 export default async function AboutPage() {
-  const aboutPage = await getAboutPageContent();
+  const [aboutPage, pressPage] = await Promise.all([
+    getAboutPageContent(),
+    getPressPageContent(),
+  ]);
   const heroVideo = aboutPage?.heroVideo || defaultHeroVideo;
+  const featuredPressPost = pressPage.cards?.[0];
+  const pressFeatureTitle = featuredPressPost?.title || aboutPage.press.featureTitle;
+  const pressFeatureImage = featuredPressPost?.image || aboutPage.press.featureImage;
+  const pressFeatureLink = featuredPressPost?.link || aboutPage.press.viewMoreHref;
+  const pressFeatureSourceLogo = featuredPressPost?.newsPaper || "";
 
   return (
     <main className="min-h-screen bg-[#F4F4F4]">
@@ -59,9 +68,11 @@ export default async function AboutPage() {
         viewMoreText={aboutPage.press.viewMoreText}
         viewMoreHref={aboutPage.press.viewMoreHref}
         featureDate={aboutPage.press.featureDate}
-        featureTitle={aboutPage.press.featureTitle}
+        featureTitle={pressFeatureTitle}
         featureSource={aboutPage.press.featureSource}
-        featureImage={aboutPage.press.featureImage}
+        featureImage={pressFeatureImage}
+        featureLink={pressFeatureLink}
+        featureSourceLogo={pressFeatureSourceLogo}
       />
     </main>
   );

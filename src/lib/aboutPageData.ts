@@ -131,6 +131,17 @@ function normalizeStories(stories: any[] = []) {
     .filter((s) => s.title || s.description);
 }
 
+function normalizeStringItems(items: any[] = []) {
+  return items
+    .map((item) => {
+      if (typeof item === "string") return item.trim();
+      if (typeof item?.text === "string") return item.text.trim();
+      if (typeof item?.value === "string") return item.value.trim();
+      return "";
+    })
+    .filter(Boolean);
+}
+
 function mapGraphql(data: any) {
   const page = data?.aboutPage;
   if (!page) return null;
@@ -143,9 +154,7 @@ function mapGraphql(data: any) {
       description: page.statementSection?.description ?? undefined,
       ctaText: page.statementSection?.ctaText ?? undefined,
       ctaHref: page.statementSection?.ctaUrl ?? undefined,
-      rightItems: Array.isArray(page.statementSection?.rightItems)
-        ? page.statementSection.rightItems.filter(Boolean)
-        : undefined,
+      rightItems: normalizeStringItems(page.statementSection?.rightItems || []),
     },
     differentiators: {
       label: page.differentiatorsSection?.label ?? undefined,
@@ -207,7 +216,7 @@ function mapRest(json: any) {
       description: statement.description,
       ctaText: statement.ctaText,
       ctaHref: statement.ctaUrl,
-      rightItems: Array.isArray(statement.rightItems) ? statement.rightItems.filter(Boolean) : undefined,
+      rightItems: normalizeStringItems(statement.rightItems || []),
     },
     differentiators: {
       label: differentiators.label,

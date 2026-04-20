@@ -23,7 +23,9 @@ export const GET_ABOUT_PAGE = gql`
         description
         ctaText
         ctaUrl
-        rightItems
+        rightItems {
+          text
+        }
       }
       differentiatorsSection {
         label
