@@ -16,6 +16,7 @@ export default function AboutPage() {
       <AboutStatementSection />
       <AboutHeroVideo videoSrc={heroVideo} />
       <OurDifferentiators />
+      <hr className="w-full border-t border-[#1D1D1D] my-16" />
     </main>
   );
 }
