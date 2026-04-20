@@ -69,12 +69,6 @@ export const GET_ABOUT_PAGE = gql`
         title
         viewMoreText
         viewMoreUrl
-        featureDate
-        featureTitle
-        featureSource
-        featureImage {
-          ...AboutMediaFields
-        }
       }
     }
   }

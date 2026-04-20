@@ -111,10 +111,6 @@ export const DUMMY_ABOUT_PAGE = {
     title: "MATTE MOVES PEOPLE TO MAKE CULTURE, TOGETHER",
     viewMoreText: "VIEW MORE",
     viewMoreHref: "/press",
-    featureDate: "April 11, 2024",
-    featureTitle: "PUMA WANTS TO SPRINT IN OLYMPICS BRAND RACE AGAINST NIKE AND ADIDAS",
-    featureSource: "ADWEEK",
-    featureImage: "/about/press.webp",
   },
 };
 
@@ -188,10 +184,6 @@ function mapGraphql(data: any) {
       title: page.pressSection?.title ?? undefined,
       viewMoreText: page.pressSection?.viewMoreText ?? undefined,
       viewMoreHref: page.pressSection?.viewMoreUrl ?? undefined,
-      featureDate: page.pressSection?.featureDate ?? undefined,
-      featureTitle: page.pressSection?.featureTitle ?? undefined,
-      featureSource: page.pressSection?.featureSource ?? undefined,
-      featureImage: getMediaUrl(page.pressSection?.featureImage as AboutMedia) ?? undefined,
     },
   };
 }
@@ -250,16 +242,12 @@ function mapRest(json: any) {
       title: press.title,
       viewMoreText: press.viewMoreText,
       viewMoreHref: press.viewMoreUrl,
-      featureDate: press.featureDate,
-      featureTitle: press.featureTitle,
-      featureSource: press.featureSource,
-      featureImage: getMediaUrl((press.featureImage?.data?.attributes ?? press.featureImage) as AboutMedia) ?? undefined,
     },
   };
 }
 
 async function fetchAboutPageRest() {
-  const url = `${STRAPI_BASE}/api/about-page?populate[heroVideo]=true&populate[statementSection]=true&populate[differentiatorsSection][populate][items]=true&populate[servicesSection][populate][0]=stories&populate[servicesSection][populate][1]=video&populate[ecosystemSection][populate]=image&populate[clientsSection][populate]=logos&populate[pressSection][populate]=featureImage`;
+  const url = `${STRAPI_BASE}/api/about-page?populate[heroVideo]=true&populate[statementSection]=true&populate[differentiatorsSection][populate][items]=true&populate[servicesSection][populate][0]=stories&populate[servicesSection][populate][1]=video&populate[ecosystemSection][populate]=image&populate[clientsSection][populate]=logos&populate[pressSection]=true`;
   try {
     const res = await fetch(url, {
       next: { revalidate: 60 },

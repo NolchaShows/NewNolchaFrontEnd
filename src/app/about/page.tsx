@@ -25,8 +25,8 @@ export default async function AboutPage() {
   ]);
   const heroVideo = aboutPage?.heroVideo || defaultHeroVideo;
   const featuredPressPost = pressPage.cards?.[0];
-  const pressFeatureTitle = featuredPressPost?.title || aboutPage.press.featureTitle;
-  const pressFeatureImage = featuredPressPost?.image || aboutPage.press.featureImage;
+  const pressFeatureTitle = featuredPressPost?.title || "Featured press post";
+  const pressFeatureImage = featuredPressPost?.image || "/about/press.webp";
   const pressFeatureLink = featuredPressPost?.link || aboutPage.press.viewMoreHref;
   const pressFeatureSourceLogo = featuredPressPost?.newsPaper || "";
 
@@ -67,9 +67,7 @@ export default async function AboutPage() {
         title={aboutPage.press.title}
         viewMoreText={aboutPage.press.viewMoreText}
         viewMoreHref={aboutPage.press.viewMoreHref}
-        featureDate={aboutPage.press.featureDate}
         featureTitle={pressFeatureTitle}
-        featureSource={aboutPage.press.featureSource}
         featureImage={pressFeatureImage}
         featureLink={pressFeatureLink}
         featureSourceLogo={pressFeatureSourceLogo}
