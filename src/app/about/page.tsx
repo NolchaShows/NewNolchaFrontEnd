@@ -1,6 +1,7 @@
 import AboutStatementSection from "@/components/about/AboutStatementSection";
 import AboutHeroVideo from "@/components/about/AboutHeroVideo.jsx";
 import OurDifferentiators from "@/components/about/OurDifferentiators";
+import OurServicesSection from "@/components/about/OurServicesSection";
 
 export const metadata = {
   title: "About Us | New Nolcha",
@@ -16,7 +17,8 @@ export default function AboutPage() {
       <AboutStatementSection />
       <AboutHeroVideo videoSrc={heroVideo} />
       <OurDifferentiators />
-      <hr className="w-full border-t border-[#1D1D1D] my-16" />
+      <hr className="w-full border-t border-[#1D1D1D] my-4" />
+      <OurServicesSection />
     </main>
   );
 }
