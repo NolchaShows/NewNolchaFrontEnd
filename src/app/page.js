@@ -262,7 +262,7 @@ const buildGalleryItems = (gallery) => {
 };
 
 export default async function Home() {
-  const homePage = await fetchHomePage("home");
+  const homePage = await fetchHomePage();
   const buildMomentumData = homePage?.build_momentum_section || null;
   const imageGallerySliderImages = mapImageGallerySliderImages(
     homePage?.image_gallery_slider

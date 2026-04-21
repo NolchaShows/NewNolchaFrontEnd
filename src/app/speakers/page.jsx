@@ -22,7 +22,7 @@ export const revalidate = 60;
 async function SpeakersPage() {
   const [speakersPage, homePage] = await Promise.all([
     fetchSpeakersPage("speakers"),
-    fetchHomePage("home"),
+    fetchHomePage(),
   ]);
   const homeSpeakerSection = homePage?.shared_speaker_section || null;
 
