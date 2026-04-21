@@ -524,6 +524,7 @@ export default async function Home() {
             size="large"
             overlayOpacity={20}
             isGoogleDrive={false}
+            loop={true}
           />
         )}
         <div className="relative z-10">
