@@ -186,6 +186,7 @@ export default function ExperienceDetailPageClient({ page }: { page: any }) {
               showControls={true}
               autoPlay={true}
               muted={true}
+              loop={true}
               className="!h-full"
             />
           </motion.div>
