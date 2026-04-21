@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import StyledHeading from './StyledHeading';
 import SectionTitle from './SectionTitle';
+import ArrowNavButtons from './ArrowNavButtons';
 
 const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogleDrive = false }) => {
     // Support both single video (backward compatibility) and multiple videos
-    const videoList = videos && videos.length > 0 
-        ? videos 
-        : videoUrl 
+    const videoList = videos && videos.length > 0
+        ? videos
+        : videoUrl
             ? [{ url: videoUrl, isGoogleDrive: isGoogleDrive }]
             : [];
 
@@ -49,7 +49,7 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
 
     const currentVideo = videoList[currentIndex];
     const videoUrlToUse = typeof currentVideo === 'string' ? currentVideo : currentVideo.url;
-    const isGoogleDriveForCurrent = typeof currentVideo === 'object' 
+    const isGoogleDriveForCurrent = typeof currentVideo === 'object'
         ? (currentVideo.isGoogleDrive || videoUrlToUse.includes('drive.google.com'))
         : (isGoogleDrive || videoUrlToUse.includes('drive.google.com'));
 
@@ -104,22 +104,11 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
 
             {/* Navigation Arrows - Only show if multiple videos */}
             {videoList.length > 1 && (
-                <div className="flex justify-center gap-3 lg:gap-4 2xl:gap-6 xxl:gap-8 3xl:gap-12 py-4 lg:py-6 2xl:py-8 xxl:py-10 3xl:py-16">
-                    <button onClick={handlePrev} aria-label="Previous video">
-                        <motion.img
-                            src="/left.jpg"
-                            className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:h-[70px] xxl:w-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
-                            whileTap={{ scale: 0.9 }}
-                        />
-                    </button>
-                    <button onClick={handleNext} aria-label="Next video">
-                        <motion.img
-                            src="/right.jpg"
-                            className="cursor-pointer w-[36px] h-[36px] lg:w-[48px] lg:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:h-[70px] xxl:w-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
-                            whileTap={{ scale: 0.9 }}
-                        />
-                    </button>
-                </div>
+                <ArrowNavButtons
+                    onLeft={handlePrev}
+                    onRight={handleNext}
+                    centerButtons={true}
+                />
             )}
         </div>
     );

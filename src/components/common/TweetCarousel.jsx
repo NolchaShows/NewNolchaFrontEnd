@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionTitle from "./SectionTitle";
+import ArrowNavButtons from "./ArrowNavButtons";
 
 const TweetCarousel = ({
   posts,
@@ -73,30 +74,7 @@ const TweetCarousel = ({
         <SectionTitle disableTitleSpacing className="text-white">{carouselTitle}</SectionTitle>
 
         {/* Navigation Arrows */}
-        <div className="flex gap-4 xl:gap-6 2xl:gap-8 xxl:gap-10">
-          <button
-            onClick={prevPost}
-            aria-label="Scroll left"
-            className="group"
-          >
-            <motion.img
-              src="/left.jpg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[40px] lg:h-[40px] xl:w-[48px] xl:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[8px] xl:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
-              whileTap={{ scale: 0.9 }}
-            />
-          </button>
-          <button
-            onClick={nextPost}
-            aria-label="Scroll right"
-            className="group"
-          >
-            <motion.img
-              src="/right.jpg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[40px] lg:h-[40px] xl:w-[48px] xl:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[8px] xl:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
-              whileTap={{ scale: 0.9 }}
-            />
-          </button>
-        </div>
+        <ArrowNavButtons onLeft={prevPost} onRight={nextPost} />
       </div>
 
       <div className="relative">

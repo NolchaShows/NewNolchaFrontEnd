@@ -118,14 +118,15 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
     
     const currentBackgroundColor = isHovered
       ? isDefaultBlack
-        ? "#FEF991" // If default is secondary, hover becomes light green/cream
+        ? "var(--primary)" // If default is secondary, hover becomes site button primary
         : "#1D1C1E" // If default is light green/cream, hover becomes secondary
       : isDefaultBlack
       ? "#1D1C1E" // Default secondary background
-      : "#FEF991"; // Default light green/cream background
+      : "var(--primary)"; // Default site button primary background
     
     // Simple hover logic: show primary image normally, secondary on hover
-    const currentImage = currentBackgroundColor === "#FEF991" ? partner.imageBlack : partner.imageWhite;
+    const currentImage =
+      currentBackgroundColor === "var(--primary)" ? partner.imageBlack : partner.imageWhite;
 
     return (
       <div

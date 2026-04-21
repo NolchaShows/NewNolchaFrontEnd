@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import StyledHeading from "./StyledHeading";
 import SectionTitle from "./SectionTitle";
+import ArrowNavButtons from "./ArrowNavButtons";
 
 const useScreenSize = () => {
   const [screenSize, setScreenSize] = useState("lg");
@@ -104,28 +105,7 @@ const PastExperiences = ({
         <SectionTitle disableTitleSpacing className="text-white">Past experience</SectionTitle>
 
         {/* Navigation Arrows - Desktop Only */}
-        <div className="hidden lg:flex gap-4 xl:gap-6 2xl:gap-8 xxl:gap-10">
-          <button
-            onClick={prevSlide}
-            aria-label="Scroll left"
-          >
-            <motion.img
-              src="/left.jpg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[40px] lg:h-[40px] xl:w-[48px] xl:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[8px] xl:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
-              whileTap={{ scale: 0.9 }}
-            />
-          </button>
-          <button
-            onClick={nextSlide}
-            aria-label="Scroll right"
-          >
-            <motion.img
-              src="/right.jpg"
-              className="cursor-pointer w-[36px] h-[36px] lg:w-[40px] lg:h-[40px] xl:w-[48px] xl:h-[48px] 2xl:w-[60px] 2xl:h-[60px] xxl:w-[70px] xxl:h-[70px] 3xl:w-[100px] 3xl:h-[100px] rounded-[5px] lg:rounded-[8px] xl:rounded-[10px] 2xl:rounded-[12px] xxl:rounded-[15px] 3xl:rounded-[20px]"
-              whileTap={{ scale: 0.9 }}
-            />
-          </button>
-        </div>
+        <ArrowNavButtons onLeft={prevSlide} onRight={nextSlide} />
       </div>
 
       <div className="relative overflow-hidden px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]">
@@ -176,7 +156,7 @@ const PastExperiences = ({
       </div>
 
       {/* Mobile arrows */}
-      {experiences.length > 1 && (
+      {/* {experiences.length > 1 && (
         <div className="flex justify-center gap-[12px] lg:hidden mt-8">
           <button onClick={prevSlide} className="cursor-pointer hover:opacity-80 transition-opacity">
             <img src="/icons/left-black-button.svg" alt="Previous" className="h-[36px] w-[36px] filter brightness-0 invert" />
@@ -185,7 +165,7 @@ const PastExperiences = ({
             <img src="/icons/right-black-button.svg" alt="Next" className="h-[36px] w-[36px] filter brightness-0 invert" />
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

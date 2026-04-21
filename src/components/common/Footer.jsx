@@ -106,7 +106,7 @@ function Footer() {
         )}
 
         {/* Divider Line */}
-        <div className="h-[1px] w-full bg-[rgba(253,255,231,0.2)]"></div>
+        {/* <div className="h-[1px] w-full bg-[rgba(253,255,231,0.2)]"></div> */}
 
         {/* Main Footer Content */}
         <div className="flex flex-col lg:flex-row items-start justify-between gap-[40px] lg:gap-[100px] w-full">
