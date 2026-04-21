@@ -1,27 +1,31 @@
-"use client";
-import React from 'react';
-import { useParams } from 'next/navigation';
-import Designer from '@/components/designers/Designer';
-import { useFeaturedArtistDetail } from '@/utils/featuredArtistUtils';
+import { notFound } from "next/navigation";
+import ExperienceDetailPageClient from "@/components/experience/ExperienceDetailPageClient";
+import { fetchFeaturedArtistPage } from "@/lib/fetchFeaturedArtistPage";
 
-const Page = () => {
-  const params = useParams();
-  const slug = params.slug;
+export const revalidate = 60;
 
-  const { featuredArtistDetail, loading, error } = useFeaturedArtistDetail(slug);
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const page = await fetchFeaturedArtistPage(resolvedParams.slug);
 
-  if (error) {
-    console.error('Error loading featured artist page:', error);
+  if (!page) {
+    return {
+      title: "Featured Artist not found",
+    };
   }
 
-  return (
-    <div>
-      <Designer
-        {...featuredArtistDetail}
-        loading={loading}
-      />
-    </div>
-  );
-};
+  return {
+    title: page.title || "Featured Artist",
+  };
+}
 
-export default Page;
+export default async function Page({ params }) {
+  const resolvedParams = await params;
+  const page = await fetchFeaturedArtistPage(resolvedParams.slug);
+
+  if (!page) {
+    notFound();
+  }
+
+  return <ExperienceDetailPageClient page={page} />;
+}
