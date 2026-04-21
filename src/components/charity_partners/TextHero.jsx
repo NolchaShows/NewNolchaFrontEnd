@@ -109,7 +109,7 @@ function TextHero({ textHeroData, loading, images = [] }) {
                 className="absolute pl-[40px] lg:px-0 -left-[35px] bottom-[40px] lg:bottom-[30px] 2xl:bottom-[60px] w-[140px] lg:w-[160px] 2xl:w-[283px] z-0"
               /> */}
               <img
-                src={currentSlide?.title || '/home/forbes/forbes.png'}
+                src={"/home/forbes/forbes.png"}
                 alt="Forbes"
                 className="relative w-[230px] lg:w-[280px] xl:w-[340px] 2xl:w-[420px] xxl:w-[550px] 3xl:w-[800px] z-10"
               />
