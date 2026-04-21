@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import InnerCircleModal from "../Modals/InnerCircleModal";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   getUpcomingEventHref,
   slugifyUpcomingEventTitle,
@@ -32,6 +32,7 @@ function Navbar() {
   const [hoveredMegaItemImage, setHoveredMegaItemImage] = useState(null);
 
   const router = useRouter();
+  const pathname = usePathname();
   const defaultExperiencesDropdown = [
     {
       label: "VV Racing with Jack Butcher",
@@ -310,6 +311,40 @@ function Navbar() {
       [key]: !prev[key],
     }));
   };
+
+  const scrollToContactSection = () => {
+    const el = document.getElementById("contact");
+    if (!el) return false;
+
+    const nav = document.querySelector('[data-navbar="main"]');
+    const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+    const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
+    window.scrollTo({ top: y, behavior: "smooth" });
+    return true;
+  };
+
+  const handleLetsTalk = () => {
+    if (scrollToContactSection()) return;
+    router.push("/#contact");
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.hash !== "#contact") return;
+
+    let attempts = 0;
+    const maxAttempts = 8;
+
+    const tryScroll = () => {
+      if (scrollToContactSection()) return;
+      attempts += 1;
+      if (attempts < maxAttempts) {
+        window.setTimeout(tryScroll, 120);
+      }
+    };
+
+    tryScroll();
+  }, [pathname]);
 
   useEffect(() => {
     // Prevent background scroll when the mobile drawer is open
@@ -653,14 +688,7 @@ function Navbar() {
               <div className="flex items-center group relative">
                 {/* Lets Talk Button */}
                 <button
-                  onClick={() => {
-                    const el = document.getElementById('contact');
-                    if (!el) return;
-                    const nav = document.querySelector('[data-navbar="main"]');
-                    const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-                    const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
-                    window.scrollTo({ top: y, behavior: 'smooth' });
-                  }}
+                  onClick={handleLetsTalk}
                   className={[
                     "py-[7.5px] 2xl:py-[12px] 3xl:py-[25px]",
                     "bg-primary text-xl 2xl:text-[28px] xxl:text-2xl 3xl:text-[50px] text-black font-medium rounded-lg",
@@ -679,14 +707,7 @@ function Navbar() {
 
                 {/* Arrow Button */}
                 <button
-                  onClick={() => {
-                    const el = document.getElementById('contact');
-                    if (!el) return;
-                    const nav = document.querySelector('[data-navbar="main"]');
-                    const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-                    const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
-                    window.scrollTo({ top: y, behavior: 'smooth' });
-                  }}
+                  onClick={handleLetsTalk}
                   className="hidden lg:flex w-11 h-11 2xl:w-[64px] 2xl:h-[64px] xxl:w-14 xxl:h-14 3xl:w-[120px] 3xl:h-[120px] bg-primary rounded-lg items-center justify-center ml-2"
                 >
                   <div className="2xl:hidden">
@@ -942,12 +963,7 @@ function Navbar() {
                   <button
                     type="button"
                     onClick={() => {
-                      const el = document.getElementById("contact");
-                      if (!el) return;
-                      const nav = document.querySelector('[data-navbar="main"]');
-                      const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-                      const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
-                      window.scrollTo({ top: y, behavior: "smooth" });
+                      handleLetsTalk();
                       setIsMobileMenuOpen(false);
                     }}
                     className="flex-1 h-[52px] rounded-lg bg-primary text-black text-[18px] font-[700] hover:opacity-95 transition-opacity"
@@ -957,12 +973,7 @@ function Navbar() {
                   <button
                     type="button"
                     onClick={() => {
-                      const el = document.getElementById("contact");
-                      if (!el) return;
-                      const nav = document.querySelector('[data-navbar="main"]');
-                      const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-                      const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
-                      window.scrollTo({ top: y, behavior: "smooth" });
+                      handleLetsTalk();
                       setIsMobileMenuOpen(false);
                     }}
                     aria-label="Lets Talk"

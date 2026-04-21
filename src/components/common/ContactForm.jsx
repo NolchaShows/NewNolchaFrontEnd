@@ -83,7 +83,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
   return (
     <div
       id="contact"
-      className="bg-cover bg-center bg-no-repeat relative flex justify-center page-container"
+      className="bg-cover bg-center bg-no-repeat relative flex justify-center page-container scroll-mt-[88px] lg:scroll-mt-[156px]"
       style={{
         backgroundImage: dynamicVideoSrc ? undefined : `url("${dynamicBackgroundImage}")`,
         backgroundColor: "#1a1a1a", // fallback dark color
