@@ -270,7 +270,7 @@ export default async function Home() {
   const logoSliderData = homePage?.logo_slider || null;
   const upcomingEvents = mapUpcomingEvents(homePage?.upcoming_events_section);
   const serviceData = homePage?.service_section || null;
-  const speakerData = homePage?.speaker_section || null;
+  const speakerData = homePage?.shared_speaker_section || null;
   const textHeroData = homePage?.texthero_section || null;
   const homePartnerSection = homePage?.shared_partner_section || null;
   const featureBannerOne = getMediaUrl(homePage?.feature_banner_one);
