@@ -61,7 +61,6 @@ function Navbar() {
   const [charityDropdown, setCharityDropdown] = useState([]);
   // Mobile dropdown states
   const [mobileDropdowns, setMobileDropdowns] = useState({
-    whiteLabel: false,
     upcoming: false,
     charity: false,
     experiences: false,
@@ -180,7 +179,7 @@ function Navbar() {
 
   const getMegaMenuConfig = (menuKey) => {
     // First item should NOT have a dropdown
-    if (!menuKey || menuKey === "whiteLabel") return null;
+    if (!menuKey) return null;
 
     switch (menuKey) {
       case "upcoming":
