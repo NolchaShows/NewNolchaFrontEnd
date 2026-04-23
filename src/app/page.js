@@ -75,6 +75,9 @@ const pickFirstImageUrl = (...mediaItems) => {
 const getExperienceCardImage = (experience) => {
   if (!experience) return null;
 
+  const listingImage = pickFirstImageUrl(experience?.listingImage);
+  if (listingImage) return listingImage;
+
   const galleryImage = pickFirstImageUrl(
     experience?.gallery?.standard_media?.[0],
     experience?.gallery?.featured_media?.[0]

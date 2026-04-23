@@ -1,6 +1,6 @@
 "use client";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
-import DynamicGallery from "@/components/designers/DynamicGallery";
+import FeaturedArtistCardGrid from "@/components/featured-artists/FeaturedArtistCardGrid";
 import Artists from "@/components/landing/Artists";
 import { useFeaturedArtistsList } from "@/utils/featuredArtistUtils";
 import React from "react";
@@ -42,12 +42,10 @@ const page = () => {
           videos={videos}
           isDesktop={true}
         />
-        {featuredArtists && featuredArtists.length > 0 && (
-          <DynamicGallery
-            imagesGallery={featuredArtists}
-            title={'Featured Artists'}
+        {(artistsLoading || (featuredArtists && featuredArtists.length > 0)) && (
+          <FeaturedArtistCardGrid
+            artists={featuredArtists}
             loading={artistsLoading}
-            basePath="/featured-artists"
           />
         )}
       </div>
