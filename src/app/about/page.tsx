@@ -2,7 +2,6 @@ import AboutStatementSection from "@/components/about/AboutStatementSection";
 import AboutHeroVideo from "@/components/about/AboutHeroVideo.jsx";
 import OurDifferentiators from "@/components/about/OurDifferentiators";
 import OurServicesSection from "@/components/about/OurServicesSection";
-import OurEcosystemSection from "@/components/about/OurEcosystemSection";
 import OurClientsSection from "@/components/about/OurClientsSection";
 import OurPressSection from "@/components/about/OurPressSection";
 import { getAboutPageContent } from "@/lib/aboutPageData";
@@ -46,12 +45,6 @@ export default async function AboutPage() {
         ctaHref={aboutPage.services.ctaHref}
         videoSrc={aboutPage.services.videoSrc}
         serviceStories={aboutPage.services.stories}
-      />
-      <hr className="w-full border-t border-[#1D1D1D] mb-4" />
-      <OurEcosystemSection
-        label={aboutPage.ecosystem.label}
-        title={aboutPage.ecosystem.title}
-        imageSrc={aboutPage.ecosystem.imageSrc}
       />
       <hr className="w-full border-t border-[#1D1D1D] mb-4" />
       <OurClientsSection

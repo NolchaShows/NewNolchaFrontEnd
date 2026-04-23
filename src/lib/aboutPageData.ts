@@ -82,11 +82,6 @@ export const DUMMY_ABOUT_PAGE = {
       },
     ],
   },
-  ecosystem: {
-    label: "[ OUR ECOSYSTEM ]",
-    title: "MATTE'S UNIQUE ECOSYSTEM",
-    imageSrc: "/about/ecosystem.webp",
-  },
   clients: {
     label: "[ OUR CLIENTS ]",
     title: "CATEGORY AGNOSTIC PARTNER PORTFOLIO",
@@ -164,11 +159,6 @@ function mapGraphql(data: any) {
       videoSrc: getMediaUrl(page.servicesSection?.video as AboutMedia) ?? undefined,
       stories: normalizeStories(page.servicesSection?.stories || []),
     },
-    ecosystem: {
-      label: page.ecosystemSection?.label ?? undefined,
-      title: page.ecosystemSection?.title ?? undefined,
-      imageSrc: getMediaUrl(page.ecosystemSection?.image as AboutMedia) ?? undefined,
-    },
     clients: {
       label: page.clientsSection?.label ?? undefined,
       title: page.clientsSection?.title ?? undefined,
@@ -196,7 +186,6 @@ function mapRest(json: any) {
   const statement = getComp("statementSection", "statement_section") || {};
   const differentiators = getComp("differentiatorsSection", "differentiators_section") || {};
   const services = getComp("servicesSection", "services_section") || {};
-  const ecosystem = getComp("ecosystemSection", "ecosystem_section") || {};
   const clients = getComp("clientsSection", "clients_section") || {};
   const press = getComp("pressSection", "press_section") || {};
 
@@ -222,11 +211,6 @@ function mapRest(json: any) {
       videoSrc: getMediaUrl((services.video?.data?.attributes ?? services.video) as AboutMedia) ?? undefined,
       stories: normalizeStories(services.stories || []),
     },
-    ecosystem: {
-      label: ecosystem.label,
-      title: ecosystem.title,
-      imageSrc: getMediaUrl((ecosystem.image?.data?.attributes ?? ecosystem.image) as AboutMedia) ?? undefined,
-    },
     clients: {
       label: clients.label,
       title: clients.title,
@@ -249,7 +233,7 @@ function mapRest(json: any) {
 async function fetchAboutPageRest() {
   const urls = [
     `${STRAPI_BASE}/api/about-page?populate=*`,
-    `${STRAPI_BASE}/api/about-page?populate[heroVideo]=true&populate[statementSection][populate]=rightItems&populate[differentiatorsSection][populate][items]=true&populate[servicesSection][populate][0]=stories&populate[servicesSection][populate][1]=video&populate[ecosystemSection][populate]=image&populate[clientsSection][populate]=logos&populate[pressSection]=true`,
+    `${STRAPI_BASE}/api/about-page?populate[heroVideo]=true&populate[statementSection][populate]=rightItems&populate[differentiatorsSection][populate][items]=true&populate[servicesSection][populate][0]=stories&populate[servicesSection][populate][1]=video&populate[clientsSection][populate]=logos&populate[pressSection]=true`,
   ];
 
   for (const url of urls) {
@@ -292,7 +276,6 @@ function mergeDeep(base: any, incoming: any) {
       stories:
         incoming.services?.stories?.length > 0 ? incoming.services.stories : base.services.stories,
     },
-    ecosystem: { ...base.ecosystem, ...pickDefined(incoming.ecosystem) },
     clients: {
       ...base.clients,
       ...pickDefined(incoming.clients),

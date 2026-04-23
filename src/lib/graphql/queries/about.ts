@@ -47,13 +47,6 @@ export const GET_ABOUT_PAGE = gql`
           description
         }
       }
-      ecosystemSection {
-        label
-        title
-        image {
-          ...AboutMediaFields
-        }
-      }
       clientsSection {
         label
         title
