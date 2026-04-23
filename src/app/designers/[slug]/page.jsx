@@ -1,27 +1,31 @@
-"use client";
-import React from 'react';
-import { useParams } from 'next/navigation';
-import Designer from '@/components/designers/Designer';
-import { useDesignerDetail } from '@/utils/designerPageUtils';
+import { notFound } from "next/navigation";
+import ExperienceDetailPageClient from "@/components/experience/ExperienceDetailPageClient";
+import { fetchDesignerPage } from "@/lib/fetchDesignerPage";
 
-const Page = () => {
-  const params = useParams();
-  const slug = params.slug;
+export const revalidate = 60;
 
-  const { designerDetail, loading, error } = useDesignerDetail(slug);
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const page = await fetchDesignerPage(resolvedParams.slug);
 
-  if (error) {
-    console.error('Error loading designer page:', error);
+  if (!page) {
+    return {
+      title: "Designer not found",
+    };
   }
 
-  return (
-    <div>
-      <Designer
-        {...designerDetail}
-        loading={loading}
-      />
-    </div>
-  );
-};
+  return {
+    title: page.title || "Designer",
+  };
+}
 
-export default Page;
+export default async function Page({ params }) {
+  const resolvedParams = await params;
+  const page = await fetchDesignerPage(resolvedParams.slug);
+
+  if (!page) {
+    notFound();
+  }
+
+  return <ExperienceDetailPageClient page={page} />;
+}

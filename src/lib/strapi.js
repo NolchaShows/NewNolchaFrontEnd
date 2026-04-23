@@ -558,15 +558,17 @@ export async function getDesignerBySlug(slug) {
 
     // Use deep population for all nested components
     const populateQuery = [
-      'populate[0]=heroImage',
-      'populate[1]=listingImage',
-      'populate[2]=paragraphs',
-      'populate[3]=sliderImages',
-      'populate[4]=sliderImages.image',
-      'populate[5]=socialImages',
-      'populate[6]=socialImages.image',
-      'populate[7]=sections',
-      'populate[8]=sections.image'
+      'populate[0]=seo',
+      'populate[1]=seo.ogImage',
+      'populate[2]=hero',
+      'populate[3]=hero.video',
+      'populate[4]=listingImage',
+      'populate[5]=detail_rows',
+      'populate[6]=detail_rows.tags',
+      'populate[7]=gallery',
+      'populate[8]=gallery.standard_media',
+      'populate[9]=gallery.featured_media',
+      'populate[10]=gallery.featured_content_sections'
     ].join('&');
 
     // Try the custom by-slug endpoint first
@@ -576,7 +578,7 @@ export async function getDesignerBySlug(slug) {
       console.log('📊 Designer by slug API Response:', JSON.stringify(data, null, 2));
 
       if (data?.data) {
-        console.log(`✅ Found designer: ${data.data.name}`);
+        console.log(`✅ Found designer: ${data.data.title || data.data.name}`);
         return data;
       }
     } catch (customEndpointError) {
@@ -596,7 +598,7 @@ export async function getDesignerBySlug(slug) {
 
     // Return the first matching designer
     const designer = Array.isArray(data.data) ? data.data[0] : data.data;
-    console.log(`✅ Found designer: ${designer.name}`);
+    console.log(`✅ Found designer: ${designer.title || designer.name}`);
 
     return { data: designer };
 

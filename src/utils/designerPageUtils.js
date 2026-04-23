@@ -363,7 +363,7 @@ export const transformDesignersListData = (designers) => {
 
   const transformed = designers.map((designer, index) => ({
     image: makeMediaUrl(designer.listingImage) || `/designers/${index + 6}.png`,
-    text: designer.name || 'Designer',
+    text: designer.title || designer.name || 'Designer',
     slug: designer.slug || `designer-${index + 1}`
   }));
 
