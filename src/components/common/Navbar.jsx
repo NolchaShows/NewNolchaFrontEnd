@@ -106,8 +106,7 @@ function Navbar() {
       label: "Press",
       href: "/press",
       subtitle: "‎",
-      hasDropdown: true,
-      dropdownType: "press",
+      hasDropdown: false,
       key: "press",
     },
     {
@@ -168,10 +167,6 @@ function Navbar() {
         return experiencesDropdown;
       case "charity":
         return charityDropdown;
-      case "press":
-        return [
-          { label: "Press", href: "/press" },
-        ];
       case "creativeCircle":
         return [
           { label: "Speakers", href: "/speakers" },
@@ -225,19 +220,6 @@ function Navbar() {
             href: "/experiences",
           },
           imageSrc: "/homepage/menu_dropdown/dropdown3.jpg",
-        };
-      case "press":
-        return {
-          sectionLabel: "Press",
-          items: [
-            { label: "Press", href: "/press" },
-          ],
-          cta: {
-            title: "View All Press",
-            description: "Read news, features, and coverage.",
-            href: "/press",
-          },
-          imageSrc: "/homepage/menu_dropdown/dropdown4.jpg",
         };
       case "creativeCircle":
         return {
