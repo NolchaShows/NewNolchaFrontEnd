@@ -130,24 +130,38 @@ const PastExperiences = ({
             const imageUrl = typeof experience === 'string' ? experience :
               experience.image?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${experience.image.url}` : experience.image || experience;
             const text = experience.text || experience.title || `Experience ${idx + 1}`;
+            const href =
+              typeof experience === "object" && experience?.href ? experience.href : null;
 
             return (
               <div
                 key={idx}
-                className="w-full sm:w-1/2 lg:w-[345px] flex-shrink-0 mx-2"
+                className="group w-full sm:w-1/2 lg:w-[345px] flex-shrink-0 mx-2 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
               >
                 <div className="relative w-full lg:w-[345px] rounded-[20px] overflow-hidden h-[300px] lg:h-[397px]">
-                  <img
-                    src={imageUrl}
-                    alt={text}
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Text Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 lg:p-6 2xl:p-8">
-                    <h3 className="text-white text-[20px] lg:text-[24px] 2xl:text-[42px] font-medium text-left">
-                      {text}
-                    </h3>
+                  <div className="press-card-blur-target h-full w-full transition-[filter] duration-300 ease-out will-change-[filter]">
+                    <img
+                      src={imageUrl}
+                      alt={text}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Text Overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 lg:p-6 2xl:p-8">
+                      <h3 className="text-white text-[20px] lg:text-[24px] 2xl:text-[42px] font-medium text-left">
+                        {text}
+                      </h3>
+                    </div>
                   </div>
+                  {href ? (
+                    <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                      <a
+                        href={href}
+                        className="pointer-events-auto inline-flex items-center justify-center bg-white/80 px-5 py-2 text-[18px] uppercase text-[#2A2A2A] transition hover:bg-white"
+                      >
+                        View
+                      </a>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             );

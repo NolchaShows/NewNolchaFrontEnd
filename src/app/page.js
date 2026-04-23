@@ -27,22 +27,6 @@ import { upcomingListEvents } from "@/data/upcomingEvents";
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
 
-const getBlockByType = (blocks = [], componentName) =>
-  blocks.find(
-    (block) =>
-      block?.__component === componentName ||
-      block?.__typename ===
-        `Component${componentName
-          .split(".")
-          .map((part) =>
-            part
-              .split("-")
-              .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-              .join("")
-          )
-          .join("")}`
-  );
-
 const getBestImageUrl = (media) => {
   if (!media) return null;
 
@@ -91,39 +75,20 @@ const pickFirstImageUrl = (...mediaItems) => {
 const getExperienceCardImage = (experience) => {
   if (!experience) return null;
 
-  const galleryBlock = getBlockByType(experience.blocks, "blocks.gallery");
-  const galleryImage =
-    pickFirstImageUrl(galleryBlock?.images?.[0], galleryBlock?.items?.[0]?.image) ||
-    null;
+  const galleryImage = pickFirstImageUrl(
+    experience?.gallery?.standard_media?.[0],
+    experience?.gallery?.featured_media?.[0]
+  );
 
   if (galleryImage) return galleryImage;
 
-  const threeImageRowBlock = getBlockByType(
-    experience.blocks,
-    "blocks.three-image-row"
-  );
-  const threeImageRowImage = pickFirstImageUrl(
-    threeImageRowBlock?.firstMedia,
-    threeImageRowBlock?.secondMedia,
-    threeImageRowBlock?.thirdMedia
+  const featuredContentSectionImage = pickFirstImageUrl(
+    ...(experience?.gallery?.featured_content_sections || []).map(
+      (section) => section?.image
+    )
   );
 
-  if (threeImageRowImage) return threeImageRowImage;
-
-  const fashionGridBlock = getBlockByType(
-    experience.blocks,
-    "blocks.fashion-grid-section"
-  );
-
-  return pickFirstImageUrl(
-    fashionGridBlock?.leftMedia,
-    fashionGridBlock?.rightMedia,
-    fashionGridBlock?.topMedia,
-    fashionGridBlock?.middleMedia1,
-    fashionGridBlock?.middleMedia2,
-    fashionGridBlock?.middleMedia3,
-    fashionGridBlock?.bottomMedia
-  );
+  return featuredContentSectionImage || null;
 };
 
 const buildPastExperiences = (featuredExperiences = []) =>
@@ -131,6 +96,7 @@ const buildPastExperiences = (featuredExperiences = []) =>
     .map((experience) => ({
       image: getExperienceCardImage(experience),
       text: experience?.title || "",
+      href: experience?.slug ? `/experiences/${experience.slug}` : null,
     }))
     .filter((experience) => experience.image && experience.text);
 
