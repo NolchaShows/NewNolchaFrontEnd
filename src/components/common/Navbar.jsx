@@ -9,6 +9,65 @@ import {
   upcomingListEvents,
 } from "@/data/upcomingEvents";
 
+const STRAPI_BASE_URL =
+  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+
+const getMediaUrl = (media) => {
+  if (!media) return null;
+
+  const rawUrl =
+    media?.formats?.large?.url ||
+    media?.formats?.medium?.url ||
+    media?.formats?.small?.url ||
+    media?.formats?.thumbnail?.url ||
+    media?.url ||
+    null;
+
+  if (!rawUrl) return null;
+  return rawUrl.startsWith("http") ? rawUrl : `${STRAPI_BASE_URL}${rawUrl}`;
+};
+
+const buildMenuKey = (item, index) =>
+  item?.key ||
+  item?.label
+    ?.toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "") ||
+  `menu-item-${index}`;
+
+const isAbsoluteHref = (href = "") =>
+  href.startsWith("/") || href.startsWith("http://") || href.startsWith("https://") || href.startsWith("#");
+
+const normalizePathPart = (value = "") => value.replace(/^\/+|\/+$/g, "");
+
+const resolveChildHref = (parentHref = "", child = {}) => {
+  const childHref = child?.href || "";
+  const childSlug = child?.slug || "";
+  const isModal = Boolean(child?.modal);
+
+  if (childHref && isAbsoluteHref(childHref)) {
+    return childHref;
+  }
+
+  const relativeValue = childSlug || childHref;
+  if (!relativeValue) {
+    return "#";
+  }
+
+  if (isModal) {
+    return `/?upcoming=${encodeURIComponent(normalizePathPart(relativeValue))}`;
+  }
+
+  const cleanParent = normalizePathPart(parentHref);
+  const cleanChild = normalizePathPart(relativeValue);
+
+  if (!cleanParent) {
+    return `/${cleanChild}`;
+  }
+
+  return `/${cleanParent}/${cleanChild}`;
+};
+
 function Navbar() {
   // Testing helper: keep one mega dropdown open
   const FORCE_DESKTOP_MEGA_OPEN = false;
@@ -59,198 +118,109 @@ function Navbar() {
     defaultExperiencesDropdown
   );
   const [charityDropdown, setCharityDropdown] = useState([]);
+  const [navigationItems, setNavigationItems] = useState([]);
   // Mobile dropdown states
-  const [mobileDropdowns, setMobileDropdowns] = useState({
-    upcoming: false,
-    charity: false,
-    experiences: false,
-  });
+  const [mobileDropdowns, setMobileDropdowns] = useState({});
 
   // Share functions
   const handleTwitterShare = () => {
     window.open('https://x.com/nolchashows', '_blank');
   };
 
-  const visibleMenuItems = [
+  const fallbackVisibleMenuItems = [
     {
       label: "White Label",
       href: "/about",
       subtitle: "Your Brand + Infrastructure",
       key: "whiteLabel",
+      hasDropdown: false,
     },
     {
       label: "Upcoming",
       href: "/upcoming",
       subtitle: "Join Us + Explore",
-      hasDropdown: true,
       key: "upcoming",
+      hasDropdown: true,
+      children: upcomingListEvents.map((event) => ({
+        label: event.title,
+        href: getUpcomingEventHref(event.title),
+        upcomingSlug: slugifyUpcomingEventTitle(event.title),
+        imageSrc: event.image,
+      })),
+      imageSrc: "/homepage/menu_dropdown/dropdown1.jpg",
     },
     {
       label: "Charity",
       href: "#",
-      hasDropdown: true,
-      dropdownType: "charity",
       subtitle: "Giving Back + Purpose",
       key: "charity",
+      hasDropdown: true,
+      children: charityDropdown,
+      imageSrc: "/homepage/menu_dropdown/dropdown2.jpg",
     },
     {
       label: "Experiences",
       href: "/experiences",
-      hasDropdown: true,
-      dropdownType: "experiences",
       subtitle: "Immersive + Connect",
       key: "experiences",
+      hasDropdown: true,
+      children: experiencesDropdown,
+      imageSrc: "/homepage/menu_dropdown/dropdown3.jpg",
     },
     {
       label: "Press",
       href: "/press",
       subtitle: "‎",
-      hasDropdown: false,
       key: "press",
+      hasDropdown: false,
     },
     {
       label: "Alumni",
       href: "/speakers",
       subtitle: "Speakers + Artists",
-      hasDropdown: true,
-      dropdownType: "creativeCircle",
       key: "creativeCircle",
+      hasDropdown: true,
+      children: [
+        {
+          label: "Speakers",
+          href: "/speakers",
+          imageSrc: "/homepage/menu_dropdown/Speakers.jpg",
+        },
+        {
+          label: "Featured Artists",
+          href: "/featured-artists",
+          imageSrc: "/homepage/menu_dropdown/Artists.jpg",
+        },
+        {
+          label: "Designers",
+          href: "/designers",
+          imageSrc: "/homepage/menu_dropdown/Designers.jpg",
+        },
+      ],
+      imageSrc: "/homepage/menu_dropdown/Speakers.jpg",
     },
   ];
 
-  const moreMenuItems = [
-    {
-      label: "Designers",
-      href: "/designers",
-      subtitle: "Plan + Go",
-    },
-    {
-      label: "Speakers",
-      href: "/speakers",
-      subtitle: "Look + Do",
-    },
-    {
-      label: "Shop",
-      href: "/shop",
-      subtitle: "Look + Do",
-    },
-    {
-      label: "Contact",
-      href: "/contact-us",
-      subtitle: "Look + Do",
-    },
-    {
-      label: "Gallery",
-      href: "/gallery",
-      subtitle: "Look + Do",
-    },
-    {
-      label: "Services",
-      href: "/services",
-      subtitle: "Look + Do",
-    },
-    {
-      label: "Join the Inner Circle",
-      href: "#",
-      isModal: true,
-      modalType: "innerCircle",
-      subtitle: "Look + Do",
-    },
-  ];
-
-  const allMenuItems = [...visibleMenuItems, ...moreMenuItems];
-
-  const getDropdownItems = (dropdownType) => {
-    switch (dropdownType) {
-      case "experiences":
-        return experiencesDropdown;
-      case "charity":
-        return charityDropdown;
-      case "creativeCircle":
-        return [
-          { label: "Speakers", href: "/speakers" },
-          { label: "Featured Artists", href: "/featured-artists" },
-          { label: "Designers", href: "/designers" },
-        ];
-      default:
-        return [];
-    }
-  };
+  const visibleMenuItems = navigationItems.length
+    ? navigationItems
+    : fallbackVisibleMenuItems;
 
   const getMegaMenuConfig = (menuKey) => {
-    // First item should NOT have a dropdown
     if (!menuKey) return null;
 
-    switch (menuKey) {
-      case "upcoming":
-        return {
-          sectionLabel: "Upcoming",
-          items: upcomingListEvents.map((event) => ({
-            label: event.title,
-            href: getUpcomingEventHref(event.title),
-            upcomingSlug: slugifyUpcomingEventTitle(event.title),
-            imageSrc: event.image,
-          })),
-          cta: {
-            title: "View All Upcoming",
-            description: "See the full calendar and join us at upcoming events.",
-            href: "/upcoming",
-          },
-          imageSrc: "/homepage/menu_dropdown/dropdown1.jpg",
-        };
-      case "charity":
-        return {
-          sectionLabel: "Charity",
-          items: charityDropdown,
-          cta: {
-            title: "View Charity Pages",
-            description: "Explore our charity initiatives and impact stories.",
-            href: charityDropdown[0]?.href || "#",
-          },
-          imageSrc: "/homepage/menu_dropdown/dropdown2.jpg",
-        };
-      case "experiences":
-        return {
-          sectionLabel: "Experiences",
-          items: experiencesDropdown,
-          cta: {
-            title: "View All Experiences",
-            description: "Explore immersive events and experiences.",
-            href: "/experiences",
-          },
-          imageSrc: "/homepage/menu_dropdown/dropdown3.jpg",
-        };
-      case "creativeCircle":
-        return {
-          sectionLabel: "Alumni",
-          items: [
-            {
-              label: "Speakers",
-              href: "/speakers",
-              imageSrc: "/homepage/menu_dropdown/Speakers.jpg",
-            },
-            {
-              label: "Featured Artists",
-              href: "/featured-artists",
-              imageSrc: "/homepage/menu_dropdown/Artists.jpg",
-            },
-            {
-              label: "Designers",
-              href: "/designers",
-              imageSrc: "/homepage/menu_dropdown/Designers.jpg",
-            },
-          ],
-          cta: {
-            title: "View Alumni",
-            description:
-              "Explore our speakers, featured artists, and designers.",
-            href: "/speakers",
-          },
-          imageSrc: "/homepage/menu_dropdown/Speakers.jpg",
-        };
-      default:
-        return null;
-    }
+    const item = visibleMenuItems.find((menuItem) => menuItem.key === menuKey);
+    if (!item?.hasDropdown || !item.children?.length) return null;
+
+    return {
+      sectionLabel: item.label,
+      items: item.children,
+      cta: {
+        title: `View ${item.label}`,
+        description: "",
+        href: item.href || item.children[0]?.href || "#",
+      },
+      imageSrc: item.imageSrc || item.children[0]?.imageSrc || null,
+    };
   };
 
   const handleModalClick = (modalType) => (e) => {
@@ -395,10 +365,15 @@ function Navbar() {
 
     const fetchNavigationPages = async () => {
       try {
-        const { getExperiencePages, getCharityPages } = await import("@/lib/strapi");
-        const [experiencePages, charityPages] = await Promise.all([
+        const {
+          getExperiencePages,
+          getCharityPages,
+          getNavigationMenu,
+        } = await import("@/lib/strapi");
+        const [experiencePages, charityPages, navigationMenu] = await Promise.all([
           getExperiencePages(),
           getCharityPages(),
+          getNavigationMenu(),
         ]);
 
         if (!isMounted) return;
@@ -417,6 +392,30 @@ function Navbar() {
             charityPages.map((page) => ({
               label: page.title,
               href: `/charity/${page.slug}`,
+            }))
+          );
+        }
+
+        const navigationItemsFromStrapi =
+          navigationMenu?.data?.attributes?.items || navigationMenu?.data?.items || [];
+
+        if (Array.isArray(navigationItemsFromStrapi) && navigationItemsFromStrapi.length > 0) {
+          setNavigationItems(
+            navigationItemsFromStrapi.map((item, index) => ({
+              label: item?.label || "",
+              href: item?.href || "#",
+              subtitle: item?.subtitle || "‎",
+              key: buildMenuKey(item, index),
+              hasDropdown: Array.isArray(item?.children) && item.children.length > 0,
+              imageSrc: getMediaUrl(item?.image),
+              children: (item?.children || []).map((child) => ({
+                label: child?.label || "",
+                href: resolveChildHref(item?.href || "", child),
+                slug: child?.slug || "",
+                modal: Boolean(child?.modal),
+                upcomingSlug: child?.modal ? normalizePathPart(child?.slug || child?.href || "") : undefined,
+                imageSrc: getMediaUrl(child?.image),
+              })),
             }))
           );
         }
@@ -455,8 +454,7 @@ function Navbar() {
     );
 
     const megaItems = item.key ? getMegaMenuConfig(item.key)?.items : null;
-    const mobileDropdownItems =
-      megaItems && megaItems.length ? megaItems : getDropdownItems(item.dropdownType);
+    const mobileDropdownItems = megaItems && megaItems.length ? megaItems : item.children || [];
 
     const RowHeader = ({ showChevron, onChevronClick }) => (
       <div className="py-4 flex items-start justify-between gap-4">
@@ -742,7 +740,7 @@ function Navbar() {
                     className="relative"
                     onMouseEnter={(e) => {
                       if (FORCE_DESKTOP_MEGA_OPEN) return;
-                      if (idx === 0) {
+                      if (!item.hasDropdown) {
                         setActiveDesktopMegaMenu(null);
                         return;
                       }
@@ -873,15 +871,7 @@ function Navbar() {
 
                     <div>
                       <div className="bg-[#0E0E0E] border border-white/10 rounded-[20px] 3xl:rounded-[40px] p-6 xxl:p-10 3xl:p-16 shadow-sm h-full flex flex-col w-[400px] xxl:w-[500px] 3xl:w-[700px]">
-                        <div className="text-[20px] xxl:text-[28px] 3xl:text-[48px] leading-[1.05] font-[700] text-white">
-                          {cfg.cta.title}
-                        </div>
-                        {cfg.sectionLabel !== "Alumni" && cfg.sectionLabel !== "Charity" && (
-                          <div className="mt-3 xxl:mt-5 3xl:mt-8 text-[16px] xxl:text-[20px] 3xl:text-[32px] text-white/80">
-                            {cfg.cta.description}
-                          </div>
-                        )}
-                        <div className="mt-5 xxl:mt-8 3xl:mt-12 flex-1 rounded-[24px] 3xl:rounded-[48px] overflow-hidden bg-[#1A1A1A]">
+                        <div className="flex-1 rounded-[24px] 3xl:rounded-[48px] overflow-hidden bg-[#1A1A1A]">
                           <img
                             src={previewImageSrc}
                             alt={`${cfg.sectionLabel} preview`}

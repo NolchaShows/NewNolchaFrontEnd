@@ -39,6 +39,32 @@ export async function fetchFromStrapi(endpoint, options = {}) {
 }
 
 /**
+ * Fetch navigation menu data from Strapi
+ * @returns {Promise<Object|null>} - The navigation menu data
+ */
+export async function getNavigationMenu() {
+  try {
+    const populateQuery = [
+      "populate[0]=items",
+      "populate[1]=items.image",
+      "populate[2]=items.children",
+      "populate[3]=items.children.image",
+    ].join("&");
+
+    const data = await fetchFromStrapi(`navigation-menu?${populateQuery}`);
+    if (!data?.data) {
+      return null;
+    }
+
+    const navigationMenu = data.data.attributes || data.data;
+    return { data: { attributes: navigationMenu } };
+  } catch (error) {
+    console.error("❌ Error fetching navigation menu:", error);
+    return null;
+  }
+}
+
+/**
  * Fetch upcoming page data from Strapi
  * @returns {Promise} - The upcoming page data
  */
