@@ -162,13 +162,11 @@ function Footer() {
                 Quick Links:
               </h3>
               <div className="flex flex-col gap-[12px] items-start font-normal leading-[1.5] opacity-80 text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px]">
-                <Link href="/btc-vegas" className="hover:text-white transition-colors">BTC Vegas</Link>
-                <Link href="/upcoming" className="hover:text-white transition-colors">Upcoming</Link>
-                <Link href="/charity_partners" className="hover:text-white transition-colors">Charity</Link>
-                <Link href="/experiences" className="hover:text-white transition-colors">Experiences</Link>
-                <Link href="/press" className="hover:text-white transition-colors">Media</Link>
-                <Link href="/creative-circle" className="hover:text-white transition-colors">Creative Circle</Link>
-                <Link href="/white-label" className="hover:text-white transition-colors">White Label Events</Link>
+                <Link href="/about" className="hover:text-white transition-colors">White Label</Link>
+                <Link href="/press" className="hover:text-white transition-colors">Press</Link>
+                <Link href="/speakers" className="hover:text-white transition-colors">Speakers</Link>
+                <Link href="/featured-artists" className="hover:text-white transition-colors">Featured Artists</Link>
+                <Link href="/designers" className="hover:text-white transition-colors">Designers</Link>
               </div>
             </div>
 
@@ -180,7 +178,6 @@ function Footer() {
               <div className="flex flex-col gap-[12px] items-start font-normal leading-[1.5] opacity-80 text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px]">
                 <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
                 <Link href="/terms-of-use" className="hover:text-white transition-colors">Terms of Use</Link>
-                <Link href="/cookie-policy" className="hover:text-white transition-colors">cookies</Link>
               </div>
             </div>
 
@@ -208,12 +205,6 @@ function Footer() {
             <p className="font-normal leading-[1.5] text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px]">
               Copyright © 2026 Nolcha, All rights reserved
             </p>
-            <Link
-              href="/cookie-policy"
-              className="font-normal leading-[1.5] text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px] hover:text-white transition-colors"
-            >
-              Manage Cookie Preferences
-            </Link>
           </div>
         </div>
       </div>
