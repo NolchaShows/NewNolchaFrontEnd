@@ -10,7 +10,7 @@ export default function AboutHeroVideo({ videoSrc }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="h-screen w-full"
+      className="w-full h-auto aspect-video lg:h-screen lg:aspect-auto"
     >
       <VideoHeroSection
         videoSrc={videoSrc}

@@ -59,7 +59,7 @@ export default function OurPressSection({
                 {featureTitle}
               </Link>
               <Link href={featureLink} aria-label="Open press post">
-                <svg className="arrow-link__svg h-12 w-12 object-contain text-[#1D1D1D]" width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.544922" y="0.5" width="10.4411" height="1.59609" fill="currentColor"></rect><rect width="10.4411" height="1.59609" transform="matrix(-6.40025e-08 1 1 6.40025e-08 9.4043 0.514771)" fill="currentColor"></rect><rect y="10.2979" width="13.7662" height="1.59609" transform="rotate(-45 0 10.2979)" fill="currentColor"></rect></svg>
+                <svg className="arrow-link__svg h-8 w-8 object-contain text-[#1D1D1D] lg:h-12 lg:w-12" width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.544922" y="0.5" width="10.4411" height="1.59609" fill="currentColor"></rect><rect width="10.4411" height="1.59609" transform="matrix(-6.40025e-08 1 1 6.40025e-08 9.4043 0.514771)" fill="currentColor"></rect><rect y="10.2979" width="13.7662" height="1.59609" transform="rotate(-45 0 10.2979)" fill="currentColor"></rect></svg>
               </Link>
             </div>
             {featureSourceLogo ? (
