@@ -22,13 +22,13 @@ export default function SpeakersPageClient({ page }: { page: any }) {
     <SmoothScroll>
       <div className="min-h-screen bg-[#f0eee6]">
         {heroVideo ? (
-          <div className="px-5 lg:px-11">
+          <div className="lg:px-11">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="h-screen w-full"
+              className="w-full h-auto aspect-video lg:h-screen lg:aspect-auto"
             >
               <VideoHeroSection
                 videoSrc={heroVideo}
@@ -43,7 +43,7 @@ export default function SpeakersPageClient({ page }: { page: any }) {
                 autoPlay={true}
                 muted={true}
                 loop={true}
-                className="!h-full"
+                className="!h-full !w-full"
               />
             </motion.div>
           </div>
