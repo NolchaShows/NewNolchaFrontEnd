@@ -6,6 +6,8 @@ const isExternalHref = (href) =>
 
 function Card({ newsPaper, image, title, link, variant = "legacy", dateLabel = "" }) {
   if (variant === "modern") {
+    const linkProps = isExternalHref(link) ? { target: "_blank", rel: "noreferrer" } : {};
+
     return (
       <article className="relative isolate flex h-full min-h-[420px] w-full flex-col overflow-hidden lg:min-h-[560px] xl:min-h-[590px] 2xl:min-h-[640px]">
         {/* Full card surface (border-to-border) so blur covers the entire box, not only image + text */}
@@ -29,21 +31,15 @@ function Card({ newsPaper, image, title, link, variant = "legacy", dateLabel = "
             </h3>
 
             <div className="mt-6 flex shrink-0 items-center gap-4 text-[10px] uppercase text-[#1A1A1A] lg:text-[16px]">
-              <a
-                href={link}
-                {...(isExternalHref(link) ? { target: "_blank", rel: "noreferrer" } : {})}
-                className="hover:opacity-75 transition-opacity"
-              >
+              <span className="hover:opacity-75 transition-opacity">
                 View Article
-              </a>
-              <a
-                href={link}
-                {...(isExternalHref(link) ? { target: "_blank", rel: "noreferrer" } : {})}
+              </span>
+              <span
                 className="inline-flex items-center hover:opacity-75 transition-opacity"
-                aria-label={`Open ${title}`}
+                aria-hidden
               >
                 <svg class="arrow-link__svg" width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.544922" y="0.5" width="10.4411" height="1.59609" fill="currentColor"></rect><rect width="10.4411" height="1.59609" transform="matrix(-6.40025e-08 1 1 6.40025e-08 9.4043 0.514771)" fill="currentColor"></rect><rect y="10.2979" width="13.7662" height="1.59609" transform="rotate(-45 0 10.2979)" fill="currentColor"></rect></svg>
-              </a>
+              </span>
             </div>
 
             <div className="min-h-0 flex-1" aria-hidden />
@@ -51,14 +47,19 @@ function Card({ newsPaper, image, title, link, variant = "legacy", dateLabel = "
         </div>
 
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-white/18 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+          <span className="inline-flex items-center justify-center bg-white/80 px-5 py-2 text-[18px] uppercase text-[#2A2A2A] transition hover:bg-white">
+            View Article
+          </span>
+        </div>
+
+        {link ? (
           <a
             href={link}
-            {...(isExternalHref(link) ? { target: "_blank", rel: "noreferrer" } : {})}
-            className="pointer-events-auto inline-flex items-center justify-center bg-white/80 px-5 py-2 text-[18px] uppercase text-[#2A2A2A] transition hover:bg-white"
-          >
-            View Article
-          </a>
-        </div>
+            {...linkProps}
+            aria-label={`Open ${title || "article"}`}
+            className="absolute inset-0 z-20"
+          />
+        ) : null}
       </article>
     );
   }

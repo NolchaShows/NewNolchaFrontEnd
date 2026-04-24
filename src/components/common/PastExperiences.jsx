@@ -146,14 +146,18 @@ const PastExperiences = ({
                       </div>
                     </div>
                     {href ? (
-                      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                      <>
                         <a
                           href={href}
-                          className="pointer-events-auto inline-flex items-center justify-center bg-white/80 px-5 py-2 text-[18px] uppercase text-[#2A2A2A] transition hover:bg-white"
-                        >
-                          View
-                        </a>
-                      </div>
+                          aria-label={`Open ${text}`}
+                          className="absolute inset-0 z-20"
+                        />
+                        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                          <span className="inline-flex items-center justify-center bg-white/80 px-5 py-2 text-[18px] uppercase text-[#2A2A2A] transition hover:bg-white">
+                            View
+                          </span>
+                        </div>
+                      </>
                     ) : null}
                   </div>
                 </div>
@@ -208,14 +212,18 @@ const PastExperiences = ({
                       </div>
                     </div>
                     {href ? (
-                      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                      <>
                         <a
                           href={href}
-                          className="pointer-events-auto inline-flex items-center justify-center bg-white/80 px-5 py-2 text-[18px] uppercase text-[#2A2A2A] transition hover:bg-white"
-                        >
-                          View
-                        </a>
-                      </div>
+                          aria-label={`Open ${text}`}
+                          className="absolute inset-0 z-20"
+                        />
+                        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                          <span className="inline-flex items-center justify-center bg-white/80 px-5 py-2 text-[18px] uppercase text-[#2A2A2A] transition hover:bg-white">
+                            View
+                          </span>
+                        </div>
+                      </>
                     ) : null}
                   </div>
                 </div>
