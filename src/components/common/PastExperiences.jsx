@@ -62,8 +62,8 @@ const PastExperiences = ({
   const CARD_GUTTER = screenSize === "3xl" ? 24 : screenSize === "xxl" ? 20 : 16;
 
   const nextSlide = () => {
-    if (currentIndex + itemsPerSlide < experiences.length) {
-      setCurrentIndex((prev) => prev + itemsPerSlide);
+    if (currentIndex + 1 < experiences.length) {
+      setCurrentIndex((prev) => prev + 1);
     } else {
       // Loop back to start
       setCurrentIndex(0);
@@ -71,11 +71,11 @@ const PastExperiences = ({
   };
 
   const prevSlide = () => {
-    if (currentIndex - itemsPerSlide >= 0) {
-      setCurrentIndex((prev) => prev - itemsPerSlide);
+    if (currentIndex - 1 >= 0) {
+      setCurrentIndex((prev) => prev - 1);
     } else {
       // Go to end
-      setCurrentIndex(Math.max(0, experiences.length - itemsPerSlide));
+      setCurrentIndex(Math.max(0, experiences.length - 1));
     }
   };
 
@@ -132,7 +132,7 @@ const PastExperiences = ({
                   key={idx}
                   className="group w-[85vw] snap-center flex-shrink-0 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
                 >
-                  <div className="relative w-full rounded-[20px] overflow-hidden h-[300px]">
+                  <div className="relative w-full rounded-[20px] overflow-hidden h-[55vh] min-h-[360px] max-h-[560px]">
                     <div className="press-card-blur-target h-full w-full transition-[filter] duration-300 ease-out will-change-[filter]">
                       <img
                         src={imageUrl}
@@ -140,7 +140,7 @@ const PastExperiences = ({
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                        <h3 className="text-white text-[20px] font-medium text-left">
+                        <h3 className="text-white text-[20px] sm:text-[22px] font-medium text-left">
                           {text}
                         </h3>
                       </div>
@@ -176,8 +176,9 @@ const PastExperiences = ({
             }}
             transition={{
               type: "spring",
-              stiffness: 300,
-              damping: 30,
+              stiffness: 120,
+              damping: 24,
+              mass: 0.9,
             }}
           >
             {experiences.map((experience, idx) => {
