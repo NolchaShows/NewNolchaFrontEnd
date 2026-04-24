@@ -153,12 +153,12 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-start justify-center z-[100] pt-[60px] lg:pt-[140px] pb-10">
+    <div className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-start justify-center z-[100] pt-0 sm:pt-[60px] lg:pt-[140px] pb-0 sm:pb-10 px-0 sm:px-6">
       {/* Outer Black Box Wrapper - for close button positioning */}
-      <div className="relative max-w-[1240px] w-full max-h-[100vh]">
+      <div className="relative max-w-[1240px] w-full h-full sm:h-auto">
 
         {/* Outer Black Box */}
-        <div className="bg-black rounded-[20px] p-10 w-full max-h-[88vh] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+        <div className="bg-black rounded-none sm:rounded-[20px] p-5 sm:p-10 w-full h-full sm:max-h-[88vh] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
           <button
             onClick={handleClose}
             className="sticky top-0 ml-auto mb-4 z-30 p-2 cursor-pointer bg-black rounded-full shadow-lg hover:bg-[#333] hover:scale-105 transition-all duration-200 border border-white/30 flex items-center justify-center"
@@ -185,13 +185,13 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
           >
 
             {/* Share Container */}
-            <div className="absolute top-5 right-5 z-10">
+            <div className="absolute top-3 sm:top-5 right-3 sm:right-5 z-20">
               <button
                 onClick={toggleShareDropdown}
-                className={`bg-[#333] border-none w-10 h-10 rounded-full cursor-pointer shadow-md flex items-center justify-center text-white transition-all duration-300 hover:bg-[#444] ${isShareOpen ? "text-primary" : ""}`}
+                className={`bg-[#333] border-none w-8 h-8 sm:w-10 sm:h-10 rounded-full cursor-pointer shadow-md flex items-center justify-center text-white transition-all duration-300 hover:bg-[#444] ${isShareOpen ? "text-primary" : ""}`}
                 aria-label="Share"
               >
-                <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                <svg viewBox="0 0 24 24" className="w-5 h-5 sm:w-6 sm:h-6 fill-current">
                   <path fill="currentColor" d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"></path>
                 </svg>
               </button>
@@ -257,47 +257,47 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
             </div>
 
             {/* Content */}
-            <div className="p-8 relative">
+            <div className="p-5 sm:p-8 relative">
               {/* Logo - Positioned absolutely */}
               {logoUrl && (
-                <div className="absolute top-[-36px] left-8 z-10">
+                <div className="absolute top-[-14px] lg:top-[-25px] xl:top-[-35px] left-5 sm:left-8 z-10">
                   <img
                     src={logoUrl}
                     alt={`${eventTitle} Logo`}
-                    className="max-w-[280px] h-auto"
+                    className="max-w-[150px] sm:max-w-[220px] lg:max-w-[280px] h-auto"
                   />
                 </div>
               )}
 
               {/* Main Content Grid */}
-              <div className="grid grid-rows-auto gap-0">
+              <div className="grid grid-rows-auto gap-0 mt-8 sm:mt-0">
                 {/* Top Row: Text Content + Main Image */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-0 items-start md:items-end">
                   {/* Text Content */}
-                  <div className={`pr-5 self-start ${logoUrl ? "mt-9" : "mt-0"}`}>
-                    <div className="mb-8">
-                      <p className="text-white text-base mb-8">
+                  <div className={`pr-0 md:pr-5 self-start ${logoUrl ? "mt-3" : "mt-0"}`}>
+                    <div className="mb-6 sm:mb-8">
+                      <p className="text-white text-sm sm:text-base mb-4 sm:mb-8">
                         <span className="text-primary font-bold">DATES: </span>
                         {eventDate}
                       </p>
                     </div>
 
                     <div className="mb-4">
-                      <p className="text-white">
+                      <p className="text-white text-sm sm:text-base">
                         <span className="text-primary font-bold">VENUE: </span>
                         {venue}
                       </p>
                     </div>
 
                     <div className="mb-4">
-                      <p className="text-white">
+                      <p className="text-white text-sm sm:text-base">
                         <span className="text-primary font-bold">WHAT TO EXPECT: </span>
                         {whatToExpect}
                       </p>
                     </div>
 
-                    <div className="mb-16">
-                      <p className="text-white">
+                    <div className="mb-8 sm:mb-16">
+                      <p className="text-white text-sm sm:text-base">
                         RSVP <a href={rsvpLink} target="_blank" rel="noopener noreferrer" className="text-primary underline">Link Here</a>.
                       </p>
                     </div>
@@ -307,7 +307,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                         href="mailto:partnerships@nolcha.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block bg-primary text-black font-bold text-base px-6 py-3 rounded-lg no-underline text-center transition-opacity hover:opacity-90 cursor-pointer"
+                        className="inline-block w-full sm:w-auto bg-primary text-black font-bold text-sm sm:text-base px-6 py-3 rounded-lg no-underline text-center transition-opacity hover:opacity-90 cursor-pointer"
                       >
                         REQUEST PROSPECTUS
                       </a>
@@ -315,7 +315,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                   </div>
 
                   {/* Main Image */}
-                  <div className="h-[400px] md:h-[500px] relative overflow-hidden rounded-none">
+                  <div className="h-[250px] sm:h-[400px] md:h-[500px] relative overflow-hidden rounded-lg sm:rounded-none">
                     <img
                       src={mainImage}
                       alt={eventTitle}

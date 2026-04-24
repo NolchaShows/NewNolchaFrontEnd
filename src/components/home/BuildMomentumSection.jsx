@@ -125,11 +125,11 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
         </div>
 
         {/* Partner Logos */}
-        <div className="flex items-center justify-between gap-4 lg:gap-8 mb-6 lg:mb-12 w-full overflow-x-auto scrollbar-hide">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between gap-10 lg:gap-8 mb-6 lg:mb-12 w-full">
           {partnerLogos.map((partner, index) => (
             <motion.div
               key={index}
-              className="flex flex-col items-center gap-4 flex-1 min-w-[100px]"
+              className="flex flex-col items-start lg:items-center gap-2 sm:gap-3 lg:gap-4 min-w-0 lg:flex-1 lg:min-w-[100px]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -139,21 +139,21 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
                 delay: index * 0.1 
               }}
             >
-              <div className="h-8 lg:h-12 flex items-center justify-center w-full">
+              <div className="h-10 lg:h-12 flex items-center justify-start lg:justify-center w-full">
                 {partner.logo ? (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="max-h-full max-w-[80px] sm:max-w-[100px] lg:max-w-full w-auto object-contain filter grayscale brightness-0 opacity-80"
+                    className="h-full w-auto object-contain filter grayscale brightness-0 opacity-80"
                   />
                 ) : (
-                  <span className="text-[10px] lg:text-[14px] font-bold uppercase tracking-wider whitespace-nowrap">
+                  <span className="text-[10px] sm:text-[11px] lg:text-[14px] font-bold uppercase tracking-wider text-left lg:text-center leading-tight">
                     {partner.name}
                   </span>
                 )}
               </div>
               {partner.status && (
-                <span className="text-[10px] lg:text-[12px] font-medium text-[#1A1A1A]/60 uppercase whitespace-nowrap">
+                <span className="text-[10px] lg:text-[12px] font-medium text-[#1A1A1A]/60 uppercase text-left lg:text-center leading-tight">
                   {partner.status}
                 </span>
               )}
