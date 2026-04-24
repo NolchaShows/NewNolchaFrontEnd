@@ -40,13 +40,19 @@ const isAbsoluteHref = (href = "") =>
 
 const normalizePathPart = (value = "") => value.replace(/^\/+|\/+$/g, "");
 
+const normalizeMenuHref = (href = "") => {
+  if (!href || href === "#") return href || "#";
+  if (isAbsoluteHref(href)) return href;
+  return `/${normalizePathPart(href)}`;
+};
+
 const resolveChildHref = (parentHref = "", child = {}) => {
   const childHref = child?.href || "";
   const childSlug = child?.slug || "";
   const isModal = Boolean(child?.modal);
 
-  if (childHref && isAbsoluteHref(childHref)) {
-    return childHref;
+  if (childHref && !isModal) {
+    return normalizeMenuHref(childHref);
   }
 
   const relativeValue = childSlug || childHref;
@@ -61,7 +67,7 @@ const resolveChildHref = (parentHref = "", child = {}) => {
   const cleanParent = normalizePathPart(parentHref);
   const cleanChild = normalizePathPart(relativeValue);
 
-  if (!cleanParent) {
+  if (!cleanParent || cleanParent === "alumni") {
     return `/${cleanChild}`;
   }
 
@@ -408,7 +414,7 @@ function Navbar() {
           setNavigationItems(
             navigationItemsFromStrapi.map((item, index) => ({
               label: item?.label || "",
-              href: item?.href || "#",
+              href: normalizeMenuHref(item?.href),
               subtitle: item?.subtitle || "‎",
               key: buildMenuKey(item, index),
               hasDropdown: Array.isArray(item?.children) && item.children.length > 0,
