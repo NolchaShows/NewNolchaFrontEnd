@@ -105,7 +105,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
       <div className="relative z-10 w-full flex flex-col lg:flex-row lg:items-center gap-[26px] lg:gap-[68px] 2xl:gap-[120px]">
         {/* Left Side */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center text-center md:text-left">
-          <SectionTitle className="text-left text-white" >{dynamicHeading}</SectionTitle>
+          <SectionTitle className="text-white mb-[20px] lg:mb-[30px] 2xl:mb-[40px] xxl:mb-[50px] 3xl:mb-[80px]" >{dynamicHeading}</SectionTitle>
 
           {/* Service Buttons Grid */}
           {/* <div className="flex flex-wrap gap-[7px] lg:gap-[10px] 2xl:gap-[18px] title-spacing">
