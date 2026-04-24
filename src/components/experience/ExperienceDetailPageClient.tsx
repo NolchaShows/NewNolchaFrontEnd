@@ -34,7 +34,7 @@ export default function ExperienceDetailPageClient({ page }: { page: any }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="h-screen w-full"
+            className="w-full h-auto aspect-video lg:h-screen lg:aspect-auto"
           >
             <VideoHeroSection
               videoSrc={heroVideo}
@@ -49,43 +49,43 @@ export default function ExperienceDetailPageClient({ page }: { page: any }) {
               autoPlay={true}
               muted={true}
               loop={true}
-              className="!h-full"
+              className="!h-full !w-full"
             />
           </motion.div>
         ) : null}
 
         <motion.section
-          className="py-10 lg:py-20"
+          className="py-8 lg:py-20"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <h1 className="mb-5 text-5xl uppercase leading-none tracking-tight text-[#1A1A1A] lg:text-[100px]">
+          <h1 className="mb-6 text-[34px] uppercase leading-[0.95] tracking-tight text-[#1A1A1A] sm:text-[42px] lg:mb-5 lg:text-[100px]">
             {title}
           </h1>
 
-          <div className="flex flex-col gap-y-6">
+          <div className="flex flex-col gap-y-5 lg:gap-y-6">
             {detailRows.map((item, index) => (
               <motion.div
                 key={`${item.label}-${index}`}
-                className="grid grid-cols-[120px_1fr] items-start gap-x-10 md:grid-cols-[200px_1fr]"
+                className="grid grid-cols-1 gap-y-2 md:grid-cols-[160px_1fr] md:gap-x-8 md:gap-y-0 lg:grid-cols-[200px_1fr] lg:gap-x-10"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <span className="text-[16px] font-bold uppercase text-[#1d1d1d]">
+                <span className="text-[13px] font-bold uppercase tracking-[0.06em] text-[#1d1d1d] sm:text-[14px] md:text-[16px] md:tracking-normal">
                   {item.label}
                 </span>
 
                 <div className="flex flex-col gap-y-3">
                   {item.tags?.length ? (
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2.5 lg:gap-3">
                       {item.tags.map((tag, tagIndex) => (
                         <span
                           key={`${tag}-${tagIndex}`}
-                          className={`border border-black px-5 py-1.5 text-[12px] uppercase ${
+                          className={`border border-black px-3 py-1 text-[11px] uppercase sm:px-4 sm:py-1.5 sm:text-[12px] ${
                             tagIndex !== 0 ? "rounded-full" : ""
                           }`}
                         >
@@ -97,7 +97,7 @@ export default function ExperienceDetailPageClient({ page }: { page: any }) {
                     <div className="flex flex-col gap-y-1.5">
                       {item.title ? (
                         <span
-                          className={`text-[15px] font-bold uppercase tracking-widest lg:text-[16px] ${
+                          className={`text-[13px] font-bold uppercase tracking-[0.12em] sm:text-[14px] lg:text-[16px] ${
                             item.description ? "text-[#818181]" : "text-[#1d1d1d]"
                           }`}
                         >
@@ -106,7 +106,7 @@ export default function ExperienceDetailPageClient({ page }: { page: any }) {
                       ) : null}
 
                       {item.description ? (
-                        <p className="max-w-[900px] text-[15px] text-[#4a4a4a] lg:text-[16px]">
+                        <p className="max-w-[900px] text-[14px] leading-[1.45] text-[#4a4a4a] lg:text-[16px]">
                           {item.description}
                         </p>
                       ) : null}
