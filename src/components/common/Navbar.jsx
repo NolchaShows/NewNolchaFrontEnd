@@ -92,6 +92,11 @@ function Navbar() {
 
   const router = useRouter();
   const pathname = usePathname();
+  const shouldUseBlackDesktopHeader =
+    pathname?.startsWith("/about") ||
+    pathname?.startsWith("/charity") ||
+    pathname?.startsWith("/experiences") ||
+    pathname?.startsWith("/speakers");
   const defaultExperiencesDropdown = [
     {
       label: "VV Racing with Jack Butcher",
@@ -559,7 +564,9 @@ function Navbar() {
         ref={desktopNavbarRef}
         className={[
           "sticky top-0 left-0 right-0 w-full bg-black",
-          "lg:fixed lg:bg-transparent lg:hover:bg-black",
+          shouldUseBlackDesktopHeader
+            ? "lg:fixed lg:bg-black"
+            : "lg:fixed lg:bg-transparent lg:hover:bg-black",
           "transition-colors duration-300 z-40 group",
           "lg:transition-transform lg:duration-300 lg:ease-[cubic-bezier(0.22,1,0.36,1)]",
           isDesktopHidden ? "lg:-translate-y-full" : "lg:translate-y-0",
@@ -573,7 +580,9 @@ function Navbar() {
           // Only close on mouse leave if we're NOT scrolled down
           if (window.scrollY <= 100) {
             setIsDesktopSecondRowOpen(false);
-            desktopNavbarRef.current?.classList.remove('lg:!bg-black');
+            if (!shouldUseBlackDesktopHeader) {
+              desktopNavbarRef.current?.classList.remove('lg:!bg-black');
+            }
           }
           setActiveDesktopMegaMenu(null);
           setMegaDropdownLeft(null);
