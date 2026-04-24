@@ -54,6 +54,7 @@ const PastExperiences = ({
 
   const itemsPerSlide = getItemsPerSlide();
   const isDesktop = screenSize === "lg";
+  const isMobile = screenSize === "sm";
   // Card sizing (requested)
   const CARD_W = screenSize === "3xl" ? 500 : screenSize === "xxl" ? 420 : 345;
   const CARD_H = screenSize === "3xl" ? 580 : screenSize === "xxl" ? 480 : 397;
@@ -105,69 +106,123 @@ const PastExperiences = ({
         <SectionTitle disableTitleSpacing className="text-white">Past experience</SectionTitle>
 
         {/* Navigation Arrows - Desktop Only */}
-        <ArrowNavButtons onLeft={prevSlide} onRight={nextSlide} />
+        {!isMobile ? <ArrowNavButtons onLeft={prevSlide} onRight={nextSlide} /> : null}
       </div>
 
-      <div className="relative overflow-hidden px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]">
-        <motion.div
-          className="flex cursor-grab active:cursor-grabbing"
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2}
-          onDragEnd={handleDragEnd}
-          animate={{
-            x: isDesktop
-              ? -currentIndex * (CARD_W + CARD_GUTTER)
-              : `-${(currentIndex / itemsPerSlide) * 100}%`,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 30,
-          }}
-        >
-          {experiences.map((experience, idx) => {
-            const imageUrl = typeof experience === 'string' ? experience :
-              experience.image?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${experience.image.url}` : experience.image || experience;
-            const text = experience.text || experience.title || `Experience ${idx + 1}`;
-            const href =
-              typeof experience === "object" && experience?.href ? experience.href : null;
+      {isMobile ? (
+        <div className="relative overflow-hidden px-0">
+          <div
+            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+            style={{
+              gap: `${CARD_GUTTER}px`,
+              WebkitOverflowScrolling: "touch",
+              paddingInline: "7.5vw",
+              scrollPaddingInline: "7.5vw",
+            }}
+          >
+            {experiences.map((experience, idx) => {
+              const imageUrl = typeof experience === "string" ? experience :
+                experience.image?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${experience.image.url}` : experience.image || experience;
+              const text = experience.text || experience.title || `Experience ${idx + 1}`;
+              const href =
+                typeof experience === "object" && experience?.href ? experience.href : null;
 
-            return (
-              <div
-                key={idx}
-                className="group w-full sm:w-1/2 lg:w-[345px] flex-shrink-0 mx-2 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
-              >
-                <div className="relative w-full lg:w-[345px] rounded-[20px] overflow-hidden h-[300px] lg:h-[397px]">
-                  <div className="press-card-blur-target h-full w-full transition-[filter] duration-300 ease-out will-change-[filter]">
-                    <img
-                      src={imageUrl}
-                      alt={text}
-                      className="w-full h-full object-cover"
-                    />
-                    {/* Text Overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 lg:p-6 2xl:p-8">
-                      <h3 className="text-white text-[20px] lg:text-[24px] 2xl:text-[42px] font-medium text-left">
-                        {text}
-                      </h3>
+              return (
+                <div
+                  key={idx}
+                  className="group w-[85vw] snap-center flex-shrink-0 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
+                >
+                  <div className="relative w-full rounded-[20px] overflow-hidden h-[300px]">
+                    <div className="press-card-blur-target h-full w-full transition-[filter] duration-300 ease-out will-change-[filter]">
+                      <img
+                        src={imageUrl}
+                        alt={text}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                        <h3 className="text-white text-[20px] font-medium text-left">
+                          {text}
+                        </h3>
+                      </div>
                     </div>
+                    {href ? (
+                      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                        <a
+                          href={href}
+                          className="pointer-events-auto inline-flex items-center justify-center bg-white/80 px-5 py-2 text-[18px] uppercase text-[#2A2A2A] transition hover:bg-white"
+                        >
+                          View
+                        </a>
+                      </div>
+                    ) : null}
                   </div>
-                  {href ? (
-                    <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
-                      <a
-                        href={href}
-                        className="pointer-events-auto inline-flex items-center justify-center bg-white/80 px-5 py-2 text-[18px] uppercase text-[#2A2A2A] transition hover:bg-white"
-                      >
-                        View
-                      </a>
-                    </div>
-                  ) : null}
                 </div>
-              </div>
-            );
-          })}
-        </motion.div>
-      </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <div className="relative overflow-hidden px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]">
+          <motion.div
+            className="flex cursor-grab active:cursor-grabbing"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+            animate={{
+              x: isDesktop
+                ? -currentIndex * (CARD_W + CARD_GUTTER)
+                : `-${(currentIndex / itemsPerSlide) * 100}%`,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+            }}
+          >
+            {experiences.map((experience, idx) => {
+              const imageUrl = typeof experience === 'string' ? experience :
+                experience.image?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${experience.image.url}` : experience.image || experience;
+              const text = experience.text || experience.title || `Experience ${idx + 1}`;
+              const href =
+                typeof experience === "object" && experience?.href ? experience.href : null;
+
+              return (
+                <div
+                  key={idx}
+                  className="group w-full sm:w-1/2 lg:w-[345px] flex-shrink-0 mx-2 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
+                >
+                  <div className="relative w-full lg:w-[345px] rounded-[20px] overflow-hidden h-[300px] lg:h-[397px]">
+                    <div className="press-card-blur-target h-full w-full transition-[filter] duration-300 ease-out will-change-[filter]">
+                      <img
+                        src={imageUrl}
+                        alt={text}
+                        className="w-full h-full object-cover"
+                      />
+                      {/* Text Overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 lg:p-6 2xl:p-8">
+                        <h3 className="text-white text-[20px] lg:text-[24px] 2xl:text-[42px] font-medium text-left">
+                          {text}
+                        </h3>
+                      </div>
+                    </div>
+                    {href ? (
+                      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+                        <a
+                          href={href}
+                          className="pointer-events-auto inline-flex items-center justify-center bg-white/80 px-5 py-2 text-[18px] uppercase text-[#2A2A2A] transition hover:bg-white"
+                        >
+                          View
+                        </a>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              );
+            })}
+          </motion.div>
+        </div>
+      )}
 
       {/* Mobile arrows */}
       {/* {experiences.length > 1 && (

@@ -66,7 +66,7 @@ export default function LogoSlider({ logoSliderData, loading }) {
       <div className="w-full">
         <div className="flex h-[60px] md:h-[116px] 2xl:h-[130px] items-center">
           {/* Fixed "AS SEEN IN" section */}
-          <div className="flex-shrink-0 bg-[#141414] h-full flex items-center justify-center px-8 min-w-[180px] md:min-w-[350px] 2xl:min-w-[400px] border-y border-white">
+          <div className="flex-shrink-0 bg-[#141414] h-full flex items-center justify-center lg:px-8 px-4 min-w-[100px] md:min-w-[350px] 2xl:min-w-[400px] border-y border-white">
             <h3 className="font-neue text-[16px] lg:text-[26px] font-bold text-white tracking-wide 2xl:text-[36px]">
               {title}
             </h3>

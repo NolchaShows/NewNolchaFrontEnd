@@ -67,6 +67,7 @@ const TweetCarousel = ({
 
   const itemsPerView = getItemsPerView();
   const gap = windowWidth < 768 ? 24 : windowWidth < 1024 ? 32 : 40;
+  const isMobile = windowWidth < 768;
 
   return (
     <div className={`py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-black ${padding} relative`}>
@@ -74,26 +75,27 @@ const TweetCarousel = ({
         <SectionTitle disableTitleSpacing className="text-white">{carouselTitle}</SectionTitle>
 
         {/* Navigation Arrows */}
-        <ArrowNavButtons onLeft={prevPost} onRight={nextPost} />
+        {!isMobile ? <ArrowNavButtons onLeft={prevPost} onRight={nextPost} /> : null}
       </div>
 
       <div className="relative">
-        <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]">
-          <div className="overflow-visible">
-            <motion.div
-              className="flex"
-              style={{ gap: `${gap}px` }}
-              animate={{
-                x: `calc(-${currentPostIndex * (100 / itemsPerView)}% - ${currentPostIndex * (gap / itemsPerView)}px)`,
+        <div className="px-0 lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]">
+          {isMobile ? (
+            <div
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+              style={{
+                gap: `${gap}px`,
+                WebkitOverflowScrolling: "touch",
+                paddingInline: "7.5vw",
+                scrollPaddingInline: "7.5vw",
               }}
-              transition={{ type: "spring", stiffness: 150, damping: 25 }}
             >
               {carouselItems.map((item, idx) => {
                 const tweetId = typeof item === 'string' ? item : item.tweetId || item.id;
                 return (
                   <div
                     key={`${tweetId}-${idx}`}
-                    className="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-26.666px)] flex-shrink-0"
+                    className="w-[85vw] snap-center flex-shrink-0"
                   >
                     <div className="bg-[#111] rounded-3xl p-4 min-h-[450px] lg:min-h-[550px] flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500">
                       {!isLoaded && (
@@ -110,8 +112,42 @@ const TweetCarousel = ({
                   </div>
                 );
               })}
-            </motion.div>
-          </div>
+            </div>
+          ) : (
+            <div className="overflow-visible">
+              <motion.div
+                className="flex"
+                style={{ gap: `${gap}px` }}
+                animate={{
+                  x: `calc(-${currentPostIndex * (100 / itemsPerView)}% - ${currentPostIndex * (gap / itemsPerView)}px)`,
+                }}
+                transition={{ type: "spring", stiffness: 150, damping: 25 }}
+              >
+                {carouselItems.map((item, idx) => {
+                  const tweetId = typeof item === 'string' ? item : item.tweetId || item.id;
+                  return (
+                    <div
+                      key={`${tweetId}-${idx}`}
+                      className="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-26.666px)] flex-shrink-0"
+                    >
+                      <div className="bg-[#111] rounded-3xl p-4 min-h-[450px] lg:min-h-[550px] flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500">
+                        {!isLoaded && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-10 h-10 border-4 border-white/10 border-t-white rounded-full animate-spin"></div>
+                          </div>
+                        )}
+                        <div className="w-full h-full overflow-y-auto scrollbar-hide">
+                          <blockquote className="twitter-tweet" data-theme="dark" data-chrome="noheader nofooter noborders transparent">
+                            <a href={`https://twitter.com/x/status/${tweetId}`}></a>
+                          </blockquote>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </motion.div>
+            </div>
+          )}
         </div>
       </div>
     </div>

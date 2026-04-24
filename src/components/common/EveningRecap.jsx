@@ -62,7 +62,7 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
     return (
         <div className="page-container-fluid bg-black !pb-0">
             {title ? (
-                <SectionTitle className="text-white text-center">{title}</SectionTitle>
+                <SectionTitle className="text-white px-5 lg:px-0 text-left lg:text-center">{title}</SectionTitle>
             ) : null}
 
             {/* Video Container */}
@@ -93,7 +93,10 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
                             transition={{ duration: 0.5, ease: "easeInOut" }}
                             src={videoUrlToUse}
                             className="w-full h-[400px] lg:h-[700px] 2xl:h-[900px] xxl:h-[1200px] 3xl:h-[1800px] object-cover"
+                            autoPlay
+                            muted
                             controls
+                            loop
                             playsInline
                         >
                             Your browser does not support the video tag.
