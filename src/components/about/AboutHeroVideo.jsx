@@ -24,6 +24,7 @@ export default function AboutHeroVideo({ videoSrc }) {
         showControls={true}
         autoPlay={true}
         muted={true}
+        loop={true}
         className="!h-full !w-full"
       />
     </motion.div>

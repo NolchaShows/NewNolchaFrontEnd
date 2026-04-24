@@ -53,7 +53,7 @@ export const GET_ABOUT_PAGE = gql`
         description
         ctaText
         ctaUrl
-        logos {
+        logos(pagination: { limit: 100 }) {
           ...AboutMediaFields
         }
       }

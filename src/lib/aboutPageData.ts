@@ -233,7 +233,7 @@ function mapRest(json: any) {
 async function fetchAboutPageRest() {
   const urls = [
     `${STRAPI_BASE}/api/about-page?populate=*`,
-    `${STRAPI_BASE}/api/about-page?populate[heroVideo]=true&populate[statementSection][populate]=rightItems&populate[differentiatorsSection][populate][items]=true&populate[servicesSection][populate][0]=stories&populate[servicesSection][populate][1]=video&populate[clientsSection][populate]=logos&populate[pressSection]=true`,
+    `${STRAPI_BASE}/api/about-page?populate[heroVideo]=true&populate[statementSection][populate]=rightItems&populate[differentiatorsSection][populate][items]=true&populate[servicesSection][populate][0]=stories&populate[servicesSection][populate][1]=video&populate[clientsSection][populate][logos][pagination][limit]=100&populate[pressSection]=true`,
   ];
 
   for (const url of urls) {

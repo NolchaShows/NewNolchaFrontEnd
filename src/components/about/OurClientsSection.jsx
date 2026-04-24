@@ -47,19 +47,30 @@ export default function OurClientsSection({
           </div>
         </div>
 
-        <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:mt-20 lg:grid-cols-6 lg:gap-x-12 lg:gap-y-16">
-          {clientLogos.map((logoPath) => (
-            <div
-              key={logoPath}
-              className="flex h-12 items-center justify-center lg:h-16"
-            >
-              <img
-                src={logoPath}
-                alt="Client logo"
-                className="max-h-full w-auto max-w-[160px] object-contain"
-              />
-            </div>
-          ))}
+        <div className="mt-14 grid grid-cols-2 gap-x-4 sm:grid-cols-3 lg:mt-20 lg:grid-cols-6 lg:gap-x-8">
+          {clientLogos.map((logo, idx) => {
+            const logoPath = typeof logo === 'string' ? logo : logo?.url || logo?.image?.url || "";
+            if (!logoPath) return null;
+            
+            const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "") ?? "https://new-nolcha-strapi-uiai.onrender.com";
+            const fullUrl = logoPath.startsWith('http') ? logoPath : `${STRAPI_URL}${logoPath.startsWith('/') ? '' : '/'}${logoPath}`;
+
+            return (
+              <div
+                key={idx}
+                className="flex items-center justify-center w-full"
+              >
+                <div className="relative w-full h-full flex items-center justify-center px-8 lg:px-8">
+                  <img
+                    loading="lazy"
+                    src={fullUrl}
+                    alt="Client logo"
+                    className="max-h-full max-w-full w-auto object-contain hover:opacity-100 transition-all duration-300"
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
