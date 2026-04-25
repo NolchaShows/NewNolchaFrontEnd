@@ -115,19 +115,26 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-black rounded-2xl max-w-3xl w-full max-h-[96vh] relative shadow-lg overflow-hidden flex flex-col border border-white/10">
+    <div
+      className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-start justify-center z-[120] pt-6 sm:pt-[90px] lg:pt-[180px] pb-0 sm:pb-10 px-0 sm:px-6"
+      onClick={handleClose}
+    >
+      <div
+        className="relative max-w-3xl w-full h-full sm:h-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="bg-black rounded-none sm:rounded-2xl p-4 sm:p-6 w-full h-full sm:max-h-[88vh] relative shadow-lg overflow-y-auto overflow-x-hidden flex flex-col border border-white/10 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 z-10 p-2 cursor-pointer bg-secondary rounded-full shadow-lg hover:bg-secondary/80 hover:scale-105 transition-all duration-200"
+          className="sticky top-0 ml-auto mb-4 z-30 p-2 cursor-pointer bg-secondary rounded-full shadow-lg hover:bg-secondary/80 hover:scale-105 transition-all duration-200"
           aria-label="Close modal"
         >
           <RxCross2 className="w-5 h-5 text-white" />
         </button>
 
         {/* Scrollable content */}
-        <div className="p-4 lg:p-6 overflow-y-auto overflow-x-hidden flex-1 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+        <div className="px-1 sm:px-0 overflow-y-visible overflow-x-hidden flex-1">
           {/* Logo and Title */}
           <div className="mb-6 flex flex-col items-center">
             <img
@@ -141,13 +148,13 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
           </div>
 
           {/* Header Image */}
-          <div className="mb-6 overflow-hidden">
+          {/* <div className="mb-6 overflow-hidden">
             <img
               src={headerImageSrc || "/home/upcoming/request.jpg"}
               alt="Cityscape with boats"
               className="w-full h-[140px] lg:h-[200px] object-cover"
             />
-          </div>
+          </div> */}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -247,6 +254,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
               Send
             </button>
           </form>
+        </div>
         </div>
       </div>
     </div>

@@ -153,9 +153,15 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-start justify-center z-[100] pt-0 sm:pt-[60px] lg:pt-[140px] pb-0 sm:pb-10 px-0 sm:px-6">
+    <div
+      className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-start justify-center z-[100] pt-0 sm:pt-[60px] lg:pt-[140px] pb-0 sm:pb-10 px-0 sm:px-6"
+      onClick={handleClose}
+    >
       {/* Outer Black Box Wrapper - for close button positioning */}
-      <div className="relative max-w-[1240px] w-full h-full sm:h-auto">
+      <div
+        className="relative max-w-[1240px] w-full h-full sm:h-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
 
         {/* Outer Black Box */}
         <div className="bg-black rounded-none sm:rounded-[20px] p-5 sm:p-10 w-full h-full sm:max-h-[88vh] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
