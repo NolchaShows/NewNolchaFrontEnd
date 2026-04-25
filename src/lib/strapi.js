@@ -503,45 +503,40 @@ export async function getSpeakersPageData() {
 }
 
 /**
- * Fetch designer page data from Strapi
+ * Fetch designer listing page singleton from Strapi (VideoHero + Artists section).
  * @returns {Promise} - The designer page data
  */
 export async function getDesignerPageData() {
   try {
-    console.log('🎨 Fetching designer page data...');
-    
-    // Use deep population for all nested components
-    const populateQuery = [
-      'populate[0]=heroImage',
-      'populate[1]=videos',
-      'populate[2]=videos.media',
-      'populate[3]=galleryImages',
-      'populate[4]=galleryImages.image',
-      'populate[5]=pressPartners',
-      'populate[6]=pressPartners.imageWhite',
-      'populate[7]=pressPartners.imageBlack',
-      'populate[8]=artistdescription'
-    ].join('&');
-    
-    const data = await fetchFromStrapi(`designer-pages?${populateQuery}`);
-    
+    console.log('🎨 Fetching designer page data (designer-page singleton)...');
+    const data = await fetchFromStrapi('designer-page');
     console.log('📊 Designer Page API Response:', JSON.stringify(data, null, 2));
-    
-    if (!data || !data.data || data.data.length === 0) {
+    if (!data?.data) {
       console.log('❌ No designer page data received from API');
       return null;
     }
-    
-    // Return the first designer page data
-    const designerPageData = Array.isArray(data.data) ? data.data[0] : data.data;
-    console.log('✅ Designer page data processed successfully');
-    console.log('📋 Raw designer page data:', JSON.stringify(designerPageData, null, 2));
-    
-    // Handle Strapi v5 format - data is directly in the object, not in attributes
+    const designerPageData = data.data;
     return { data: { attributes: designerPageData } };
-    
   } catch (error) {
     console.error('❌ Error fetching designer page data:', error);
+    return null;
+  }
+}
+
+/**
+ * Fetch featured artists listing page singleton (VideoHero + Artists section).
+ * @returns {Promise<Object|null>}
+ */
+export async function getFeaturedArtistsPageData() {
+  try {
+    console.log('🎨 Fetching featured artists page (featured-artists-page singleton)...');
+    const data = await fetchFromStrapi('featured-artists-page');
+    if (!data?.data) {
+      return null;
+    }
+    return { data: { attributes: data.data } };
+  } catch (error) {
+    console.error('❌ Error fetching featured artists page data:', error);
     return null;
   }
 }

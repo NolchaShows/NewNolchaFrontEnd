@@ -89,6 +89,36 @@ export const transformDesignerData = (data) => {
     }
   };
 
+  // Listing singleton (designer-page): experience.hero + home.artist-section from Strapi
+  if (data.hero) {
+    const heroVideo = makeUrl(data.hero.video);
+    if (heroVideo) {
+      result.heroVideo = heroVideo;
+    }
+    if (data.hero.title) {
+      result.heroFirstPart = data.hero.title;
+      result.heroSecondPart = "";
+    }
+  }
+
+  if (data.artist_section) {
+    const s = data.artist_section;
+    result.artistData = {
+      ...result.artistData,
+      title: s.title || result.artistData.title,
+      description: s.description || result.artistData.description,
+    };
+    if (s.carousal_item && s.carousal_item.length > 0) {
+      result.artistData = { ...result.artistData, carousal_item: s.carousal_item };
+    }
+    if (s.media && s.media.length > 0) {
+      const fromMedia = s.media.map((m) => makeUrl(m)).filter(Boolean);
+      if (fromMedia.length) {
+        result.videos = fromMedia;
+      }
+    }
+  }
+
   console.log('🎯 Final designer result:', result);
   console.log('🏷️ Fields from Strapi vs defaults:');
   console.log('  - title:', data.title ? 'Strapi' : 'Default');

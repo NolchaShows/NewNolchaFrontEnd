@@ -189,6 +189,107 @@ export const useFeaturedArtistsList = () => {
   return { featuredArtists, loading, error };
 };
 
+const defaultFeaturedArtistsPageVideos = [
+  "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-4.mp4",
+  "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-5.mp4",
+  "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-6.mp4",
+  "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-7.mp4",
+];
+
+const defaultFeaturedArtistsPageArtistData = {
+  title: "And +500 Other Artists",
+  description:
+    "Onchainmonkey - World Of Women - Ron English - Jeremy Cowart - Lindsay Kokoska - Nodemonkes - Kira  Bursky - Vincent D'onofrio - Latashá - Vakseen - Talia Zoref - Rob Prior - Laurence Fuller - Janedao - Izzy  Weissgerber - Gretta Kruesi - Janedao -yiyang Lu - Skye Nicolas  - Aeforia  - Arno Carstens - Mohsen  Hazrati - Ragzy X - Musketon - Tillavision - Made By Oona - Stacie Ant - Young & Sick",
+};
+
+/**
+ * Transform Strapi featured-artists-page singleton (hero + artist_section) for /featured-artists
+ */
+export const transformFeaturedArtistsPageData = (data) => {
+  if (!data) {
+    return {
+      heroVideo: null,
+      heroFirstPart: "Featured Artists",
+      heroSecondPart: "",
+      artistData: { ...defaultFeaturedArtistsPageArtistData },
+      videos: [...defaultFeaturedArtistsPageVideos],
+    };
+  }
+
+  const result = {
+    heroVideo: null,
+    heroFirstPart: "Featured Artists",
+    heroSecondPart: "",
+    artistData: { ...defaultFeaturedArtistsPageArtistData },
+    videos: [...defaultFeaturedArtistsPageVideos],
+  };
+
+  if (data.hero) {
+    const v = makeMediaUrl(data.hero.video);
+    if (v) {
+      result.heroVideo = v;
+    }
+    if (data.hero.title) {
+      result.heroFirstPart = data.hero.title;
+      result.heroSecondPart = "";
+    }
+  }
+
+  if (data.artist_section) {
+    const s = data.artist_section;
+    result.artistData = {
+      ...result.artistData,
+      title: s.title || result.artistData.title,
+      description: s.description || result.artistData.description,
+    };
+    if (s.carousal_item && s.carousal_item.length > 0) {
+      result.artistData = { ...result.artistData, carousal_item: s.carousal_item };
+    }
+    if (s.media && s.media.length > 0) {
+      const fromMedia = s.media.map((m) => makeMediaUrl(m)).filter(Boolean);
+      if (fromMedia.length) {
+        result.videos = fromMedia;
+      }
+    }
+  }
+
+  return result;
+};
+
+/**
+ * @returns {{ page: object, loading: boolean, error: string | null }}
+ */
+export const useFeaturedArtistsPageData = () => {
+  const [page, setPage] = useState(() => transformFeaturedArtistsPageData(null));
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const run = async () => {
+      try {
+        const { getFeaturedArtistsPageData } = await import("@/lib/strapi");
+        const res = await getFeaturedArtistsPageData();
+        if (res?.data?.attributes) {
+          setPage(transformFeaturedArtistsPageData(res.data.attributes));
+        } else if (res?.data) {
+          setPage(transformFeaturedArtistsPageData(res.data));
+        } else {
+          setPage(transformFeaturedArtistsPageData(null));
+        }
+        setError(null);
+      } catch (e) {
+        setError(e?.message);
+        setPage(transformFeaturedArtistsPageData(null));
+      } finally {
+        setLoading(false);
+      }
+    };
+    run();
+  }, []);
+
+  return { page, loading, error };
+};
+
 /**
  * Custom hook for fetching single featured artist by slug (for detail page)
  * @param {string} slug - The featured artist's slug
