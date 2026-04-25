@@ -1,5 +1,10 @@
 // Utility functions for designer page
 import { useState, useEffect } from 'react';
+import {
+  resolveStrapiFileUrl,
+  pickHeroVideoUrl,
+  unwrapStrapiEntry,
+} from "@/lib/strapiMediaUrl";
 
 /**
  * Transform Strapi designer page data to component props
@@ -7,50 +12,27 @@ import { useState, useEffect } from 'react';
  * @returns {Object} - Transformed data for designer page components
  */
 export const transformDesignerData = (data) => {
-  console.log('🎨 Starting designer data transformation with:', data);
-  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
-  
-  const makeUrl = (media) => {
-    if (!media) return null;
-    
-    // Handle different Strapi data formats
-    let url = null;
-    
-    // Strapi v4 format with data.attributes
-    if (media.data?.attributes?.url) {
-      url = media.data.attributes.url;
-    }
-    // Strapi v5 format - direct object with url
-    else if (media.url) {
-      url = media.url;
-    }
-    // Simple string URL
-    else if (typeof media === 'string') {
-      url = media;
-    }
-    
-    if (!url) return null;
-    
-    // Add base URL if it's a relative path
-    return url && !url.startsWith('http') ? `${baseUrl}${url}` : url;
-  };
+  const p = unwrapStrapiEntry(data) || data;
+  console.log("🎨 Starting designer data transformation with:", p);
+
+  const makeUrl = (media) => resolveStrapiFileUrl(media);
 
   // Transform videos
-  console.log('🎥 Videos data:', data.videos);
-  const videos = (data.videos && data.videos.length > 0) ? data.videos.map((video, index) => {
+  console.log("🎥 Videos data:", p.videos);
+  const videos = (p.videos && p.videos.length > 0) ? p.videos.map((video, index) => {
     return makeUrl(video.media) || `/home/artists/${index + 1}.png`;
   }) : [];
 
   // Transform gallery images
-  console.log('🖼️ Gallery images data:', data.galleryImages);
-  const galleryImages = (data.galleryImages && data.galleryImages.length > 0) ? data.galleryImages.map((item, index) => ({
+  console.log("🖼️ Gallery images data:", p.galleryImages);
+  const galleryImages = (p.galleryImages && p.galleryImages.length > 0) ? p.galleryImages.map((item, index) => ({
     image: makeUrl(item.image) || `/designers/${index + 6}.png`,
     text: item.text || "YUE MINJUN"
   })) : [];
 
   // Transform press partners - only use actual Strapi images, no hardcoded fallbacks
-  console.log('📰 Press partners data:', data.pressPartners);
-  const pressPartners = (data.pressPartners && data.pressPartners.length > 0) ? data.pressPartners.map((partner, index) => ({
+  console.log("📰 Press partners data:", p.pressPartners);
+  const pressPartners = (p.pressPartners && p.pressPartners.length > 0) ? p.pressPartners.map((partner, index) => ({
     id: index + 1,
     imageWhite: makeUrl(partner.imageWhite) || makeUrl(partner.primary),
     imageBlack: makeUrl(partner.imageBlack) || makeUrl(partner.secondary) || makeUrl(partner.primary),
@@ -59,50 +41,50 @@ export const transformDesignerData = (data) => {
   })).filter(partner => partner.imageWhite && partner.imageBlack) : []; // Only include partners with actual images
 
   // Transform artist description from repeatable component array
-  console.log('🎨 Artist Description raw data:', data.artistdescription);
+  console.log("🎨 Artist Description raw data:", p.artistdescription);
   let artistDescriptionText = "";
-  if (data.artistdescription && Array.isArray(data.artistdescription) && data.artistdescription.length > 0) {
+  if (p.artistdescription && Array.isArray(p.artistdescription) && p.artistdescription.length > 0) {
     // Map through the array and extract text values, then join with " - "
-    artistDescriptionText = data.artistdescription
+    artistDescriptionText = p.artistdescription
       .map(item => item.text || item.name || item.title || item)
       .filter(text => text && text.trim() !== "")
       .join(" - ");
   }
-  console.log('🎨 Processed artist description:', artistDescriptionText);
+  console.log("🎨 Processed artist description:", artistDescriptionText);
 
   // Get default data for fallbacks
   const defaultData = getDefaultDesignerData();
 
   // Merge Strapi data with defaults, preferring Strapi data when available
   const result = {
-    title: data.title || defaultData.title,
-    subtitle: data.subtitle || defaultData.subtitle,
-    heroImage: makeUrl(data.heroImage) || defaultData.heroImage,
+    title: p.title || defaultData.title,
+    subtitle: p.subtitle || defaultData.subtitle,
+    heroImage: makeUrl(p.heroImage) || defaultData.heroImage,
     videos: videos.length > 0 ? videos : defaultData.videos,
     galleryImages: galleryImages.length > 0 ? galleryImages : defaultData.galleryImages,
     pressPartners: pressPartners, // Only use Strapi press partners, no default fallback
     companies: defaultData.companies, // Always use default companies for now
     // Artist data for the Artists component
     artistData: {
-      title: data.artisttitle || "And +500 Other Artists",
+      title: p.artisttitle || "And +500 Other Artists",
       description: artistDescriptionText || "ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY COWART - LINDSAY KOKOSKA - NODEMONKES - KIRA BURSKY - VINCENT D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA ZOREF - ROB PRIOR - LAURENCE FULLER - JANEDAO - IZZY WEISSGERBER - GRETTA KRUESI - JANEDAO -YIYANG LU - SKYE NICOLAS - AEFORIA - ARNO CARSTENS - MOHSEN HAZRATI - RAGZY X - MUSKETON - TILLAVISION - MADE BY OONA - STACIE ANT - YOUNG & SICK"
     }
   };
 
   // Listing singleton (designer-page): experience.hero + home.artist-section from Strapi
-  if (data.hero) {
-    const heroVideo = makeUrl(data.hero.video);
+  if (p.hero) {
+    const heroVideo = pickHeroVideoUrl(p.hero);
     if (heroVideo) {
       result.heroVideo = heroVideo;
     }
-    if (data.hero.title) {
-      result.heroFirstPart = data.hero.title;
+    if (p.hero.title) {
+      result.heroFirstPart = p.hero.title;
       result.heroSecondPart = "";
     }
   }
 
-  if (data.artist_section) {
-    const s = data.artist_section;
+  if (p.artist_section) {
+    const s = p.artist_section;
     result.artistData = {
       ...result.artistData,
       title: s.title || result.artistData.title,
@@ -119,14 +101,14 @@ export const transformDesignerData = (data) => {
     }
   }
 
-  console.log('🎯 Final designer result:', result);
-  console.log('🏷️ Fields from Strapi vs defaults:');
-  console.log('  - title:', data.title ? 'Strapi' : 'Default');
-  console.log('  - subtitle:', data.subtitle ? 'Strapi' : 'Default');
-  console.log('  - heroImage:', makeUrl(data.heroImage) ? 'Strapi' : 'Default');
-  console.log('  - videos:', videos.length > 0 ? 'Strapi' : 'Default');
-  console.log('  - galleryImages:', galleryImages.length > 0 ? 'Strapi' : 'Default');
-  console.log('  - pressPartners:', pressPartners.length > 0 ? 'Strapi' : 'Default');
+  console.log("🎯 Final designer result:", result);
+  console.log("🏷️ Fields from Strapi vs defaults:");
+  console.log("  - title:", p.title ? "Strapi" : "Default");
+  console.log("  - subtitle:", p.subtitle ? "Strapi" : "Default");
+  console.log("  - heroImage:", makeUrl(p.heroImage) ? "Strapi" : "Default");
+  console.log("  - videos:", videos.length > 0 ? "Strapi" : "Default");
+  console.log("  - galleryImages:", galleryImages.length > 0 ? "Strapi" : "Default");
+  console.log("  - pressPartners:", pressPartners.length > 0 ? "Strapi" : "Default");
 
   return result;
 };

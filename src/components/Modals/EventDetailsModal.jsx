@@ -315,7 +315,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                         rel="noopener noreferrer"
                         className="inline-block w-full sm:w-auto bg-primary text-black font-bold text-sm sm:text-base px-6 py-3 rounded-lg no-underline text-center transition-opacity hover:opacity-90 cursor-pointer"
                       >
-                        REQUEST PROSPECTUS
+                        PARTNER WITH US
                       </a>
                     </div>
                   </div>

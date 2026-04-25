@@ -526,7 +526,17 @@ export async function getSpeakersPageData() {
 export async function getDesignerPageData() {
   try {
     console.log('🎨 Fetching designer page data (designer-page singleton)...');
-    const data = await fetchFromStrapi('designer-page');
+    const qs = new URLSearchParams();
+    qs.set('populate[hero][populate][video]', 'true');
+    qs.set('populate[artist_section][populate][media]', 'true');
+    qs.set('populate[artist_section][populate][carousal_item]', 'true');
+    let data;
+    try {
+      data = await fetchFromStrapi(`designer-page?${qs.toString()}`);
+    } catch (innerError) {
+      console.warn('⚠️ designer-page nested populate failed, retrying without query:', innerError?.message);
+      data = await fetchFromStrapi('designer-page');
+    }
     console.log('📊 Designer Page API Response:', JSON.stringify(data, null, 2));
     if (!data?.data) {
       console.log('❌ No designer page data received from API');
@@ -547,7 +557,19 @@ export async function getDesignerPageData() {
 export async function getFeaturedArtistsPageData() {
   try {
     console.log('🎨 Fetching featured artists page (featured-artists-page singleton)...');
-    const data = await fetchFromStrapi('featured-artists-page');
+    const qs = new URLSearchParams();
+    qs.set('populate[hero][populate][video]', 'true');
+    qs.set('populate[artist_section][populate][media]', 'true');
+    qs.set('populate[artist_section][populate][carousal_item]', 'true');
+
+    let data;
+    try {
+      data = await fetchFromStrapi(`featured-artists-page?${qs.toString()}`);
+    } catch (populateError) {
+      console.warn('⚠️ Featured artists page nested populate failed, retrying without query:', populateError?.message);
+      data = await fetchFromStrapi('featured-artists-page');
+    }
+
     if (!data?.data) {
       return null;
     }

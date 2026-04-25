@@ -1,28 +1,14 @@
 // Utility functions for featured artist pages
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import {
+  resolveStrapiFileUrl,
+  pickHeroVideoUrl,
+  unwrapStrapiEntry,
+} from "@/lib/strapiMediaUrl";
 
-/**
- * Helper function to make URLs from Strapi media
- */
-const makeMediaUrl = (media) => {
-  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+export { resolveStrapiFileUrl } from "@/lib/strapiMediaUrl";
 
-  if (!media) return null;
-
-  let url = null;
-
-  if (media.data?.attributes?.url) {
-    url = media.data.attributes.url;
-  } else if (media.url) {
-    url = media.url;
-  } else if (typeof media === 'string') {
-    url = media;
-  }
-
-  if (!url) return null;
-
-  return url && !url.startsWith('http') ? `${baseUrl}${url}` : url;
-};
+const makeMediaUrl = (media) => resolveStrapiFileUrl(media);
 
 /**
  * Transform Strapi featured artists list data for DynamicGallery
@@ -216,6 +202,17 @@ export const transformFeaturedArtistsPageData = (data) => {
     };
   }
 
+  const payload = unwrapStrapiEntry(data) || data;
+  if (!payload) {
+    return {
+      heroVideo: null,
+      heroFirstPart: "Featured Artists",
+      heroSecondPart: "",
+      artistData: { ...defaultFeaturedArtistsPageArtistData },
+      videos: [...defaultFeaturedArtistsPageVideos],
+    };
+  }
+
   const result = {
     heroVideo: null,
     heroFirstPart: "Featured Artists",
@@ -224,19 +221,19 @@ export const transformFeaturedArtistsPageData = (data) => {
     videos: [...defaultFeaturedArtistsPageVideos],
   };
 
-  if (data.hero) {
-    const v = makeMediaUrl(data.hero.video);
+  if (payload.hero) {
+    const v = pickHeroVideoUrl(payload.hero);
     if (v) {
       result.heroVideo = v;
     }
-    if (data.hero.title) {
-      result.heroFirstPart = data.hero.title;
+    if (payload.hero.title) {
+      result.heroFirstPart = payload.hero.title;
       result.heroSecondPart = "";
     }
   }
 
-  if (data.artist_section) {
-    const s = data.artist_section;
+  if (payload.artist_section) {
+    const s = payload.artist_section;
     result.artistData = {
       ...result.artistData,
       title: s.title || result.artistData.title,

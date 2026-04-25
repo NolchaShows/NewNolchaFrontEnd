@@ -41,9 +41,10 @@ const VideoHeroSection = ({
         return url;
     };
 
-    const embedUrl = isGoogleDrive || videoSrc.includes('drive.google.com') 
-        ? getGoogleDriveEmbedUrl(videoSrc) 
-        : videoSrc;
+    const safeSrc = videoSrc || "";
+    const embedUrl = isGoogleDrive || safeSrc.includes("drive.google.com")
+        ? getGoogleDriveEmbedUrl(safeSrc)
+        : safeSrc;
     
     const isGoogleDriveVideo = embedUrl.includes('drive.google.com');
     const shouldAutoPlay = typeof autoPlay === "boolean" ? autoPlay : !showControls;
@@ -69,7 +70,9 @@ const VideoHeroSection = ({
                     ></iframe>
                 ) : (
                     <video
+                        key={embedUrl}
                         className="w-full h-full object-cover"
+                        src={embedUrl}
                         autoPlay={shouldAutoPlay}
                         muted={shouldMute}
                         loop={shouldLoop}
@@ -77,10 +80,6 @@ const VideoHeroSection = ({
                         playsInline
                         style={{ minWidth: "100%", minHeight: "100%" }}
                     >
-                        <source
-                            src={videoSrc}
-                            type="video/mp4"
-                        />
                         Your browser does not support the video tag.
                     </video>
                 )}
