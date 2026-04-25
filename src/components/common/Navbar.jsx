@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import InnerCircleModal from "../Modals/InnerCircleModal";
 import { usePathname, useRouter } from "next/navigation";
@@ -8,6 +8,12 @@ import {
   slugifyUpcomingEventTitle,
   upcomingListEvents,
 } from "@/data/upcomingEvents";
+import {
+  extractUpcomingEventsFromHome,
+  mapUpcomingEventsToNavChildren,
+  mapExternalNavChildren,
+  isStrapiUpcomingItem,
+} from "@/utils/upcomingNavUtils";
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
@@ -47,21 +53,21 @@ const normalizeMenuHref = (href = "") => {
 };
 
 const resolveChildHref = (parentHref = "", child = {}) => {
+  const ext = (child?.externalUrl || "").trim();
+  if (ext && /^https?:\/\//i.test(ext)) {
+    return ext;
+  }
+
   const childHref = child?.href || "";
   const childSlug = child?.slug || "";
-  const isModal = Boolean(child?.modal);
 
-  if (childHref && !isModal) {
+  if (childHref) {
     return normalizeMenuHref(childHref);
   }
 
   const relativeValue = childSlug || childHref;
   if (!relativeValue) {
     return "#";
-  }
-
-  if (isModal) {
-    return `/?upcoming=${encodeURIComponent(normalizePathPart(relativeValue))}`;
   }
 
   const cleanParent = normalizePathPart(parentHref);
@@ -130,6 +136,9 @@ function Navbar() {
   );
   const [charityDropdown, setCharityDropdown] = useState([]);
   const [navigationItems, setNavigationItems] = useState([]);
+  const [upcomingDropdownChildren, setUpcomingDropdownChildren] = useState(() =>
+    mapUpcomingEventsToNavChildren(upcomingListEvents, getMediaUrl)
+  );
   // Mobile dropdown states
   const [mobileDropdowns, setMobileDropdowns] = useState({});
 
@@ -212,9 +221,20 @@ function Navbar() {
     },
   ];
 
-  const visibleMenuItems = navigationItems.length
-    ? navigationItems
-    : fallbackVisibleMenuItems;
+  const visibleMenuItems = useMemo(() => {
+    if (navigationItems.length) {
+      return navigationItems;
+    }
+    return fallbackVisibleMenuItems.map((item) =>
+      item.key === "upcoming"
+        ? {
+            ...item,
+            children: upcomingDropdownChildren,
+            hasDropdown: upcomingDropdownChildren.length > 0,
+          }
+        : item
+    );
+  }, [navigationItems, upcomingDropdownChildren]);
 
   const getMegaMenuConfig = (menuKey) => {
     if (!menuKey) return null;
@@ -259,6 +279,11 @@ function Navbar() {
   };
 
   const handleDropdownLinkClick = (dropdownItem) => {
+    if (dropdownItem?.isExternal) {
+      setActiveDesktopMegaMenu(null);
+      setIsMobileMenuOpen(false);
+      return;
+    }
     if (dropdownItem?.upcomingSlug) {
       notifyUpcomingSelection(dropdownItem.upcomingSlug);
     }
@@ -380,12 +405,18 @@ function Navbar() {
           getExperiencePages,
           getCharityPages,
           getNavigationMenu,
+          getHomePageForNavigation,
         } = await import("@/lib/strapi");
-        const [experiencePages, charityPages, navigationMenu] = await Promise.all([
+        const [exRes, chRes, navRes, homeRes] = await Promise.allSettled([
           getExperiencePages(),
           getCharityPages(),
           getNavigationMenu(),
+          getHomePageForNavigation(),
         ]);
+        const experiencePages = exRes.status === "fulfilled" ? exRes.value : null;
+        const charityPages = chRes.status === "fulfilled" ? chRes.value : null;
+        const navigationMenu = navRes.status === "fulfilled" ? navRes.value : null;
+        const homePageRes = homeRes.status === "fulfilled" ? homeRes.value : null;
 
         if (!isMounted) return;
 
@@ -407,28 +438,67 @@ function Navbar() {
           );
         }
 
+        const homeRoot = homePageRes?.data?.attributes || homePageRes?.data;
+        const rawHomeEvents = extractUpcomingEventsFromHome(homeRoot);
+        const fromHome =
+          rawHomeEvents.length > 0
+            ? mapUpcomingEventsToNavChildren(rawHomeEvents, getMediaUrl)
+            : mapUpcomingEventsToNavChildren(upcomingListEvents, getMediaUrl);
+
         const navigationItemsFromStrapi =
           navigationMenu?.data?.attributes?.items || navigationMenu?.data?.items || [];
 
+        const strapiUpcoming = Array.isArray(navigationItemsFromStrapi)
+          ? navigationItemsFromStrapi.find(isStrapiUpcomingItem)
+          : null;
+        const externalFromStrapi = mapExternalNavChildren(
+          strapiUpcoming?.children || [],
+          getMediaUrl
+        );
+        const mergedUpcomingChildren = [...fromHome, ...externalFromStrapi];
+        setUpcomingDropdownChildren(mergedUpcomingChildren);
+
         if (Array.isArray(navigationItemsFromStrapi) && navigationItemsFromStrapi.length > 0) {
-          setNavigationItems(
-            navigationItemsFromStrapi.map((item, index) => ({
+          const mapped = navigationItemsFromStrapi.map((item, index) => {
+            const base = {
               label: item?.label || "",
               href: normalizeMenuHref(item?.href),
               subtitle: item?.subtitle || "‎",
               key: buildMenuKey(item, index),
               hasDropdown: Array.isArray(item?.children) && item.children.length > 0,
               imageSrc: getMediaUrl(item?.image),
-              children: (item?.children || []).map((child) => ({
-                label: child?.label || "",
-                href: resolveChildHref(item?.href || "", child),
-                slug: child?.slug || "",
-                modal: Boolean(child?.modal),
-                upcomingSlug: child?.modal ? normalizePathPart(child?.slug || child?.href || "") : undefined,
-                imageSrc: getMediaUrl(child?.image),
-              })),
-            }))
-          );
+              children: (item?.children || []).map((child) => {
+                const ext = (child?.externalUrl || "").trim();
+                if (ext && /^https?:\/\//i.test(ext)) {
+                  return {
+                    label: child?.label || "",
+                    href: ext,
+                    slug: child?.slug || "",
+                    isExternal: true,
+                    imageSrc: getMediaUrl(child?.image),
+                  };
+                }
+                return {
+                  label: child?.label || "",
+                  href: resolveChildHref(item?.href || "", child),
+                  slug: child?.slug || "",
+                  isExternal: false,
+                  imageSrc: getMediaUrl(child?.image),
+                };
+              }),
+            };
+            if (isStrapiUpcomingItem(item)) {
+              return {
+                ...base,
+                hasDropdown: mergedUpcomingChildren.length > 0,
+                children: mergedUpcomingChildren,
+              };
+            }
+            return base;
+          });
+          setNavigationItems(mapped);
+        } else {
+          setNavigationItems([]);
         }
       } catch (error) {
         console.error("Failed to fetch navbar pages from Strapi:", error);
@@ -525,16 +595,29 @@ function Navbar() {
               <div className="pb-4">
                 <div className="mt-1 bg-[#0E0E0E] rounded-[14px] border border-white/10 p-4">
                   <div className="space-y-3">
-                    {mobileDropdownItems.map((dropdownItem, dropdownIdx) => (
-                      <Link
-                        key={dropdownIdx}
-                        href={dropdownItem.href}
-                        className="block text-[16px] text-white/90 hover:text-primary transition-colors"
-                        onClick={() => handleDropdownLinkClick(dropdownItem)}
-                      >
-                        {dropdownItem.label}
-                      </Link>
-                    ))}
+                    {mobileDropdownItems.map((dropdownItem, dropdownIdx) =>
+                      dropdownItem.isExternal ? (
+                        <a
+                          key={dropdownItem.href + dropdownIdx}
+                          href={dropdownItem.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block text-[16px] text-white/90 hover:text-primary transition-colors"
+                          onClick={() => handleDropdownLinkClick(dropdownItem)}
+                        >
+                          {dropdownItem.label}
+                        </a>
+                      ) : (
+                        <Link
+                          key={dropdownIdx}
+                          href={dropdownItem.href}
+                          className="block text-[16px] text-white/90 hover:text-primary transition-colors"
+                          onClick={() => handleDropdownLinkClick(dropdownItem)}
+                        >
+                          {dropdownItem.label}
+                        </Link>
+                      )
+                    )}
                   </div>
                 </div>
               </div>
@@ -865,17 +948,31 @@ function Navbar() {
                         {cfg.sectionLabel}
                       </div>
                       <div className="space-y-[14px] xxl:space-y-[20px] max-h-[calc(100%-40px)] overflow-auto">
-                        {cfg.items.map((it, i) => (
-                          <Link
-                            key={`${it.href}-${i}`}
-                            href={it.href}
-                            className="block text-[20px] xxl:text-[26px] leading-[1.15] font-[500] text-white hover:text-primary transition-opacity"
-                            onMouseEnter={() => setHoveredMegaItemImage(it.imageSrc || null)}
-                            onClick={() => handleDropdownLinkClick(it)}
-                          >
-                            {it.label}
-                          </Link>
-                        ))}
+                        {cfg.items.map((it, i) =>
+                          it.isExternal ? (
+                            <a
+                              key={`ext-${it.href}-${i}`}
+                              href={it.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block text-[20px] xxl:text-[26px] leading-[1.15] font-[500] text-white hover:text-primary transition-opacity"
+                              onMouseEnter={() => setHoveredMegaItemImage(it.imageSrc || null)}
+                              onClick={() => handleDropdownLinkClick(it)}
+                            >
+                              {it.label}
+                            </a>
+                          ) : (
+                            <Link
+                              key={`${it.href}-${i}`}
+                              href={it.href}
+                              className="block text-[20px] xxl:text-[26px] leading-[1.15] font-[500] text-white hover:text-primary transition-opacity"
+                              onMouseEnter={() => setHoveredMegaItemImage(it.imageSrc || null)}
+                              onClick={() => handleDropdownLinkClick(it)}
+                            >
+                              {it.label}
+                            </Link>
+                          )
+                        )}
                       </div>
                     </div>
 

@@ -65,6 +65,23 @@ export async function getNavigationMenu() {
 }
 
 /**
+ * Home page singleton (includes upcoming_events_section.events) for navbar.
+ * @returns {Promise<Object|null>} - Strapi home-page document (attributes or flat)
+ */
+export async function getHomePageForNavigation() {
+  try {
+    const data = await fetchFromStrapi("home-page");
+    if (!data?.data) {
+      return null;
+    }
+    return { data: { attributes: data.data?.attributes || data.data } };
+  } catch (error) {
+    console.error("❌ Error fetching home page for navigation:", error);
+    return null;
+  }
+}
+
+/**
  * Fetch upcoming page data from Strapi
  * @returns {Promise} - The upcoming page data
  */
