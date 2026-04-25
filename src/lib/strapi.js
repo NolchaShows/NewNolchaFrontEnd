@@ -82,6 +82,19 @@ export async function getHomePageForNavigation() {
 }
 
 /**
+ * Site footer singleton: logo, description, link columns, contact, social (managed in Strapi; no newsletter).
+ * @returns {Promise<Object|null>} raw Strapi response `{ data }` or null on error
+ */
+export async function getFooterData() {
+  try {
+    return await fetchFromStrapi("footer");
+  } catch (error) {
+    console.warn("Error fetching footer from Strapi:", error);
+    return null;
+  }
+}
+
+/**
  * Fetch upcoming page data from Strapi
  * @returns {Promise} - The upcoming page data
  */

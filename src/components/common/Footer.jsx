@@ -1,8 +1,36 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useFooterContent } from "@/utils/footerUtils";
+
+function FooterLink({ href, className, children }) {
+  if (!href) {
+    return <span className={className}>{children}</span>;
+  }
+  if (href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+    return (
+      <a
+        href={href}
+        className={className}
+        {...(href.startsWith("http")
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
+      >
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
+}
 
 function Footer() {
+  const { content } = useFooterContent();
+  const { stayInformed, logoUrl, description, social, quickLinks, resources, contact, copyright } =
+    content;
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -12,26 +40,18 @@ function Footer() {
       setMessage("Please enter an email address");
       return;
     }
-
     if (!email.includes("@")) {
       setMessage("Please enter a valid email address");
       return;
     }
-
     setIsLoading(true);
     setMessage("");
-
     try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-
-      const data = await response.json();
-
       if (response.ok) {
         setMessage("Email sent successfully! Check your inbox.");
         setEmail("");
@@ -49,19 +69,15 @@ function Footer() {
   return (
     <div className="bg-black w-full flex flex-col items-start p-[20px] lg:p-[60px] 2xl:p-[80px]">
       <div className="bg-black flex flex-col gap-[60px] lg:gap-[80px] items-end pb-[20px] pt-[60px] lg:pt-[80px] px-[20px] lg:px-[60px] relative rounded-[20px] w-full">
-        {/* Top Section - Stay Informed */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[30px] lg:gap-[100px] w-full">
-          {/* Left - Text Content */}
           <div className="flex flex-col gap-[20px] items-start w-full lg:w-auto">
             <h2 className="text-[32px] lg:text-[40px] 2xl:text-[48px] font-black leading-[1.2] tracking-[-1.44px] text-white whitespace-pre-wrap">
-              Stay Informed
+              {stayInformed.title}
             </h2>
             <p className="text-[16px] lg:text-[18px] 2xl:text-[20px] font-normal leading-[1.5] tracking-[-0.6px] text-white max-w-[546px]">
-              Get updates on upcoming events, sponsorship opportunities, and partner announcements.
+              {stayInformed.description}
             </p>
           </div>
-
-          {/* Right - Email Input */}
           <div className="flex gap-0 items-center justify-center w-full lg:w-[427px]">
             <div className="flex flex-1 flex-col gap-[6px] items-start min-w-0 w-full">
               <div className="bg-[#FAFAFA] border border-[#E9EAEB] border-solid flex gap-[8px] items-center pl-[16px] pr-[8px] py-[6px] rounded-lg w-full">
@@ -71,22 +87,22 @@ function Footer() {
                     placeholder="Enter your email Address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
+                    onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                     className="flex-1 font-normal leading-[1.5] min-w-0 overflow-ellipsis overflow-hidden text-[#171717] text-[16px] lg:text-[18px] tracking-[-0.54px] whitespace-nowrap bg-transparent border-none outline-none focus:outline-none placeholder:text-[#171717]"
                     disabled={isLoading}
                   />
                 </div>
                 <div className="flex gap-0 items-center pl-0 pr-[12px] py-0">
                   <button
+                    type="button"
                     onClick={handleSubmit}
                     disabled={isLoading}
-                    className={`bg-primary flex gap-0 items-center justify-center px-[16px] py-[8px] rounded-lg transition-colors ${isLoading
-                      ? 'opacity-50 cursor-not-allowed'
-                      : 'hover:bg-primary/80'
-                      }`}
+                    className={`bg-primary flex gap-0 items-center justify-center px-[16px] py-[8px] rounded-lg transition-colors ${
+                      isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-primary/80"
+                    }`}
                   >
                     <span className="font-medium leading-[24px] text-[16px] text-black text-center">
-                      {isLoading ? 'Sending...' : 'Subscribe'}
+                      {isLoading ? "Sending..." : "Subscribe"}
                     </span>
                   </button>
                 </div>
@@ -94,41 +110,37 @@ function Footer() {
             </div>
           </div>
         </div>
-
-        {/* Message display */}
-        {message && (
-          <div className={`text-sm ${message.includes('successfully')
-            ? 'text-green-400'
-            : 'text-red-400'
-            }`}>
+        {message ? (
+          <div
+            className={`w-full text-sm ${
+              message.includes("successfully") ? "text-green-400" : "text-red-400"
+            }`}
+          >
             {message}
           </div>
-        )}
+        ) : null}
 
-        {/* Divider Line */}
-        {/* <div className="h-[1px] w-full bg-[rgba(253,255,231,0.2)]"></div> */}
-
-        {/* Main Footer Content */}
         <div className="flex flex-col lg:flex-row items-start justify-between gap-[40px] lg:gap-[100px] w-full">
-          {/* Left Column - Logo, Description, Social Icons */}
           <div className="flex flex-col gap-[30px] items-start w-full lg:w-[361px]">
-            {/* Logo and Description */}
             <div className="flex flex-col gap-[16px] items-start w-full">
               <img
-                src="/footer/logo.png"
+                src={logoUrl}
                 className="h-[47px] w-[168px] object-contain"
                 alt="Nolcha Logo"
               />
               <p className="font-normal leading-[1.5] text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px] whitespace-pre-wrap">
-                Nolcha has been at the forefront of technology, culture, and immersive experiences producing high-impact events, summits, and activations for visionary brands and the world's leading blockchain, AI, and crypto conferences..
+                {description}
               </p>
             </div>
 
-            {/* Social Media Icons */}
             <div className="flex gap-[12px] items-center">
               <div
                 className="bg-primary flex items-center p-[10px] rounded-lg cursor-pointer hover:bg-primary/80 transition-colors"
-                onClick={() => window.open("https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.nolcha.com%2Fcontent-for-swiper-with-popup%2Fart-basel-2025-xw6ct", "_blank")}
+                onClick={() => social.linkedin && window.open(social.linkedin, "_blank", "noopener,noreferrer")}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && social.linkedin && window.open(social.linkedin, "_blank", "noopener,noreferrer")}
+                aria-label="LinkedIn"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M6.9375 5.001C6.93724 5.53143 6.72627 6.04004 6.35101 6.41492C5.97575 6.78981 5.46693 7.00027 4.9365 7C4.40607 6.99974 3.89746 6.78877 3.52258 6.41351C3.14769 6.03825 2.93724 5.52943 2.9375 4.999C2.93777 4.46857 3.14873 3.95996 3.52399 3.58508C3.89925 3.21019 4.40807 2.99974 4.9385 3C5.46893 3.00027 5.97754 3.21123 6.35242 3.58649C6.72731 3.96175 6.93777 4.47057 6.9375 5.001ZM6.9975 8.481H2.9975V21.001H6.9975V8.481ZM13.3175 8.481H9.3375V21.001H13.2775V14.431C13.2775 10.771 18.0475 10.431 18.0475 14.431V21.001H21.9975V13.071C21.9975 6.901 14.9375 7.131 13.2775 10.161L13.3175 8.481Z" fill="#000000" />
@@ -136,7 +148,11 @@ function Footer() {
               </div>
               <div
                 className="bg-primary flex items-center p-[10px] rounded-lg cursor-pointer hover:bg-primary/80 transition-colors"
-                onClick={() => window.open("https://www.instagram.com/nolchashows", "_blank")}
+                onClick={() => social.instagram && window.open(social.instagram, "_blank", "noopener,noreferrer")}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && social.instagram && window.open(social.instagram, "_blank", "noopener,noreferrer")}
+                aria-label="Instagram"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M12 8.75C11.138 8.75 10.3114 9.09241 9.7019 9.7019C9.09241 10.3114 8.75 11.138 8.75 12C8.75 12.862 9.09241 13.6886 9.7019 14.2981C10.3114 14.9076 11.138 15.25 12 15.25C12.862 15.25 13.6886 14.9076 14.2981 14.2981C14.9076 13.6886 15.25 12.862 15.25 12C15.25 11.138 14.9076 10.3114 14.2981 9.7019C13.6886 9.09241 12.862 8.75 12 8.75Z" fill="#000000" />
@@ -145,7 +161,11 @@ function Footer() {
               </div>
               <div
                 className="bg-primary flex items-center p-[10px] rounded-lg cursor-pointer hover:bg-primary/80 transition-colors"
-                onClick={() => window.open("https://x.com/nolchashows", "_blank")}
+                onClick={() => social.x && window.open(social.x, "_blank", "noopener,noreferrer")}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && social.x && window.open(social.x, "_blank", "noopener,noreferrer")}
+                aria-label="X (Twitter)"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M10.488 14.651L15.25 21H22.25L14.392 10.522L20.93 3H18.28L13.163 8.886L8.75 3H1.75L9.26 13.015L2.32 21H4.97L10.488 14.651ZM16.25 19L5.75 5H7.75L18.25 19H16.25Z" fill="#000000" />
@@ -154,56 +174,56 @@ function Footer() {
             </div>
           </div>
 
-          {/* Right Columns - Quick Links, Resources, Lets Talk */}
           <div className="flex flex-col lg:flex-row gap-[40px] lg:gap-[100px] items-start w-full lg:w-auto">
-            {/* Quick Links Column */}
             <div className="flex flex-col gap-[24px] items-start">
               <h3 className="font-bold leading-[1.6] text-[18px] lg:text-[20px] text-[#FDFFE7] tracking-[-0.6px] whitespace-nowrap">
-                Quick Links:
+                {quickLinks.title}
               </h3>
               <div className="flex flex-col gap-[12px] items-start font-normal leading-[1.5] opacity-80 text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px]">
-                <Link href="/about" className="hover:text-white transition-colors">White Label</Link>
-                <Link href="/press" className="hover:text-white transition-colors">Press</Link>
-                <Link href="/speakers" className="hover:text-white transition-colors">Speakers</Link>
-                <Link href="/featured-artists" className="hover:text-white transition-colors">Featured Artists</Link>
-                <Link href="/designers" className="hover:text-white transition-colors">Designers</Link>
+                {quickLinks.links.map((item) => (
+                  <FooterLink key={item.label + item.href} href={item.href} className="hover:text-white transition-colors">
+                    {item.label}
+                  </FooterLink>
+                ))}
               </div>
             </div>
 
-            {/* Helpful Resources Column */}
             <div className="flex flex-col gap-[24px] items-start">
               <h3 className="font-bold leading-[1.6] text-[18px] lg:text-[20px] text-[#FDFFE7] tracking-[-0.6px] whitespace-nowrap">
-                Helpful Resources:
+                {resources.title}
               </h3>
               <div className="flex flex-col gap-[12px] items-start font-normal leading-[1.5] opacity-80 text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px]">
-                <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                <Link href="/terms-of-use" className="hover:text-white transition-colors">Terms of Use</Link>
+                {resources.links.map((item) => (
+                  <FooterLink key={item.label + item.href} href={item.href} className="hover:text-white transition-colors">
+                    {item.label}
+                  </FooterLink>
+                ))}
               </div>
             </div>
 
-            {/* Lets Talk Column */}
             <div className="flex flex-col gap-[24px] items-start w-full lg:w-[273px]">
               <h3 className="font-bold leading-[1.6] text-[18px] lg:text-[20px] text-[#FDFFE7] tracking-[-0.6px] whitespace-nowrap">
-                Lets Talk
+                {contact.title}
               </h3>
               <div className="flex flex-col gap-[12px] items-start font-normal leading-[1.5] opacity-80 text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px] w-full">
-                <p>NOLCHA</p>
-                <p className="whitespace-pre-wrap">
-                  1345 Ave of the Americas, 2nd floor, New York, NY 10105
-                </p>
-                <a href="mailto:Partnerships@nolcha.com" className="hover:text-white transition-colors">
-                  Partnerships@nolcha.com
-                </a>
+                {contact.company ? <p>{contact.company}</p> : null}
+                {contact.address ? (
+                  <p className="whitespace-pre-wrap">{contact.address}</p>
+                ) : null}
+                {contact.email ? (
+                  <a href={`mailto:${contact.email}`} className="hover:text-white transition-colors">
+                    {contact.email}
+                  </a>
+                ) : null}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Footer Bottom */}
         <div className="flex flex-col items-start w-full">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-[20px] w-full">
             <p className="font-normal leading-[1.5] text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px]">
-              Copyright © 2026 Nolcha, All rights reserved
+              {copyright}
             </p>
           </div>
         </div>
