@@ -52,17 +52,46 @@ const normalizeMenuHref = (href = "") => {
   return `/${normalizePathPart(href)}`;
 };
 
-const resolveChildHref = (parentHref = "", child = {}) => {
+const resolveMenuParentSegment = (parentHref = "", parent = {}) => {
+  const cleanParent = normalizePathPart(parentHref);
+  if (cleanParent && cleanParent !== "#") return cleanParent;
+
+  const key = String(parent?.key || "").toLowerCase();
+  const label = String(parent?.label || "").toLowerCase();
+
+  if (key === "experiences" || label === "experiences") return "experiences";
+  if (key === "charity" || label === "charity") return "charity";
+
+  return "";
+};
+
+const resolveChildHref = (parentHref = "", child = {}, parent = {}) => {
   const ext = (child?.externalUrl || "").trim();
   if (ext && /^https?:\/\//i.test(ext)) {
     return ext;
   }
 
+  const cleanParent = resolveMenuParentSegment(parentHref, parent);
   const childHref = child?.href || "";
   const childSlug = child?.slug || "";
 
   if (childHref) {
-    return normalizeMenuHref(childHref);
+    const normalizedChildHref = normalizeMenuHref(childHref);
+    const cleanHref = normalizePathPart(normalizedChildHref);
+
+    if (!cleanParent || cleanParent === "alumni") {
+      return normalizedChildHref;
+    }
+
+    if (
+      cleanHref === cleanParent ||
+      cleanHref.startsWith(`${cleanParent}/`)
+    ) {
+      return normalizedChildHref;
+    }
+
+    const hrefLeaf = cleanHref.split("/").pop();
+    return `/${cleanParent}/${hrefLeaf}`;
   }
 
   const relativeValue = childSlug || childHref;
@@ -70,7 +99,6 @@ const resolveChildHref = (parentHref = "", child = {}) => {
     return "#";
   }
 
-  const cleanParent = normalizePathPart(parentHref);
   const cleanChild = normalizePathPart(relativeValue);
 
   if (!cleanParent || cleanParent === "alumni") {
@@ -480,7 +508,7 @@ function Navbar() {
                 }
                 return {
                   label: child?.label || "",
-                  href: resolveChildHref(item?.href || "", child),
+                  href: resolveChildHref(item?.href || "", child, item),
                   slug: child?.slug || "",
                   isExternal: false,
                   imageSrc: getMediaUrl(child?.image),
