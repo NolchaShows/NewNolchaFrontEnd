@@ -2,6 +2,10 @@
 import React, { useState, useEffect } from "react";
 import SectionTitle from "../common/SectionTitle";
 
+/** Light tile / hover accent for partner cards */
+const PARTNER_ACCENT = "#bdff00";
+const PARTNER_ACCENT_CLASS = "bg-[#bdff00]";
+
 const Partners = ({ partnerData, loading, title, description, partners, bg, logo }) => {
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -61,13 +65,16 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
         altText: partner.alt_text || partner.altText || fallbackPartner.altText || `Partner ${index + 1}`,
         backgroundColor:
           partner.color === "light"
-            ? "bg-[#E7F0D3]"
+            ? PARTNER_ACCENT_CLASS
             : partner.color === "black"
               ? "bg-black"
               : fallbackPartner.backgroundColor || "bg-black",
         color:
           partner.color ||
-          (fallbackPartner.backgroundColor === "bg-[#E7F0D3]" ? "light" : "black"),
+          (fallbackPartner.backgroundColor === PARTNER_ACCENT_CLASS ||
+          fallbackPartner.backgroundColor === "bg-[#E7F0D3]"
+            ? "light"
+            : "black"),
       };
     });
   };
@@ -118,16 +125,16 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
     
     const currentBackgroundColor = isHovered
       ? isDefaultBlack
-        ? "var(--primary)" // If default is secondary, hover becomes site button primary
-        : "#1D1C1E" // If default is light green/cream, hover becomes secondary
+        ? PARTNER_ACCENT
+        : "#1D1C1E"
       : isDefaultBlack
-      ? "#1D1C1E" // Default secondary background
-      : "var(--primary)"; // Default site button primary background
-    
-    // Simple hover logic: show primary image normally, secondary on hover
+      ? "#1D1C1E"
+      : PARTNER_ACCENT;
+
+    // Green tile: black mark. Dark tile: white mark (after filter).
     const currentImage =
-      currentBackgroundColor === "var(--primary)" ? partner.imageBlack : partner.imageWhite;
-    const isDarkTile = currentBackgroundColor !== "var(--primary)";
+      currentBackgroundColor === PARTNER_ACCENT ? partner.imageBlack : partner.imageWhite;
+    const isGreenTile = currentBackgroundColor === PARTNER_ACCENT;
 
     return (
       <div
@@ -142,8 +149,8 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
           <img
             src={currentImage}
             alt={partner.altText}
-            className={`w-full h-auto max-w-[75%] sm:max-w-[80%] 2xl:max-w-[90%] object-contain transition-all duration-300 ease-in-out ${
-              isDarkTile ? "filter brightness-0 invert" : ""
+            className={`w-full h-auto max-w-[75%] sm:max-w-[80%] 2xl:max-w-[90%] object-contain transition-all duration-300 ease-in-out filter ${
+              isGreenTile ? "brightness-0" : "brightness-0 invert"
             }`}
           />
         </div>
