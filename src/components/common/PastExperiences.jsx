@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import StyledHeading from "./StyledHeading";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import SectionTitle from "./SectionTitle";
 import ArrowNavButtons from "./ArrowNavButtons";
 
@@ -36,63 +34,100 @@ const PastExperiences = ({
   experiences = [],
   title = "Past experience",
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const screenSize = useScreenSize();
+  const scrollRef = useRef(null);
+  const dragRef = useRef({
+    active: false,
+    startX: 0,
+    startScroll: 0,
+    dragged: false,
+  });
+  const suppressLinkClickRef = useRef(false);
 
-  const getItemsPerSlide = () => {
-    switch (screenSize) {
-      case "sm":
-        return 1;
-      case "md":
-        return 2;
-      case "lg":
-        return 5;
-      default:
-        return 5;
-    }
-  };
-
-  const itemsPerSlide = getItemsPerSlide();
-  const isDesktop = screenSize === "lg";
   const isMobile = screenSize === "sm";
-  // Card sizing (requested)
-  const CARD_W = screenSize === "3xl" ? 500 : screenSize === "xxl" ? 420 : 345;
-  const CARD_H = screenSize === "3xl" ? 580 : screenSize === "xxl" ? 480 : 397;
   // Matches `px-2` on each card container (8px left + 8px right)
   const CARD_GUTTER = screenSize === "3xl" ? 24 : screenSize === "xxl" ? 20 : 16;
 
-  const nextSlide = () => {
-    if (currentIndex + 1 < experiences.length) {
-      setCurrentIndex((prev) => prev + 1);
-    } else {
-      // Loop back to start
-      setCurrentIndex(0);
+  const getScrollStep = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return 360;
+    if (el.children.length >= 2) {
+      const a = el.children[0];
+      const b = el.children[1];
+      return b.offsetLeft - a.offsetLeft;
     }
-  };
+    const first = el.firstElementChild;
+    return first ? first.getBoundingClientRect().width + CARD_GUTTER : 360;
+  }, [CARD_GUTTER]);
 
-  const prevSlide = () => {
-    if (currentIndex - 1 >= 0) {
-      setCurrentIndex((prev) => prev - 1);
-    } else {
-      // Go to end
-      setCurrentIndex(Math.max(0, experiences.length - 1));
-    }
-  };
-
-  const handleDragEnd = (event, info) => {
-    const threshold = 50; // Minimum drag distance to trigger slide change
-    const velocity = info.velocity.x;
-
-    // Determine slide change based on drag distance and velocity
-    if (Math.abs(info.offset.x) > threshold || Math.abs(velocity) > 500) {
-      if (info.offset.x > 0 || velocity > 0) {
-        // Swiped right (dragged left) - go to previous
-        prevSlide();
+  const scrollRowBy = useCallback(
+    (direction) => {
+      const el = scrollRef.current;
+      if (!el) return;
+      const step = getScrollStep();
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll <= 0) return;
+      if (direction > 0) {
+        if (el.scrollLeft >= maxScroll - 2) {
+          el.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          el.scrollBy({ left: step, behavior: "smooth" });
+        }
       } else {
-        // Swiped left (dragged right) - go to next
-        nextSlide();
+        if (el.scrollLeft <= 2) {
+          el.scrollTo({ left: maxScroll, behavior: "smooth" });
+        } else {
+          el.scrollBy({ left: -step, behavior: "smooth" });
+        }
       }
-    }
+    },
+    [getScrollStep]
+  );
+
+  const nextSlide = useCallback(() => scrollRowBy(1), [scrollRowBy]);
+  const prevSlide = useCallback(() => scrollRowBy(-1), [scrollRowBy]);
+
+  useEffect(() => {
+    const onMove = (e) => {
+      if (!dragRef.current.active) return;
+      const el = scrollRef.current;
+      if (!el) return;
+      const dx = e.clientX - dragRef.current.startX;
+      if (Math.abs(dx) > 6) {
+        dragRef.current.dragged = true;
+      }
+      el.scrollLeft = dragRef.current.startScroll - dx;
+    };
+
+    const onUp = () => {
+      if (!dragRef.current.active) return;
+      const wasDrag = dragRef.current.dragged;
+      dragRef.current.active = false;
+      dragRef.current.dragged = false;
+      if (wasDrag) {
+        suppressLinkClickRef.current = true;
+      }
+    };
+
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, []);
+
+  const onDragScrollMouseDown = (e) => {
+    if (e.button !== 0) return;
+    const el = scrollRef.current;
+    if (!el) return;
+    dragRef.current = {
+      active: true,
+      startX: e.clientX,
+      startScroll: el.scrollLeft,
+      dragged: false,
+    };
+    e.preventDefault();
   };
 
   // If no data available, don't render the component
@@ -112,7 +147,9 @@ const PastExperiences = ({
       {isMobile ? (
         <div className="relative overflow-hidden px-0">
           <div
-            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+            ref={scrollRef}
+            onMouseDown={onDragScrollMouseDown}
+            className="flex cursor-grab active:cursor-grabbing overflow-x-auto snap-x snap-mandatory scrollbar-hide select-none"
             style={{
               gap: `${CARD_GUTTER}px`,
               WebkitOverflowScrolling: "touch",
@@ -137,6 +174,7 @@ const PastExperiences = ({
                       <img
                         src={imageUrl}
                         alt={text}
+                        draggable={false}
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -150,6 +188,12 @@ const PastExperiences = ({
                         <a
                           href={href}
                           aria-label={`Open ${text}`}
+                          onClick={(e) => {
+                            if (suppressLinkClickRef.current) {
+                              e.preventDefault();
+                              suppressLinkClickRef.current = false;
+                            }
+                          }}
                           className="absolute inset-0 z-20"
                         />
                         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
@@ -167,22 +211,12 @@ const PastExperiences = ({
         </div>
       ) : (
         <div className="relative overflow-hidden px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]">
-          <motion.div
-            className="flex cursor-grab active:cursor-grabbing"
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.2}
-            onDragEnd={handleDragEnd}
-            animate={{
-              x: isDesktop
-                ? -currentIndex * (CARD_W + CARD_GUTTER)
-                : `-${(currentIndex / itemsPerSlide) * 100}%`,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 120,
-              damping: 24,
-              mass: 0.9,
+          <div
+            ref={scrollRef}
+            onMouseDown={onDragScrollMouseDown}
+            className="flex cursor-grab active:cursor-grabbing overflow-x-auto scrollbar-hide select-none"
+            style={{
+              WebkitOverflowScrolling: "touch",
             }}
           >
             {experiences.map((experience, idx) => {
@@ -202,6 +236,7 @@ const PastExperiences = ({
                       <img
                         src={imageUrl}
                         alt={text}
+                        draggable={false}
                         className="w-full h-full object-cover"
                       />
                       {/* Text Overlay */}
@@ -216,6 +251,12 @@ const PastExperiences = ({
                         <a
                           href={href}
                           aria-label={`Open ${text}`}
+                          onClick={(e) => {
+                            if (suppressLinkClickRef.current) {
+                              e.preventDefault();
+                              suppressLinkClickRef.current = false;
+                            }
+                          }}
                           className="absolute inset-0 z-20"
                         />
                         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
@@ -229,7 +270,7 @@ const PastExperiences = ({
                 </div>
               );
             })}
-          </motion.div>
+          </div>
         </div>
       )}
 
