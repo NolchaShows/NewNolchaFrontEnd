@@ -129,7 +129,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
           {partnerLogos.map((partner, index) => (
             <motion.div
               key={index}
-              className="flex flex-col items-start lg:items-center gap-2 sm:gap-3 lg:gap-4 min-w-0 lg:flex-1 lg:min-w-[100px]"
+              className="flex flex-col items-start lg:items-center gap-2 sm:gap-3 lg:gap-4 min-w-0 lg:flex-1 lg:min-w-[200px]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -139,7 +139,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
                 delay: index * 0.1 
               }}
             >
-              <div className="h-10 lg:h-12 flex items-center justify-start lg:justify-center w-full">
+              <div className="h-20 lg:h-24 flex items-center justify-start lg:justify-center w-full">
                 {partner.logo ? (
                   <img
                     src={partner.logo}
