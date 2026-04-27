@@ -127,6 +127,7 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
     // Simple hover logic: show primary image normally, secondary on hover
     const currentImage =
       currentBackgroundColor === "var(--primary)" ? partner.imageBlack : partner.imageWhite;
+    const isDarkTile = currentBackgroundColor !== "var(--primary)";
 
     return (
       <div
@@ -141,7 +142,9 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
           <img
             src={currentImage}
             alt={partner.altText}
-            className="w-full h-auto max-w-[75%] sm:max-w-[80%] 2xl:max-w-[90%] object-contain transition-all duration-300 ease-in-out"
+            className={`w-full h-auto max-w-[75%] sm:max-w-[80%] 2xl:max-w-[90%] object-contain transition-all duration-300 ease-in-out ${
+              isDarkTile ? "filter brightness-0 invert" : ""
+            }`}
           />
         </div>
       </div>
