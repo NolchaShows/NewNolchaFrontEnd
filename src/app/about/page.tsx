@@ -3,7 +3,7 @@ import AboutHeroVideo from "@/components/about/AboutHeroVideo.jsx";
 import OurDifferentiators from "@/components/about/OurDifferentiators";
 import OurServicesSection from "@/components/about/OurServicesSection";
 import OurClientsSection from "@/components/about/OurClientsSection";
-import OurPressSection from "@/components/about/OurPressSection";
+// import OurPressSection from "@/components/about/OurPressSection";
 import { getAboutPageContent } from "@/lib/aboutPageData";
 import { getPressPageContent } from "@/lib/pressPageData";
 
@@ -55,7 +55,7 @@ export default async function AboutPage() {
         ctaHref={aboutPage.clients.ctaHref}
         clientLogos={aboutPage.clients.logos}
       />
-      <OurPressSection
+      {/* <OurPressSection
         label={aboutPage.press.label}
         title={aboutPage.press.title}
         viewMoreText={aboutPage.press.viewMoreText}
@@ -64,7 +64,7 @@ export default async function AboutPage() {
         featureImage={pressFeatureImage}
         featureLink={pressFeatureLink}
         featureSourceLogo={pressFeatureSourceLogo}
-      />
+      /> */}
     </main>
   );
 }
