@@ -969,13 +969,13 @@ function Navbar() {
               hoveredMegaItemImage || cfg.items?.[0]?.imageSrc || cfg.imageSrc;
             return (
               <div className="pt-3">
-                <div className="w-[746px] xxl:w-[900px] h-[427px] xxl:h-[550px] rounded-[20px] bg-black overflow-hidden">
-                  <div className="grid grid-cols-[1fr_400px] xxl:grid-cols-[1fr_500px] gap-6 p-6 xxl:p-10 h-full">
-                    <div>
+                <div className="w-[746px] xxl:w-[900px] min-h-[427px] xxl:min-h-[550px] max-h-[85vh] overflow-y-auto rounded-[20px] bg-black">
+                  <div className="grid grid-cols-[1fr_400px] xxl:grid-cols-[1fr_500px] gap-6 p-6 xxl:p-10 items-start">
+                    <div className="min-w-0">
                       <div className="text-[16px] xxl:text-[20px] text-white/70 mb-4">
                         {cfg.sectionLabel}
                       </div>
-                      <div className="space-y-[14px] xxl:space-y-[20px] max-h-[calc(100%-40px)] overflow-auto">
+                      <div className="space-y-[14px] xxl:space-y-[20px]">
                         {cfg.items.map((it, i) =>
                           it.isExternal ? (
                             <a
@@ -1004,9 +1004,9 @@ function Navbar() {
                       </div>
                     </div>
 
-                    <div>
-                      <div className="bg-[#0E0E0E] border border-white/10 rounded-[20px] p-6 xxl:p-10 shadow-sm h-full flex flex-col w-[400px] xxl:w-[500px]">
-                        <div className="flex-1 rounded-[24px] overflow-hidden bg-[#1A1A1A]">
+                    <div className="self-start">
+                      <div className="bg-[#0E0E0E] border border-white/10 rounded-[20px] p-6 xxl:p-10 shadow-sm flex flex-col w-[400px] xxl:w-[500px]">
+                        <div className="h-[300px] xxl:h-[380px] w-full rounded-[24px] overflow-hidden bg-[#1A1A1A] shrink-0">
                           <img
                             src={previewImageSrc}
                             alt={`${cfg.sectionLabel} preview`}
