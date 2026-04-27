@@ -8,7 +8,7 @@ import SectionTitle from "../common/SectionTitle";
 
 function VideoGridZigZag({ videos }) {
   const borderColors = ['#FF6813', '#BBD7FF', '#CAD533', '#E6C6C5'];
-  
+
   return (
     <div className="w-full flex justify-center">
       {/* 🖥️ Desktop/Large screens */}
@@ -257,6 +257,17 @@ function Artists({ artistData, loading, textColor, backgroundColor, isFade, vide
         ) : (
           <VideoGrid videos={mediaItems} />
         )}
+
+        <div className="bg-black flex w-full flex-col items-center pt-4 lg:pt-6 2xl:pt-8 3xl:pt-10">
+          <button
+            onClick={() => {
+              window.location.href = "/featured-artists";
+            }}
+            className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
+          >
+            <span>View all Artists</span>
+          </button>
+        </div>
 
       </div>
     </div>
