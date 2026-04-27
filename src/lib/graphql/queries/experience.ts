@@ -99,6 +99,12 @@ export const EXPERIENCE_BLOCK_EVENING_RECAP_SECTION = gql`
     video {
       ...MediaVideoFields
     }
+    slides {
+      title
+      video {
+        ...MediaVideoFields
+      }
+    }
   }
 `;
 

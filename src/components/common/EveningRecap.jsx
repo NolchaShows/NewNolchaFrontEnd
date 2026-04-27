@@ -49,6 +49,11 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
 
     const currentVideo = videoList[currentIndex];
     const videoUrlToUse = typeof currentVideo === 'string' ? currentVideo : currentVideo.url;
+    const slideTitle =
+        typeof currentVideo === 'object' && currentVideo != null && typeof currentVideo.title === 'string'
+            ? currentVideo.title.trim()
+            : '';
+    const displayTitle = slideTitle || title;
     const isGoogleDriveForCurrent = typeof currentVideo === 'object'
         ? (currentVideo.isGoogleDrive || videoUrlToUse.includes('drive.google.com'))
         : (isGoogleDrive || videoUrlToUse.includes('drive.google.com'));
@@ -60,13 +65,18 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
     const isGoogleDriveVideo = embedUrl.includes('drive.google.com');
 
     return (
-        <div className="page-container-fluid bg-black !pb-0">
-            {title ? (
-                <SectionTitle className="text-white px-5 lg:px-0 text-left lg:text-center">{title}</SectionTitle>
+        <div className="page-container-fluid bg-black pb-10 lg:pb-16 2xl:pb-20 xxl:pb-24">
+            {displayTitle ? (
+                <SectionTitle
+                    key={`evening-title-${currentIndex}-${displayTitle}`}
+                    className="text-white px-5 lg:px-0 text-left lg:text-center"
+                >
+                    {displayTitle}
+                </SectionTitle>
             ) : null}
 
             {/* Video Container */}
-            <div className={`relative overflow-hidden ${title ? "mt-5 lg:mt-10 2xl:mt-12 xxl:mt-15 3xl:mt-24" : "mt-0"}`}>
+            <div className={`relative overflow-hidden mb-6 lg:mb-8 2xl:mb-10 ${displayTitle ? "mt-5 lg:mt-10 2xl:mt-12 xxl:mt-15 3xl:mt-24" : "mt-0"}`}>
                 <AnimatePresence mode="wait">
                     {isGoogleDriveVideo ? (
                         <motion.div

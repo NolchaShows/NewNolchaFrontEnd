@@ -435,17 +435,20 @@ export default async function Home() {
     title: "Recent Events: Bitcoin Nashville 2024",
     videos: [
       {
+        title: "Recent Events: Bitcoin Nashville 2024",
         url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov",
-        isGoogleDrive: false
+        isGoogleDrive: false,
       },
       {
+        title: "NYFW — SHAO / OH POLLY",
         url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov",
-        isGoogleDrive: false
+        isGoogleDrive: false,
       },
       {
+        title: "Art Basel — Web3 & culture",
         url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov",
-        isGoogleDrive: false
-      }
+        isGoogleDrive: false,
+      },
     ],
     // Keep videoUrl for backward compatibility
     videoUrl: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov"
