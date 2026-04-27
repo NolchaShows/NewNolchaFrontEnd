@@ -64,19 +64,27 @@ export default function LogoSlider({ logoSliderData, loading }) {
   return (
     <>
       <div className="w-full">
-        <div className="flex h-[60px] md:h-[116px] 2xl:h-[130px] items-center">
+        <div className="flex h-[60px] md:h-[116px] 2xl:h-[130px] items-stretch">
           {/* Fixed "AS SEEN IN" section */}
-          <div className="flex-shrink-0 bg-[#141414] h-full flex items-center justify-center lg:px-8 px-4 min-w-[100px] md:min-w-[350px] 2xl:min-w-[400px] border-y border-white">
-            <h3 className="font-neue text-[16px] lg:text-[26px] font-bold text-white tracking-wide 2xl:text-[36px]">
+          <div className="relative flex-shrink-0 bg-[#141414] flex items-center justify-center lg:px-8 px-4 min-w-[100px] md:min-w-[350px] 2xl:min-w-[400px]">
+            <span
+              className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-px min-h-px bg-white"
+              aria-hidden
+            />
+            <span
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-px min-h-px bg-white"
+              aria-hidden
+            />
+            <h3 className="relative z-[1] font-neue text-[16px] lg:text-[26px] font-bold text-white tracking-wide 2xl:text-[36px]">
               {title}
             </h3>
           </div>
 
           {/* Sliding logos container */}
           <div className="flex-1 relative overflow-hidden h-full">
-            <div className="absolute inset-0 flex items-center">
+            <div className="absolute inset-0 flex items-stretch">
               <div
-                className="flex items-center press-animate-slide"
+                className="flex items-stretch h-full press-animate-slide"
                 style={{
                   width: `${duplicatedLogos.length * 350}px`, // adjust total width
                   "--press-slide-distance": `${logos.length * 200}px`,
@@ -85,16 +93,28 @@ export default function LogoSlider({ logoSliderData, loading }) {
                 {duplicatedLogos.map((logo, index) => (
                   <div
                     key={`${logo.name}-${index}`}
-                    className="flex-shrink-0 flex bg-[#141414] items-center justify-center w-[180px] md:w-[350px] h-[60px] md:h-[116px] 2xl:min-h-[130px] border-y border-r border-white"
+                    className="relative flex-shrink-0 flex bg-[#141414] items-center justify-center w-[180px] md:w-[350px] h-full min-h-0 isolate"
                   >
+                    <span
+                      className="pointer-events-none absolute inset-x-0 top-0 z-20 h-px min-h-px bg-white"
+                      aria-hidden
+                    />
+                    <span
+                      className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-px min-h-px bg-white"
+                      aria-hidden
+                    />
+                    <span
+                      className="pointer-events-none absolute inset-y-0 right-0 z-20 w-px min-w-px bg-white"
+                      aria-hidden
+                    />
                     {logo.url ? (
                       <img
                         src={logo.url}
                         alt={logo.name}
-                        className="h-full w-full object-contain"
+                        className="relative z-10 h-full w-full object-contain"
                       />
                     ) : (
-                      <span className="text-lg font-semibold text-gray-600">
+                      <span className="relative z-10 text-lg font-semibold text-gray-600">
                         {logo.name}
                       </span>
                     )}
