@@ -136,7 +136,9 @@ function Navbar() {
     pathname?.startsWith("/about") ||
     pathname?.startsWith("/charity") ||
     pathname?.startsWith("/experiences") ||
-    pathname?.startsWith("/speakers");
+    pathname?.startsWith("/speakers") ||
+    pathname?.startsWith("/featured-artists/") ||
+    pathname?.startsWith("/designers/");
   const defaultExperiencesDropdown = [
     {
       label: "VV Racing with Jack Butcher",
