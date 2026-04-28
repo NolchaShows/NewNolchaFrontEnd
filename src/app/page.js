@@ -120,6 +120,8 @@ const mapUpcomingEvents = (upcomingSection) => {
     logo: getMediaUrl(event?.logo) || "",
     mainImage: getMediaUrl(event?.mainImage) || getMediaUrl(event?.image) || "",
     galleryImages: (event?.galleryImages || []).map((image) => getMediaUrl(image)).filter(Boolean),
+    tweetCarousel:
+      event?.tweet_carousel ?? event?.tweetCarousel ?? null,
   }));
 };
 
@@ -508,6 +510,7 @@ export default async function Home() {
           <HomeUpcomingEventsSection
             title={homePage?.upcoming_events_section?.title || "Upcoming Events"}
             events={upcomingEvents}
+            fallbackTweetCarousel={homeTweetCarousel}
           />
           {homePage?.evening_recap_section ? (
             <EveningRecapSection slug="home" pageType="home" page={homePage} />

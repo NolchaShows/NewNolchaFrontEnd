@@ -7,6 +7,7 @@ import { upcomingListEvents } from "@/data/upcomingEvents";
 export default function HomeUpcomingEventsSection({
   title = "Upcoming Events",
   events = upcomingListEvents,
+  fallbackTweetCarousel = null,
 }) {
   const [requestedUpcomingSlug, setRequestedUpcomingSlug] = useState(null);
 
@@ -76,6 +77,7 @@ export default function HomeUpcomingEventsSection({
       events={events}
       openEventSlug={requestedUpcomingSlug}
       onOpenEventHandled={handleUpcomingEventHandled}
+      fallbackTweetCarousel={fallbackTweetCarousel}
     />
   );
 }

@@ -5,6 +5,7 @@ import { FaXTwitter, FaInstagram, FaDiscord, FaFacebookF, FaLinkedin, FaLink } f
 import { RiTelegram2Line } from "react-icons/ri";
 import EveningRecap from "../common/EveningRecap";
 import MediaGalleryGrid from "../common/MediaGalleryGrid";
+import TweetCarousel from "../common/TweetCarousel";
 
 const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -41,6 +42,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   const logoUrl = eventData?.logo || eventData?.logoUrl || "";
   const mainImage = eventData?.mainImage || eventData?.image || "/landing/recent_event.png";
   const galleryImages = eventData?.galleryImages || eventData?.gallery || [];
+  const tweetCarousel = eventData?.tweetCarousel || null;
 
   // Default gallery images if none provided
   const displayGalleryImages = galleryImages.length > 0
@@ -338,6 +340,17 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                 videos={eveningRecap.videos}
                 videoUrl={eveningRecap.videoUrl}
               />
+              {tweetCarousel?.items?.length ? (
+                <div className="mt-8">
+                  <TweetCarousel
+                    carousalData={tweetCarousel}
+                    posts={[]}
+                    embedded
+                    padding=""
+                    title={tweetCarousel.title || "Community Moments"}
+                  />
+                </div>
+              ) : null}
               {/* Bottom Row: Experience-style Gallery */}
               <div className="mt-8 bg-[#f0eee6] p-4 md:p-6">
                 <MediaGalleryGrid items={modalGalleryItems} />

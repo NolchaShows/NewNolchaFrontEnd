@@ -5,11 +5,19 @@ import SponsorshipDetailsModal from "../Modals/SponsorshipDetailsModal";
 import EventDetailsModal from "../Modals/EventDetailsModal";
 import { slugifyUpcomingEventTitle } from "@/data/upcomingEvents";
 
+function resolveTweetCarouselForEvent(event, fallback) {
+  const direct = event?.tweetCarousel || event?.tweet_carousel;
+  if (direct?.items?.length) return direct;
+  if (fallback?.items?.length) return fallback;
+  return null;
+}
+
 const UpcomingEventsList = ({
   title = "Upcoming Events",
   events = [],
   openEventSlug = null,
   onOpenEventHandled,
+  fallbackTweetCarousel = null,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -83,10 +91,14 @@ const UpcomingEventsList = ({
       logo: matchedEvent.logo || matchedEvent.logoUrl || "",
       mainImage: matchedEvent.mainImage || matchedEvent.image || "",
       galleryImages: matchedEvent.galleryImages || matchedEvent.gallery || [],
+      tweetCarousel: resolveTweetCarouselForEvent(
+        matchedEvent,
+        fallbackTweetCarousel
+      ),
     });
     setIsEventDetailsModalOpen(true);
     onOpenEventHandled?.();
-  }, [defaults, onOpenEventHandled, openEventSlug, safeEvents]);
+  }, [defaults, fallbackTweetCarousel, onOpenEventHandled, openEventSlug, safeEvents]);
 
   useEffect(() => {
     if (!openEventSlug) {
@@ -158,6 +170,10 @@ const UpcomingEventsList = ({
                             logo: display.logo || display.logoUrl || "",
                             mainImage: display.mainImage || display.image || "",
                             galleryImages: display.galleryImages || display.gallery || [],
+                            tweetCarousel: resolveTweetCarouselForEvent(
+                              display,
+                              fallbackTweetCarousel
+                            ),
                           });
                           setIsEventDetailsModalOpen(true);
                         }}

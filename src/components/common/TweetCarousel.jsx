@@ -1,15 +1,26 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import ArrowNavButtons from "./ArrowNavButtons";
+
+/** Accepts numeric id or full X/Twitter status URL. */
+export function parseTweetId(raw) {
+  if (raw == null || raw === "") return "";
+  const s = String(raw).trim();
+  if (/^\d{5,}$/.test(s)) return s;
+  const m = s.match(/status\/(\d+)/i);
+  if (m) return m[1];
+  return s;
+}
 
 const TweetCarousel = ({
   posts,
   carousalData,
   padding = "",
   title = "Trusted by",
+  embedded = false,
 }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,25 +37,34 @@ const TweetCarousel = ({
 
   // Load Twitter embed script
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://platform.twitter.com/widgets.js';
+    const script = document.createElement("script");
+    script.src = "https://platform.twitter.com/widgets.js";
     script.async = true;
-    script.charset = 'utf-8';
+    script.charset = "utf-8";
     document.body.appendChild(script);
 
     const timer = setTimeout(() => setIsLoaded(true), 1500);
 
     const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
       clearTimeout(timer);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isLoaded || typeof window === "undefined" || !window.twttr?.widgets) return;
+    try {
+      window.twttr.widgets.load();
+    } catch {
+      /* ignore */
+    }
+  }, [currentPostIndex, isLoaded, carouselItems.length, embedded]);
 
   const nextPost = () => {
     setCurrentPostIndex((prev) => (prev + 1) % carouselItems.length);
@@ -66,38 +86,74 @@ const TweetCarousel = ({
   };
 
   const itemsPerView = getItemsPerView();
-  const gap = windowWidth < 768 ? 24 : windowWidth < 1024 ? 32 : 40;
+  const gap = embedded
+    ? windowWidth < 768
+      ? 10
+      : windowWidth < 1024
+        ? 12
+        : 14
+    : windowWidth < 768
+      ? 24
+      : windowWidth < 1024
+        ? 32
+        : 40;
   const isMobile = windowWidth < 768;
 
+  const desktopCardWidthClass = embedded
+    ? "w-full md:w-[calc(50%-6px)] lg:w-[calc(33.333%-9.5px)]"
+    : "w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-26.666px)]";
+
+  const rootClass = embedded
+    ? `py-4 sm:py-6 lg:py-8 overflow-hidden bg-[#0f0f0f] rounded-[14px] border border-white/12 ${padding} relative`
+    : `py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-black ${padding} relative`;
+
+  const headerWrapClass = embedded
+    ? "px-3 sm:px-5 lg:px-8 mb-4 lg:mb-6 flex flex-row items-center justify-between"
+    : "px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] mb-12 flex flex-row items-center justify-between";
+
+  const innerPadClass = embedded
+    ? "px-0 lg:px-4 xl:px-6"
+    : "px-0 lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]";
+
+  const cardShell =
+    embedded
+      ? "min-h-[280px] sm:min-h-[320px] lg:min-h-[380px]"
+      : "min-h-[450px] lg:min-h-[550px]";
+
   return (
-    <div className={`py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-black ${padding} relative`}>
-      <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] mb-12 flex flex-row items-center justify-between">
-        <SectionTitle disableTitleSpacing className="text-white">{carouselTitle}</SectionTitle>
+    <div className={rootClass}>
+      <div className={headerWrapClass}>
+        <SectionTitle disableTitleSpacing className="text-white">
+          {carouselTitle}
+        </SectionTitle>
 
         {/* Navigation Arrows */}
         {!isMobile ? <ArrowNavButtons onLeft={prevPost} onRight={nextPost} /> : null}
       </div>
 
       <div className="relative">
-        <div className="px-0 lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]">
+        <div className={innerPadClass}>
           {isMobile ? (
             <div
               className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
               style={{
                 gap: `${gap}px`,
                 WebkitOverflowScrolling: "touch",
-                paddingInline: "7.5vw",
-                scrollPaddingInline: "7.5vw",
+                paddingInline: embedded ? "4vw" : "7.5vw",
+                scrollPaddingInline: embedded ? "4vw" : "7.5vw",
               }}
             >
               {carouselItems.map((item, idx) => {
-                const tweetId = typeof item === 'string' ? item : item.tweetId || item.id;
+                const rawId = typeof item === "string" ? item : item.tweetId || item.id;
+                const tweetId = parseTweetId(rawId);
                 return (
                   <div
                     key={`${tweetId}-${idx}`}
                     className="w-[85vw] snap-center flex-shrink-0"
                   >
-                    <div className="bg-[#111] rounded-3xl p-4 min-h-[450px] lg:min-h-[550px] flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500">
+                    <div
+                      className={`bg-[#111] rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500`}
+                    >
                       {!isLoaded && (
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="w-10 h-10 border-4 border-white/10 border-t-white rounded-full animate-spin"></div>
@@ -124,13 +180,16 @@ const TweetCarousel = ({
                 transition={{ type: "spring", stiffness: 150, damping: 25 }}
               >
                 {carouselItems.map((item, idx) => {
-                  const tweetId = typeof item === 'string' ? item : item.tweetId || item.id;
+                  const rawId = typeof item === "string" ? item : item.tweetId || item.id;
+                  const tweetId = parseTweetId(rawId);
                   return (
                     <div
                       key={`${tweetId}-${idx}`}
-                      className="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-26.666px)] flex-shrink-0"
+                      className={`${desktopCardWidthClass} flex-shrink-0`}
                     >
-                      <div className="bg-[#111] rounded-3xl p-4 min-h-[450px] lg:min-h-[550px] flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500">
+                      <div
+                        className={`bg-[#111] rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500`}
+                      >
                         {!isLoaded && (
                           <div className="absolute inset-0 flex items-center justify-center">
                             <div className="w-10 h-10 border-4 border-white/10 border-t-white rounded-full animate-spin"></div>
