@@ -2,6 +2,9 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Markdown from "react-markdown";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import type { BlocksContent } from "@strapi/blocks-react-renderer";
 import SmoothScroll from "@/components/common/SmoothScroll";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
 import MediaGalleryGrid from "@/components/common/MediaGalleryGrid";
@@ -10,11 +13,107 @@ import {
   getStructuredMediaUrl,
 } from "@/lib/structuredPageMedia";
 
+function hasRenderableDescription(value: unknown): boolean {
+  if (value === null || value === undefined) return false;
+  if (typeof value === "string") return value.trim().length > 0;
+  if (Array.isArray(value)) return value.length > 0;
+  return false;
+}
+
+function DetailRowDescription({ value }: { value: unknown }) {
+  if (!hasRenderableDescription(value)) return null;
+
+  if (typeof value === "string") {
+    /** Strapi "Rich Text (Markdown)" stores bold/italic as ** / * in the REST API as plain strings. */
+    return (
+      <div className="detail-row-markdown max-w-[900px] text-[14px] leading-[1.45] text-[#4a4a4a] lg:text-[16px] [&_strong]:font-semibold [&_em]:italic [&_a]:text-[#1a1a1a] [&_a]:underline [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-2 [&_blockquote]:border-[#c4c4c4] [&_blockquote]:pl-4 [&_blockquote]:italic">
+        <Markdown
+          components={{
+            p({ children }) {
+              return <p className="mb-3 last:mb-0">{children}</p>;
+            },
+          }}
+        >
+          {value}
+        </Markdown>
+      </div>
+    );
+  }
+
+  if (Array.isArray(value)) {
+    return (
+      <div className="detail-row-rich-text max-w-[900px] text-[14px] leading-[1.45] text-[#4a4a4a] lg:text-[16px] [&_a]:text-[#1a1a1a] [&_a]:underline [&_strong]:font-semibold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5">
+        <BlocksRenderer
+          content={value as BlocksContent}
+          blocks={{
+            paragraph: ({ children }) => (
+              <p className="mb-3 last:mb-0">{children}</p>
+            ),
+            heading: ({ children, level }) => {
+              const className =
+                "mb-2 mt-4 font-semibold uppercase tracking-tight first:mt-0";
+              switch (level) {
+                case 1:
+                  return <h1 className={className}>{children}</h1>;
+                case 2:
+                  return <h2 className={className}>{children}</h2>;
+                case 3:
+                  return <h3 className={className}>{children}</h3>;
+                case 4:
+                  return <h4 className={className}>{children}</h4>;
+                case 5:
+                  return <h5 className={className}>{children}</h5>;
+                case 6:
+                  return <h6 className={className}>{children}</h6>;
+                default:
+                  return <h3 className={className}>{children}</h3>;
+              }
+            },
+            quote: ({ children }) => (
+              <blockquote className="my-3 border-l-2 border-[#c4c4c4] pl-4 italic">
+                {children}
+              </blockquote>
+            ),
+            code: ({ plainText }) => (
+              <pre className="my-3 overflow-x-auto rounded bg-black/5 p-3 text-[13px]">
+                <code>{plainText}</code>
+              </pre>
+            ),
+            list: ({ format, children }) => {
+              const ListTag = format === "ordered" ? "ol" : "ul";
+              return <ListTag className="my-2 pl-5">{children}</ListTag>;
+            },
+            "list-item": ({ children }) => <li className="mb-1">{children}</li>,
+            image: ({ image }) => {
+              const src = image?.url?.startsWith("http")
+                ? image.url
+                : `${process.env.NEXT_PUBLIC_STRAPI_URL || ""}${image?.url || ""}`;
+              if (!src) return null;
+              return (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={src}
+                  alt={image.alternativeText || ""}
+                  className="my-3 h-auto max-w-full rounded"
+                  width={image.width}
+                  height={image.height}
+                />
+              );
+            },
+          }}
+        />
+      </div>
+    );
+  }
+
+  return null;
+}
+
 const mapDetailRows = (page: any) => {
   return (page?.detail_rows || []).map((row: any) => ({
     label: row?.label || "",
     title: row?.title || "",
-    description: row?.description || "",
+    description: row?.description,
     tags: (row?.tags || []).map((tag: any) => tag?.text).filter(Boolean),
   }));
 };
@@ -98,18 +197,16 @@ export default function ExperienceDetailPageClient({ page }: { page: any }) {
                       {item.title ? (
                         <span
                           className={`text-[13px] font-bold uppercase tracking-[0.12em] sm:text-[14px] lg:text-[16px] ${
-                            item.description ? "text-[#818181]" : "text-[#1d1d1d]"
+                            hasRenderableDescription(item.description)
+                              ? "text-[#818181]"
+                              : "text-[#1d1d1d]"
                           }`}
                         >
                           {item.title}
                         </span>
                       ) : null}
 
-                      {item.description ? (
-                        <p className="max-w-[900px] text-[14px] leading-[1.45] text-[#4a4a4a] lg:text-[16px]">
-                          {item.description}
-                        </p>
-                      ) : null}
+                      <DetailRowDescription value={item.description} />
                     </div>
                   )}
                 </div>
