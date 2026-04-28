@@ -1,5 +1,28 @@
 import { fetchStructuredPageBySlug } from "@/lib/fetchStructuredPageBySlug";
 
+type NormalizedGallery = {
+  standard_media: unknown[];
+  featured_media: unknown[];
+  featured_content_sections: unknown[];
+  featured_interval: number;
+};
+
+function normalizeGallery(gallery: unknown): NormalizedGallery | null {
+  if (!gallery || typeof gallery !== "object") return null;
+
+  const g = gallery as Partial<NormalizedGallery>;
+
+  return {
+    standard_media: Array.isArray(g.standard_media) ? g.standard_media : [],
+    featured_media: Array.isArray(g.featured_media) ? g.featured_media : [],
+    featured_content_sections: Array.isArray(g.featured_content_sections)
+      ? g.featured_content_sections
+      : [],
+    featured_interval:
+      typeof g.featured_interval === "number" ? g.featured_interval : 6,
+  };
+}
+
 export async function fetchSpeakersPage(slug: string) {
   const page = await fetchStructuredPageBySlug("speakers", slug);
 
@@ -8,13 +31,6 @@ export async function fetchSpeakersPage(slug: string) {
   return {
     ...page,
     shared_speaker_section: page.shared_speaker_section ?? null,
-    gallery: page.gallery
-      ? {
-          standard_media: page.gallery.standard_media ?? [],
-          featured_media: page.gallery.featured_media ?? [],
-          featured_content_sections: page.gallery.featured_content_sections ?? [],
-          featured_interval: page.gallery.featured_interval ?? 6,
-        }
-      : null,
+    gallery: normalizeGallery(page.gallery),
   };
 }
