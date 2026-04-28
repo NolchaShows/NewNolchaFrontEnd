@@ -223,7 +223,7 @@ export async function getArtistPageData() {
     console.log('🎨 Fetching artist page data...');
     
     // Use deep population for all nested components
-    const data = await fetchFromStrapi('artist-pages?populate[0]=artist_section&populate[1]=artist_section.carousal_item&populate[2]=artist_section.media&populate[3]=card&populate[4]=card.image');
+    const data = await fetchFromStrapi('artist-pages?populate[0]=artist_section&populate[1]=artist_section.media&populate[2]=card&populate[3]=card.image');
     
     console.log('📊 Artist Page API Response:', JSON.stringify(data, null, 2));
     
@@ -251,7 +251,7 @@ export async function getArtistPageData() {
 export async function getLandingPageData() {
   try {
     // Use the most explicit population syntax for nested media and components
-    const data = await fetchFromStrapi('landing-pages?populate[0]=hero_section&populate[1]=logo_slider&populate[2]=logo_slider.logos&populate[3]=about_section&populate[4]=about_section.image&populate[5]=about_section.paragraphs&populate[6]=recent_events&populate[7]=recent_events.events&populate[8]=service_section&populate[9]=service_section.services&populate[10]=service_section.services.images&populate[11]=partner_section&populate[12]=partner_section.partners&populate[13]=partner_section.partners.primary&populate[14]=partner_section.partners.secondary&populate[15]=speaker_section&populate[16]=speaker_section.speakers&populate[17]=speaker_section.speakers.image&populate[18]=texthero_section&populate[19]=texthero_section.slides&populate[20]=texthero_section.slides.main_image&populate[21]=texthero_section.slides.logo_image&populate[22]=nolcha_experience_section&populate[23]=nolcha_experience_section.main_image&populate[24]=nolcha_experience_section.accordion_sections&populate[25]=artist_section&populate[26]=artist_section.carousal_item&populate[27]=artist_section.media&populate[28]=carousal_section&populate[29]=carousal_section.carousal_item&populate[30]=carousal_section.carousal_item.image&populate[31]=contact_section&populate[32]=contact_section.background_image&populate[33]=partner_section_2&populate[34]=partner_section_2.partners&populate[35]=partner_section_2.partners.primary&populate[36]=partner_section_2.partners.secondary');
+    const data = await fetchFromStrapi('landing-pages?populate[0]=hero_section&populate[1]=logo_slider&populate[2]=logo_slider.logos&populate[3]=about_section&populate[4]=about_section.image&populate[5]=about_section.paragraphs&populate[6]=recent_events&populate[7]=recent_events.events&populate[8]=service_section&populate[9]=service_section.services&populate[10]=service_section.services.images&populate[11]=partner_section&populate[12]=partner_section.partners&populate[13]=partner_section.partners.primary&populate[14]=partner_section.partners.secondary&populate[15]=speaker_section&populate[16]=speaker_section.speakers&populate[17]=speaker_section.speakers.image&populate[18]=texthero_section&populate[19]=texthero_section.slides&populate[20]=texthero_section.slides.main_image&populate[21]=texthero_section.slides.logo_image&populate[22]=nolcha_experience_section&populate[23]=nolcha_experience_section.main_image&populate[24]=nolcha_experience_section.accordion_sections&populate[25]=artist_section&populate[26]=artist_section.media&populate[27]=carousal_section&populate[28]=carousal_section.carousal_item&populate[29]=carousal_section.carousal_item.image&populate[30]=contact_section&populate[31]=contact_section.background_image&populate[32]=partner_section_2&populate[33]=partner_section_2.partners&populate[34]=partner_section_2.partners.primary&populate[35]=partner_section_2.partners.secondary');
     return data;
   } catch (error) {
     console.error('Error fetching landing page data:', error);
@@ -542,7 +542,6 @@ export async function getDesignerPageData() {
     const qs = new URLSearchParams();
     qs.set('populate[hero][populate][video]', 'true');
     qs.set('populate[artist_section][populate][media]', 'true');
-    qs.set('populate[artist_section][populate][carousal_item]', 'true');
     let data;
     try {
       data = await fetchFromStrapi(`designer-page?${qs.toString()}`);
@@ -573,7 +572,6 @@ export async function getFeaturedArtistsPageData() {
     const qs = new URLSearchParams();
     qs.set('populate[hero][populate][video]', 'true');
     qs.set('populate[artist_section][populate][media]', 'true');
-    qs.set('populate[artist_section][populate][carousal_item]', 'true');
 
     let data;
     try {

@@ -239,9 +239,6 @@ export const transformFeaturedArtistsPageData = (data) => {
       title: s.title || result.artistData.title,
       description: s.description || result.artistData.description,
     };
-    if (s.carousal_item && s.carousal_item.length > 0) {
-      result.artistData = { ...result.artistData, carousal_item: s.carousal_item };
-    }
     if (s.media && s.media.length > 0) {
       const fromMedia = s.media.map((m) => makeMediaUrl(m)).filter(Boolean);
       if (fromMedia.length) {
