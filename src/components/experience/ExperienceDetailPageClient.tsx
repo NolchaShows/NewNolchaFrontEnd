@@ -6,6 +6,7 @@ import Markdown from "react-markdown";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import type { BlocksContent } from "@strapi/blocks-react-renderer";
 import SmoothScroll from "@/components/common/SmoothScroll";
+import TweetCarousel from "@/components/common/TweetCarousel";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
 import MediaGalleryGrid from "@/components/common/MediaGalleryGrid";
 import {
@@ -123,6 +124,8 @@ export default function ExperienceDetailPageClient({ page }: { page: any }) {
   const heroVideo = getStructuredMediaUrl(page?.hero?.video) || "";
   const detailRows = mapDetailRows(page);
   const galleryItems = buildStructuredGalleryItems(page?.gallery);
+  const tweetCarousel =
+    page?.shared_tweet_carousel ?? page?.sharedTweetCarousel ?? null;
 
   return (
     <SmoothScroll>
@@ -214,6 +217,24 @@ export default function ExperienceDetailPageClient({ page }: { page: any }) {
             ))}
           </div>
         </motion.section>
+
+        {tweetCarousel?.items?.length ? (
+          <motion.section
+            className="mt-8 w-full lg:mt-12"
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.85, ease: "easeOut" }}
+          >
+            <TweetCarousel
+              carousalData={tweetCarousel}
+              posts={[]}
+              variant="light"
+              padding=""
+              title={tweetCarousel.title || "Community moments"}
+            />
+          </motion.section>
+        ) : null}
 
         {galleryItems.length ? (
           <motion.div

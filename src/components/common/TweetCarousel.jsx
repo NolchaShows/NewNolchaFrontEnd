@@ -4,16 +4,10 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import ArrowNavButtons from "./ArrowNavButtons";
+import { parseTweetIdentifier } from "@/lib/strapiFlatten";
 
-/** Accepts numeric id or full X/Twitter status URL. */
-export function parseTweetId(raw) {
-  if (raw == null || raw === "") return "";
-  const s = String(raw).trim();
-  if (/^\d{5,}$/.test(s)) return s;
-  const m = s.match(/status\/(\d+)/i);
-  if (m) return m[1];
-  return s;
-}
+/** Re-export — same normalization as CMS parsing */
+export const parseTweetId = parseTweetIdentifier;
 
 const TweetCarousel = ({
   posts,
@@ -21,6 +15,7 @@ const TweetCarousel = ({
   padding = "",
   title = "Trusted by",
   embedded = false,
+  variant = "dark",
 }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -64,7 +59,7 @@ const TweetCarousel = ({
     } catch {
       /* ignore */
     }
-  }, [currentPostIndex, isLoaded, carouselItems.length, embedded]);
+  }, [currentPostIndex, isLoaded, carouselItems.length, embedded, variant]);
 
   const nextPost = () => {
     setCurrentPostIndex((prev) => (prev + 1) % carouselItems.length);
@@ -77,6 +72,8 @@ const TweetCarousel = ({
   if (!carouselItems || carouselItems.length === 0) {
     return null;
   }
+
+  const isLight = variant === "light" && !embedded;
 
   // Determine items per view based on window width
   const getItemsPerView = () => {
@@ -105,27 +102,55 @@ const TweetCarousel = ({
 
   const rootClass = embedded
     ? `py-4 sm:py-6 lg:py-8 overflow-hidden bg-[#0f0f0f] rounded-[14px] border border-white/12 ${padding} relative`
-    : `py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-black ${padding} relative`;
+    : isLight
+      ? `py-10 lg:py-14 xl:py-16 overflow-hidden rounded-[20px] border border-[#1a1a1a]/12 bg-white/55 shadow-[0_1px_0_rgba(26,26,26,0.06)] ${padding} relative`
+      : `py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-black ${padding} relative`;
 
   const headerWrapClass = embedded
     ? "px-3 sm:px-5 lg:px-8 mb-4 lg:mb-6 flex flex-row items-center justify-between"
-    : "px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] mb-12 flex flex-row items-center justify-between";
+    : isLight
+      ? "px-4 sm:px-6 lg:px-8 mb-6 lg:mb-8 flex flex-row items-center justify-between gap-4"
+      : "px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] mb-12 flex flex-row items-center justify-between";
 
   const innerPadClass = embedded
     ? "px-0 lg:px-4 xl:px-6"
-    : "px-0 lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]";
+    : isLight
+      ? "px-2 sm:px-4 lg:px-6"
+      : "px-0 lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px]";
 
   const cardShell =
     embedded
       ? "min-h-[280px] sm:min-h-[320px] lg:min-h-[380px]"
-      : "min-h-[450px] lg:min-h-[550px]";
+      : isLight
+        ? "min-h-[380px] lg:min-h-[460px]"
+        : "min-h-[450px] lg:min-h-[550px]";
+
+  const cardShellClass = isLight
+    ? `bg-white rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-[#1a1a1a]/10 shadow-[0_2px_12px_rgba(26,26,26,0.06)] transition-colors duration-300 hover:border-[#1a1a1a]/18`
+    : `bg-[#111] rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500`;
+
+  const tweetTheme = isLight ? "light" : "dark";
+
+  const spinnerClass = isLight
+    ? "border-[#1a1a1a]/20 border-t-[#1a1a1a]/80"
+    : "border-white/10 border-t-white";
+
+  const tweetCardOuterClass = embedded
+    ? `bg-[#111] rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500`
+    : cardShellClass;
 
   return (
     <div className={rootClass}>
       <div className={headerWrapClass}>
-        <SectionTitle disableTitleSpacing className="text-white">
-          {carouselTitle}
-        </SectionTitle>
+        {isLight ? (
+          <h2 className="text-[#1A1A1A] text-[20px] sm:text-[24px] lg:text-[30px] font-bold uppercase tracking-[-0.04em] leading-[1.1]">
+            {carouselTitle}
+          </h2>
+        ) : (
+          <SectionTitle disableTitleSpacing className="text-white">
+            {carouselTitle}
+          </SectionTitle>
+        )}
 
         {/* Navigation Arrows */}
         {!isMobile ? <ArrowNavButtons onLeft={prevPost} onRight={nextPost} /> : null}
@@ -139,8 +164,8 @@ const TweetCarousel = ({
               style={{
                 gap: `${gap}px`,
                 WebkitOverflowScrolling: "touch",
-                paddingInline: embedded ? "4vw" : "7.5vw",
-                scrollPaddingInline: embedded ? "4vw" : "7.5vw",
+                paddingInline: isLight ? "3vw" : embedded ? "4vw" : "7.5vw",
+                scrollPaddingInline: isLight ? "3vw" : embedded ? "4vw" : "7.5vw",
               }}
             >
               {carouselItems.map((item, idx) => {
@@ -151,17 +176,21 @@ const TweetCarousel = ({
                     key={`${tweetId}-${idx}`}
                     className="w-[85vw] snap-center flex-shrink-0"
                   >
-                    <div
-                      className={`bg-[#111] rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500`}
-                    >
+                    <div className={tweetCardOuterClass}>
                       {!isLoaded && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-10 h-10 border-4 border-white/10 border-t-white rounded-full animate-spin"></div>
+                          <div
+                            className={`w-10 h-10 border-4 ${spinnerClass} rounded-full animate-spin`}
+                          />
                         </div>
                       )}
                       <div className="w-full h-full overflow-y-auto scrollbar-hide">
-                        <blockquote className="twitter-tweet" data-theme="dark" data-chrome="noheader nofooter noborders transparent">
-                          <a href={`https://twitter.com/x/status/${tweetId}`}></a>
+                        <blockquote
+                          className="twitter-tweet"
+                          data-theme={tweetTheme}
+                          data-chrome="noheader nofooter noborders transparent"
+                        >
+                          <a href={`https://twitter.com/x/status/${tweetId}`} />
                         </blockquote>
                       </div>
                     </div>
@@ -187,17 +216,21 @@ const TweetCarousel = ({
                       key={`${tweetId}-${idx}`}
                       className={`${desktopCardWidthClass} flex-shrink-0`}
                     >
-                      <div
-                        className={`bg-[#111] rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500`}
-                      >
+                      <div className={tweetCardOuterClass}>
                         {!isLoaded && (
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-10 h-10 border-4 border-white/10 border-t-white rounded-full animate-spin"></div>
+                            <div
+                              className={`w-10 h-10 border-4 ${spinnerClass} rounded-full animate-spin`}
+                            />
                           </div>
                         )}
                         <div className="w-full h-full overflow-y-auto scrollbar-hide">
-                          <blockquote className="twitter-tweet" data-theme="dark" data-chrome="noheader nofooter noborders transparent">
-                            <a href={`https://twitter.com/x/status/${tweetId}`}></a>
+                          <blockquote
+                            className="twitter-tweet"
+                            data-theme={tweetTheme}
+                            data-chrome="noheader nofooter noborders transparent"
+                          >
+                            <a href={`https://twitter.com/x/status/${tweetId}`} />
                           </blockquote>
                         </div>
                       </div>

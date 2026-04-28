@@ -1,9 +1,19 @@
 import { fetchStructuredPageBySlug } from "@/lib/fetchStructuredPageBySlug";
+import {
+  parseSharedTweetCarousel,
+  pickSharedTweetCarouselRaw,
+} from "@/lib/strapiFlatten";
 
 export async function fetchExperiencePage(slug: string) {
   const page = await fetchStructuredPageBySlug("experience", slug);
 
   if (!page) return null;
+
+  const p = page as Record<string, unknown>;
+  const rawCarousel = pickSharedTweetCarouselRaw(p);
+
+  /** Server-side: one parse; client gets only what TweetCarousel needs */
+  const shared_tweet_carousel = parseSharedTweetCarousel(rawCarousel);
 
   return {
     ...page,
@@ -16,5 +26,6 @@ export async function fetchExperiencePage(slug: string) {
           featured_interval: page.gallery.featured_interval ?? 6,
         }
       : null,
+    shared_tweet_carousel,
   };
 }
