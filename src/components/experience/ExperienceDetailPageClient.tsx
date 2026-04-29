@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Markdown from "react-markdown";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import type { BlocksContent } from "@strapi/blocks-react-renderer";
+import Link from "next/link";
 import SmoothScroll from "@/components/common/SmoothScroll";
 import TweetCarousel from "@/components/common/TweetCarousel";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
@@ -119,7 +120,13 @@ const mapDetailRows = (page: any) => {
   }));
 };
 
-export default function ExperienceDetailPageClient({ page }: { page: any }) {
+export default function ExperienceDetailPageClient({
+  page,
+  nextExperienceHref,
+}: {
+  page: any;
+  nextExperienceHref?: string;
+}) {
   const title = page?.title || "Page";
   const heroVideo = getStructuredMediaUrl(page?.hero?.video) || "";
   const detailRows = mapDetailRows(page);
@@ -244,6 +251,23 @@ export default function ExperienceDetailPageClient({ page }: { page: any }) {
             transition={{ duration: 1.2 }}
           >
             <MediaGalleryGrid items={galleryItems} />
+          </motion.div>
+        ) : null}
+
+        {nextExperienceHref ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="py-10 lg:py-16 flex justify-center"
+          >
+            <Link
+              href={nextExperienceHref}
+              className="inline-flex items-center rounded-lg bg-black px-6 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#222] lg:px-8 lg:py-4 lg:text-base"
+            >
+              See more experiences
+            </Link>
           </motion.div>
         ) : null}
       </div>
