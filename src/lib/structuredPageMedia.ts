@@ -14,6 +14,13 @@ export const getStructuredMediaUrl = (media: any) => {
   return media.url;
 };
 
+const toAbsoluteMediaUrl = (rawUrl: string | null) => {
+  if (!rawUrl) return null;
+  if (rawUrl.startsWith("http")) return rawUrl;
+  if (rawUrl.startsWith("/uploads")) return `${STRAPI_BASE_URL}${rawUrl}`;
+  return rawUrl;
+};
+
 const isVideoMedia = (media: any) => {
   if (!media) return false;
 
@@ -44,24 +51,61 @@ const getMediaDimensions = (media: any) => {
   };
 };
 
+const getMediaPosterUrl = (media: any) => {
+  if (!media) return null;
+
+  const rawPosterUrl =
+    media.poster?.url ||
+    media.thumbnail?.url ||
+    media.formats?.thumbnail?.url ||
+    null;
+
+  return toAbsoluteMediaUrl(rawPosterUrl);
+};
+
+const getOptimizedImageUrl = (media: any, fullWidth: boolean) => {
+  if (!media) return null;
+
+  const preferred = fullWidth
+    ? [
+        media.formats?.large?.url,
+        media.formats?.medium?.url,
+        media.formats?.small?.url,
+        media.formats?.thumbnail?.url,
+      ]
+    : [
+        media.formats?.medium?.url,
+        media.formats?.small?.url,
+        media.formats?.thumbnail?.url,
+        media.formats?.large?.url,
+      ];
+
+  const rawUrl = preferred.find(Boolean) || media.url || null;
+  return toAbsoluteMediaUrl(rawUrl);
+};
+
 const normalizeMediaItem = (
   media: any,
   options: { fullWidth?: boolean } = {}
 ) => {
   if (!media) return null;
-
-  const url = getStructuredMediaUrl(media);
+  const isVideo = isVideoMedia(media);
+  const fullWidth = Boolean(options.fullWidth);
+  const url = isVideo
+    ? getStructuredMediaUrl(media)
+    : getOptimizedImageUrl(media, fullWidth);
   if (!url) return null;
 
   const { width, height } = getMediaDimensions(media);
 
   return {
-    type: isVideoMedia(media) ? "video" : "image",
+    type: isVideo ? "video" : "image",
     url,
     mime: media.mime || null,
+    poster: getMediaPosterUrl(media),
     width,
     height,
-    fullWidth: Boolean(options.fullWidth),
+    fullWidth,
   };
 };
 

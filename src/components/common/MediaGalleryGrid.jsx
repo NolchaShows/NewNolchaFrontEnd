@@ -1,14 +1,79 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 const DEFAULT_ASPECT_RATIO = "2 / 3";
 const GRID_TILE_RATIO = 2 / 3;
 
+const GalleryVideo = ({ item, className }) => {
+  const [isReady, setIsReady] = useState(false);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const containerRef = useRef(null);
+  const showControls = Boolean(item.fullWidth);
+
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          setShouldLoadVideo(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "320px 0px" }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative h-full w-full">
+      {item.poster && !isReady ? (
+        <img
+          src={item.poster}
+          alt={item.alt || "Video thumbnail"}
+          className={`absolute inset-0 h-full w-full ${className}`}
+          width={item.width || undefined}
+          height={item.height || undefined}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : null}
+
+      <video
+        src={shouldLoadVideo ? item.url : undefined}
+        poster={item.poster || undefined}
+        className={`${className} transition-opacity duration-300 ${
+          item.poster ? (isReady ? "opacity-100" : "opacity-0") : "opacity-100"
+        }`}
+        autoPlay={shouldLoadVideo}
+        muted
+        loop
+        controls={showControls}
+        playsInline
+        preload={shouldLoadVideo ? (showControls ? "metadata" : "none") : "none"}
+        loading="lazy"
+        onLoadedData={() => setIsReady(true)}
+      >
+        {shouldLoadVideo ? (
+          <source src={item.url} type={item.mime || undefined} />
+        ) : null}
+      </video>
+    </div>
+  );
+};
+
 const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
   const getItemStyle = (item) => {
     if (item.fullWidth) {
-      return undefined;
+      if (item.width && item.height) {
+        return { aspectRatio: `${item.width} / ${item.height}` };
+      }
+      return { aspectRatio: "16 / 9" };
     }
 
     return { aspectRatio: DEFAULT_ASPECT_RATIO };
@@ -16,7 +81,7 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
 
   const getMediaClassName = (item) => {
     if (item.fullWidth) {
-      return "w-full h-auto object-contain";
+      return "w-full h-full object-cover";
     }
 
     if (!item.width || !item.height) {
@@ -32,25 +97,11 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
     return "w-full h-full object-cover";
   };
 
-  const renderMedia = (item) => {
+  const renderMedia = (item, index) => {
     const mediaClassName = getMediaClassName(item);
 
     if (item.type === "video") {
-      const showControls = Boolean(item.fullWidth);
-      return (
-        <video
-          src={item.url}
-          className={mediaClassName}
-          autoPlay={!showControls}
-          muted={!showControls}
-          loop={!showControls}
-          controls={showControls}
-          playsInline
-          preload="metadata"
-        >
-          <source src={item.url} />
-        </video>
-      );
+      return <GalleryVideo item={item} className={mediaClassName} />;
     }
 
     return (
@@ -60,6 +111,9 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
         className={mediaClassName}
         width={item.width || undefined}
         height={item.height || undefined}
+        loading={index < 2 ? "eager" : "lazy"}
+        decoding="async"
+        fetchPriority={index < 2 ? "high" : "low"}
       />
     );
   };
@@ -128,7 +182,7 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
                   delay: isFullWidth ? 0 : (index % 3) * 0.1,
                 }}
               >
-                {renderMedia(item)}
+                {renderMedia(item, index)}
               </motion.div>
             );
           })}
