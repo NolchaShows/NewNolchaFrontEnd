@@ -85,14 +85,14 @@ const VideoHeroSection = ({
                 )}
                 {/* Dark overlay for better text readability */}
                 <div 
-                    className="absolute inset-0"
+                    className="absolute inset-0 pointer-events-none"
                     style={{ backgroundColor: `rgba(0, 0, 0, ${overlayOpacity / 100})` }}
                 ></div>
             </div>
 
             {/* Content Overlay */}
-            <div className="relative z-10 flex items-center justify-center h-full page-container">
-                <div className="text-center text-white">
+            <div className="relative z-10 flex items-center justify-center h-full page-container pointer-events-none">
+                <div className="text-center text-white pointer-events-auto">
                     {/* Main Heading */}
                     <StyledHeading
                         firstPart={firstPart}
