@@ -136,7 +136,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
           <div className="flex justify-center lg:justify-start">
             {!isButton ? (
               <img
-                src="/contact/1.png"
+                src="/contact/1.webp"
                 alt="Sponsors"
                 className="w-full h-auto filter brightness-0 invert"
               />
