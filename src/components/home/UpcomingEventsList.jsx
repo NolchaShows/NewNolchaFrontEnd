@@ -106,6 +106,26 @@ const UpcomingEventsList = ({
     }
   }, [openEventSlug]);
 
+  const getExternalEventLink = (event = {}) => {
+    const href = (
+      event?.externalUrl ||
+      event?.external_url ||
+      event?.externalLink ||
+      event?.external_link ||
+      ""
+    ).trim();
+
+    return /^https?:\/\//i.test(href) ? href : "";
+  };
+
+  const openExternalEventLink = (event) => {
+    if (typeof window === "undefined") return false;
+    const href = getExternalEventLink(event);
+    if (!href) return false;
+    window.open(href, "_blank", "noopener,noreferrer");
+    return true;
+  };
+
   return (
     <section id="upcoming-events" className="w-full bg-black page-container relative">
       <SectionTitle className="mb-[20px] lg:mb-[30px] 2xl:mb-[50px]">{title}</SectionTitle>
@@ -161,6 +181,9 @@ const UpcomingEventsList = ({
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
+                          if (openExternalEventLink(display)) {
+                            return;
+                          }
                           setEventDetailsContext({
                             title: display.title || ev.title || "",
                             date: display.date || "",
@@ -184,6 +207,9 @@ const UpcomingEventsList = ({
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
+                          if (openExternalEventLink(display)) {
+                            return;
+                          }
                           setModalContext({
                             title: display.title || ev.title || "",
                             image: display.image || "",

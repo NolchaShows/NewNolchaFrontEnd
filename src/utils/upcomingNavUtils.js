@@ -15,6 +15,14 @@ export const mapUpcomingEventsToNavChildren = (events, getMediaUrl) => {
 
   return events.map((event) => {
     const title = event?.title || "";
+    const externalHref = (
+      event?.externalUrl ||
+      event?.external_url ||
+      event?.externalLink ||
+      event?.external_link ||
+      ""
+    ).trim();
+    const hasExternalHref = /^https?:\/\//i.test(externalHref);
     let imageSrc =
       (getMediaUrl && (getMediaUrl(event?.image) || getMediaUrl(event?.mainImage))) ||
       null;
@@ -24,10 +32,10 @@ export const mapUpcomingEventsToNavChildren = (events, getMediaUrl) => {
 
     return {
       label: title,
-      href: getUpcomingEventHref(title),
-      upcomingSlug: slugifyUpcomingEventTitle(title),
+      href: hasExternalHref ? externalHref : getUpcomingEventHref(title),
+      upcomingSlug: hasExternalHref ? undefined : slugifyUpcomingEventTitle(title),
       imageSrc: imageSrc || event?.image || "",
-      isExternal: false,
+      isExternal: hasExternalHref,
     };
   });
 };

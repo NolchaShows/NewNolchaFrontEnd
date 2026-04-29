@@ -110,6 +110,12 @@ const mapUpcomingEvents = (upcomingSection) => {
     title: event?.title || "",
     image: getMediaUrl(event?.image) || "",
     date: event?.date || "",
+    externalUrl:
+      event?.externalUrl ||
+      event?.external_url ||
+      event?.externalLink ||
+      event?.external_link ||
+      "",
     location: event?.location || "",
     pastEventsLocation: event?.pastEventsLocation || "",
     letsTalkLocation: event?.letsTalkLocation || "",
