@@ -47,7 +47,7 @@ export default function OurClientsSection({
           </div>
         </div>
 
-        <div className="mt-14 grid grid-cols-2 gap-x-4 sm:grid-cols-3 lg:mt-20 lg:grid-cols-6 lg:gap-x-8">
+        <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:mt-20 lg:grid-cols-6 lg:gap-x-14 lg:gap-y-10">
           {clientLogos.map((logo, idx) => {
             const logoPath = typeof logo === 'string' ? logo : logo?.url || logo?.image?.url || "";
             if (!logoPath) return null;
@@ -60,7 +60,7 @@ export default function OurClientsSection({
                 key={idx}
                 className="flex items-center justify-center w-full"
               >
-                <div className="relative w-full h-full flex items-center justify-center px-8 lg:px-8">
+                <div className="relative w-full h-full flex items-center justify-center">
                   <img
                     loading="lazy"
                     src={fullUrl}
