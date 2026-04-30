@@ -215,7 +215,12 @@ const interleaveGalleryMedia = (
 };
 
 const buildGalleryItems = (gallery) => {
-  const standardMedia = (gallery?.standard_media || [])
+  const standardMediaSource =
+    gallery?.standard_media?.length
+      ? gallery.standard_media
+      : gallery?.images || [];
+
+  const standardMedia = standardMediaSource
     .map((media) => normalizeMediaItem(media))
     .filter(Boolean);
   const featuredMedia = (gallery?.featured_media || [])
@@ -257,6 +262,11 @@ export default async function Home() {
   const homeTweetCarousel = homePage?.shared_tweet_carousel || null;
   const pastExperiences = buildPastExperiences(homePage?.featured_experiences);
   const contactData = homePage?.contact_section || null;
+  const homeGallerySource =
+    homePage?.gallery_section?.gallery ||
+    homePage?.gallery_section ||
+    null;
+  const homeGalleryItems = homeGallerySource ? buildGalleryItems(homeGallerySource) : [];
   const slideData = [
     {
       image: "/home/hero.png",
@@ -612,8 +622,8 @@ export default async function Home() {
       <div className="lg:px-11 px-5 pt-4 lg:pt-8">
         <MediaGalleryGrid 
           items={
-            homePage?.gallery_section?.gallery 
-              ? buildGalleryItems(homePage.gallery_section.gallery)
+            homeGalleryItems.length
+              ? homeGalleryItems
               : interleaveGalleryMedia(
                   [
                     { type: "image", url: "/shao_nyfw/image 21.png", width: 1200, height: 1500 },
