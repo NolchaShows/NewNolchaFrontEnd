@@ -16,7 +16,7 @@ const TweetCarousel = ({
   title = "Trusted by",
   embedded = false,
   variant = "dark",
-  cardVariant,
+  cardVariant = "dark",
 }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
