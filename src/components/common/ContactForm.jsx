@@ -51,6 +51,13 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
     ? buildMediaUrl(contactData.background_image.url)
     : bg || "/landing/background2.jpg";
   const dynamicVideoSrc = buildMediaUrl(contactData?.video?.url) || videoSrc;
+  const dynamicSponsorsImage =
+    buildMediaUrl(
+      contactData?.sponsors_image?.url ||
+        contactData?.sponsorsImage?.url ||
+        contactData?.sponsors_logo?.url ||
+        contactData?.sponsorsLogo?.url
+    ) || "/contact/1.webp";
 
   const firstNamePlaceholder =
     contactData?.first_name_placeholder || "First Name";
@@ -136,7 +143,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
           <div className="flex justify-center lg:justify-start">
             {!isButton ? (
               <img
-                src="/contact/1.webp"
+                src={dynamicSponsorsImage}
                 alt="Sponsors"
                 className="w-full h-auto filter brightness-0 invert"
               />
