@@ -1,6 +1,9 @@
 import client from "@/lib/graphql/apollo-client";
 import { GET_PRESS_PAGE } from "@/lib/graphql/queries/press";
-import type { GetPressPageQuery } from "@/lib/graphql/__generated__/graphql";
+
+type GetPressPageQuery = {
+  pressPage?: any | null;
+};
 
 const STRAPI_BASE =
   process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "") ??
