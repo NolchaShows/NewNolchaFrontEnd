@@ -18,7 +18,6 @@ import HomeWideVideoBanner from "@/components/home/HomeWideVideoBanner";
 import Image from "next/image";
 import HeroSection from "@/components/experience/HeroSection";
 import EveningRecapSection from "@/components/experience/EveningRecapSection";
-import GallerySection from "@/components/experience/GallerySection";
 import SharedTweetCarouselSection from "@/components/experience/SharedTweetCarouselSection";
 import HomeUpcomingEventsSection from "@/components/home/HomeUpcomingEventsSection";
 import { fetchHomePage } from "@/lib/graphql/fetchHomePage";
