@@ -139,12 +139,12 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
                 delay: index * 0.1 
               }}
             >
-              <div className="h-20 lg:h-24 flex items-center justify-start lg:justify-center w-full">
+              <div className="h-20 lg:h-24 2xl:h-36 flex items-center justify-start lg:justify-center w-full">
                 {partner.logo ? (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-full w-auto object-contain filter grayscale brightness-0 opacity-80"
+                    className="h-full w-auto max-w-[220px] 2xl:max-w-[340px] object-contain filter grayscale brightness-0 opacity-80"
                   />
                 ) : (
                   <span className="text-[10px] sm:text-[11px] lg:text-[14px] font-bold uppercase tracking-wider text-left lg:text-center leading-tight">
