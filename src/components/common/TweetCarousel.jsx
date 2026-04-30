@@ -16,6 +16,7 @@ const TweetCarousel = ({
   title = "Trusted by",
   embedded = false,
   variant = "dark",
+  cardVariant,
 }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -59,7 +60,7 @@ const TweetCarousel = ({
     } catch {
       /* ignore */
     }
-  }, [currentPostIndex, isLoaded, carouselItems.length, embedded, variant]);
+  }, [currentPostIndex, isLoaded, carouselItems.length, embedded, variant, cardVariant]);
 
   const nextPost = () => {
     setCurrentPostIndex((prev) => (prev + 1) % carouselItems.length);
@@ -74,6 +75,7 @@ const TweetCarousel = ({
   }
 
   const isLight = variant === "light" && !embedded;
+  const useLightCards = cardVariant === "light" || variant === "light";
 
   // Determine items per view based on window width
   const getItemsPerView = () => {
@@ -125,18 +127,20 @@ const TweetCarousel = ({
         ? "min-h-[380px] lg:min-h-[460px]"
         : "min-h-[450px] lg:min-h-[550px]";
 
-  const cardShellClass = isLight
+  const cardShellClass = useLightCards
     ? `bg-white rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-[#1a1a1a]/10 shadow-[0_2px_12px_rgba(26,26,26,0.06)] transition-colors duration-300 hover:border-[#1a1a1a]/18`
     : `bg-[#111] rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500`;
 
-  const tweetTheme = isLight ? "light" : "dark";
+  const tweetTheme = useLightCards ? "light" : "dark";
 
-  const spinnerClass = isLight
+  const spinnerClass = useLightCards
     ? "border-[#1a1a1a]/20 border-t-[#1a1a1a]/80"
     : "border-white/10 border-t-white";
 
   const tweetCardOuterClass = embedded
-    ? `bg-[#111] rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500`
+    ? useLightCards
+      ? `bg-white rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-[#1a1a1a]/10 shadow-[0_2px_12px_rgba(26,26,26,0.06)] transition-colors duration-300 hover:border-[#1a1a1a]/18`
+      : `bg-[#111] rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-white/5 hover:border-white/20 transition-colors duration-500`
     : cardShellClass;
 
   return (

@@ -8,10 +8,14 @@ export default async function SharedTweetCarouselSection({
   slug,
   pageType = "experience",
   page,
+  variant = "dark",
+  cardVariant,
 }: {
   slug: string;
   pageType?: StructuredPageType;
   page?: any;
+  variant?: "dark" | "light";
+  cardVariant?: "dark" | "light";
 }) {
   if (!slug) return null;
 
@@ -26,6 +30,8 @@ export default async function SharedTweetCarouselSection({
       <TweetCarousel
         posts={[]}
         carousalData={carousel}
+        variant={variant}
+        cardVariant={cardVariant}
         padding=""
         title="Community Moments"
       />

@@ -634,10 +634,16 @@ export default async function Home() {
         />
       </div>
       {homeTweetCarousel?.items?.length ? (
-        <SharedTweetCarouselSection slug="home" pageType="home" page={homePage} />
+        <SharedTweetCarouselSection
+          slug="home"
+          pageType="home"
+          page={homePage}
+          cardVariant="light"
+        />
       ) : (
         <TweetCarousel
           posts={tweetsData}
+          cardVariant="light"
           padding=""
           title="Community Moments"
         />

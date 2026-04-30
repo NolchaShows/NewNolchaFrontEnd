@@ -346,6 +346,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                     carousalData={tweetCarousel}
                     posts={[]}
                     embedded
+                    variant="light"
                     padding=""
                     title={tweetCarousel.title || "Community Moments"}
                   />
