@@ -102,6 +102,36 @@ const buildPastExperiences = (featuredExperiences = []) =>
     }))
     .filter((experience) => experience.image && experience.text);
 
+const normalizeTweetCarousel = (rawCarousel) => {
+  if (!rawCarousel) return null;
+
+  const normalizedItems = (rawCarousel?.items || [])
+    .map((item) => {
+      const tweetId =
+        typeof item === "string" ? item.trim() : String(item?.tweetId || item?.id || "").trim();
+      return tweetId ? { tweetId } : null;
+    })
+    .filter(Boolean);
+
+  if (normalizedItems.length) {
+    return { ...rawCarousel, items: normalizedItems };
+  }
+
+  const bulk = String(rawCarousel?.bulkTweetIds || "").trim();
+  if (!bulk) return rawCarousel;
+
+  const bulkItems = bulk
+    .split(/[\s,;\n\r\t]+/)
+    .map((token) => {
+      const match = token.trim().match(/(\d{8,})/);
+      return match?.[1] ? { tweetId: match[1] } : null;
+    })
+    .filter(Boolean);
+
+  if (!bulkItems.length) return rawCarousel;
+  return { ...rawCarousel, items: bulkItems };
+};
+
 const mapUpcomingEvents = (upcomingSection) => {
   if (!upcomingSection?.events?.length) return upcomingListEvents;
 
@@ -148,8 +178,9 @@ const mapUpcomingEvents = (upcomingSection) => {
     logo: getMediaUrl(event?.logo) || "",
     mainImage: getMediaUrl(event?.mainImage) || getMediaUrl(event?.image) || "",
     galleryImages: (event?.galleryImages || []).map((image) => getMediaUrl(image)).filter(Boolean),
-    tweetCarousel:
-      event?.tweet_carousel ?? event?.tweetCarousel ?? null,
+    tweetCarousel: normalizeTweetCarousel(
+      event?.tweet_carousel ?? event?.tweetCarousel ?? null
+    ),
     eveningRecap: (() => {
       const recap =
         event?.evening_recap_section ||
