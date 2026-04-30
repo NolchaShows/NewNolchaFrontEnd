@@ -127,7 +127,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="sticky top-0 ml-auto mb-4 z-30 p-2 cursor-pointer bg-secondary rounded-full shadow-lg hover:bg-secondary/80 hover:scale-105 transition-all duration-200"
+          className="absolute top-3 right-3 z-30 p-2 cursor-pointer bg-secondary rounded-full shadow-lg hover:bg-secondary/80 hover:scale-105 transition-all duration-200"
           aria-label="Close modal"
         >
           <RxCross2 className="w-5 h-5 text-white" />
@@ -136,7 +136,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
         {/* Scrollable content */}
         <div className="px-1 sm:px-0 overflow-y-visible overflow-x-hidden flex-1">
           {/* Logo and Title */}
-          <div className="mb-6 flex flex-col items-center">
+          <div className="mb-3 flex flex-col items-center">
             <img
               src="/navbar/logo.svg"
               alt="NOLCHA"
