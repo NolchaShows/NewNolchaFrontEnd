@@ -5,16 +5,7 @@ import React, { useMemo, useState, useCallback, useEffect, useRef } from 'react'
 const DEFAULT_IMAGES = [
   "/homepage/image_gallery/1.jpg",
   "/homepage/image_gallery/2.jpg",
-  "/homepage/image_gallery/3.jpg",
-  "/homepage/image_gallery/4.jpg",
-  "/homepage/image_gallery/5.jpg",
-  "/homepage/image_gallery/6.jpg",
-  "/homepage/image_gallery/7.jpg",
-  "/homepage/image_gallery/8.jpg",
-  "/homepage/image_gallery/9.jpg",
-  "/homepage/image_gallery/10.jpg",
-  "/homepage/image_gallery/11.jpg",
-  "/homepage/image_gallery/12.jpg"
+  "/homepage/image_gallery/3.jpg"
 ];
 
 const ImageGallerySlider = ({ images }) => {

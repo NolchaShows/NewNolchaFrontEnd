@@ -128,16 +128,6 @@ export const getDefaultDesignerData = () => {
     galleryImages: [
       { image: "/designers/6.png", text: "YUE MINJUN" },
       { image: "/designers/7.png", text: "YUE MINJUN" },
-      { image: "/designers/8.png", text: "YUE MINJUN" },
-      { image: "/designers/9.png", text: "YUE MINJUN" },
-      { image: "/designers/10.png", text: "YUE MINJUN" },
-      { image: "/designers/11.png", text: "YUE MINJUN" },
-      { image: "/designers/12.png", text: "YUE MINJUN" },
-      { image: "/designers/13.png", text: "YUE MINJUN" },
-      { image: "/designers/14.png", text: "YUE MINJUN" },
-      { image: "/designers/15.png", text: "YUE MINJUN" },
-      { image: "/designers/16.png", text: "YUE MINJUN" },
-      { image: "/designers/17.png", text: "YUE MINJUN" },
     ],
     pressPartners: [
       {

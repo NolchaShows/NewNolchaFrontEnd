@@ -3,9 +3,7 @@ import AboutHeroVideo from "@/components/about/AboutHeroVideo.jsx";
 import OurDifferentiators from "@/components/about/OurDifferentiators";
 import OurServicesSection from "@/components/about/OurServicesSection";
 import OurClientsSection from "@/components/about/OurClientsSection";
-// import OurPressSection from "@/components/about/OurPressSection";
 import { getAboutPageContent } from "@/lib/aboutPageData";
-import { getPressPageContent } from "@/lib/pressPageData";
 
 export const metadata = {
   title: "About Us | New Nolcha",
@@ -18,16 +16,8 @@ const defaultHeroVideo =
 export const revalidate = 60;
 
 export default async function AboutPage() {
-  const [aboutPage, pressPage] = await Promise.all([
-    getAboutPageContent(),
-    getPressPageContent(),
-  ]);
+  const aboutPage = await getAboutPageContent();
   const heroVideo = aboutPage?.heroVideo || defaultHeroVideo;
-  const featuredPressPost = pressPage.cards?.[0];
-  const pressFeatureTitle = featuredPressPost?.title || "Featured press post";
-  const pressFeatureImage = featuredPressPost?.image || "/about/press.webp";
-  const pressFeatureLink = featuredPressPost?.link || aboutPage.press.viewMoreHref;
-  const pressFeatureSourceLogo = featuredPressPost?.newsPaper || "";
 
   return (
     <main className="min-h-screen bg-[#F4F4F4]">
@@ -55,16 +45,6 @@ export default async function AboutPage() {
         ctaHref={aboutPage.clients.ctaHref}
         clientLogos={aboutPage.clients.logos}
       />
-      {/* <OurPressSection
-        label={aboutPage.press.label}
-        title={aboutPage.press.title}
-        viewMoreText={aboutPage.press.viewMoreText}
-        viewMoreHref={aboutPage.press.viewMoreHref}
-        featureTitle={pressFeatureTitle}
-        featureImage={pressFeatureImage}
-        featureLink={pressFeatureLink}
-        featureSourceLogo={pressFeatureSourceLogo}
-      /> */}
     </main>
   );
 }

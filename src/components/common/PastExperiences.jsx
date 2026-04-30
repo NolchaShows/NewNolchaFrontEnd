@@ -278,10 +278,10 @@ const PastExperiences = ({
       {/* {experiences.length > 1 && (
         <div className="flex justify-center gap-[12px] lg:hidden mt-8">
           <button onClick={prevSlide} className="cursor-pointer hover:opacity-80 transition-opacity">
-            <img src="/icons/left-black-button.svg" alt="Previous" className="h-[36px] w-[36px] filter brightness-0 invert" />
+            <img src="/icons/left-arrow.svg" alt="Previous" className="h-[36px] w-[36px] filter brightness-0 invert" />
           </button>
           <button onClick={nextSlide} className="cursor-pointer hover:opacity-80 transition-opacity">
-            <img src="/icons/right-black-button.svg" alt="Next" className="h-[36px] w-[36px] filter brightness-0 invert" />
+            <img src="/icons/left-arrow.svg" alt="Next" className="h-[36px] w-[36px] filter brightness-0 invert" />
           </button>
         </div>
       )} */}

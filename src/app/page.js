@@ -478,10 +478,6 @@ export default async function Home() {
     { image: "homepage/past_experiences/event-1.png", text: "Bitcoin Conference" },
     { image: "homepage/past_experiences/event-2.png", text: "Opening Night Consensus" },
     { image: "homepage/past_experiences/event-3.png", text: "NYFW Immersive" },
-    { image: "homepage/past_experiences/event-4.png", text: "BTC Nashville" },
-    { image: "homepage/past_experiences/event-5.png", text: "NYFW OH POLLY" },
-    { image: "homepage/past_experiences/event-6.png", text: "JACK BUTCHER RACE" },
-    { image: "homepage/past_experiences/event-7.png", text: "UPCOMING" },
   ]
 
   const heroVideo = "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4";
