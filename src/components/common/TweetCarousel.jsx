@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useDragControls } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import ArrowNavButtons from "./ArrowNavButtons";
 import { parseTweetIdentifier } from "@/lib/strapiFlatten";
@@ -21,6 +21,7 @@ const TweetCarousel = ({
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const dragControls = useDragControls();
 
   // Use dynamic data from Strapi if available, otherwise fallback to posts prop
   const carouselTitle = carousalData?.title || title;
@@ -85,6 +86,7 @@ const TweetCarousel = ({
   };
 
   const itemsPerView = getItemsPerView();
+  const maxDesktopIndex = Math.max(0, carouselItems.length - itemsPerView);
   const gap = embedded
     ? windowWidth < 768
       ? 10
@@ -168,6 +170,7 @@ const TweetCarousel = ({
               style={{
                 gap: `${gap}px`,
                 WebkitOverflowScrolling: "touch",
+                touchAction: "pan-x pinch-zoom",
                 paddingInline: isLight ? "3vw" : embedded ? "4vw" : "7.5vw",
                 scrollPaddingInline: isLight ? "3vw" : embedded ? "4vw" : "7.5vw",
               }}
@@ -188,7 +191,7 @@ const TweetCarousel = ({
                           />
                         </div>
                       )}
-                      <div className="w-full h-full overflow-y-auto scrollbar-hide">
+                      <div className="w-full h-full overflow-hidden pointer-events-none">
                         <blockquote
                           className="twitter-tweet"
                           data-theme={tweetTheme}
@@ -203,10 +206,32 @@ const TweetCarousel = ({
               })}
             </div>
           ) : (
-            <div className="overflow-visible">
+            <div
+              className="overflow-visible cursor-grab active:cursor-grabbing select-none"
+              style={{ userSelect: "none", WebkitUserSelect: "none" }}
+              onPointerDown={(event) => {
+                if (event.pointerType === "mouse" && event.button !== 0) return;
+                event.preventDefault();
+                dragControls.start(event);
+              }}
+            >
               <motion.div
-                className="flex"
+                className="flex select-none"
                 style={{ gap: `${gap}px` }}
+                drag="x"
+                dragListener={false}
+                dragControls={dragControls}
+                dragConstraints={{ left: -1, right: 1 }}
+                dragElastic={0.08}
+                dragMomentum={false}
+                onDragEnd={(_, info) => {
+                  const threshold = 60;
+                  if (info.offset.x <= -threshold) {
+                    setCurrentPostIndex((prev) => Math.min(prev + 1, maxDesktopIndex));
+                  } else if (info.offset.x >= threshold) {
+                    setCurrentPostIndex((prev) => Math.max(prev - 1, 0));
+                  }
+                }}
                 animate={{
                   x: `calc(-${currentPostIndex * (100 / itemsPerView)}% - ${currentPostIndex * (gap / itemsPerView)}px)`,
                 }}
@@ -228,7 +253,7 @@ const TweetCarousel = ({
                             />
                           </div>
                         )}
-                        <div className="w-full h-full overflow-y-auto scrollbar-hide">
+                        <div className="w-full h-full overflow-hidden pointer-events-none">
                           <blockquote
                             className="twitter-tweet"
                             data-theme={tweetTheme}
