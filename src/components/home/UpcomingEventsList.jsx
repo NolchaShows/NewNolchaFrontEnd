@@ -95,6 +95,7 @@ const UpcomingEventsList = ({
         matchedEvent,
         fallbackTweetCarousel
       ),
+      eveningRecap: matchedEvent.eveningRecap || null,
     });
     setIsEventDetailsModalOpen(true);
     onOpenEventHandled?.();
@@ -197,6 +198,7 @@ const UpcomingEventsList = ({
                               display,
                               fallbackTweetCarousel
                             ),
+                            eveningRecap: display.eveningRecap || null,
                           });
                           setIsEventDetailsModalOpen(true);
                         }}

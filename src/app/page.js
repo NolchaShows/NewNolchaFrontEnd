@@ -105,6 +105,29 @@ const buildPastExperiences = (featuredExperiences = []) =>
 const mapUpcomingEvents = (upcomingSection) => {
   if (!upcomingSection?.events?.length) return upcomingListEvents;
 
+  const mapRecapSlides = (slides = []) =>
+    (slides || [])
+      .map((slide) => {
+        if (!slide) return null;
+
+        const rawUrl =
+          slide?.url ||
+          getMediaUrl(slide?.video) ||
+          getMediaUrl(slide?.file) ||
+          getMediaUrl(slide?.media) ||
+          null;
+
+        if (!rawUrl) return null;
+
+        return {
+          title: slide?.title || "",
+          url: rawUrl,
+          isGoogleDrive:
+            Boolean(slide?.isGoogleDrive) || rawUrl.includes("drive.google.com"),
+        };
+      })
+      .filter(Boolean);
+
   return upcomingSection.events.map((event) => ({
     title: event?.title || "",
     image: getMediaUrl(event?.image) || "",
@@ -127,6 +150,32 @@ const mapUpcomingEvents = (upcomingSection) => {
     galleryImages: (event?.galleryImages || []).map((image) => getMediaUrl(image)).filter(Boolean),
     tweetCarousel:
       event?.tweet_carousel ?? event?.tweetCarousel ?? null,
+    eveningRecap: (() => {
+      const recap =
+        event?.evening_recap_section ||
+        event?.eveningRecapSection ||
+        event?.evening_recap ||
+        event?.eveningRecap ||
+        null;
+
+      if (!recap) return null;
+
+      const slides = mapRecapSlides(recap?.slides || recap?.videos || []);
+      const singleVideoUrl =
+        recap?.videoUrl ||
+        recap?.video_url ||
+        getMediaUrl(recap?.video) ||
+        "";
+
+      if (!slides.length && !singleVideoUrl) return null;
+
+      return {
+        year: recap?.year || "",
+        title: recap?.title || "",
+        videos: slides,
+        videoUrl: singleVideoUrl,
+      };
+    })(),
   }));
 };
 

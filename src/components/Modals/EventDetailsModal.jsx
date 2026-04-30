@@ -56,6 +56,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   const mainImage = eventData?.mainImage || eventData?.image || "/landing/recent_event.png";
   const galleryImages = eventData?.galleryImages || eventData?.gallery || [];
   const tweetCarousel = eventData?.tweetCarousel || null;
+  const eventEveningRecap = eventData?.eveningRecap || null;
 
   // Default gallery images if none provided
   const displayGalleryImages = galleryImages.length > 0
@@ -99,7 +100,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
 
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
-  const eveningRecap = {
+  const eveningRecap = eventEveningRecap || {
     year: "2024",
     title: "Recent Events: Bitcoin Nashville 2024",
     videos: [
@@ -110,7 +111,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
     ],
     // Keep videoUrl for backward compatibility
     videoUrl: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov"
-  }
+  };
 
   const toggleShareDropdown = () => {
     setIsShareOpen(!isShareOpen);
@@ -348,10 +349,8 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
               </div>
 
               <EveningRecap
-                year={eveningRecap.year}
                 title={eveningRecap.title}
                 videos={eveningRecap.videos}
-                videoUrl={eveningRecap.videoUrl}
               />
               {tweetCarousel?.items?.length ? (
                 <div className="mt-8">
