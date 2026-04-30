@@ -133,12 +133,14 @@ function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const shouldUseBlackDesktopHeader =
-    pathname?.startsWith("/about") ||
+    pathname?.startsWith("/white-label") ||
     pathname?.startsWith("/charity") ||
     pathname?.startsWith("/experiences") ||
     pathname?.startsWith("/speakers") ||
     pathname?.startsWith("/featured-artists/") ||
-    pathname?.startsWith("/designers/");
+    pathname?.startsWith("/designers/") ||
+    pathname?.startsWith("/terms-of-use") ||
+    pathname?.startsWith("/privacy-policy");
   const defaultExperiencesDropdown = [
     {
       label: "VV Racing with Jack Butcher",
