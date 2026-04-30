@@ -14,6 +14,7 @@ import {
   mapExternalNavChildren,
   isStrapiUpcomingItem,
 } from "@/utils/upcomingNavUtils";
+import { dispatchModalCloseEvent } from "@/lib/modalEvents";
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
@@ -343,6 +344,7 @@ function Navbar() {
   };
 
   const handleLetsTalk = () => {
+    dispatchModalCloseEvent();
     if (scrollToContactSection()) return;
     router.push("/#contact");
   };

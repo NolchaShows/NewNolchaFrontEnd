@@ -6,6 +6,7 @@ import { RiTelegram2Line } from "react-icons/ri";
 import EveningRecap from "../common/EveningRecap";
 import MediaGalleryGrid from "../common/MediaGalleryGrid";
 import TweetCarousel from "../common/TweetCarousel";
+import { subscribeToModalCloseEvent } from "@/lib/modalEvents";
 
 const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -30,6 +31,18 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
       setIsShareOpen(false);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleGlobalClose = () => {
+      document.body.style.overflow = "unset";
+      setIsShareOpen(false);
+      onClose();
+    };
+
+    return subscribeToModalCloseEvent(handleGlobalClose);
+  }, [isOpen, onClose]);
 
   if (!isOpen || !eventData) return null;
 

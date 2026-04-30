@@ -1,6 +1,7 @@
 "use client";
 import React, { useMemo, useState, useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
+import { subscribeToModalCloseEvent } from "@/lib/modalEvents";
 
 const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEventTitle }) => {
   const eventsList = useMemo(
@@ -66,6 +67,17 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleGlobalClose = () => {
+      document.body.style.overflow = "unset";
+      onClose();
+    };
+
+    return subscribeToModalCloseEvent(handleGlobalClose);
+  }, [isOpen, onClose]);
 
   // Preselect relevant event(s) when opening modal
   useEffect(() => {

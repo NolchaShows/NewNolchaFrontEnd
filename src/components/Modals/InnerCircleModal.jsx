@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
+import { subscribeToModalCloseEvent } from "@/lib/modalEvents";
 
 const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
   const [formData, setFormData] = useState({
@@ -22,6 +23,15 @@ const InnerCircleModal = ({ setIsInnerCircleModalOpen }) => {
       document.body.style.overflow = "unset";
     };
   }, []);
+
+  useEffect(() => {
+    const handleGlobalClose = () => {
+      document.body.style.overflow = "unset";
+      setIsInnerCircleModalOpen(false);
+    };
+
+    return subscribeToModalCloseEvent(handleGlobalClose);
+  }, [setIsInnerCircleModalOpen]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
