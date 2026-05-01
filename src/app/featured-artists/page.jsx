@@ -38,6 +38,7 @@ const page = () => {
           artistData={featuredPage?.artistData}
           videos={featuredPage?.videos}
           isDesktop={true}
+          hideViewAllButton={true}
         />
         {(artistsLoading || (featuredArtists && featuredArtists.length > 0)) && (
           <FeaturedArtistCardGrid

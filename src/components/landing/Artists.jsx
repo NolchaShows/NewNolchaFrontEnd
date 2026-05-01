@@ -202,7 +202,18 @@ export function Carousel({
     </div>
   );
 }
-function Artists({ artistData, loading, textColor, backgroundColor, isFade, videos, isSlider, isTextLeft, isDesktop = false }) {
+function Artists({
+  artistData,
+  loading,
+  textColor,
+  backgroundColor,
+  isFade,
+  videos,
+  isSlider,
+  isTextLeft,
+  isDesktop = false,
+  hideViewAllButton = false,
+}) {
   // Use dynamic data from Strapi if available, otherwise fall back to defaults
   const title = artistData?.title || "And +500 Other Artists";
   const description = artistData?.description || "Onchainmonkey - World Of Women - Ron English - Jeremy Cowart - Lindsay Kokoska - Nodemonkes - Kira  Bursky - Vincent D’onofrio - Latashá - Vakseen - Talia Zoref - Rob Prior - Laurence Fuller - Janedao - Izzy  Weissgerber - Gretta Kruesi - Janedao -yiyang Lu - Skye Nicolas  - Aeforia  - Arno Carstens - Mohsen  Hazrati - Ragzy X - Musketon - Tillavision - Made By Oona - Stacie Ant - Young & Sick";
@@ -258,16 +269,18 @@ function Artists({ artistData, loading, textColor, backgroundColor, isFade, vide
           <VideoGrid videos={mediaItems} />
         )}
 
-        <div className="bg-black flex w-full flex-col items-center pt-4 lg:pt-6 2xl:pt-8 3xl:pt-10">
-          <button
-            onClick={() => {
-              window.location.href = "/featured-artists";
-            }}
-            className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
-          >
-            <span>View all Artists</span>
-          </button>
-        </div>
+        {!hideViewAllButton && (
+          <div className="bg-black flex w-full flex-col items-center pt-4 lg:pt-6 2xl:pt-8 3xl:pt-10">
+            <button
+              onClick={() => {
+                window.location.href = "/featured-artists";
+              }}
+              className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
+            >
+              <span>View all Artists</span>
+            </button>
+          </div>
+        )}
 
       </div>
     </div>
