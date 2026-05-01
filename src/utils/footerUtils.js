@@ -29,7 +29,7 @@ export const DEFAULT_FOOTER_CONTENT = {
   quickLinks: {
     title: "Quick Links:",
     links: [
-      { label: "White Label", href: "/about" },
+      { label: "White Label", href: "/white-label" },
       { label: "Press", href: "/press" },
       { label: "Speakers", href: "/speakers" },
       { label: "Featured Artists", href: "/featured-artists" },
