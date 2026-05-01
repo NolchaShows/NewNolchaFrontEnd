@@ -90,6 +90,7 @@ const UpcomingEventsList = ({
       rsvpLink: matchedEvent.rsvpLink || matchedEvent.rsvp_url || "#",
       logo: matchedEvent.logo || matchedEvent.logoUrl || "",
       mainImage: matchedEvent.mainImage || matchedEvent.image || "",
+      additionalRowImages: matchedEvent.additionalRowImages || [],
       galleryImages: matchedEvent.galleryImages || matchedEvent.gallery || [],
       tweetCarousel: resolveTweetCarouselForEvent(
         matchedEvent,
@@ -193,6 +194,7 @@ const UpcomingEventsList = ({
                             rsvpLink: display.rsvpLink || display.rsvp_url || "#",
                             logo: display.logo || display.logoUrl || "",
                             mainImage: display.mainImage || display.image || "",
+                            additionalRowImages: display.additionalRowImages || [],
                             galleryImages: display.galleryImages || display.gallery || [],
                             tweetCarousel: resolveTweetCarouselForEvent(
                               display,

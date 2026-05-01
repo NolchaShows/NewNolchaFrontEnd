@@ -151,6 +151,12 @@ const mapUpcomingEvents = (upcomingSection) => {
     rsvpLink: event?.rsvpLink || "#",
     logo: getMediaUrl(event?.logo) || "",
     mainImage: getMediaUrl(event?.mainImage) || getMediaUrl(event?.image) || "",
+    secondaryImage: getMediaUrl(event?.secondaryImage) || "",
+    tertiaryImage: getMediaUrl(event?.tertiaryImage) || "",
+    additionalRowImages: [
+      getMediaUrl(event?.secondaryImage),
+      getMediaUrl(event?.tertiaryImage),
+    ].filter(Boolean),
     galleryImages: (event?.galleryImages || []).map((image) => getMediaUrl(image)).filter(Boolean),
     tweetCarousel: parseSharedTweetCarousel(
       event?.tweet_carousel ?? event?.tweetCarousel ?? null

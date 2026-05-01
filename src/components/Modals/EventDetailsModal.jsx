@@ -72,6 +72,14 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
       "/shao_nyfw/image 28.png",
     ];
 
+  const additionalRowImages =
+    eventData?.additionalRowImages?.length >= 2
+      ? eventData.additionalRowImages
+      : [
+          displayGalleryImages[0] || "/shao_nyfw/image 21.png",
+          displayGalleryImages[1] || "/shao_nyfw/image 22.png",
+        ];
+
   const modalGalleryItems = displayGalleryImages
     .map((item) => {
       if (!item) return null;
@@ -344,6 +352,22 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                       className="w-full h-full object-cover"
                     />
                   </div>
+                </div>
+
+                {/* Second Row: Additional Images */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 mt-0">
+                  {additionalRowImages.slice(0, 2).map((image, index) => (
+                    <div
+                      key={`additional-row-image-${index}`}
+                      className="h-[220px] sm:h-[300px] md:h-[360px] relative overflow-hidden rounded-lg sm:rounded-none"
+                    >
+                      <img
+                        src={image}
+                        alt={`${eventTitle} additional ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
                 </div>
 
               </div>
