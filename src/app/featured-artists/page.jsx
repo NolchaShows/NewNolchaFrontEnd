@@ -21,7 +21,7 @@ const page = () => {
       <VideoHeroSection
         videoSrc={heroVideo}
         isSticky={true}
-        className="-mt-[88px] 2xl:-mt-[120px] h-screen"
+        className="h-screen"
         firstPart={heroFirstPart}
         secondPart={heroSecondPart}
         strokeColor="#000000"

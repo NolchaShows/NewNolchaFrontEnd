@@ -1,25 +1,17 @@
-'use client'
-import { usePathname } from 'next/navigation';
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 
 export default function ConditionalLayout({ children }) {
-  const pathname = usePathname();
-  const hideNavFooter = pathname === '/sign-in' || pathname === '/dashboard' || pathname === "/gmail/template/1" || pathname === "/gmail/template/2";
 
   return (
     <>
-      {!hideNavFooter && (
-        <div className="bg-[var(--surface-color)]">
-          <Navbar />
-        </div>
-      )}
-      <div className={!hideNavFooter ? "pt-[88px] 2xl:pt-[120px]" : ""}>
+      <div className="bg-[var(--surface-color)]">
+        <Navbar />
+      </div>
+      <div>
         {children}
       </div>
-      {!hideNavFooter && (
-        <Footer />
-      )}
+      <Footer />
     </>
   );
 }
