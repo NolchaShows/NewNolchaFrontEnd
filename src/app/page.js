@@ -22,6 +22,10 @@ import SharedTweetCarouselSection from "@/components/experience/SharedTweetCarou
 import HomeUpcomingEventsSection from "@/components/home/HomeUpcomingEventsSection";
 import { fetchHomePage } from "@/lib/graphql/fetchHomePage";
 import { upcomingListEvents } from "@/data/upcomingEvents";
+import {
+  parseSharedTweetCarousel,
+  pickSharedTweetCarouselRaw,
+} from "@/lib/strapiFlatten";
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
@@ -102,36 +106,6 @@ const buildPastExperiences = (featuredExperiences = []) =>
     }))
     .filter((experience) => experience.image && experience.text);
 
-const normalizeTweetCarousel = (rawCarousel) => {
-  if (!rawCarousel) return null;
-
-  const normalizedItems = (rawCarousel?.items || [])
-    .map((item) => {
-      const tweetId =
-        typeof item === "string" ? item.trim() : String(item?.tweetId || item?.id || "").trim();
-      return tweetId ? { tweetId } : null;
-    })
-    .filter(Boolean);
-
-  if (normalizedItems.length) {
-    return { ...rawCarousel, items: normalizedItems };
-  }
-
-  const bulk = String(rawCarousel?.bulkTweetIds || "").trim();
-  if (!bulk) return rawCarousel;
-
-  const bulkItems = bulk
-    .split(/[\s,;\n\r\t]+/)
-    .map((token) => {
-      const match = token.trim().match(/(\d{8,})/);
-      return match?.[1] ? { tweetId: match[1] } : null;
-    })
-    .filter(Boolean);
-
-  if (!bulkItems.length) return rawCarousel;
-  return { ...rawCarousel, items: bulkItems };
-};
-
 const mapUpcomingEvents = (upcomingSection) => {
   if (!upcomingSection?.events?.length) return upcomingListEvents;
 
@@ -178,7 +152,7 @@ const mapUpcomingEvents = (upcomingSection) => {
     logo: getMediaUrl(event?.logo) || "",
     mainImage: getMediaUrl(event?.mainImage) || getMediaUrl(event?.image) || "",
     galleryImages: (event?.galleryImages || []).map((image) => getMediaUrl(image)).filter(Boolean),
-    tweetCarousel: normalizeTweetCarousel(
+    tweetCarousel: parseSharedTweetCarousel(
       event?.tweet_carousel ?? event?.tweetCarousel ?? null
     ),
     eveningRecap: (() => {
@@ -339,7 +313,9 @@ export default async function Home() {
   const pressMediaImage = getMediaUrl(homePage?.press_media_image);
   const artistData = homePage?.artist_section || null;
   const featureBannerTwo = getMediaUrl(homePage?.feature_banner_two);
-  const homeTweetCarousel = homePage?.shared_tweet_carousel || null;
+  const homeTweetCarousel = parseSharedTweetCarousel(
+    pickSharedTweetCarouselRaw(homePage)
+  );
   const pastExperiences = buildPastExperiences(homePage?.featured_experiences);
   const contactData = homePage?.contact_section || null;
   const homeGallerySource =

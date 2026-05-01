@@ -121,9 +121,17 @@ export function parseSharedTweetCarousel(raw: unknown): {
   const items: Array<{ tweetId: string }> = [];
 
   for (const row of arr) {
+    if (typeof row === "string" || typeof row === "number") {
+      const idStr = String(row).trim();
+      const tweetId =
+        parseTweetIdentifier(idStr) || (/^\d+$/.test(idStr) ? idStr : "");
+      if (tweetId) items.push({ tweetId });
+      continue;
+    }
+
     const flatRow = flattenStrapiEntity(unwrapNode(row));
     const r = (flatRow || row) as Record<string, unknown>;
-    const rawId = r.tweetId ?? r.tweet_id;
+    const rawId = r.tweetId ?? r.tweet_id ?? r.id;
     if (
       rawId == null ||
       (typeof rawId !== "string" && typeof rawId !== "number")
@@ -136,6 +144,28 @@ export function parseSharedTweetCarousel(raw: unknown): {
       (/^\d+$/.test(idStr) ? idStr : "");
     if (!tweetId) continue;
     items.push({ tweetId });
+  }
+
+  if (!items.length) {
+    const bulkRaw =
+      (doc as Record<string, unknown>).bulkTweetIds ??
+      (doc as Record<string, unknown>).bulk_tweet_ids;
+    const bulk =
+      typeof bulkRaw === "string"
+        ? bulkRaw.trim()
+        : bulkRaw != null
+          ? String(bulkRaw).trim()
+          : "";
+    if (bulk) {
+      for (const token of bulk.split(/[\s,;\n\r\t]+/)) {
+        const match = token.trim().match(/(\d{8,})/);
+        if (!match?.[1]) continue;
+        const tweetId =
+          parseTweetIdentifier(match[1]) ||
+          (/^\d+$/.test(match[1]) ? match[1] : "");
+        if (tweetId) items.push({ tweetId });
+      }
+    }
   }
 
   if (!items.length) return null;

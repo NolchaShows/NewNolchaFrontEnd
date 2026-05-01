@@ -1,3 +1,8 @@
+import {
+  parseSharedTweetCarousel,
+  pickSharedTweetCarouselRaw,
+} from "@/lib/strapiFlatten";
+
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
 
@@ -28,5 +33,8 @@ export async function fetchFeaturedArtistPage(slug) {
           featured_interval: page.gallery.featured_interval ?? 6,
         }
       : null,
+    shared_tweet_carousel: parseSharedTweetCarousel(
+      pickSharedTweetCarouselRaw(page as Record<string, unknown>)
+    ),
   };
 }

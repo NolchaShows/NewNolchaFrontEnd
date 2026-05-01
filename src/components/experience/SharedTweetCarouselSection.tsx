@@ -3,6 +3,10 @@ import {
   fetchStructuredPageBySlug,
   type StructuredPageType,
 } from "@/lib/fetchStructuredPageBySlug";
+import {
+  parseSharedTweetCarousel,
+  pickSharedTweetCarouselRaw,
+} from "@/lib/strapiFlatten";
 
 export default async function SharedTweetCarouselSection({
   slug,
@@ -21,8 +25,9 @@ export default async function SharedTweetCarouselSection({
 
   try {
     const resolvedPage = page ?? (await fetchStructuredPageBySlug(pageType, slug));
-    const carousel =
-      resolvedPage?.shared_tweet_carousel || resolvedPage?.sharedTweetCarousel || null;
+    const carousel = parseSharedTweetCarousel(
+      pickSharedTweetCarouselRaw(resolvedPage as Record<string, unknown>)
+    );
 
     if (!carousel?.items?.length) return null;
 

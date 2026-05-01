@@ -1,4 +1,8 @@
 import { fetchStructuredPageBySlug } from "@/lib/fetchStructuredPageBySlug";
+import {
+  parseSharedTweetCarousel,
+  pickSharedTweetCarouselRaw,
+} from "@/lib/strapiFlatten";
 
 type NormalizedGallery = {
   standard_media: unknown[];
@@ -28,9 +32,14 @@ export async function fetchCharityPage(slug: string) {
 
   if (!page) return null;
 
+  const p = page as Record<string, unknown>;
+
   return {
     ...page,
     detail_rows: page.detail_rows ?? [],
     gallery: normalizeGallery(page.gallery),
+    shared_tweet_carousel: parseSharedTweetCarousel(
+      pickSharedTweetCarouselRaw(p)
+    ),
   };
 }
