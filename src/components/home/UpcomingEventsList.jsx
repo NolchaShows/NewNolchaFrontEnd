@@ -24,6 +24,7 @@ const UpcomingEventsList = ({
   const [modalContext, setModalContext] = useState({ title: "", image: "" });
   const [isEventDetailsModalOpen, setIsEventDetailsModalOpen] = useState(false);
   const [eventDetailsContext, setEventDetailsContext] = useState(null);
+  const [eventDetailsModalKey, setEventDetailsModalKey] = useState("event-details-initial");
   const lastAutoOpenedSlugRef = useRef(null);
 
   const safeEvents = useMemo(
@@ -98,6 +99,9 @@ const UpcomingEventsList = ({
       ),
       eveningRecap: matchedEvent.eveningRecap || null,
     });
+    setEventDetailsModalKey(
+      `${slugifyUpcomingEventTitle(matchedEvent.title || "event")}-${Date.now()}`
+    );
     setIsEventDetailsModalOpen(true);
     onOpenEventHandled?.();
   }, [defaults, fallbackTweetCarousel, onOpenEventHandled, openEventSlug, safeEvents]);
@@ -186,7 +190,7 @@ const UpcomingEventsList = ({
                           if (openExternalEventLink(display)) {
                             return;
                           }
-                          setEventDetailsContext({
+                          const nextEventDetailsContext = {
                             title: display.title || ev.title || "",
                             date: display.date || "",
                             venue: display.venue || display.location || "",
@@ -201,7 +205,15 @@ const UpcomingEventsList = ({
                               fallbackTweetCarousel
                             ),
                             eveningRecap: display.eveningRecap || null,
+                          };
+                          setEventDetailsContext({
+                            ...nextEventDetailsContext,
                           });
+                          setEventDetailsModalKey(
+                            `${slugifyUpcomingEventTitle(
+                              nextEventDetailsContext.title || ev.title || "event"
+                            )}-${Date.now()}`
+                          );
                           setIsEventDetailsModalOpen(true);
                         }}
                         className="w-full lg:w-auto px-[10px] lg:px-[18px] 2xl:px-[24px] py-[10px] lg:py-[10px] 2xl:py-[15px] bg-black text-white rounded-lg text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-800 transition-colors"
@@ -249,6 +261,7 @@ const UpcomingEventsList = ({
 
       {/* Event Details Modal */}
       <EventDetailsModal
+        key={eventDetailsModalKey}
         isOpen={isEventDetailsModalOpen}
         onClose={() => setIsEventDetailsModalOpen(false)}
         eventData={eventDetailsContext}
