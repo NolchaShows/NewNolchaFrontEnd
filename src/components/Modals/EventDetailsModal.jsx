@@ -290,11 +290,11 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
             <div className="p-5 sm:p-8 relative">
               {/* Logo - Positioned absolutely */}
               {logoUrl && (
-                <div className="absolute top-[-14px] lg:top-[-25px] xl:top-[-35px] left-5 sm:left-8 z-10">
+                <div className="absolute top-0 left-5 sm:left-8 z-10 w-[230px] sm:w-[340px] lg:w-[440px] h-[84px] sm:h-[114px] lg:h-[142px] flex items-center -translate-y-1/2">
                   <img
                     src={logoUrl}
                     alt={`${eventTitle} Logo`}
-                    className="max-w-[150px] sm:max-w-[220px] lg:max-w-[280px] h-auto"
+                    className="w-full h-full object-contain object-left"
                   />
                 </div>
               )}
