@@ -373,8 +373,10 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
               </div>
 
               <EveningRecap
+                year={eveningRecap.year}
                 title={eveningRecap.title}
                 videos={eveningRecap.videos}
+                videoUrl={eveningRecap.videoUrl}
               />
               {tweetCarousel?.items?.length ? (
                 <div className="mt-8">
