@@ -4,9 +4,14 @@
 @theme {
   --color-primary: #7BAE9D;
   --color-secondary: #1D1C1E;
-  --breakpoint-xxl: 1920px;
-  --breakpoint-3xl: 2560px;
-  --breakpoint-4xl: 3840px;
+  /*
+   * Breakpoints must use the same unit as Tailwind’s defaults (rem), or min-width
+   * ordering breaks and custom variants like 3xl: never win over 2xl:.
+   * 120rem = 1920px, 160rem = 2560px, 240rem = 3840px at 16px root.
+   */
+  --breakpoint-xxl: 120rem;
+  --breakpoint-3xl: 160rem;
+  --breakpoint-4xl: 240rem;
 }
 
 /* globals.css */
