@@ -66,6 +66,71 @@ export function resolveStrapiFileUrl(media, depth = 0) {
 }
 
 /**
+ * Prefer the original upload URL over responsive formats so large UI (e.g. speaker cards)
+ * stays sharp. Falls back to largest available format if the original path is missing.
+ */
+export function resolveStrapiImageUrlBestQuality(media, depth = 0) {
+  if (media == null || depth > 5) {
+    return null;
+  }
+  if (typeof media === "number") {
+    return null;
+  }
+  if (Array.isArray(media) && media.length) {
+    return resolveStrapiImageUrlBestQuality(media[0], depth + 1);
+  }
+  if (typeof media === "string") {
+    return resolveStrapiFileUrl(media, depth + 1);
+  }
+  if (typeof media !== "object") {
+    return null;
+  }
+
+  if (Array.isArray(media.data) && media.data.length) {
+    return resolveStrapiImageUrlBestQuality({ data: media.data[0] }, depth + 1);
+  }
+  if (
+    media.data &&
+    typeof media.data === "object" &&
+    !media.url &&
+    !media.data.url &&
+    !media.data.attributes
+  ) {
+    return resolveStrapiImageUrlBestQuality(media.data, depth + 1);
+  }
+
+  const formats =
+    media.formats ||
+    media.attributes?.formats ||
+    media.data?.attributes?.formats ||
+    {};
+
+  const formatFallback =
+    formats.xlarge?.url ||
+    formats.large2x?.url ||
+    formats.large?.url ||
+    formats.medium?.url ||
+    formats.small?.url ||
+    formats.thumbnail?.url ||
+    null;
+
+  const rawUrl =
+    media.data?.attributes?.url ||
+    media.data?.url ||
+    media.attributes?.url ||
+    media.url ||
+    formatFallback ||
+    null;
+
+  if (!rawUrl) return null;
+  if (rawUrl.startsWith("http") || rawUrl.startsWith("//")) {
+    return rawUrl.startsWith("//") ? `https:${rawUrl}` : rawUrl;
+  }
+  const path = rawUrl.startsWith("/") ? rawUrl : `/${rawUrl}`;
+  return `${base()}${path}`;
+}
+
+/**
  * `experience.hero` may nest video oddly after serialization; also accept first entry if an array.
  */
 export function pickHeroVideoUrl(hero) {

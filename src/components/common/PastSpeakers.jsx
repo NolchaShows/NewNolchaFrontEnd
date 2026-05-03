@@ -4,24 +4,10 @@ import StyledHeading from './StyledHeading';
 import { motion } from "framer-motion";
 import SectionTitle from './SectionTitle';
 import ArrowNavButtons from './ArrowNavButtons';
+import { resolveStrapiImageUrlBestQuality } from '@/lib/strapiMediaUrl';
 
-const STRAPI_BASE_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
-
-const resolveSpeakerImage = (image) => {
-  if (!image) return null;
-
-  const rawUrl =
-    image?.formats?.large?.url ||
-    image?.formats?.medium?.url ||
-    image?.formats?.small?.url ||
-    image?.formats?.thumbnail?.url ||
-    image?.url ||
-    (typeof image === "string" ? image : null);
-
-  if (!rawUrl) return null;
-  return rawUrl.startsWith("http") ? rawUrl : `${STRAPI_BASE_URL}${rawUrl}`;
-};
+const resolveSpeakerImage = (image) =>
+  image ? resolveStrapiImageUrlBestQuality(image) : null;
 
 const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
   const carouselRef = useRef(null);
