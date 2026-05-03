@@ -6,6 +6,7 @@ import { RiTelegram2Line } from "react-icons/ri";
 import EveningRecap from "../common/EveningRecap";
 import MediaGalleryGrid from "../common/MediaGalleryGrid";
 import TweetCarousel from "../common/TweetCarousel";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 import { subscribeToModalCloseEvent } from "@/lib/modalEvents";
 
 const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
@@ -50,7 +51,12 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   const eventTitle = eventData?.title || "Event";
   const eventDate = eventData?.date || "TBD";
   const venue = eventData?.venue || eventData?.location || "TBD";
-  const whatToExpect = eventData?.whatToExpect || eventData?.description || "Join us for an unforgettable experience.";
+  const whatToExpectRaw =
+    eventData?.whatToExpect ??
+    eventData?.what_to_expect ??
+    eventData?.description ??
+    null;
+  const whatToExpectFallback = "Join us for an unforgettable experience.";
   const rsvpLink = eventData?.rsvpLink || eventData?.rsvp_url || "#";
   const logoUrl = eventData?.logo || eventData?.logoUrl || "";
   const mainImage = eventData?.mainImage || eventData?.image || "/landing/recent_event.png";
@@ -320,10 +326,14 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                     </div>
 
                     <div className="mb-4">
-                      <p className="text-white text-sm sm:text-base">
-                        <span className="text-primary font-bold">WHAT TO EXPECT: </span>
-                        {whatToExpect}
+                      <p className="text-white text-sm sm:text-base mb-2">
+                        <span className="text-primary font-bold">WHAT TO EXPECT:</span>
                       </p>
+                      <StrapiRichDescription
+                        variant="modal"
+                        value={whatToExpectRaw}
+                        fallback={whatToExpectFallback}
+                      />
                     </div>
 
                     <div className="mb-8 sm:mb-16">

@@ -87,7 +87,10 @@ const UpcomingEventsList = ({
       date: matchedEvent.date || "",
       venue: matchedEvent.venue || matchedEvent.location || "",
       whatToExpect:
-        matchedEvent.whatToExpect || matchedEvent.description || "",
+        matchedEvent.whatToExpect ??
+        matchedEvent.what_to_expect ??
+        matchedEvent.description ??
+        null,
       rsvpLink: matchedEvent.rsvpLink || matchedEvent.rsvp_url || "#",
       logo: matchedEvent.logo || matchedEvent.logoUrl || "",
       mainImage: matchedEvent.mainImage || matchedEvent.image || "",
@@ -194,7 +197,11 @@ const UpcomingEventsList = ({
                             title: display.title || ev.title || "",
                             date: display.date || "",
                             venue: display.venue || display.location || "",
-                            whatToExpect: display.whatToExpect || display.description || "",
+                            whatToExpect:
+                              display.whatToExpect ??
+                              display.what_to_expect ??
+                              display.description ??
+                              null,
                             rsvpLink: display.rsvpLink || display.rsvp_url || "#",
                             logo: display.logo || display.logoUrl || "",
                             mainImage: display.mainImage || display.image || "",

@@ -147,7 +147,11 @@ const mapUpcomingEvents = (upcomingSection) => {
     letsTalkLocation: event?.letsTalkLocation || "",
     whiteLabelLocation: event?.whiteLabelLocation || "",
     venue: event?.venue || event?.location || "",
-    whatToExpect: event?.whatToExpect || "",
+    whatToExpect:
+      event?.whatToExpect ??
+      event?.what_to_expect ??
+      event?.description ??
+      null,
     rsvpLink: event?.rsvpLink || "#",
     logo: getMediaUrl(event?.logo) || "",
     mainImage: getMediaUrl(event?.mainImage) || getMediaUrl(event?.image) || "",
