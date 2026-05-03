@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 
 const defaultHeadline =
   "NOLCHA'S PROJECTS CONNECT STRATEGY, CREATIVITY, AND PRODUCTION IN A NEW PRACTICE TO CREATE WORLDS THAT INSPIRE, ENTERTAIN, AND ENRICH.";
@@ -21,9 +22,10 @@ export default function PressStatementSection({
   ctaText = "GET IN TOUCH",
   ctaHref = "/contact-us",
 }) {
+  const router = useRouter();
   const href = ctaHref || "/contact-us";
   const ctaClassName =
-    "inline-flex w-fit items-center gap-1 text-[10px] lg:text-[16px] font-normal uppercase text-[#1D1D1D] underline-offset-4 transition-colors hover:text-[#1A1A1A] hover:underline";
+    "inline-flex w-fit items-center gap-1 text-[10px] lg:text-[16px] font-normal uppercase text-[#1D1D1D] underline-offset-4 transition-colors hover:text-[#1A1A1A] hover:underline cursor-pointer";
 
   const ctaInner = (
     <>
@@ -71,9 +73,13 @@ export default function PressStatementSection({
                 {ctaInner}
               </a>
             ) : (
-              <Link href={href} className={ctaClassName}>
+              <button
+                type="button"
+                className={`${ctaClassName} border-0 bg-transparent p-0 text-left`}
+                onClick={() => navigateToContactLikeLetsTalk(router)}
+              >
                 {ctaInner}
-              </Link>
+              </button>
             )}
           </motion.div>
         </div>

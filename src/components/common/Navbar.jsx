@@ -14,7 +14,10 @@ import {
   mapExternalNavChildren,
   isStrapiUpcomingItem,
 } from "@/utils/upcomingNavUtils";
-import { dispatchModalCloseEvent } from "@/lib/modalEvents";
+import {
+  navigateToContactLikeLetsTalk,
+  scrollToContactSection,
+} from "@/lib/letsTalkNavigation";
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
@@ -332,21 +335,8 @@ function Navbar() {
     }));
   };
 
-  const scrollToContactSection = () => {
-    const el = document.getElementById("contact");
-    if (!el) return false;
-
-    const nav = document.querySelector('[data-navbar="main"]');
-    const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-    const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
-    window.scrollTo({ top: y, behavior: "smooth" });
-    return true;
-  };
-
   const handleLetsTalk = () => {
-    dispatchModalCloseEvent();
-    if (scrollToContactSection()) return;
-    router.push("/#contact");
+    navigateToContactLikeLetsTalk(router);
   };
 
   useEffect(() => {
