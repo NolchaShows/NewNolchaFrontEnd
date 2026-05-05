@@ -13,6 +13,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [selectedServices, setSelectedServices] = useState(new Set());
 
   const router = useRouter();
@@ -74,17 +75,42 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
 
     setIsLoading(true);
     setIsSuccess(false);
+    setSubmitError("");
 
-    setTimeout(() => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL || "https://new-nolcha-strapi-uiai.onrender.com"}/api/contact/send`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit contact form");
+      }
+
       setIsLoading(false);
       setIsSuccess(true);
-    }, 5000); // 5s delay
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      setIsLoading(false);
+      setIsSuccess(false);
+      setSubmitError("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -224,6 +250,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
                 rounded-lg
                 w-full
                 py-3 px-6 2xl:py-6 2xl:px-12
+                min-h-[56px] 2xl:min-h-[80px]
                 text-[16px]
                 2xl:text-[24px]
                 font-medium
@@ -242,6 +269,14 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
                   submitButtonText
                 )}
               </button>
+              {isSuccess && (
+                <p className="mt-2 text-sm md:text-base text-[#E7F0D3]">
+                  Thank you! Your message has been sent successfully.
+                </p>
+              )}
+              {submitError && (
+                <p className="mt-2 text-sm text-red-300">{submitError}</p>
+              )}
             </div>
           </div>
         </div>
