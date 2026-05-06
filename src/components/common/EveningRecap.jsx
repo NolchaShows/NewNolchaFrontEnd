@@ -13,6 +13,7 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
             : [];
 
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [touchStartX, setTouchStartX] = useState(null);
 
     // Helper function to convert Google Drive link to embed URL
     const getGoogleDriveEmbedUrl = (url) => {
@@ -41,6 +42,32 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
 
     const handleNext = () => {
         setCurrentIndex((prev) => (prev === videoList.length - 1 ? 0 : prev + 1));
+    };
+
+    const handleTouchStartCapture = (e) => {
+        if (videoList.length <= 1) return;
+        setTouchStartX(e.touches[0]?.clientX ?? null);
+    };
+
+    const handleTouchEndCapture = (e) => {
+        if (videoList.length <= 1 || touchStartX === null) return;
+
+        const touchEndX = e.changedTouches[0]?.clientX ?? null;
+        if (touchEndX === null) {
+            setTouchStartX(null);
+            return;
+        }
+
+        const deltaX = touchStartX - touchEndX;
+        const swipeThreshold = 50;
+
+        if (deltaX > swipeThreshold) {
+            handleNext();
+        } else if (deltaX < -swipeThreshold) {
+            handlePrev();
+        }
+
+        setTouchStartX(null);
     };
 
     if (videoList.length === 0) {
@@ -76,7 +103,11 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
             ) : null}
 
             {/* Video Container */}
-            <div className={`relative overflow-hidden mb-6 lg:mb-8 2xl:mb-10 ${displayTitle ? "mt-5 lg:mt-10 2xl:mt-12 xxl:mt-15 3xl:mt-24" : "mt-0"}`}>
+            <div
+                className={`relative overflow-hidden mb-6 lg:mb-8 2xl:mb-10 ${displayTitle ? "mt-5 lg:mt-10 2xl:mt-12 xxl:mt-15 3xl:mt-24" : "mt-0"}`}
+                onTouchStartCapture={handleTouchStartCapture}
+                onTouchEndCapture={handleTouchEndCapture}
+            >
                 <AnimatePresence mode="wait">
                     {isGoogleDriveVideo ? (
                         <motion.div
@@ -120,6 +151,7 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
                 <ArrowNavButtons
                     onLeft={handlePrev}
                     onRight={handleNext}
+                    className="flex gap-3 lg:gap-4 xl:gap-6 2xl:gap-8 xxl:gap-10"
                     centerButtons={true}
                 />
             )}
