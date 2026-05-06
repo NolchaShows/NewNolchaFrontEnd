@@ -33,34 +33,50 @@ function Footer() {
     content;
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async () => {
-    if (!email) {
-      setMessage("Please enter an email address");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const safeEmail = email.trim();
+
+    if (!safeEmail) {
+      setErrorMessage("Please enter an email address.");
+      setSuccessMessage("");
       return;
     }
-    if (!email.includes("@")) {
-      setMessage("Please enter a valid email address");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(safeEmail)) {
+      setErrorMessage("Please enter a valid email address.");
+      setSuccessMessage("");
       return;
     }
+
     setIsLoading(true);
-    setMessage("");
+    setErrorMessage("");
+    setSuccessMessage("");
+
     try {
-      const response = await fetch("/api/send-email", {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL || "https://new-nolcha-strapi-uiai.onrender.com"}/api/newsletter/subscribe`,
+        {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+        body: JSON.stringify({ email: safeEmail }),
+      }
+      );
+
       if (response.ok) {
-        setMessage("Email sent successfully! Check your inbox.");
+        setSuccessMessage("Thanks! You are now subscribed.");
         setEmail("");
       } else {
-        setMessage("Failed to send email. Please try again.");
+        setErrorMessage("Failed to subscribe. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
-      setMessage("An error occurred. Please try again.");
+      setErrorMessage("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -78,7 +94,7 @@ function Footer() {
               {stayInformed.description}
             </p>
           </div>
-          <div className="flex gap-0 items-center justify-center w-full lg:w-[427px]">
+          <form onSubmit={handleSubmit} className="flex gap-0 items-center justify-center w-full lg:w-[427px]">
             <div className="flex flex-1 flex-col gap-[6px] items-start min-w-0 w-full">
               <div className="bg-[#FAFAFA] border border-[#E9EAEB] border-solid flex gap-[8px] items-center pl-[16px] pr-[8px] py-[6px] rounded-lg w-full">
                 <div className="flex flex-1 gap-0 items-center min-w-0">
@@ -87,15 +103,14 @@ function Footer() {
                     placeholder="Enter your email Address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                     className="flex-1 font-normal leading-[1.5] min-w-0 overflow-ellipsis overflow-hidden text-[#171717] text-[16px] lg:text-[18px] tracking-[-0.54px] whitespace-nowrap bg-transparent border-none outline-none focus:outline-none placeholder:text-[#171717]"
                     disabled={isLoading}
+                    required
                   />
                 </div>
                 <div className="flex gap-0 items-center pl-0 pr-[12px] py-0">
                   <button
-                    type="button"
-                    onClick={handleSubmit}
+                    type="submit"
                     disabled={isLoading}
                     className={`bg-primary flex gap-0 items-center justify-center px-[16px] py-[8px] rounded-lg transition-colors ${
                       isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-primary/80"
@@ -108,18 +123,8 @@ function Footer() {
                 </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
-        {message ? (
-          <div
-            className={`w-full text-sm ${
-              message.includes("successfully") ? "text-green-400" : "text-red-400"
-            }`}
-          >
-            {message}
-          </div>
-        ) : null}
-
         <div className="flex flex-col lg:flex-row items-start justify-between gap-[40px] lg:gap-[100px] w-full">
           <div className="flex flex-col gap-[30px] items-start w-full lg:w-[361px]">
             <div className="flex flex-col gap-[16px] items-start w-full">
@@ -228,6 +233,35 @@ function Footer() {
           </div>
         </div>
       </div>
+      {(successMessage || errorMessage) && (
+        <div className="fixed inset-0 z-[140] flex items-center justify-center bg-black/70 px-4">
+          <div
+            role="status"
+            aria-live="polite"
+            className="w-full max-w-[520px] rounded-2xl border border-white/20 bg-[#0F0F0F] p-6 md:p-8 text-center"
+          >
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-black text-2xl font-bold">
+              {successMessage ? "✓" : "!"}
+            </div>
+            <h3 className="text-white text-[24px] md:text-[30px] font-bold mb-3">
+              {successMessage ? "Thank You" : "Subscription Failed"}
+            </h3>
+            <p className="text-[rgba(253,255,231,0.85)] text-[15px] md:text-[18px]">
+              {successMessage || errorMessage}
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setSuccessMessage("");
+                setErrorMessage("");
+              }}
+              className="mt-7 bg-primary text-black font-medium px-8 py-3 rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

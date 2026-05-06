@@ -4,6 +4,10 @@ import { RxCross2 } from "react-icons/rx";
 import { subscribeToModalCloseEvent } from "@/lib/modalEvents";
 
 const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEventTitle }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
   const eventsList = useMemo(
     () => [
       "Consensus Hong Kong Kong",
@@ -112,15 +116,62 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Implement form submission logic
-    console.log("Form submitted:", formData);
-    // You can add API call here
-    alert("Thank you for your request! We'll be in touch soon.");
-    handleClose();
+
+    const selectedEvents = Object.entries(formData.events)
+      .filter(([, checked]) => checked)
+      .map(([name]) => name);
+
+    const [firstName = "", ...restName] = formData.fullName.trim().split(/\s+/);
+    const lastName = restName.join(" ") || "-";
+
+    setIsLoading(true);
+    setIsSuccess(false);
+    setSubmitError("");
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL || "https://new-nolcha-strapi-uiai.onrender.com"}/api/contact/send`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email: formData.email,
+            message: [
+              "Sponsorship Details Request",
+              `Company: ${formData.company}`,
+              `Selected Event(s): ${selectedEvents.length ? selectedEvents.join(", ") : "None"}`,
+            ].join("\n"),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to send request");
+      }
+
+      setIsSuccess(true);
+      setFormData({
+        fullName: "",
+        email: "",
+        company: "",
+        events: Object.fromEntries(eventsList.map((name) => [name, false])),
+      });
+    } catch (error) {
+      setSubmitError("Unable to send right now. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleClose = () => {
     document.body.style.overflow = "unset";
+    setIsSuccess(false);
+    setSubmitError("");
+    setIsLoading(false);
     onClose();
   };
 
@@ -147,6 +198,46 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
 
         {/* Scrollable content */}
         <div className="px-1 sm:px-0 overflow-y-visible overflow-x-hidden flex-1">
+          {submitError ? (
+            <div className="min-h-[360px] flex flex-col items-center justify-center text-center px-4 py-8">
+              <div className="w-16 h-16 rounded-full bg-primary text-black text-3xl font-bold flex items-center justify-center mb-5">
+                !
+              </div>
+              <h2 className="text-[24px] lg:text-[32px] font-bold text-white mb-3">
+                Unable to Send
+              </h2>
+              <p className="text-[15px] lg:text-[18px] text-[rgba(253,255,231,0.85)] max-w-[520px]">
+                {submitError}
+              </p>
+              <button
+                type="button"
+                onClick={() => setSubmitError("")}
+                className="mt-8 bg-primary text-black font-medium px-8 py-3 rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : isSuccess ? (
+            <div className="min-h-[360px] flex flex-col items-center justify-center text-center px-4 py-8">
+              <div className="w-16 h-16 rounded-full bg-primary text-black text-3xl font-bold flex items-center justify-center mb-5">
+                ✓
+              </div>
+              <h2 className="text-[24px] lg:text-[32px] font-bold text-white mb-3">
+                Thank You
+              </h2>
+              <p className="text-[15px] lg:text-[18px] text-[rgba(253,255,231,0.85)] max-w-[520px]">
+                We received your sponsorship details request. Our team will get in touch with you shortly.
+              </p>
+              <button
+                type="button"
+                onClick={handleClose}
+                className="mt-8 bg-primary text-black font-medium px-8 py-3 rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Close
+              </button>
+            </div>
+          ) : (
+            <>
           {/* Logo and Title */}
           <div className="mb-3 flex flex-col items-center">
             <img
@@ -261,11 +352,14 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
             {/* Send Button */}
             <button
               type="submit"
+              disabled={isLoading}
               className="w-full bg-primary hover:opacity-90 text-black font-medium py-4 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:outline-none"
             >
-              Send
+              {isLoading ? "Sending..." : "Send"}
             </button>
           </form>
+            </>
+          )}
         </div>
         </div>
       </div>

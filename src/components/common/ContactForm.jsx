@@ -12,8 +12,8 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
   const [selectedServices, setSelectedServices] = useState(new Set());
 
   const router = useRouter();
@@ -98,8 +98,8 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
         throw new Error("Failed to submit contact form");
       }
 
-      setIsLoading(false);
       setIsSuccess(true);
+      setSubmitError("");
       setFormData({
         firstName: "",
         lastName: "",
@@ -107,9 +107,10 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
         message: "",
       });
     } catch (error) {
-      setIsLoading(false);
       setIsSuccess(false);
       setSubmitError("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -263,24 +264,42 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
               >
                 {isLoading ? (
                   <div className="linear-loader"></div>
-                ) : isSuccess ? (
-                  <span className="text-white text-2xl">✔</span>
                 ) : (
                   submitButtonText
                 )}
               </button>
-              {isSuccess && (
-                <p className="mt-2 text-sm md:text-base text-[#E7F0D3]">
-                  Thank you! Your message has been sent successfully.
-                </p>
-              )}
-              {submitError && (
-                <p className="mt-2 text-sm text-red-300">{submitError}</p>
-              )}
             </div>
           </div>
         </div>
       </div>
+
+      {(isSuccess || submitError) && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/70 px-4">
+          <div className="w-full max-w-[560px] rounded-2xl border border-white/20 bg-[#0F0F0F] p-6 md:p-8 text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-black text-2xl font-bold">
+              {isSuccess ? "✓" : "!"}
+            </div>
+            <h3 className="text-white text-[24px] md:text-[30px] font-bold mb-3">
+              {isSuccess ? "Thank You" : "Submission Failed"}
+            </h3>
+            <p className="text-[rgba(253,255,231,0.85)] text-[15px] md:text-[18px]">
+              {isSuccess
+                ? "Your message has been sent successfully. We will get back to you soon."
+                : submitError}
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setIsSuccess(false);
+                setSubmitError("");
+              }}
+              className="mt-7 bg-primary text-black font-medium px-8 py-3 rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
   .linear-loader {
