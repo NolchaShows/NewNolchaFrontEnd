@@ -602,7 +602,7 @@ export default async function Home() {
           <ExploreServices
             title={serviceData?.title || fallbackExploreServices.title}
             videoSrc={
-              getMediaUrl(serviceData?.image) ||
+              getMediaUrl(serviceData?.video || serviceData?.image) ||
               "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4"
             }
             caption={serviceData?.caption || fallbackExploreServices.caption}
