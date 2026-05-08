@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionTitle from "../common/SectionTitle";
 
-const ExploreServices = ({ title, image, caption, items }) => {
+const ExploreServices = ({ title, videoSrc, caption, items }) => {
   const resolvedTitle = title || "How Brands Work With Nolcha";
   const resolvedItems =
     items && items.length > 0
@@ -13,16 +13,9 @@ const ExploreServices = ({ title, image, caption, items }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
 
-  // Video URLs mapping
-  const videoUrls = [
-    "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4",
-    "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%203.mp4",
-  ];
-
-  // Get video URL for current item (cycle through if more items than videos)
-  const getVideoUrl = (index) => {
-    return videoUrls[index % videoUrls.length];
-  };
+  const resolvedVideoSrc =
+    videoSrc ||
+    "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4";
 
   const toggleItem = (index) => {
     const newIndex = expandedIndex === index ? -1 : index;
@@ -32,9 +25,8 @@ const ExploreServices = ({ title, image, caption, items }) => {
   // Auto-play video when expandedIndex changes
   useEffect(() => {
     if (videoRef.current && expandedIndex >= 0) {
-      const newSrc = getVideoUrl(expandedIndex);
-      if (videoRef.current.src !== newSrc) {
-        videoRef.current.src = newSrc;
+      if (videoRef.current.src !== resolvedVideoSrc) {
+        videoRef.current.src = resolvedVideoSrc;
         videoRef.current.load();
       }
       // Auto-play video
@@ -57,7 +49,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
         setIsPlaying(false);
       }
     }
-  }, [expandedIndex]);
+  }, [expandedIndex, resolvedVideoSrc]);
 
   const handleVideoPlay = () => {
     setIsPlaying(true);
@@ -77,7 +69,7 @@ const ExploreServices = ({ title, image, caption, items }) => {
           <div className="rounded-[14px] lg:rounded-[18px] xl:rounded-[22px] 2xl:rounded-[30px] xxl:rounded-[40px] 3xl:rounded-[60px] overflow-hidden relative bg-black">
             <video
               ref={videoRef}
-              src={getVideoUrl(expandedIndex >= 0 ? expandedIndex : 0)}
+              src={resolvedVideoSrc}
               className="w-full h-[340px] lg:h-[500px] xl:h-[570px] 2xl:h-[620px] xxl:h-[700px] 3xl:h-[1000px] object-cover"
               onPause={handleVideoPause}
               onPlay={handleVideoPlay}
