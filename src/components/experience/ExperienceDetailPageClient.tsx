@@ -33,7 +33,10 @@ export default function ExperienceDetailPageClient({
   nextExperienceHref?: string;
 }) {
   const title = page?.title || "Page";
-  const heroVideo = getStructuredMediaUrl(page?.hero?.video) || "";
+  const heroMedia = page?.hero?.video || null;
+  const heroMediaUrl = getStructuredMediaUrl(heroMedia) || "";
+  const heroMediaMime = String(heroMedia?.mime || "").toLowerCase();
+  const isHeroImage = heroMediaMime.startsWith("image/");
   const detailRows = mapDetailRows(page);
   const galleryItems = buildStructuredGalleryItems(page?.gallery);
   const tweetCarousel =
@@ -42,7 +45,7 @@ export default function ExperienceDetailPageClient({
   return (
     <SmoothScroll>
       <div className="min-h-screen bg-[#f0eee6] px-5 lg:px-11">
-        {heroVideo ? (
+        {heroMediaUrl ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -50,26 +53,34 @@ export default function ExperienceDetailPageClient({
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="w-full h-auto aspect-video lg:h-screen lg:aspect-auto"
           >
-            <VideoHeroSection
-              videoSrc={heroVideo}
-              firstPart=""
-              secondPart=""
-              strokeColor="#000000"
-              fillColor="#000000"
-              textColor="#000000"
-              size="large"
-              overlayOpacity={0}
-              showControls={true}
-              autoPlay={true}
-              muted={true}
-              loop={true}
-              className="!h-full !w-full"
-            />
+            {isHeroImage ? (
+              <img
+                src={heroMediaUrl}
+                alt={title}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <VideoHeroSection
+                videoSrc={heroMediaUrl}
+                firstPart=""
+                secondPart=""
+                strokeColor="#000000"
+                fillColor="#000000"
+                textColor="#000000"
+                size="large"
+                overlayOpacity={0}
+                showControls={true}
+                autoPlay={true}
+                muted={true}
+                loop={true}
+                className="!h-full !w-full"
+              />
+            )}
           </motion.div>
         ) : null}
 
         <motion.section
-          className="py-8 lg:py-20"
+          className={`py-8 lg:py-20 ${heroMediaUrl ? "" : "pt-24 lg:pt-32"}`}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
