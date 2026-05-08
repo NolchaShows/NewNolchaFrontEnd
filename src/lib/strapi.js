@@ -420,51 +420,14 @@ export async function getCharityPages() {
 export async function getSpeakersPageData() {
   try {
     console.log('🎤 Fetching speakers page data...');
-    
-    // Speakers is now a single type. Try the singleton endpoint first.
-    try {
-      const singletonData = await fetchFromStrapi('speakers-page');
-      if (singletonData?.data) {
-        console.log('✅ Speakers singleton endpoint works');
-        return { data: { attributes: singletonData.data } };
-      }
-    } catch (singletonError) {
-      console.log('⚠️ speakers-page endpoint failed, trying legacy endpoint:', singletonError.message);
-    }
-    
-    // Legacy fallback while environments are migrating
-    try {
-      const simpleData = await fetchFromStrapi('speakers-pages?populate=*');
-      if (!simpleData || !simpleData.data) {
-        return null;
-      }
 
-      try {
-        console.log('🔍 Trying to populate repeatable components with images (legacy)...');
-        const componentPopulate = 'populate[carousal1][populate]=images&populate[carousal2][populate]=images&populate[carousal3][populate]=images&populate[gallery][populate]=images&populate[stack_section][populate][testimonials][populate]=images&populate[stack_section][populate][images_left][populate]=images&populate[stack_section][populate][images_right][populate]=images';
-        
-        const componentData = await fetchFromStrapi(`speakers-pages?${componentPopulate}`);
-        
-        if (componentData && componentData.data) {
-          const speakersPage = Array.isArray(componentData.data) ? componentData.data[0] : componentData.data;
-
-          if (simpleData?.data?.[0]?.videos) {
-            speakersPage.videos = simpleData.data[0].videos;
-          }
-
-          return { data: { attributes: speakersPage } };
-        }
-      } catch (componentError) {
-        console.log('❌ Legacy component populate failed:', componentError.message);
-      }
-
-      const speakersPage = Array.isArray(simpleData.data) ? simpleData.data[0] : simpleData.data;
-      return { data: { attributes: speakersPage } };
-    } catch (legacyError) {
-      console.log('❌ Legacy speakers-pages endpoint failed:', legacyError.message);
+    const data = await fetchFromStrapi('speakers-page');
+    if (!data?.data) {
+      console.log('❌ No speakers page data received from API');
       return null;
     }
-    
+
+    return { data: { attributes: data.data } };
   } catch (error) {
     console.error('❌ Error fetching speakers page data:', error);
     return null;
