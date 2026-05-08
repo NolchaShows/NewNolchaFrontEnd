@@ -12,7 +12,7 @@ const RESOURCE_BY_TYPE: Record<StructuredPageType, string> = {
   experience: "experience-pages",
   charity: "charity-pages",
   home: "home-pages",
-  speakers: "speakers-pages",
+  speakers: "speakers-page",
 };
 
 /**

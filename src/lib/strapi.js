@@ -421,109 +421,48 @@ export async function getSpeakersPageData() {
   try {
     console.log('🎤 Fetching speakers page data...');
     
-    // First, try a simple request to check if the endpoint exists
+    // Speakers is now a single type. Try the singleton endpoint first.
     try {
-      console.log('🔍 Testing basic endpoint...');
-      const basicData = await fetchFromStrapi('speakers-pages');
-      console.log('✅ Basic endpoint works:', basicData);
-    } catch (basicError) {
-      console.log('❌ Basic endpoint failed:', basicError.message);
-      
-      // Try alternative endpoint names
-      const alternativeEndpoints = [
-        'speakers-page',
-        'speaker-pages',
-        'speaker-page',
-        'speakerspage',
-        'speakerpage'
-      ];
-      
-      for (const endpoint of alternativeEndpoints) {
-        try {
-          console.log(`🔍 Trying alternative endpoint: ${endpoint}`);
-          const altData = await fetchFromStrapi(endpoint);
-          console.log(`✅ Found working endpoint: ${endpoint}`);
-          return { data: { attributes: Array.isArray(altData.data) ? altData.data[0] : altData.data } };
-        } catch (altError) {
-          console.log(`❌ ${endpoint} failed:`, altError.message);
-        }
+      const singletonData = await fetchFromStrapi('speakers-page');
+      if (singletonData?.data) {
+        console.log('✅ Speakers singleton endpoint works');
+        return { data: { attributes: singletonData.data } };
       }
-      
-      console.log('❌ No working endpoints found');
-      return null;
+    } catch (singletonError) {
+      console.log('⚠️ speakers-page endpoint failed, trying legacy endpoint:', singletonError.message);
     }
     
-    // If basic endpoint works, try with simple populate
+    // Legacy fallback while environments are migrating
     try {
-      console.log('🔍 Trying with simple populate...');
       const simpleData = await fetchFromStrapi('speakers-pages?populate=*');
-      console.log('✅ Simple populate works:', simpleData);
-      
       if (!simpleData || !simpleData.data) {
-        console.log('❌ No speakers page data received from API');
         return null;
       }
-      
-      // Now try to get component data with proper population
+
       try {
-        console.log('🔍 Trying to populate repeatable components with images...');
+        console.log('🔍 Trying to populate repeatable components with images (legacy)...');
         const componentPopulate = 'populate[carousal1][populate]=images&populate[carousal2][populate]=images&populate[carousal3][populate]=images&populate[gallery][populate]=images&populate[stack_section][populate][testimonials][populate]=images&populate[stack_section][populate][images_left][populate]=images&populate[stack_section][populate][images_right][populate]=images';
         
         const componentData = await fetchFromStrapi(`speakers-pages?${componentPopulate}`);
-        console.log('✅ Component populate successful');
         
         if (componentData && componentData.data) {
           const speakersPage = Array.isArray(componentData.data) ? componentData.data[0] : componentData.data;
-          
-          // Manually add videos from simple data since it can't be populated together with components
+
           if (simpleData?.data?.[0]?.videos) {
             speakersPage.videos = simpleData.data[0].videos;
           }
-          // stack_section is now properly populated with the component data, so no need to override it
-          
-          console.log('✅ Combined component and simple data successfully');
-          console.log('📋 Final data structure:', {
-            hasVideos: !!speakersPage.videos,
-            hasStackSection: !!speakersPage.stack_section,
-            stackSectionHasTitle: !!speakersPage.stack_section?.title,
-            stackSectionTestimonials: speakersPage.stack_section?.testimonials?.length || 0,
-            stackSectionImagesLeft: speakersPage.stack_section?.images_left?.length || 0,
-            stackSectionImagesRight: speakersPage.stack_section?.images_right?.length || 0,
-            carousal1Count: speakersPage.carousal1?.length || 0,
-            carousal2Count: speakersPage.carousal2?.length || 0,
-            carousal3Count: speakersPage.carousal3?.length || 0,
-            galleryCount: speakersPage.gallery?.length || 0
-          });
-          
+
           return { data: { attributes: speakersPage } };
         }
       } catch (componentError) {
-        console.log('❌ Component populate failed:', componentError.message);
+        console.log('❌ Legacy component populate failed:', componentError.message);
       }
-      
-      // Fallback to simple data if component populate fails
+
       const speakersPage = Array.isArray(simpleData.data) ? simpleData.data[0] : simpleData.data;
-      console.log('✅ Using simple data as fallback - speakers page data processed successfully');
-      
       return { data: { attributes: speakersPage } };
-      
-    } catch (populateError) {
-      console.log('❌ Simple populate failed:', populateError.message);
-      
-      // Since nested populate is complex, use the working simple populate
-      // and handle component data fetching separately if needed
-      console.log('🔍 Using simple populate (components will show IDs only)...');
-      const speakersPage = Array.isArray(simpleData.data) ? simpleData.data[0] : simpleData.data;
-      console.log('📋 Speakers page structure:', Object.keys(speakersPage));
-      console.log('� Component IDs found:', {
-        carousal1: speakersPage.carousal1?.length || 0,
-        carousal2: speakersPage.carousal2?.length || 0,
-        carousal3: speakersPage.carousal3?.length || 0,
-        gallery: speakersPage.gallery?.length || 0,
-        stack_section: speakersPage.stack_section ? 'present' : 'missing'
-      });
-      
-      return { data: { attributes: speakersPage } };
+    } catch (legacyError) {
+      console.log('❌ Legacy speakers-pages endpoint failed:', legacyError.message);
+      return null;
     }
     
   } catch (error) {
