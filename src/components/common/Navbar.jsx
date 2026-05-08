@@ -112,7 +112,139 @@ const resolveChildHref = (parentHref = "", child = {}, parent = {}) => {
   return `/${cleanParent}/${cleanChild}`;
 };
 
-function Navbar() {
+function buildNavbarState(initialNavData) {
+  const defaultExperiencesDropdown = [
+    {
+      label: "VV Racing with Jack Butcher",
+      href: "/experiences/vv_raching_with_jack_butcher",
+    },
+    {
+      label: "Bitcoin Conference",
+      href: "/experiences/bitcoin_conferance",
+    },
+    {
+      label: "Opening Night Consensus",
+      href: "/experiences/opening_night_consensus",
+    },
+    {
+      label: "CTRL Ordinals Collection Launch",
+      href: "/experiences/ctrl_ordinals_collection_launch",
+    },
+    {
+      label: "New York Fashion Week",
+      href: "/experiences/new_york_fashion_week",
+    },
+  ];
+
+  const baseUpcomingChildren = mapUpcomingEventsToNavChildren(
+    upcomingListEvents,
+    getMediaUrl
+  );
+
+  if (!initialNavData) {
+    return {
+      experiencesDropdown: defaultExperiencesDropdown,
+      charityDropdown: [],
+      navigationItems: [],
+      upcomingDropdownChildren: baseUpcomingChildren,
+    };
+  }
+
+  const experiencePages = Array.isArray(initialNavData?.experiencePages)
+    ? initialNavData.experiencePages
+    : [];
+  const charityPages = Array.isArray(initialNavData?.charityPages)
+    ? initialNavData.charityPages
+    : [];
+  const navigationMenu = initialNavData?.navigationMenu || null;
+  const homePageRes = initialNavData?.homePageRes || null;
+
+  const mappedExperiencesDropdown =
+    experiencePages.length > 0
+      ? experiencePages.map((page) => ({
+          label: page.title,
+          href: `/experiences/${page.slug}`,
+        }))
+      : defaultExperiencesDropdown;
+
+  const mappedCharityDropdown =
+    charityPages.length > 0
+      ? charityPages.map((page) => ({
+          label: page.title,
+          href: `/charity/${page.slug}`,
+        }))
+      : [];
+
+  const homeRoot = homePageRes?.data?.attributes || homePageRes?.data;
+  const rawHomeEvents = extractUpcomingEventsFromHome(homeRoot);
+  const fromHome =
+    rawHomeEvents.length > 0
+      ? mapUpcomingEventsToNavChildren(rawHomeEvents, getMediaUrl)
+      : baseUpcomingChildren;
+
+  const navigationItemsFromStrapi =
+    navigationMenu?.data?.attributes?.items || navigationMenu?.data?.items || [];
+
+  const strapiUpcoming = Array.isArray(navigationItemsFromStrapi)
+    ? navigationItemsFromStrapi.find(isStrapiUpcomingItem)
+    : null;
+  const externalFromStrapi = mapExternalNavChildren(
+    strapiUpcoming?.children || [],
+    getMediaUrl
+  );
+  const mergedUpcomingChildren = [...fromHome, ...externalFromStrapi];
+
+  const mappedNavigationItems =
+    Array.isArray(navigationItemsFromStrapi) && navigationItemsFromStrapi.length > 0
+      ? navigationItemsFromStrapi.map((item, index) => {
+          const base = {
+            label: item?.label || "",
+            href: normalizeMenuHref(item?.href),
+            subtitle: item?.subtitle || "‎",
+            key: buildMenuKey(item, index),
+            hasDropdown: Array.isArray(item?.children) && item.children.length > 0,
+            imageSrc: getMediaUrl(item?.image),
+            children: (item?.children || []).map((child) => {
+              const ext = (child?.externalUrl || "").trim();
+              if (ext && /^https?:\/\//i.test(ext)) {
+                return {
+                  label: child?.label || "",
+                  href: ext,
+                  slug: child?.slug || "",
+                  isExternal: true,
+                  imageSrc: getMediaUrl(child?.image),
+                };
+              }
+              return {
+                label: child?.label || "",
+                href: resolveChildHref(item?.href || "", child, item),
+                slug: child?.slug || "",
+                isExternal: false,
+                imageSrc: getMediaUrl(child?.image),
+              };
+            }),
+          };
+
+          if (isStrapiUpcomingItem(item)) {
+            return {
+              ...base,
+              hasDropdown: mergedUpcomingChildren.length > 0,
+              children: mergedUpcomingChildren,
+            };
+          }
+          return base;
+        })
+      : [];
+
+  return {
+    experiencesDropdown: mappedExperiencesDropdown,
+    charityDropdown: mappedCharityDropdown,
+    navigationItems: mappedNavigationItems,
+    upcomingDropdownChildren: mergedUpcomingChildren,
+  };
+}
+
+function Navbar({ initialNavData = null }) {
   // Testing helper: keep one mega dropdown open
   const FORCE_DESKTOP_MEGA_OPEN = false;
   const FORCED_DESKTOP_MEGA_KEY = "upcoming";
@@ -145,35 +277,21 @@ function Navbar() {
     pathname?.startsWith("/designers/") ||
     pathname?.startsWith("/terms-of-use") ||
     pathname?.startsWith("/privacy-policy");
-  const defaultExperiencesDropdown = [
-    {
-      label: "VV Racing with Jack Butcher",
-      href: "/experiences/vv_raching_with_jack_butcher",
-    },
-    {
-      label: "Bitcoin Conference",
-      href: "/experiences/bitcoin_conferance",
-    },
-    {
-      label: "Opening Night Consensus",
-      href: "/experiences/opening_night_consensus",
-    },
-    {
-      label: "CTRL Ordinals Collection Launch",
-      href: "/experiences/ctrl_ordinals_collection_launch",
-    },
-    {
-      label: "New York Fashion Week",
-      href: "/experiences/new_york_fashion_week",
-    },
-  ];
-  const [experiencesDropdown, setExperiencesDropdown] = useState(
-    defaultExperiencesDropdown
+  const initialNavbarState = useMemo(
+    () => buildNavbarState(initialNavData),
+    [initialNavData]
   );
-  const [charityDropdown, setCharityDropdown] = useState([]);
-  const [navigationItems, setNavigationItems] = useState([]);
-  const [upcomingDropdownChildren, setUpcomingDropdownChildren] = useState(() =>
-    mapUpcomingEventsToNavChildren(upcomingListEvents, getMediaUrl)
+  const [experiencesDropdown, setExperiencesDropdown] = useState(
+    initialNavbarState.experiencesDropdown
+  );
+  const [charityDropdown, setCharityDropdown] = useState(
+    initialNavbarState.charityDropdown
+  );
+  const [navigationItems, setNavigationItems] = useState(
+    initialNavbarState.navigationItems
+  );
+  const [upcomingDropdownChildren, setUpcomingDropdownChildren] = useState(
+    initialNavbarState.upcomingDropdownChildren
   );
   // Mobile dropdown states
   const [mobileDropdowns, setMobileDropdowns] = useState({});
