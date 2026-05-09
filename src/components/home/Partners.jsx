@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import SectionTitle from "../common/SectionTitle";
 
 /** Light tile / hover accent for partner cards */
@@ -30,7 +31,7 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
     
     return strapiPartners.map((partner, index) => {
       const baseUrl =
-        process.env.NEXT_PUBLIC_STRAPI_URL || "https://new-nolcha-strapi.onrender.com";
+        process.env.NEXT_PUBLIC_STRAPI_URL || "https://new-nolcha-strapi-uiai.onrender.com";
       const fallbackPartner = partners?.[index] || {};
       
       // Get image URLs from Strapi
@@ -146,13 +147,18 @@ const Partners = ({ partnerData, loading, title, description, partners, bg, logo
           className="flex items-center justify-center w-full h-full rounded-2xl xl:rounded-xl lg:rounded-lg md:rounded-lg sm:rounded-lg relative transition-all duration-300 ease-in-out p-2 sm:p-3 md:p-4"
           style={{ backgroundColor: currentBackgroundColor }}
         >
-          <img
-            src={currentImage}
-            alt={partner.altText}
-            className={`w-full h-auto max-w-[75%] sm:max-w-[80%] 2xl:max-w-[90%] object-contain transition-all duration-300 ease-in-out filter ${
-              isGreenTile ? "brightness-0" : "brightness-0 invert"
-            }`}
-          />
+          <div className={`relative w-[75%] sm:w-[80%] 2xl:w-[90%] aspect-[3/2] transition-all duration-300 ease-in-out filter ${
+            isGreenTile ? "brightness-0" : "brightness-0 invert"
+          }`}>
+            <Image
+              src={currentImage}
+              alt={partner.altText}
+              fill
+              className="object-contain"
+              sizes="(max-width: 640px) 80px, (max-width: 768px) 100px, (max-width: 1024px) 120px, 145px"
+              unoptimized={typeof currentImage === "string" && currentImage.startsWith("http")}
+            />
+          </div>
         </div>
       </div>
     );

@@ -4,6 +4,8 @@ import StyledHeading from "./StyledHeading";
 
 const VideoHeroSection = ({
     videoSrc,
+    poster,
+    preload = "metadata",
     firstPart = "SHAO",
     secondPart = "NYFW",
     strokeColor = "#000000",
@@ -73,11 +75,13 @@ const VideoHeroSection = ({
                         key={embedUrl}
                         className="w-full h-full object-cover"
                         src={embedUrl}
+                        poster={poster}
                         autoPlay={shouldAutoPlay}
                         muted={shouldMute}
                         loop={shouldLoop}
                         controls={showControls}
                         playsInline
+                        preload={preload}
                         style={{ minWidth: "100%", minHeight: "100%" }}
                     >
                         Your browser does not support the video tag.

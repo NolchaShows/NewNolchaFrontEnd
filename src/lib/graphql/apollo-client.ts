@@ -1,9 +1,10 @@
 import { ApolloClient, InMemoryCache, HttpLink, NormalizedCacheObject } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
+const STRAPI_BASE = process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
 const STRAPI_GRAPHQL_ENDPOINT =
   process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT ??
-  "https://new-nolcha-strapi.onrender.com/graphql";
+  `${STRAPI_BASE}/graphql`;
 
 /**
  * Create a new Apollo Client instance.

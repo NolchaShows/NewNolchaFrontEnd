@@ -21,9 +21,12 @@ export async function fetchFromStrapi(endpoint, options = {}) {
   }
 
   try {
+    const signal =
+      options.signal ?? AbortSignal.timeout(60_000);
     const response = await fetch(url, {
       ...options,
       headers,
+      signal,
     });
 
     if (!response.ok) {
@@ -66,11 +69,14 @@ export async function getNavigationMenu() {
 
 /**
  * Home page singleton (includes upcoming_events_section.events) for navbar.
+ * Uses the below-fold endpoint so the same URL and revalidate option as
+ * fetchBelowFoldHomePage() in page.js — Next.js deduplicates both into
+ * one network request per render.
  * @returns {Promise<Object|null>} - Strapi home-page document (attributes or flat)
  */
 export async function getHomePageForNavigation() {
   try {
-    const data = await fetchFromStrapi("home-page");
+    const data = await fetchFromStrapi("home-page/below-fold", { next: { revalidate: 60 } });
     if (!data?.data) {
       return null;
     }

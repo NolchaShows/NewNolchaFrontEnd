@@ -9,9 +9,27 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
     items && items.length > 0
       ? items
       : [];
-  const [expandedIndex, setExpandedIndex] = useState(0); // First item expanded by default
+  const [expandedIndex, setExpandedIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [inView, setInView] = useState(false);
   const videoRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const resolvedVideoSrc =
     videoSrc ||
@@ -22,8 +40,9 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
     setExpandedIndex(newIndex);
   };
 
-  // Auto-play video when expandedIndex changes
+  // Auto-play video when expandedIndex changes or when section enters viewport
   useEffect(() => {
+    if (!inView) return;
     if (videoRef.current && expandedIndex >= 0) {
       if (videoRef.current.src !== resolvedVideoSrc) {
         videoRef.current.src = resolvedVideoSrc;
@@ -37,19 +56,17 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
             setIsPlaying(true);
           })
           .catch((error) => {
-            // Autoplay failed (user interaction required in some browsers)
             console.log("Autoplay prevented:", error);
             setIsPlaying(false);
           });
       }
     } else {
-      // Pause when no item is expanded
       if (videoRef.current) {
         videoRef.current.pause();
         setIsPlaying(false);
       }
     }
-  }, [expandedIndex, resolvedVideoSrc]);
+  }, [expandedIndex, resolvedVideoSrc, inView]);
 
   const handleVideoPlay = () => {
     setIsPlaying(true);
@@ -60,7 +77,7 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
   };
 
   return (
-    <section className="page-container bg-black py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] xxl:py-[140px] 3xl:py-[200px]">
+    <section ref={sectionRef} className="page-container bg-black py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] xxl:py-[140px] 3xl:py-[200px]">
       <SectionTitle className="text-white text-left mb-[30px] lg:mb-[40px] xl:mb-[50px] 2xl:mb-[60px] xxl:mb-[70px] 3xl:mb-[100px]">{resolvedTitle}</SectionTitle>
 
       <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[24px] xl:gap-[30px] 2xl:gap-[40px] xxl:gap-[60px] 3xl:gap-[100px] items-center lg:items-start">
@@ -69,12 +86,11 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
           <div className="rounded-[14px] lg:rounded-[18px] xl:rounded-[22px] 2xl:rounded-[30px] xxl:rounded-[40px] 3xl:rounded-[60px] overflow-hidden relative bg-black">
             <video
               ref={videoRef}
-              src={resolvedVideoSrc}
+              src={inView ? resolvedVideoSrc : undefined}
               className="w-full h-[340px] lg:h-[500px] xl:h-[570px] 2xl:h-[620px] xxl:h-[700px] 3xl:h-[1000px] object-cover"
               onPause={handleVideoPause}
               onPlay={handleVideoPlay}
               onEnded={() => {
-                // Loop video when it ends
                 if (videoRef.current) {
                   videoRef.current.currentTime = 0;
                   videoRef.current.play();
@@ -84,6 +100,7 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
               muted
               loop
               playsInline
+              preload="none"
             />
             {/* Play button overlay - only show if video failed to autoplay */}
             {!isPlaying && expandedIndex >= 0 && (

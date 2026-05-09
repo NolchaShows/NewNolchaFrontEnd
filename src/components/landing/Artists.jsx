@@ -4,14 +4,30 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import SectionTitle from "../common/SectionTitle";
 
-// "use client";
-
 function VideoGridZigZag({ videos }) {
   const borderColors = ['#FF6813', '#BBD7FF', '#CAD533', '#E6C6C5'];
+  const containerRef = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '600px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="w-full flex justify-center">
-      {/* 🖥️ Desktop/Large screens */}
+    <div ref={containerRef} className="w-full flex justify-center">
+      {/* Desktop/Large screens */}
       {videos && videos.length > 0 ? (
         <div className="hidden lg:flex lg:justify-center gap-4 xl:gap-6 2xl:gap-8 xxl:gap-12 3xl:gap-20 lg:h-[450px] xl:h-[600px] 2xl:h-[750px] xxl:h-[900px] 3xl:h-[1300px] lg:items-end">
           {videos.map((src, i) => (
@@ -20,11 +36,12 @@ function VideoGridZigZag({ videos }) {
               className={`flex ${i % 2 === 0 ? "items-start" : "items-end"} h-[450px] xl:h-[600px] 2xl:h-[700px] xxl:h-[800px] 3xl:h-[1100px]`}
             >
               <video
-                src={src}
+                src={inView ? src : undefined}
                 autoPlay
                 muted
                 loop
                 playsInline
+                preload="none"
                 className="w-[200px] h-[350px] xl:w-[275px] xl:h-[491px] 2xl:w-[350px] 2xl:h-[550px] xxl:w-[450px] xxl:h-[650px] 3xl:w-[600px] 3xl:h-[850px] object-cover rounded-[20px] 3xl:rounded-[40px] shadow-lg"
                 style={{ border: `10px solid ${borderColors[i]}` }}
               />
@@ -32,7 +49,6 @@ function VideoGridZigZag({ videos }) {
           ))}
         </div>
       ) : (
-        // Fallback empty state if no videos
         <div className="hidden lg:flex lg:justify-center lg:gap-6 2xl:gap-20 lg:h-[600px] 2xl:h-[700px] lg:items-end">
           {Array.from({ length: 4 }).map((_, i) => (
             <div
@@ -48,28 +64,30 @@ function VideoGridZigZag({ videos }) {
         </div>
       )}
 
-      {/* 📱 Mobile + Tablet zig-zag grid */}
+      {/* Mobile + Tablet zig-zag grid */}
       <div className="flex justify-center gap-4 lg:hidden">
         {/* Left column */}
         <div className="flex flex-col gap-6">
           {videos[0] && (
             <video
-              src={videos[0]}
+              src={inView ? videos[0] : undefined}
               autoPlay
               muted
               loop
               playsInline
+              preload="none"
               className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] object-cover rounded-[12px]"
               style={{ border: `10px solid ${borderColors[0]}` }}
             />
           )}
           {videos[2] && (
             <video
-              src={videos[2]}
+              src={inView ? videos[2] : undefined}
               autoPlay
               muted
               loop
               playsInline
+              preload="none"
               className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] object-cover rounded-[12px]"
               style={{ border: `10px solid ${borderColors[2]}` }}
             />
@@ -80,22 +98,24 @@ function VideoGridZigZag({ videos }) {
         <div className="flex flex-col gap-6 mt-15">
           {videos[1] && (
             <video
-              src={videos[1]}
+              src={inView ? videos[1] : undefined}
               autoPlay
               muted
               loop
               playsInline
+              preload="none"
               className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] object-cover rounded-[12px]"
               style={{ border: `10px solid ${borderColors[1]}` }}
             />
           )}
           {videos[3] && (
             <video
-              src={videos[3]}
+              src={inView ? videos[3] : undefined}
               autoPlay
               muted
               loop
               playsInline
+              preload="none"
               className="w-[175px] h-[260px] md:w-[230px] md:h-[350px] object-cover rounded-[12px]"
               style={{ border: `10px solid ${borderColors[3]}` }}
             />

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 export default function LogoSlider({ logoSliderData, loading }) {
   // Default values in case data is not available
@@ -108,10 +109,14 @@ export default function LogoSlider({ logoSliderData, loading }) {
                       aria-hidden
                     />
                     {logo.url ? (
-                      <img
+                      <Image
                         src={logo.url}
                         alt={logo.name}
-                        className="relative z-10 h-full w-full object-contain"
+                        fill
+                        className="object-contain relative z-10"
+                        sizes="(max-width: 768px) 180px, 350px"
+                        loading={index < logos.length ? "eager" : "lazy"}
+                        unoptimized={logo.url.startsWith("http")}
                       />
                     ) : (
                       <span className="relative z-10 text-lg font-semibold text-gray-600">

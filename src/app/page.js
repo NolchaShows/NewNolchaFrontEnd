@@ -1,31 +1,34 @@
-import Artists from "@/components/landing/Artists";
-import TextHero from "@/components/charity_partners/TextHero";
-import ContactForm from "@/components/common/ContactForm";
-import LogoSlider from "@/components/home/TextSlider";
-import Partners from "@/components/home/Partners";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
 import BuildMomentumSection from "@/components/home/BuildMomentumSection";
 import ImageGallerySlider from "@/components/common/ImageGallerySlider";
-import EveningRecap from "@/components/common/EveningRecap";
-import PastSpeakers from "@/components/common/PastSpeakers";
-import MediaGalleryGrid from "@/components/common/MediaGalleryGrid";
-import ExploreServices from "@/components/home/ExploreServices";
-import TweetCarousel from "@/components/common/TweetCarousel";
-import { tweetsData } from "@/data/tweetsData";
-import PastExperiences from "@/components/common/PastExperiences";
-import NolchaExperience from "@/components/home/Collaboration";
-import HomeWideVideoBanner from "@/components/home/HomeWideVideoBanner";
-import Image from "next/image";
-import HeroSection from "@/components/experience/HeroSection";
-import EveningRecapSection from "@/components/experience/EveningRecapSection";
-import SharedTweetCarouselSection from "@/components/experience/SharedTweetCarouselSection";
+import LogoSlider from "@/components/home/TextSlider";
 import HomeUpcomingEventsSection from "@/components/home/HomeUpcomingEventsSection";
+import HeroSection from "@/components/experience/HeroSection";
 import { fetchHomePage } from "@/lib/graphql/fetchHomePage";
+import { fetchBelowFoldHomePage } from "@/lib/fetchStructuredPageBySlug";
+import { tweetsData } from "@/data/tweetsData";
 import { upcomingListEvents } from "@/data/upcomingEvents";
 import {
   parseSharedTweetCarousel,
   pickSharedTweetCarouselRaw,
 } from "@/lib/strapiFlatten";
+
+// Below-fold components are code-split to keep the initial JS bundle lean
+const Artists = dynamic(() => import("@/components/landing/Artists"));
+const TextHero = dynamic(() => import("@/components/charity_partners/TextHero"));
+const ContactForm = dynamic(() => import("@/components/common/ContactForm"));
+const Partners = dynamic(() => import("@/components/home/Partners"));
+const EveningRecap = dynamic(() => import("@/components/common/EveningRecap"));
+const PastSpeakers = dynamic(() => import("@/components/common/PastSpeakers"));
+const MediaGalleryGrid = dynamic(() => import("@/components/common/MediaGalleryGrid"));
+const ExploreServices = dynamic(() => import("@/components/home/ExploreServices"));
+const TweetCarousel = dynamic(() => import("@/components/common/TweetCarousel"));
+const PastExperiences = dynamic(() => import("@/components/common/PastExperiences"));
+const NolchaExperience = dynamic(() => import("@/components/home/Collaboration"));
+const HomeWideVideoBanner = dynamic(() => import("@/components/home/HomeWideVideoBanner"));
+const EveningRecapSection = dynamic(() => import("@/components/experience/EveningRecapSection"));
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
@@ -307,7 +310,15 @@ const buildGalleryItems = (gallery) => {
 };
 
 export default async function Home() {
-  const homePage = await fetchHomePage();
+  // Fetch above-fold and below-fold data in parallel so both DB queries run
+  // simultaneously. The below-fold fetch is deduplicated with
+  // getHomePageForNavigation() in ConditionalLayout since they share the same
+  // URL and revalidate value.
+  const [aboveFold, belowFold] = await Promise.all([
+    fetchHomePage(),
+    fetchBelowFoldHomePage(),
+  ]);
+  const homePage = { ...aboveFold, ...belowFold };
   const buildMomentumData = homePage?.build_momentum_section || null;
   const imageGallerySliderImages = mapImageGallerySliderImages(
     homePage?.image_gallery_slider
@@ -565,6 +576,8 @@ export default async function Home() {
         ) : (
           <VideoHeroSection
             videoSrc={heroVideo}
+            poster="/home/hero.png"
+            preload="auto"
             isSticky={true}
             className="!h-screen"
             firstPart="Curated connections for leaders in AI, Web3 & Crypto."
@@ -659,9 +672,12 @@ export default async function Home() {
         bg={"bg-white"}
       /> */}
       {pressMediaImage ? (
-        <img
+        <Image
           src={pressMediaImage}
           alt="Press and media recognition"
+          width={4309}
+          height={2224}
+          sizes="100vw"
           className="w-full h-auto"
         />
       ) : (
@@ -712,21 +728,13 @@ export default async function Home() {
           } 
         />
       </div>
-      {homeTweetCarousel?.items?.length ? (
-        <SharedTweetCarouselSection
-          slug="home"
-          pageType="home"
-          page={homePage}
-          cardVariant="light"
-        />
-      ) : (
-        <TweetCarousel
-          posts={tweetsData}
-          cardVariant="light"
-          padding=""
-          title="Community Moments"
-        />
-      )}
+      <TweetCarousel
+        posts={tweetsData}
+        carousalData={homeTweetCarousel || undefined}
+        cardVariant="light"
+        padding=""
+        title="Community Moments"
+      />
       <PastExperiences
         experiences={pastExperiences.length ? pastExperiences : fallbackPastExperiences}
       />

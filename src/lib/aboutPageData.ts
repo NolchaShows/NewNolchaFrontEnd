@@ -3,7 +3,7 @@ import { GET_ABOUT_PAGE } from "@/lib/graphql/queries/about";
 
 const STRAPI_BASE =
   process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "") ??
-  (process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT ?? "https://new-nolcha-strapi.onrender.com/graphql").replace(
+  (process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT ?? "https://new-nolcha-strapi-uiai.onrender.com/graphql").replace(
     /\/graphql\/?$/,
     ""
   );

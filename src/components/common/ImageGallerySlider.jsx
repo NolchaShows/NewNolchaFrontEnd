@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState, useCallback, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 const DEFAULT_IMAGES = [
   "/homepage/image_gallery/1.jpg",
@@ -14,8 +15,8 @@ const ImageGallerySlider = ({ images }) => {
   const [isInteracting, setIsInteracting] = useState(false);
   const autoTimerRef = useRef(null);
   const resumeTimerRef = useRef(null);
-  const AUTO_DELAY_MS = 4000; // auto-advance delay
-  const RESUME_DELAY_MS = 2500; // wait after user interaction before resuming
+  const AUTO_DELAY_MS = 4000;
+  const RESUME_DELAY_MS = 2500;
 
   const handlePrev = useCallback(() => {
     setIsInteracting(true);
@@ -42,7 +43,6 @@ const ImageGallerySlider = ({ images }) => {
     return () => window.removeEventListener('keydown', onKey);
   }, [handlePrev, handleNext]);
 
-  // Auto-advance using a timeout (easier to pause/clear when interacting)
   useEffect(() => {
     if (items.length <= 1 || isInteracting) return;
     if (autoTimerRef.current) clearTimeout(autoTimerRef.current);
@@ -54,7 +54,6 @@ const ImageGallerySlider = ({ images }) => {
     };
   }, [index, items.length, isInteracting]);
 
-  // Cleanup timers on unmount
   useEffect(() => {
     return () => {
       if (autoTimerRef.current) clearTimeout(autoTimerRef.current);
@@ -65,11 +64,15 @@ const ImageGallerySlider = ({ images }) => {
   return (
     <div className="relative w-full">
       <div className="relative w-full h-[100vw] md:h-[42vw] lg:h-[40vw] xl:h-[42vw]">
-        <img
+        <Image
           src={items[index]}
-          alt={`image-${index}`}
-          className="absolute inset-0 w-full h-full object-cover select-none"
+          alt={`Gallery image ${index + 1}`}
+          fill
+          className="object-cover select-none"
+          sizes="100vw"
           draggable={false}
+          priority={index === 0}
+          unoptimized={typeof items[index] === "string" && items[index].startsWith("http")}
         />
 
         {items.length > 1 && (

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import NextImage from "next/image";
 
 const DEFAULT_ASPECT_RATIO = "2 / 3";
 const GRID_TILE_RATIO = 2 / 3;
@@ -98,22 +99,28 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
   };
 
   const renderMedia = (item, index) => {
-    const mediaClassName = getMediaClassName(item);
-
     if (item.type === "video") {
-      return <GalleryVideo item={item} className={mediaClassName} />;
+      return <GalleryVideo item={item} className={getMediaClassName(item)} />;
     }
 
+    const isFullWidth = Boolean(item.fullWidth);
+    // Remote images (R2/Strapi) are already served by Cloudflare CDN.
+    // Skip Next.js image optimization to avoid 7s fetch timeout.
+    const isRemote = typeof item.url === "string" && item.url.startsWith("http");
+    const sizes = isFullWidth
+      ? "100vw"
+      : "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw";
+
     return (
-      <img
+      <NextImage
         src={item.url}
         alt={item.alt || "Gallery content"}
-        className={mediaClassName}
-        width={item.width || undefined}
-        height={item.height || undefined}
+        fill
+        className="object-cover"
+        sizes={sizes}
+        priority={index < 2}
         loading={index < 2 ? "eager" : "lazy"}
-        decoding="async"
-        fetchPriority={index < 2 ? "high" : "low"}
+        unoptimized={isRemote}
       />
     );
   };
