@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import SmoothScroll from "@/components/common/SmoothScroll";
@@ -51,13 +52,17 @@ export default function ExperienceDetailPageClient({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full h-auto aspect-video lg:h-screen lg:aspect-auto"
+            className="relative w-full h-auto aspect-video lg:h-screen lg:aspect-auto"
           >
             {isHeroImage ? (
-              <img
+              <Image
                 src={heroMediaUrl}
                 alt={title}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                sizes="100vw"
+                priority
+                unoptimized={heroMediaUrl.startsWith("http")}
               />
             ) : (
               <VideoHeroSection

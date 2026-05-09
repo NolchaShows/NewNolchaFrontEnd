@@ -1,4 +1,5 @@
 // @ts-nocheck
+import Image from "next/image";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
 import StyledHeading from "@/components/common/StyledHeading";
 import { fetchStructuredPageBySlug, type StructuredPageType } from "@/lib/fetchStructuredPageBySlug";
@@ -49,10 +50,16 @@ export default async function HeroSection({
   if (isImageHero) {
     return (
       <div className="relative w-full h-screen overflow-hidden">
-        <img
+        <Image
           src={videoSrc}
           alt={resolvedPage.hero.title || resolvedPage.title || "Hero image"}
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          className="object-cover"
+          sizes="100vw"
+          priority
+          unoptimized={
+            typeof videoSrc === "string" && videoSrc.startsWith("http")
+          }
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative z-10 flex items-center justify-center h-full page-container">

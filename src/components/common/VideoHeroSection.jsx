@@ -4,7 +4,7 @@ import StyledHeading from "./StyledHeading";
 
 const VideoHeroSection = ({
     videoSrc,
-    poster,
+    poster = undefined,
     preload = "metadata",
     firstPart = "SHAO",
     secondPart = "NYFW",
