@@ -4,6 +4,7 @@ import SectionTitle from "../common/SectionTitle";
 import SponsorshipDetailsModal from "../Modals/SponsorshipDetailsModal";
 import EventDetailsModal from "../Modals/EventDetailsModal";
 import { slugifyUpcomingEventTitle } from "@/data/upcomingEvents";
+import { pickRsvpUrl } from "@/lib/pickRsvpUrl";
 
 function resolveTweetCarouselForEvent(event, fallback) {
   const direct = event?.tweetCarousel || event?.tweet_carousel;
@@ -91,7 +92,7 @@ const UpcomingEventsList = ({
         matchedEvent.what_to_expect ??
         matchedEvent.description ??
         null,
-      rsvpLink: matchedEvent.rsvpLink || matchedEvent.rsvp_url || "#",
+      rsvpLink: pickRsvpUrl(matchedEvent) ?? "",
       logo: matchedEvent.logo || matchedEvent.logoUrl || "",
       mainImage: matchedEvent.mainImage || matchedEvent.image || "",
       additionalRowImages: matchedEvent.additionalRowImages || [],
@@ -202,7 +203,7 @@ const UpcomingEventsList = ({
                               display.what_to_expect ??
                               display.description ??
                               null,
-                            rsvpLink: display.rsvpLink || display.rsvp_url || "#",
+                            rsvpLink: pickRsvpUrl(display) ?? "",
                             logo: display.logo || display.logoUrl || "",
                             mainImage: display.mainImage || display.image || "",
                             additionalRowImages: display.additionalRowImages || [],

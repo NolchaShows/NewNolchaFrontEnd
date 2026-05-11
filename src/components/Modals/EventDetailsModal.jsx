@@ -9,6 +9,8 @@ import TweetCarousel from "../common/TweetCarousel";
 import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 import { subscribeToModalCloseEvent } from "@/lib/modalEvents";
 
+import { pickRsvpUrl } from "@/lib/pickRsvpUrl";
+
 const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
@@ -57,7 +59,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
     eventData?.description ??
     null;
   const whatToExpectFallback = "Join us for an unforgettable experience.";
-  const rsvpLink = eventData?.rsvpLink || eventData?.rsvp_url || "#";
+  const rsvpLink = pickRsvpUrl(eventData);
   const logoUrl = eventData?.logo || eventData?.logoUrl || "";
   const mainImage = eventData?.mainImage || eventData?.image || "/landing/recent_event.png";
   const galleryImages = eventData?.galleryImages || eventData?.gallery || [];
@@ -336,11 +338,22 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                       />
                     </div>
 
-                    <div className="mb-8 sm:mb-16">
-                      <p className="text-white text-sm sm:text-base">
-                        RSVP <a href={rsvpLink} target="_blank" rel="noopener noreferrer" className="text-primary underline">Link Here</a>.
-                      </p>
-                    </div>
+                    {rsvpLink ? (
+                      <div className="mb-8 sm:mb-16">
+                        <p className="text-white text-sm sm:text-base">
+                          RSVP{" "}
+                          <a
+                            href={rsvpLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary underline"
+                          >
+                            Link Here
+                          </a>
+                          .
+                        </p>
+                      </div>
+                    ) : null}
 
                     <div className="mb-8">
                       <a

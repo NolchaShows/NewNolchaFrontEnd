@@ -14,6 +14,7 @@ import {
   parseSharedTweetCarousel,
   pickSharedTweetCarouselRaw,
 } from "@/lib/strapiFlatten";
+import { pickRsvpUrl } from "@/lib/pickRsvpUrl";
 
 // Below-fold components are code-split to keep the initial JS bundle lean
 const Artists = dynamic(() => import("@/components/landing/Artists"));
@@ -155,7 +156,7 @@ const mapUpcomingEvents = (upcomingSection) => {
       event?.what_to_expect ??
       event?.description ??
       null,
-    rsvpLink: event?.rsvpLink || "#",
+    rsvpLink: pickRsvpUrl(event) ?? "",
     logo: getMediaUrl(event?.logo) || "",
     mainImage: getMediaUrl(event?.mainImage) || getMediaUrl(event?.image) || "",
     secondaryImage: getMediaUrl(event?.secondaryImage) || "",
