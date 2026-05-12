@@ -310,7 +310,7 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
               {/* Main Content Grid */}
               <div className="grid grid-rows-auto gap-0 mt-8 sm:mt-0">
                 {/* Top Row: Text Content + Main Image */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-0 items-start md:items-end">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-0 items-start">
                   {/* Text Content */}
                   <div className={`pr-0 md:pr-5 self-start ${logoUrl ? "mt-3" : "mt-0"}`}>
                     <div className="mb-6 sm:mb-8">
@@ -367,12 +367,12 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
                     </div>
                   </div>
 
-                  {/* Main Image */}
-                  <div className="h-[250px] sm:h-[400px] md:h-[500px] relative overflow-hidden rounded-lg sm:rounded-none">
+                  {/* Main Image — portrait assets from CMS; avoid landscape crop */}
+                  <div className="relative flex w-full items-center justify-center overflow-hidden rounded-lg bg-[#2a2a2a]/90 sm:rounded-none">
                     <img
                       src={mainImage}
                       alt={eventTitle}
-                      className="w-full h-full object-cover"
+                      className="max-h-[min(72vh,640px)] w-full object-contain object-center"
                     />
                   </div>
                 </div>
