@@ -824,8 +824,8 @@ function Navbar({ initialNavData = null }) {
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <img
-                src="/navbar/logo.svg"
-                className="h-10 lg:h-12 2xl:h-14 xxl:h-16 transition-[filter] duration-300 filter brightness-0 invert"
+                src="/navbar/logo.webp"
+                className="h-10 lg:h-12 2xl:h-14 xxl:h-16"
                 alt="NOLCHA"
               />
             </Link>
@@ -1156,9 +1156,9 @@ function Navbar({ initialNavData = null }) {
               {/* Drawer Header */}
               <div className="flex items-center justify-between">
                 <img
-                  src="/navbar/logo.svg"
+                  src="/navbar/logo.webp"
                   alt="NOLCHA"
-                  className="h-8 filter brightness-0 invert"
+                  className="h-8"
                 />
                 <button
                   type="button"

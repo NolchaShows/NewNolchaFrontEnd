@@ -241,9 +241,9 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
           {/* Logo and Title */}
           <div className="mb-3 flex flex-col items-center">
             <img
-              src="/navbar/logo.svg"
+              src="/navbar/logo.webp"
               alt="NOLCHA"
-              className="h-5 lg:h-8 w-auto mb-1 filter brightness-0 invert"
+              className="h-5 lg:h-8 w-auto mb-1"
             />
             <h2 className="text-[18px] lg:text-[28px] font-bold text-white">
               Request Sponsorship Details
