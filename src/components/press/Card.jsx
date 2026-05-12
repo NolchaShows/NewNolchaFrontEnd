@@ -21,9 +21,17 @@ function Card({ newsPaper, image, title, link, variant = "legacy", dateLabel = "
           </div>
 
           <div className="flex min-h-0 flex-1 flex-col bg-[#EEEEEE]">
-            <div className="mt-3 flex shrink-0 items-center justify-between text-[12px] italic text-[#636363] lg:text-[16px]">
-              <span>Article</span>
-              {dateLabel ? <span>{dateLabel}</span> : <span className="opacity-0">00/00/00</span>}
+            <div className="mt-3 flex shrink-0 items-center justify-between gap-3 text-[12px] italic text-[#636363] lg:text-[16px]">
+              <span className="inline-flex min-h-[30px] min-w-0 max-w-[55%] items-center lg:min-h-[38px]">
+                {newsPaper ? (
+                  <img
+                    src={newsPaper}
+                    alt=""
+                    className="max-h-[30px] w-auto max-w-full object-contain object-left lg:max-h-[38px]"
+                  />
+                ) : null}
+              </span>
+              {dateLabel ? <span className="shrink-0">{dateLabel}</span> : <span className="opacity-0">00/00/00</span>}
             </div>
 
             <h3 className="mt-3 shrink-0 text-[14px] uppercase text-[#111111] lg:text-[20px]">
@@ -38,7 +46,7 @@ function Card({ newsPaper, image, title, link, variant = "legacy", dateLabel = "
                 className="inline-flex items-center hover:opacity-75 transition-opacity"
                 aria-hidden
               >
-                <svg class="arrow-link__svg" width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.544922" y="0.5" width="10.4411" height="1.59609" fill="currentColor"></rect><rect width="10.4411" height="1.59609" transform="matrix(-6.40025e-08 1 1 6.40025e-08 9.4043 0.514771)" fill="currentColor"></rect><rect y="10.2979" width="13.7662" height="1.59609" transform="rotate(-45 0 10.2979)" fill="currentColor"></rect></svg>
+                <svg className="arrow-link__svg" width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.544922" y="0.5" width="10.4411" height="1.59609" fill="currentColor"></rect><rect width="10.4411" height="1.59609" transform="matrix(-6.40025e-08 1 1 6.40025e-08 9.4043 0.514771)" fill="currentColor"></rect><rect y="10.2979" width="13.7662" height="1.59609" transform="rotate(-45 0 10.2979)" fill="currentColor"></rect></svg>
               </span>
             </div>
 
@@ -68,7 +76,7 @@ function Card({ newsPaper, image, title, link, variant = "legacy", dateLabel = "
     <div
       className="backdrop-blur-[4px] bg-[#1a1a1a] lg:py-[30px] py-[20px] xxl:py-[40px] 3xl:py-[60px] lg:px-[20px] px-[16px] xxl:px-[30px] 3xl:px-[45px] flex flex-col gap-[20px] xxl:gap-[30px] 3xl:gap-[45px] w-full rounded-[17px] 3xl:rounded-[34px] shadow-[0px_0.5px_10px_rgba(0,0,0,0.1),0px_20px_26px_rgba(0,0,0,0.4)] text-white transition-transform duration-300"
     >
-      <div className="flex justify-center items-center h-[58px] xxl:h-[80px] 3xl:h-[112px]">
+      <div className="flex justify-center items-center h-[100px] xxl:h-[136px] 3xl:h-[190px]">
         <img
           src={newsPaper}
           className="h-full w-auto object-contain"
