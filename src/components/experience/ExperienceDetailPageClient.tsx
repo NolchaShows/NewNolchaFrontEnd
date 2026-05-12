@@ -52,7 +52,7 @@ export default function ExperienceDetailPageClient({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative w-full h-auto aspect-video lg:h-screen lg:aspect-auto"
+            className="relative pt-8 w-full h-auto aspect-video md:mt-0 lg:h-screen lg:aspect-auto"
           >
             {isHeroImage ? (
               <Image
