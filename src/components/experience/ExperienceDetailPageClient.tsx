@@ -22,7 +22,13 @@ const mapDetailRows = (page: any) => {
     label: row?.label || "",
     title: row?.title || "",
     description: row?.description,
-    tags: (row?.tags || []).map((tag: any) => tag?.text).filter(Boolean),
+    tags: (row?.tags || [])
+      .map((tag: any) => {
+        const text = tag?.text;
+        if (!text) return null;
+        return { text, color: tag?.color || null };
+      })
+      .filter(Boolean) as { text: string; color: string | null }[],
   }));
 };
 
@@ -112,16 +118,24 @@ export default function ExperienceDetailPageClient({
                 <div className="flex flex-col gap-y-3">
                   {item.tags?.length ? (
                     <div className="flex flex-wrap gap-2.5 lg:gap-3">
-                      {item.tags.map((tag, tagIndex) => (
-                        <span
-                          key={`${tag}-${tagIndex}`}
-                          className={`border border-black px-3 py-1 text-[11px] uppercase sm:px-4 sm:py-1.5 sm:text-[12px] ${
-                            tagIndex !== 0 ? "rounded-full" : ""
-                          }`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                      {item.tags.map((tag, tagIndex) => {
+                        const hasColor = Boolean(tag.color);
+                        return (
+                          <span
+                            key={`${tag.text}-${tagIndex}`}
+                            className={`px-3 py-1 text-[11px] uppercase sm:px-4 sm:py-1.5 sm:text-[12px] ${
+                              hasColor ? "border-0 text-white" : "border border-black"
+                            } ${tagIndex !== 0 ? "rounded-full" : ""}`}
+                            style={
+                              hasColor
+                                ? { backgroundColor: tag.color as string }
+                                : undefined
+                            }
+                          >
+                            {tag.text}
+                          </span>
+                        );
+                      })}
                     </div>
                   ) : (
                     <div className="flex flex-col gap-y-1.5">
