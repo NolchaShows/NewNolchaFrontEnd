@@ -587,7 +587,7 @@ export default async function Home() {
             fillColor="#FEF991"
             textColor="#FFFFFF"
             size="large"
-            overlayOpacity={20}
+            overlayOpacity={40}
             isGoogleDrive={false}
             loop={true}
           />

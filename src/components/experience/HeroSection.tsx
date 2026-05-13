@@ -127,7 +127,7 @@ export default async function HeroSection({
       fillColor="#FFFFFF"
       textColor="#FFFFFF"
       size="large"
-      overlayOpacity={20}
+      overlayOpacity={pageType === "home" ? 40 : 20}
       className="h-screen"
       isGoogleDrive={false}
     />
