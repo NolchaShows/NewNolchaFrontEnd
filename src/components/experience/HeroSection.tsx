@@ -1,5 +1,6 @@
 // @ts-nocheck
 import Image from "next/image";
+import { preconnect, preload } from "react-dom";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
 import StyledHeading from "@/components/common/StyledHeading";
 import { fetchStructuredPageBySlug, type StructuredPageType } from "@/lib/fetchStructuredPageBySlug";
@@ -26,6 +27,23 @@ const getVideoUrl = (media: any): string | null => {
   return `${base}${url}`;
 };
 
+// Prefer a smaller responsive image format so the poster loads fast.
+const getPosterUrl = (media: any): string | null => {
+  if (!media) return null;
+  const raw =
+    media?.formats?.large?.url ||
+    media?.formats?.medium?.url ||
+    media?.formats?.small?.url ||
+    media?.url ||
+    null;
+  if (!raw) return null;
+  if (typeof raw === "string" && raw.startsWith("http")) return raw;
+  const base =
+    process.env.NEXT_PUBLIC_STRAPI_URL ??
+    "https://new-nolcha-strapi-uiai.onrender.com";
+  return `${base}${raw}`;
+};
+
 export default async function HeroSection({
   slug,
   pageType = "experience",
@@ -44,8 +62,28 @@ export default async function HeroSection({
   const videoSrc = getVideoUrl(resolvedPage.hero.video);
   const mediaMime = String(resolvedPage?.hero?.video?.mime || "").toLowerCase();
   const isImageHero = mediaMime.startsWith("image/");
+  const poster = getPosterUrl(resolvedPage.hero.thumbnail) ?? undefined;
+  const preloadStrategy = pageType === "home" ? "auto" : "metadata";
 
   if (!videoSrc) return null;
+
+  // Prioritize the hero asset:
+  // - preconnect opens the TCP/TLS handshake to R2 before the video tag is parsed
+  // - preload emits <link rel="preload" as="video" fetchpriority="high"> so the
+  //   browser's preload scanner can start the download from the <head>, in
+  //   parallel with HTML streaming, without blocking other resources.
+  try {
+    preconnect(new URL(videoSrc).origin);
+  } catch {}
+  if (!isImageHero) {
+    preload(videoSrc, { as: "video", fetchPriority: "high" });
+  }
+  if (poster) {
+    try {
+      preconnect(new URL(poster).origin);
+    } catch {}
+    preload(poster, { as: "image", fetchPriority: "high" });
+  }
 
   if (isImageHero) {
     return (
@@ -81,6 +119,8 @@ export default async function HeroSection({
   return (
     <VideoHeroSection
       videoSrc={videoSrc}
+      poster={poster}
+      preload={preloadStrategy}
       firstPart={first}
       secondPart={second}
       strokeColor="#000000"

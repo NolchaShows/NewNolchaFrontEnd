@@ -55,13 +55,13 @@ const VideoHeroSection = ({
   return (
     <div
       className={[
-        "relative w-full overflow-hidden",
+        "relative w-full overflow-hidden bg-black",
         isSticky ? "sticky top-0 z-0" : "",
         className || "h-screen"
       ].join(" ")}
     >
             {/* Video Background */}
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 bg-black">
                 {isGoogleDriveVideo ? (
                     <iframe
                         src={embedUrl}
@@ -82,6 +82,7 @@ const VideoHeroSection = ({
                         controls={showControls}
                         playsInline
                         preload={preload}
+                        fetchPriority="high"
                         style={{ minWidth: "100%", minHeight: "100%" }}
                     >
                         Your browser does not support the video tag.
