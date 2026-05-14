@@ -58,35 +58,37 @@ export default function ExperienceDetailPageClient({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative pt-8 w-full h-auto aspect-video md:mt-0 lg:h-screen lg:aspect-auto"
+            className="relative w-full pt-10 aspect-video h-auto sm:pt-12 lg:flex lg:h-screen lg:flex-col lg:aspect-auto lg:pt-24 xl:pt-32 xxl:pt-40"
           >
-            {isHeroImage ? (
-              <Image
-                src={heroMediaUrl}
-                alt={title}
-                fill
-                className="object-cover"
-                sizes="100vw"
-                priority
-                unoptimized={heroMediaUrl.startsWith("http")}
-              />
-            ) : (
-              <VideoHeroSection
-                videoSrc={heroMediaUrl}
-                firstPart=""
-                secondPart=""
-                strokeColor="#000000"
-                fillColor="#000000"
-                textColor="#000000"
-                size="large"
-                overlayOpacity={0}
-                showControls={true}
-                autoPlay={true}
-                muted={true}
-                loop={true}
-                className="!h-full !w-full"
-              />
-            )}
+            <div className="relative w-full aspect-video h-auto min-h-0 flex-1 lg:aspect-auto">
+              {isHeroImage ? (
+                <Image
+                  src={heroMediaUrl}
+                  alt={title}
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                  priority
+                  unoptimized={heroMediaUrl.startsWith("http")}
+                />
+              ) : (
+                <VideoHeroSection
+                  videoSrc={heroMediaUrl}
+                  firstPart=""
+                  secondPart=""
+                  strokeColor="#000000"
+                  fillColor="#000000"
+                  textColor="#000000"
+                  size="large"
+                  overlayOpacity={0}
+                  showControls={true}
+                  autoPlay={true}
+                  muted={true}
+                  loop={true}
+                  className="!h-full !w-full"
+                />
+              )}
+            </div>
           </motion.div>
         ) : null}
 
