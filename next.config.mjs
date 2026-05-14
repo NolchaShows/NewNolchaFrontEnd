@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    optimizePackageImports: ["lucide-react", "react-icons"],
+  },
   images: {
     remotePatterns: [
       // Cloudflare R2 buckets used for Nolcha media

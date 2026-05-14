@@ -1,6 +1,10 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import VideoHeroSection from "@/components/common/VideoHeroSection";
+
+const VideoHeroSection = dynamic(
+  () => import("@/components/common/VideoHeroSection"),
+  { ssr: true }
+);
 import BuildMomentumSection from "@/components/home/BuildMomentumSection";
 import ImageGallerySlider from "@/components/common/ImageGallerySlider";
 import LogoSlider from "@/components/home/TextSlider";

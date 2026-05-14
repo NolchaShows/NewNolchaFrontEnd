@@ -1,35 +1,17 @@
+import { Suspense } from "react";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
-import {
-  getExperiencePages,
-  getCharityPages,
-  getNavigationMenu,
-  getHomePageForNavigation,
-} from "@/lib/strapi";
+import NavbarWithStrapi from "./NavbarWithStrapi";
 
-export default async function ConditionalLayout({ children }) {
-  const [exRes, chRes, navRes, homeRes] = await Promise.allSettled([
-    getExperiencePages(),
-    getCharityPages(),
-    getNavigationMenu(),
-    getHomePageForNavigation(),
-  ]);
-
-  const initialNavData = {
-    experiencePages: exRes.status === "fulfilled" ? exRes.value : null,
-    charityPages: chRes.status === "fulfilled" ? chRes.value : null,
-    navigationMenu: navRes.status === "fulfilled" ? navRes.value : null,
-    homePageRes: homeRes.status === "fulfilled" ? homeRes.value : null,
-  };
-
+export default function ConditionalLayout({ children }) {
   return (
     <>
       <div className="bg-[var(--surface-color)]">
-        <Navbar initialNavData={initialNavData} />
+        <Suspense fallback={<Navbar initialNavData={null} />}>
+          <NavbarWithStrapi />
+        </Suspense>
       </div>
-      <div>
-        {children}
-      </div>
+      <div>{children}</div>
       <Footer />
     </>
   );
