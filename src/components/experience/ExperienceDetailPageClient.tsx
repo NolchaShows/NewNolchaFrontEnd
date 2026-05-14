@@ -124,7 +124,7 @@ export default function ExperienceDetailPageClient({
                           <span
                             key={`${tag.text}-${tagIndex}`}
                             className={`px-3 py-1 text-[11px] uppercase sm:px-4 sm:py-1.5 sm:text-[12px] ${
-                              hasColor ? "border-0 text-white" : "border border-black"
+                              hasColor ? "border-0 text-black" : "border border-black"
                             } ${tagIndex !== 0 ? "rounded-full" : ""}`}
                             style={
                               hasColor
