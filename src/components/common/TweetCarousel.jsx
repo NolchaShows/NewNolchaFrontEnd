@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, useDragControls } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import ArrowNavButtons from "./ArrowNavButtons";
@@ -19,9 +19,11 @@ const TweetCarousel = ({
   cardVariant = "dark",
 }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
+  const [embedRequested, setEmbedRequested] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const dragControls = useDragControls();
+  const carouselRootRef = useRef(null);
 
   // Use dynamic data from Strapi if available, otherwise fallback to posts prop
   const carouselTitle = carousalData?.title || title;
@@ -32,36 +34,103 @@ const TweetCarousel = ({
     posts ||
     [];
 
-  // Load Twitter embed script
+  // Defer Twitter until near/in viewport — widgets.js dominates main-thread on mobile PSI
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://platform.twitter.com/widgets.js";
-    script.async = true;
-    script.charset = "utf-8";
-    document.body.appendChild(script);
+    if (!carouselItems.length) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setEmbedRequested(true);
+      return;
+    }
+    let io;
+    const raf = requestAnimationFrame(() => {
+      const el = carouselRootRef.current;
+      if (!el) return;
+      io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setEmbedRequested(true);
+            io.disconnect();
+          }
+        },
+        { root: null, rootMargin: "240px 0px 320px 0px", threshold: 0.01 }
+      );
+      io.observe(el);
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      io?.disconnect();
+    };
+  }, [carouselItems.length]);
 
-    const timer = setTimeout(() => setIsLoaded(true), 1500);
-
+  useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-      clearTimeout(timer);
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
-    if (!isLoaded || typeof window === "undefined" || !window.twttr?.widgets) return;
+    if (!embedRequested || typeof window === "undefined") return;
+
+    const root = carouselRootRef.current;
+
+    const finishLoad = () => setIsLoaded(true);
+
+    const runWidgetLoad = () => {
+      try {
+        if (!window.twttr?.widgets?.load) {
+          finishLoad();
+          return;
+        }
+        const p = root ? window.twttr.widgets.load(root) : window.twttr.widgets.load();
+        if (p && typeof p.then === "function") {
+          p.then(finishLoad).catch(finishLoad);
+        } else {
+          finishLoad();
+        }
+      } catch {
+        finishLoad();
+      }
+    };
+
+    const startWhenReady = () => {
+      if (window.twttr?.widgets?.load) {
+        runWidgetLoad();
+      } else if (window.twttr?.ready) {
+        window.twttr.ready(runWidgetLoad);
+      } else {
+        finishLoad();
+      }
+    };
+
+    let script = document.getElementById("twitter-wjs");
+    if (!script) {
+      script = document.createElement("script");
+      script.id = "twitter-wjs";
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.async = true;
+      script.charset = "utf-8";
+      script.addEventListener("load", startWhenReady);
+      document.body.appendChild(script);
+    } else {
+      startWhenReady();
+    }
+
+    return () => {
+      script?.removeEventListener("load", startWhenReady);
+    };
+  }, [embedRequested]);
+
+  useEffect(() => {
+    if (!isLoaded || !embedRequested || typeof window === "undefined" || !window.twttr?.widgets?.load)
+      return;
     try {
-      window.twttr.widgets.load();
+      const root = carouselRootRef.current;
+      const p = root ? window.twttr.widgets.load(root) : window.twttr.widgets.load();
+      if (p && typeof p.then === "function") p.catch(() => {});
     } catch {
       /* ignore */
     }
-  }, [currentPostIndex, isLoaded, carouselItems.length, embedded, variant, cardVariant]);
+  }, [currentPostIndex, isLoaded, embedRequested, carouselItems.length, embedded, variant, cardVariant]);
 
   const nextPost = () => {
     setCurrentPostIndex((prev) => (prev + 1) % carouselItems.length);
@@ -146,7 +215,7 @@ const TweetCarousel = ({
     : cardShellClass;
 
   return (
-    <div className={rootClass}>
+    <div ref={carouselRootRef} className={rootClass}>
       <div className={headerWrapClass}>
         {isLight ? (
           <h2 className="text-[#1A1A1A] text-[20px] sm:text-[24px] lg:text-[30px] font-bold uppercase tracking-[-0.04em] leading-[1.1]">
@@ -184,14 +253,16 @@ const TweetCarousel = ({
                     className="w-[85vw] snap-center flex-shrink-0"
                   >
                     <div className={tweetCardOuterClass}>
-                      {!isLoaded && (
-                        <div className="absolute inset-0 flex items-center justify-center">
+                      {embedRequested && !isLoaded && (
+                        <div className="absolute inset-0 flex items-center justify-center z-[1]">
                           <div
                             className={`w-10 h-10 border-4 ${spinnerClass} rounded-full animate-spin`}
                           />
                         </div>
                       )}
-                      <div className="w-full h-full overflow-hidden pointer-events-none">
+                      <div
+                        className={`w-full h-full overflow-hidden ${isLoaded ? "pointer-events-none" : ""}`}
+                      >
                         <blockquote
                           className="twitter-tweet"
                           data-theme={tweetTheme}
@@ -246,14 +317,16 @@ const TweetCarousel = ({
                       className={`${desktopCardWidthClass} flex-shrink-0`}
                     >
                       <div className={tweetCardOuterClass}>
-                        {!isLoaded && (
-                          <div className="absolute inset-0 flex items-center justify-center">
+                        {embedRequested && !isLoaded && (
+                          <div className="absolute inset-0 flex items-center justify-center z-[1]">
                             <div
                               className={`w-10 h-10 border-4 ${spinnerClass} rounded-full animate-spin`}
                             />
                           </div>
                         )}
-                        <div className="w-full h-full overflow-hidden pointer-events-none">
+                        <div
+                          className={`w-full h-full overflow-hidden ${isLoaded ? "pointer-events-none" : ""}`}
+                        >
                           <blockquote
                             className="twitter-tweet"
                             data-theme={tweetTheme}
