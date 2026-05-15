@@ -1,7 +1,6 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
 import StyledHeading from './StyledHeading';
-import { motion } from "framer-motion";
 import SectionTitle from './SectionTitle';
 import ArrowNavButtons from './ArrowNavButtons';
 import { resolveStrapiImageUrlBestQuality } from '@/lib/strapiMediaUrl';

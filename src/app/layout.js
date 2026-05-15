@@ -1,13 +1,13 @@
 import "./globals.css";
 import ConditionalLayout from "./ConditionalLayout";
-import localFont from "next/font/local";
+import { IBM_Plex_Sans } from "next/font/google";
 
-const ibmPlexSans = localFont({
-  src: [
-    { path: "../../public/font/IBMPlexSans/IBMPlexSans-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../../public/font/IBMPlexSans/IBMPlexSans-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../../public/font/IBMPlexSans/IBMPlexSans-Bold.ttf", weight: "700", style: "normal" },
-  ],
+// next/font/google self-hosts as WOFF2 with latin subsetting at build time.
+// This replaces the local TTF files (which are ~30-40% larger) and eliminates
+// the duplicate font request (with/without ?dpl=) seen in PageSpeed.
+const ibmPlexSans = IBM_Plex_Sans({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
   variable: "--font-ibm-plex-sans",
   display: "swap",
 });

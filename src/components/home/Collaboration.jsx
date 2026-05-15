@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import Image from "next/image";
 
 const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   const fallbackSections = [
@@ -73,16 +74,25 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
     );
   }
 
+  const imageUrl = getImageUrl();
+  // Skip Next.js optimization only for Render.com (cold-start latency);
+  // R2 and local paths are served fast and should be optimized to WebP/AVIF.
+  const imageUnoptimized =
+    imageUrl.startsWith("http") && imageUrl.includes(".onrender.com");
+
   return (
     <div className="bg-secondary page-container py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] xxl:py-[140px] 3xl:py-[200px]">
       <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[40px] xl:gap-[50px] 2xl:gap-[60px] xxl:gap-[80px] 3xl:gap-[120px] items-start">
         {/* Left side - Image with gradient overlay */}
-        <div className="relative w-full lg:w-[420px] xl:w-[513px] 2xl:w-[580px] xxl:w-[650px] 3xl:w-[900px] h-auto lg:h-[435px] xl:h-[531px] 2xl:h-[600px] xxl:h-[680px] 3xl:h-[950px] flex-shrink-0">
+        <div className="relative w-full lg:w-[420px] xl:w-[513px] 2xl:w-[580px] xxl:w-[650px] 3xl:w-[900px] aspect-[4/5] lg:aspect-auto lg:h-[435px] xl:h-[531px] 2xl:h-[600px] xxl:h-[680px] 3xl:h-[950px] flex-shrink-0">
           <div className="rounded-[12px] overflow-hidden relative w-full h-full">
-            <img
-              src={getImageUrl()}
+            <Image
+              src={imageUrl}
               alt="Nolcha Shows collaboration event"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 420px, (max-width: 1536px) 513px, 580px"
+              unoptimized={imageUnoptimized}
             />
             {/* Gradient overlay (full image) */}
             <div

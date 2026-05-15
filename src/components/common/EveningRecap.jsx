@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import SectionTitle from './SectionTitle';
 import ArrowNavButtons from './ArrowNavButtons';
 
@@ -108,42 +107,33 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
                 onTouchStartCapture={handleTouchStartCapture}
                 onTouchEndCapture={handleTouchEndCapture}
             >
-                <AnimatePresence mode="wait">
-                    {isGoogleDriveVideo ? (
-                        <motion.div
-                            key={`iframe-${currentIndex}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5, ease: "easeInOut" }}
-                            className="w-full h-[400px] lg:h-[700px] 2xl:h-[900px] xxl:h-[1200px] 3xl:h-[1800px]"
-                        >
-                            <iframe
-                                src={embedUrl}
-                                className="w-full h-full"
-                                allow="autoplay"
-                                allowFullScreen
-                            ></iframe>
-                        </motion.div>
-                    ) : (
-                        <motion.video
-                            key={`video-${currentIndex}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5, ease: "easeInOut" }}
-                            src={videoUrlToUse}
-                            className="w-full h-[400px] lg:h-[700px] 2xl:h-[900px] xxl:h-[1200px] 3xl:h-[1800px] object-cover"
-                            autoPlay
-                            muted
-                            controls
-                            loop
-                            playsInline
-                        >
-                            Your browser does not support the video tag.
-                        </motion.video>
-                    )}
-                </AnimatePresence>
+                {/* key re-mounts the element on index change, restarting the CSS fade-in */}
+                {isGoogleDriveVideo ? (
+                    <div
+                        key={`iframe-${currentIndex}`}
+                        className="w-full h-[400px] lg:h-[700px] 2xl:h-[900px] xxl:h-[1200px] 3xl:h-[1800px] animate-fadeIn"
+                    >
+                        <iframe
+                            src={embedUrl}
+                            className="w-full h-full"
+                            allow="autoplay"
+                            allowFullScreen
+                        ></iframe>
+                    </div>
+                ) : (
+                    <video
+                        key={`video-${currentIndex}`}
+                        src={videoUrlToUse}
+                        className="w-full h-[400px] lg:h-[700px] 2xl:h-[900px] xxl:h-[1200px] 3xl:h-[1800px] object-cover animate-fadeIn"
+                        autoPlay
+                        muted
+                        controls
+                        loop
+                        playsInline
+                    >
+                        Your browser does not support the video tag.
+                    </video>
+                )}
             </div>
 
             {/* Navigation Arrows - Only show if multiple videos */}

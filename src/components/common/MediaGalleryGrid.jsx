@@ -128,9 +128,10 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
     }
 
     const isFullWidth = Boolean(item.fullWidth);
-    // Remote images (R2/Strapi) are already served by Cloudflare CDN.
-    // Skip Next.js image optimization to avoid 7s fetch timeout.
-    const isRemote = typeof item.url === "string" && item.url.startsWith("http");
+    // Skip optimization only for Render.com (Strapi) origins which can have
+    // cold-start latency. R2 CDN is fast — let Next.js serve WebP/AVIF.
+    const isSlowOrigin =
+      typeof item.url === "string" && item.url.includes(".onrender.com");
     const sizes = isFullWidth
       ? "100vw"
       : "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw";
@@ -144,7 +145,7 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
         sizes={sizes}
         priority={index < 2}
         loading={index < 2 ? "eager" : "lazy"}
-        unoptimized={isRemote}
+        unoptimized={isSlowOrigin}
       />
     );
   };

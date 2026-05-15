@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 
 const ArrowNavButtons = ({
   onLeft,
@@ -14,17 +13,19 @@ const ArrowNavButtons = ({
   return (
     <div className={`${className} ${centerButtons ? "justify-center" : ""}`}>
       <button onClick={onLeft} aria-label="Scroll left" className={buttonClassName}>
-        <motion.img
+        <img
           src="/icons/left-arrow.svg"
-          className={iconClassName}
-          whileTap={{ scale: 0.9 }}
+          alt=""
+          aria-hidden="true"
+          className={`${iconClassName} active:scale-90 transition-transform duration-100`}
         />
       </button>
       <button onClick={onRight} aria-label="Scroll right" className={buttonClassName}>
-        <motion.img
+        <img
           src="/icons/right-arrow.svg"
-          className={iconClassName}
-          whileTap={{ scale: 0.9 }}
+          alt=""
+          aria-hidden="true"
+          className={`${iconClassName} active:scale-90 transition-transform duration-100`}
         />
       </button>
     </div>
