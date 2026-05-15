@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { RxCross2 } from "react-icons/rx";
 import { FaXTwitter, FaInstagram, FaDiscord, FaFacebookF, FaLinkedin, FaLink } from "react-icons/fa6";
 import { RiTelegram2Line } from "react-icons/ri";
@@ -184,10 +185,13 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
     onClose();
   };
 
-  return (
+  const modalContent = (
     <div
-      className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-start justify-center z-[100] pt-0 sm:pt-[60px] lg:pt-[140px] pb-0 sm:pb-10 px-0 sm:px-6"
+      className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-start justify-center z-[150] pt-0 sm:pt-[60px] lg:pt-[140px] pb-0 sm:pb-10 px-0 sm:px-6"
       onClick={handleClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${eventTitle} details`}
     >
       {/* Outer Black Box Wrapper - for close button positioning */}
       <div
@@ -425,12 +429,16 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
       {/* Click outside to close */}
       {isShareOpen && (
         <div
-          className="fixed inset-0 z-40"
+          className="fixed inset-0 z-[151]"
           onClick={() => setIsShareOpen(false)}
+          aria-hidden="true"
         />
       )}
     </div>
   );
+
+  if (typeof document === "undefined") return null;
+  return createPortal(modalContent, document.body);
 };
 
 export default EventDetailsModal;
