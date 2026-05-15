@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useDragControls } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import ArrowNavButtons from "./ArrowNavButtons";
 import { parseTweetIdentifier } from "@/lib/strapiFlatten";
@@ -22,7 +21,9 @@ const TweetCarousel = ({
   const [embedRequested, setEmbedRequested] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
-  const dragControls = useDragControls();
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragDeltaX, setDragDeltaX] = useState(0);
   const carouselRootRef = useRef(null);
 
   // Use dynamic data from Strapi if available, otherwise fallback to posts prop
@@ -280,33 +281,42 @@ const TweetCarousel = ({
             <div
               className="overflow-visible cursor-grab active:cursor-grabbing select-none"
               style={{ userSelect: "none", WebkitUserSelect: "none" }}
-              onPointerDown={(event) => {
-                if (event.pointerType === "mouse" && event.button !== 0) return;
-                event.preventDefault();
-                dragControls.start(event);
+              onPointerDown={(e) => {
+                if (e.pointerType === "mouse" && e.button !== 0) return;
+                e.preventDefault();
+                e.currentTarget.setPointerCapture(e.pointerId);
+                setIsDragging(true);
+                setDragStartX(e.clientX);
+                setDragDeltaX(0);
+              }}
+              onPointerMove={(e) => {
+                if (!isDragging) return;
+                setDragDeltaX(e.clientX - dragStartX);
+              }}
+              onPointerUp={(e) => {
+                if (!isDragging) return;
+                setIsDragging(false);
+                const delta = e.clientX - dragStartX;
+                const threshold = 60;
+                if (delta <= -threshold) {
+                  setCurrentPostIndex((prev) => Math.min(prev + 1, maxDesktopIndex));
+                } else if (delta >= threshold) {
+                  setCurrentPostIndex((prev) => Math.max(prev - 1, 0));
+                }
+                setDragDeltaX(0);
+              }}
+              onPointerCancel={() => {
+                setIsDragging(false);
+                setDragDeltaX(0);
               }}
             >
-              <motion.div
+              <div
                 className="flex select-none"
-                style={{ gap: `${gap}px` }}
-                drag="x"
-                dragListener={false}
-                dragControls={dragControls}
-                dragConstraints={{ left: -1, right: 1 }}
-                dragElastic={0.08}
-                dragMomentum={false}
-                onDragEnd={(_, info) => {
-                  const threshold = 60;
-                  if (info.offset.x <= -threshold) {
-                    setCurrentPostIndex((prev) => Math.min(prev + 1, maxDesktopIndex));
-                  } else if (info.offset.x >= threshold) {
-                    setCurrentPostIndex((prev) => Math.max(prev - 1, 0));
-                  }
+                style={{
+                  gap: `${gap}px`,
+                  transform: `translateX(calc(-${currentPostIndex * (100 / itemsPerView)}% - ${currentPostIndex * (gap / itemsPerView)}px + ${isDragging ? dragDeltaX : 0}px))`,
+                  transition: isDragging ? "none" : "transform 350ms cubic-bezier(0.25, 0.1, 0.25, 1)",
                 }}
-                animate={{
-                  x: `calc(-${currentPostIndex * (100 / itemsPerView)}% - ${currentPostIndex * (gap / itemsPerView)}px)`,
-                }}
-                transition={{ type: "spring", stiffness: 150, damping: 25 }}
               >
                 {carouselItems.map((item, idx) => {
                   const rawId = typeof item === "string" ? item : item.tweetId || item.id;
@@ -339,7 +349,7 @@ const TweetCarousel = ({
                     </div>
                   );
                 })}
-              </motion.div>
+              </div>
             </div>
           )}
         </div>

@@ -1,29 +1,35 @@
 "use client";
 import { useEffect } from "react";
-import Lenis from "lenis";
 
 export default function SmoothScroll({ children }) {
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.5, // Increased duration for slower, smoother scroll
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-      infinite: false,
+    let lenis;
+    let rafId;
+
+    // Defer Lenis parse+eval until after first paint to avoid main-thread blocking
+    import("lenis").then(({ default: Lenis }) => {
+      lenis = new Lenis({
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+        infinite: false,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
+
+      rafId = requestAnimationFrame(raf);
     });
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
     return () => {
-      lenis.destroy();
+      cancelAnimationFrame(rafId);
+      lenis?.destroy();
     };
   }, []);
 

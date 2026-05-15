@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    // Tree-shake icon/animation packages at module-level (avoids barrel-file bloat)
+    optimizePackageImports: ["lucide-react", "react-icons", "@react-spring/web"],
+  },
   images: {
     remotePatterns: [
       // Cloudflare R2 buckets used for Nolcha media

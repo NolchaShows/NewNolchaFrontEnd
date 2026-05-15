@@ -1,9 +1,32 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
 import SectionTitle from "../common/SectionTitle";
-import RoundedCtaButton from "../common/RoundedCtaButton";
+
+const FadeInUp = ({ index, children, className }) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.style.transitionDelay = `${index * 100}ms`;
+          el.classList.add("is-visible");
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -40px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [index]);
+  return (
+    <div ref={ref} className={`fade-in-up ${className ?? ""}`}>
+      {children}
+    </div>
+  );
+};
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
@@ -127,17 +150,10 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
         {/* Partner Logos */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between gap-10 lg:gap-8 mb-6 lg:mb-12 w-full">
           {partnerLogos.map((partner, index) => (
-            <motion.div
+            <FadeInUp
               key={index}
+              index={index}
               className="flex flex-col items-start lg:items-center gap-2 sm:gap-3 lg:gap-4 min-w-0 lg:flex-1 lg:min-w-[200px]"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ 
-                duration: 0.8, 
-                ease: "easeOut",
-                delay: index * 0.1 
-              }}
             >
               <div className="h-20 lg:h-24 2xl:h-36 flex items-center justify-start lg:justify-center w-full">
                 {partner.logo ? (
@@ -157,7 +173,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
                   {partner.status}
                 </span>
               )}
-            </motion.div>
+            </FadeInUp>
           ))}
         </div>
       </div>

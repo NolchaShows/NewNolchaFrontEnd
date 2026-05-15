@@ -1,7 +1,31 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import NextImage from "next/image";
+
+const InViewFadeUp = ({ children, className, style, delay = 0 }) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.style.transitionDelay = `${delay}ms`;
+          el.classList.add("is-visible");
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -50px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [delay]);
+  return (
+    <div ref={ref} className={`fade-in-up ${className ?? ""}`} style={style}>
+      {children}
+    </div>
+  );
+};
 
 const DEFAULT_ASPECT_RATIO = "2 / 3";
 const GRID_TILE_RATIO = 2 / 3;
@@ -157,16 +181,13 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
           {items.map((item, index) => {
             if (item.type === "contentSection") {
               return (
-                <motion.div
+                <InViewFadeUp
                   key={`${item.label || "content"}-${index}`}
                   className="md:col-span-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
+                  delay={200}
                 >
                   {renderContentSection(item)}
-                </motion.div>
+                </InViewFadeUp>
               );
             }
 
@@ -174,23 +195,14 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
             const colSpan = isFullWidth ? "md:col-span-3" : "col-span-1";
 
             return (
-              <motion.div
+              <InViewFadeUp
                 key={`${item.url}-${index}`}
                 className={`${colSpan} relative overflow-hidden bg-white`}
                 style={getItemStyle(item)}
-                data-width={item.width || undefined}
-                data-height={item.height || undefined}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{
-                  duration: 0.8,
-                  ease: "easeOut",
-                  delay: isFullWidth ? 0 : (index % 3) * 0.1,
-                }}
+                delay={isFullWidth ? 0 : (index % 3) * 100}
               >
                 {renderMedia(item, index)}
-              </motion.div>
+              </InViewFadeUp>
             );
           })}
         </div>

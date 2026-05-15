@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import SectionTitle from "../common/SectionTitle";
 
 const ExploreServices = ({ title, videoSrc, caption, items }) => {
@@ -195,60 +194,57 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
                   </div>
                 </button>
 
-                {/* Expandable Content */}
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div>
-                        {/* Description */}
-                        <div
-                          className="text-white text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed mb-[6px] lg:mb-[10px] 2xl:mb-[14px] mt-[10px] lg:mt-[20px] 2xl:mt-[30px]"
-                          dangerouslySetInnerHTML={{ __html: description }}
-                        />
+                {/* Expandable Content — CSS max-height accordion (no framer-motion) */}
+                <div
+                  className="overflow-hidden"
+                  style={{
+                    maxHeight: isExpanded ? "800px" : "0",
+                    opacity: isExpanded ? 1 : 0,
+                    transition: "max-height 0.35s ease-in-out, opacity 0.25s ease-in-out",
+                  }}
+                >
+                  <div>
+                    {/* Description */}
+                    <div
+                      className="text-white text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed mb-[6px] lg:mb-[10px] 2xl:mb-[14px] mt-[10px] lg:mt-[20px] 2xl:mt-[30px]"
+                      dangerouslySetInnerHTML={{ __html: description }}
+                    />
 
-                        {/* Scope of work */}
-                        {seeOurWork && (
-                          <div className="mb-[10px] lg:mb-[20px] 2xl:mb-[30px]">
-                            <h4 className="text-white text-[14px] lg:text-[16px] 2xl:text-[18px] font-semibold mb-[12px] lg:mb-[10px] 2xl:mb-[14px]">
-                              See our Work
-                            </h4>
-                            <div className="flex flex-wrap gap-[8px] lg:gap-[12px] 2xl:gap-[16px]">
-                              <p className="text-white text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed mb-[6px] lg:mb-[10px] 2xl:mb-[14px]">
-                                {seeOurWork}
-                              </p>
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Lets Talk Button */}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const el = document.getElementById("contact");
-                            if (!el) return;
-                            const nav = document.querySelector(".sticky.top-0");
-                            const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-                            const y =
-                              el.getBoundingClientRect().top +
-                              window.pageYOffset -
-                              navHeight -
-                              12;
-                            window.scrollTo({ top: y, behavior: "smooth" });
-                          }}
-                          className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
-                        >
-                          <span>Lets Talk</span>
-                        </button>
+                    {/* Scope of work */}
+                    {seeOurWork && (
+                      <div className="mb-[10px] lg:mb-[20px] 2xl:mb-[30px]">
+                        <h4 className="text-white text-[14px] lg:text-[16px] 2xl:text-[18px] font-semibold mb-[12px] lg:mb-[10px] 2xl:mb-[14px]">
+                          See our Work
+                        </h4>
+                        <div className="flex flex-wrap gap-[8px] lg:gap-[12px] 2xl:gap-[16px]">
+                          <p className="text-white text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed mb-[6px] lg:mb-[10px] 2xl:mb-[14px]">
+                            {seeOurWork}
+                          </p>
+                        </div>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                    )}
+
+                    {/* Lets Talk Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const el = document.getElementById("contact");
+                        if (!el) return;
+                        const nav = document.querySelector(".sticky.top-0");
+                        const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+                        const y =
+                          el.getBoundingClientRect().top +
+                          window.pageYOffset -
+                          navHeight -
+                          12;
+                        window.scrollTo({ top: y, behavior: "smooth" });
+                      }}
+                      className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
+                    >
+                      <span>Lets Talk</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             );
           })}
