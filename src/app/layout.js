@@ -1,12 +1,15 @@
 import "./globals.css";
 import ConditionalLayout from "./ConditionalLayout";
-import { IBM_Plex_Sans } from "next/font/google";
+import localFont from "next/font/local";
 
-const ibmPlexSans = IBM_Plex_Sans({
-  weight: ["400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
+const ibmPlexSans = localFont({
+  src: [
+    { path: "../../public/font/IBMPlexSans/IBMPlexSans-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../../public/font/IBMPlexSans/IBMPlexSans-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../../public/font/IBMPlexSans/IBMPlexSans-Bold.ttf", weight: "700", style: "normal" },
+  ],
   variable: "--font-ibm-plex-sans",
+  display: "swap",
 });
 
 export const metadata = {
