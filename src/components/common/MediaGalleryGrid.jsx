@@ -98,14 +98,12 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
     return "w-full h-full object-cover";
   };
 
-  const renderMedia = (item, index) => {
+  const renderMedia = (item) => {
     if (item.type === "video") {
       return <GalleryVideo item={item} className={getMediaClassName(item)} />;
     }
 
     const isFullWidth = Boolean(item.fullWidth);
-    // Remote images (R2/Strapi) are already served by Cloudflare CDN.
-    // Skip Next.js image optimization to avoid 7s fetch timeout.
     const isRemote = typeof item.url === "string" && item.url.startsWith("http");
     const sizes = isFullWidth
       ? "100vw"
@@ -118,8 +116,7 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
         fill
         className="object-cover"
         sizes={sizes}
-        priority={index < 2}
-        loading={index < 2 ? "eager" : "lazy"}
+        loading="lazy"
         unoptimized={isRemote}
       />
     );
@@ -189,7 +186,7 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
                   delay: isFullWidth ? 0 : (index % 3) * 0.1,
                 }}
               >
-                {renderMedia(item, index)}
+                {renderMedia(item)}
               </motion.div>
             );
           })}

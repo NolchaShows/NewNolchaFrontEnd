@@ -19,7 +19,8 @@ const TweetCarousel = ({
   cardVariant = "dark",
 }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
-  const [embedRequested, setEmbedRequested] = useState(false);
+  /** Embedded modals load immediately; homepage defers until user opts in (saves PSI / main thread). */
+  const [embedRequested, setEmbedRequested] = useState(Boolean(embedded));
   const [isLoaded, setIsLoaded] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const dragControls = useDragControls();
@@ -33,34 +34,6 @@ const TweetCarousel = ({
     carousalData?.carousalItem ||
     posts ||
     [];
-
-  // Defer Twitter until near/in viewport — widgets.js dominates main-thread on mobile PSI
-  useEffect(() => {
-    if (!carouselItems.length) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setEmbedRequested(true);
-      return;
-    }
-    let io;
-    const raf = requestAnimationFrame(() => {
-      const el = carouselRootRef.current;
-      if (!el) return;
-      io = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setEmbedRequested(true);
-            io.disconnect();
-          }
-        },
-        { root: null, rootMargin: "240px 0px 320px 0px", threshold: 0.01 }
-      );
-      io.observe(el);
-    });
-    return () => {
-      cancelAnimationFrame(raf);
-      io?.disconnect();
-    };
-  }, [carouselItems.length]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -180,10 +153,10 @@ const TweetCarousel = ({
       : `py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-black ${padding} relative`;
 
   const headerWrapClass = embedded
-    ? "px-3 sm:px-5 lg:px-8 mb-4 lg:mb-6 flex flex-row items-center justify-between"
+    ? "px-3 sm:px-5 lg:px-8 mb-4 lg:mb-6 flex flex-row flex-wrap items-center justify-between gap-3"
     : isLight
-      ? "px-4 sm:px-6 lg:px-8 mb-6 lg:mb-8 flex flex-row items-center justify-between gap-4"
-      : "px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] mb-12 flex flex-row items-center justify-between";
+      ? "px-4 sm:px-6 lg:px-8 mb-6 lg:mb-8 flex flex-row flex-wrap items-center justify-between gap-3"
+      : "px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] mb-12 flex flex-row flex-wrap items-center justify-between gap-3";
 
   const innerPadClass = embedded
     ? "px-0 lg:px-4 xl:px-6"
@@ -208,6 +181,10 @@ const TweetCarousel = ({
     ? "border-[#1a1a1a]/20 border-t-[#1a1a1a]/80"
     : "border-white/10 border-t-white";
 
+  const loadEmbedsButtonClass = isLight
+    ? "shrink-0 rounded-full border border-[#1a1a1a]/25 bg-white px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-[#1a1a1a] hover:bg-[#f5f5f5] sm:text-sm"
+    : "shrink-0 rounded-full border border-white/25 bg-white/10 px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-white hover:bg-white/15 sm:text-sm";
+
   const tweetCardOuterClass = embedded
     ? useLightCards
       ? `bg-white rounded-3xl p-4 ${cardShell} flex items-center justify-center relative group border border-[#1a1a1a]/10 shadow-[0_2px_12px_rgba(26,26,26,0.06)] transition-colors duration-300 hover:border-[#1a1a1a]/18`
@@ -226,6 +203,16 @@ const TweetCarousel = ({
             {carouselTitle}
           </SectionTitle>
         )}
+
+        {!embedded && !embedRequested ? (
+          <button
+            type="button"
+            onClick={() => setEmbedRequested(true)}
+            className={loadEmbedsButtonClass}
+          >
+            Load posts
+          </button>
+        ) : null}
 
         {/* Navigation Arrows */}
         {!isMobile ? <ArrowNavButtons onLeft={prevPost} onRight={nextPost} /> : null}
