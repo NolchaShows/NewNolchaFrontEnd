@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { RxCross2 } from "react-icons/rx";
 import { FaXTwitter, FaInstagram, FaDiscord, FaFacebookF, FaLinkedin, FaLink } from "react-icons/fa6";
@@ -12,9 +12,19 @@ import { subscribeToModalCloseEvent } from "@/lib/modalEvents";
 
 import { pickRsvpUrl } from "@/lib/pickRsvpUrl";
 
+const MODAL_TOP_GAP = 16;
+
+const getNavbarBottomOffset = () => {
+  if (typeof window === "undefined") return 0;
+  const nav = document.querySelector('[data-navbar="main"]');
+  if (!nav) return 0;
+  return Math.max(0, nav.getBoundingClientRect().bottom) + MODAL_TOP_GAP;
+};
+
 const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [topOffset, setTopOffset] = useState(0);
 
   // Prevent background scroll when modal is open
   useEffect(() => {
@@ -47,6 +57,32 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
 
     return subscribeToModalCloseEvent(handleGlobalClose);
   }, [isOpen, onClose]);
+
+  useLayoutEffect(() => {
+    if (!isOpen) {
+      setTopOffset(0);
+      return;
+    }
+
+    const updateTopOffset = () => {
+      setTopOffset(getNavbarBottomOffset());
+    };
+
+    updateTopOffset();
+
+    const nav = document.querySelector('[data-navbar="main"]');
+    const resizeObserver =
+      nav && typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(updateTopOffset)
+        : null;
+    resizeObserver?.observe(nav);
+
+    window.addEventListener("resize", updateTopOffset);
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", updateTopOffset);
+    };
+  }, [isOpen]);
 
   if (!isOpen || !eventData) return null;
 
@@ -185,9 +221,13 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
     onClose();
   };
 
+  const modalMaxHeight =
+    topOffset > 0 ? `calc(100dvh - ${topOffset + 40}px)` : "calc(100dvh - 2.5rem)";
+
   const modalContent = (
     <div
-      className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-start justify-center z-[150] pt-0 sm:pt-[60px] lg:pt-[140px] pb-0 sm:pb-10 px-0 sm:px-6"
+      className="fixed inset-0 backdrop-blur-md bg-black/50 flex items-start justify-center z-[150] pb-0 sm:pb-10 px-0 sm:px-6"
+      style={{ paddingTop: topOffset || undefined }}
       onClick={handleClose}
       role="dialog"
       aria-modal="true"
@@ -200,7 +240,10 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
       >
 
         {/* Outer Black Box */}
-        <div className="bg-black rounded-none sm:rounded-[20px] p-5 sm:p-10 w-full h-full sm:max-h-[88vh] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+        <div
+          className="bg-black rounded-none sm:rounded-[20px] p-5 sm:p-10 w-full h-full sm:h-auto overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent"
+          style={{ maxHeight: modalMaxHeight }}
+        >
           <button
             onClick={handleClose}
             className="sticky top-0 ml-auto mb-4 z-30 p-2 cursor-pointer bg-black rounded-full shadow-lg hover:bg-[#333] hover:scale-105 transition-all duration-200 border border-white/30 flex items-center justify-center"
