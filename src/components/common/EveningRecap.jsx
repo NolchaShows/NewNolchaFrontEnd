@@ -13,6 +13,9 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStartX, setTouchStartX] = useState(null);
+    const [hasNavigated, setHasNavigated] = useState(false);
+
+    const shouldAutoplayFirst = currentIndex === 0 && !hasNavigated;
 
     // Helper function to convert Google Drive link to embed URL
     const getGoogleDriveEmbedUrl = (url) => {
@@ -36,10 +39,12 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
     };
 
     const handlePrev = () => {
+        setHasNavigated(true);
         setCurrentIndex((prev) => (prev === 0 ? videoList.length - 1 : prev - 1));
     };
 
     const handleNext = () => {
+        setHasNavigated(true);
         setCurrentIndex((prev) => (prev === videoList.length - 1 ? 0 : prev + 1));
     };
 
@@ -61,9 +66,11 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
         const swipeThreshold = 50;
 
         if (deltaX > swipeThreshold) {
-            handleNext();
+            setHasNavigated(true);
+            setCurrentIndex((prev) => (prev === videoList.length - 1 ? 0 : prev + 1));
         } else if (deltaX < -swipeThreshold) {
-            handlePrev();
+            setHasNavigated(true);
+            setCurrentIndex((prev) => (prev === 0 ? videoList.length - 1 : prev - 1));
         }
 
         setTouchStartX(null);
@@ -125,11 +132,12 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
                         key={`video-${currentIndex}`}
                         src={videoUrlToUse}
                         className="w-full h-[400px] lg:h-[700px] 2xl:h-[900px] xxl:h-[1200px] 3xl:h-[1800px] object-cover animate-fadeIn"
-                        autoPlay
-                        muted
+                        autoPlay={shouldAutoplayFirst}
+                        muted={shouldAutoplayFirst}
                         controls
                         loop
                         playsInline
+                        preload={shouldAutoplayFirst ? "auto" : "metadata"}
                     >
                         Your browser does not support the video tag.
                     </video>
