@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import SectionTitle from "../common/SectionTitle";
+import { useRouter } from "next/navigation";
+import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 
 const FadeInUp = ({ index, children, className }) => {
   const ref = useRef(null);
@@ -85,6 +86,7 @@ const renderParagraph = (paragraph, index) => {
 };
 
 const BuildMomentumSection = ({ buildMomentumData }) => {
+  const router = useRouter();
   const defaultPartnerLogos = [
     { name: "Mercedes-Benz", logo: 'homepage/build_momentum_section/mercedes.png' },
     { name: "Bullish", logo: 'homepage/build_momentum_section/bullish.png' },
@@ -109,6 +111,17 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
   const heading =
     buildMomentumData?.heading || "We Build Cultural Momentum";
 
+  const ctaText =
+    buildMomentumData?.ctaText == null
+      ? "GET IN TOUCH"
+      : String(buildMomentumData.ctaText).trim();
+  const ctaUrl =
+    (buildMomentumData?.ctaUrl == null
+      ? "/#contact"
+      : String(buildMomentumData.ctaUrl).trim()) || "/#contact";
+  const isExternalCta =
+    ctaUrl.startsWith("http://") || ctaUrl.startsWith("https://");
+
   const paragraphs =
     buildMomentumData?.paragraphs?.length > 0
       ? buildMomentumData.paragraphs
@@ -129,23 +142,46 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
 
   return (
     <section className="w-full bg-[#F3F3F3] text-[#1A1A1A] py-8 lg:py-16 lg:px-11 px-5 flex items-center">
-      <div className="mx-auto text-center w-full">
+      <div className="mx-auto w-full text-left">
         {/* Heading */}
-        <h2 className="text-[34px] lg:text-[60px] font-medium mb-11 lg:mb-22">
+        <h2 className="text-[34px] lg:text-[60px] font-medium mb-5 lg:mb-10 text-left">
           {heading}
         </h2>
 
         {/* Paragraphs */}
-        <div className="mx-auto mb-16 lg:mb-24 flex flex-col gap-6">
+        <div className="flex flex-col gap-6 text-left">
           {paragraphs.map((paragraph, index) => (
             <p
               key={index}
-              className="text-[20px] lg:text-[36px] text-[#1A1A1A]/80 font-normal"
+              className="text-[20px] lg:text-[36px] text-[#1A1A1A]/80 font-normal text-left"
             >
               {typeof paragraph === "string" ? paragraph : (paragraph.text || paragraph)}
             </p>
           ))}
         </div>
+
+        {ctaText ? (
+          isExternalCta ? (
+            <a
+              href={ctaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 lg:mt-10 mb-16 lg:mb-24 inline-flex w-fit items-center gap-1 text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70"
+            >
+              <span>{ctaText}</span>
+              <span aria-hidden>↗</span>
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => navigateToContactLikeLetsTalk(router)}
+              className="mt-8 lg:mt-10 mb-16 lg:mb-24 inline-flex w-fit items-center gap-1 border-0 bg-transparent p-0 text-left text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70 cursor-pointer"
+            >
+              <span>{ctaText}</span>
+              <span aria-hidden>↗</span>
+            </button>
+          )
+        ) : null}
 
         {/* Partner Logos */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between gap-10 lg:gap-8 mb-6 lg:mb-12 w-full">

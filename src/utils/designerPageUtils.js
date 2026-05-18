@@ -5,6 +5,7 @@ import {
   pickHeroVideoUrl,
   unwrapStrapiEntry,
 } from "@/lib/strapiMediaUrl";
+import { mapArtistSection } from "@/lib/mapArtistSection";
 
 /**
  * Transform Strapi designer page data to component props
@@ -64,11 +65,7 @@ export const transformDesignerData = (data) => {
     galleryImages: galleryImages.length > 0 ? galleryImages : defaultData.galleryImages,
     pressPartners: pressPartners, // Only use Strapi press partners, no default fallback
     companies: defaultData.companies, // Always use default companies for now
-    // Artist data for the Artists component
-    artistData: {
-      title: p.artisttitle || "And +500 Other Artists",
-      description: artistDescriptionText || "ONCHAINMONKEY - WORLD OF WOMEN - RON ENGLISH - JEREMY COWART - LINDSAY KOKOSKA - NODEMONKES - KIRA BURSKY - VINCENT D'ONOFRIO - LATASHÁ - VAKSEEN - TALIA ZOREF - ROB PRIOR - LAURENCE FULLER - JANEDAO - IZZY WEISSGERBER - GRETTA KRUESI - JANEDAO -YIYANG LU - SKYE NICOLAS - AEFORIA - ARNO CARSTENS - MOHSEN HAZRATI - RAGZY X - MUSKETON - TILLAVISION - MADE BY OONA - STACIE ANT - YOUNG & SICK"
-    }
+    artistData: mapArtistSection(p.artist_section),
   };
 
   // Listing singleton (designer-page): experience.hero + home.artist-section from Strapi
@@ -85,11 +82,7 @@ export const transformDesignerData = (data) => {
 
   if (p.artist_section) {
     const s = p.artist_section;
-    result.artistData = {
-      ...result.artistData,
-      title: s.title || result.artistData.title,
-      description: s.description || result.artistData.description,
-    };
+    result.artistData = mapArtistSection(s);
     if (s.media && s.media.length > 0) {
       const fromMedia = s.media.map((m) => makeUrl(m)).filter(Boolean);
       if (fromMedia.length) {

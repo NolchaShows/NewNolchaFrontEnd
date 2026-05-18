@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import SectionTitle from "../common/SectionTitle";
 
@@ -232,11 +233,22 @@ function Artists({
   isSlider,
   isTextLeft,
   isDesktop = false,
-  hideViewAllButton = false,
 }) {
-  // Use dynamic data from Strapi if available, otherwise fall back to defaults
-  const title = artistData?.title || "And +500 Other Artists";
-  const description = artistData?.description || "Onchainmonkey - World Of Women - Ron English - Jeremy Cowart - Lindsay Kokoska - Nodemonkes - Kira  Bursky - Vincent D’onofrio - Latashá - Vakseen - Talia Zoref - Rob Prior - Laurence Fuller - Janedao - Izzy  Weissgerber - Gretta Kruesi - Janedao -yiyang Lu - Skye Nicolas  - Aeforia  - Arno Carstens - Mohsen  Hazrati - Ragzy X - Musketon - Tillavision - Made By Oona - Stacie Ant - Young & Sick";
+  const title =
+    typeof artistData?.title === "string" ? artistData.title.trim() : "";
+  const description =
+    typeof artistData?.description === "string"
+      ? artistData.description.trim()
+      : "";
+  const viewAllLabel =
+    typeof artistData?.viewAllLabel === "string"
+      ? artistData.viewAllLabel.trim()
+      : "";
+  const viewAllUrl =
+    typeof artistData?.viewAllUrl === "string" ? artistData.viewAllUrl.trim() : "";
+  const showViewAll = Boolean(viewAllLabel && viewAllUrl);
+  const isExternalViewAll =
+    viewAllUrl.startsWith("http://") || viewAllUrl.startsWith("https://");
 
   // Map carousel artists from Strapi data
   const carouselArtists = artistData?.carousal_item?.map(item => item.text) || [];
@@ -275,30 +287,49 @@ function Artists({
         />
       )}
       <div className="bg-black page-container flex flex-col gap-[30px] lg:gap-[35px] xl:gap-[40px] 2xl:gap-[0] 3xl:gap-[50px]">
-        <div className="flex w-[90%] lg:w-[85%] xl:w-[80%] 3xl:w-[75%] mx-auto justify-center xl:flex-row flex-col gap-[20px] 3xl:gap-[40px] text-white">
-          <div className={`flex flex-col gap-[20px] 2xl:gap-[30px] 3xl:gap-[50px] font-bold lg:items-center lg:text-center ${isTextLeft ? 'text-lefwt lg:text-center' : 'text-center'}`}>
-            <SectionTitle disableTitleSpacing={true} className="text-white">{title}</SectionTitle>
-            <p className="font-normal text-[16px] md:text-[18px] xl:text-[20px] 2xl:text-4xl 3xl:text-5xl text-white">
-              {description}
-            </p>
+        {(title || description) && (
+          <div className="flex w-[90%] lg:w-[85%] xl:w-[80%] 3xl:w-[75%] mx-auto justify-center xl:flex-row flex-col gap-[20px] 3xl:gap-[40px] text-white">
+            <div
+              className={`flex flex-col gap-[20px] 2xl:gap-[30px] 3xl:gap-[50px] font-bold lg:items-center lg:text-center ${isTextLeft ? "text-left lg:text-center" : "text-center"}`}
+            >
+              {title ? (
+                <SectionTitle disableTitleSpacing={true} className="text-white">
+                  {title}
+                </SectionTitle>
+              ) : null}
+              {description ? (
+                <p className="font-normal text-[16px] md:text-[18px] xl:text-[20px] 2xl:text-4xl 3xl:text-5xl text-white">
+                  {description}
+                </p>
+              ) : null}
+            </div>
           </div>
-        </div>
+        )}
         {isDesktop && mediaItems.length === 4 ? (
           <VideoGridZigZag videos={mediaItems} />
         ) : (
           <VideoGrid videos={mediaItems} />
         )}
 
-        {!hideViewAllButton && (
+        {showViewAll && (
           <div className="bg-black flex w-full flex-col items-center pt-4 lg:pt-6 2xl:pt-8 3xl:pt-10">
-            <button
-              onClick={() => {
-                window.location.href = "/featured-artists";
-              }}
-              className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
-            >
-              <span>View all Artists</span>
-            </button>
+            {isExternalViewAll ? (
+              <a
+                href={viewAllUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
+              >
+                <span>{viewAllLabel}</span>
+              </a>
+            ) : (
+              <Link
+                href={viewAllUrl}
+                className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
+              >
+                <span>{viewAllLabel}</span>
+              </Link>
+            )}
           </div>
         )}
 

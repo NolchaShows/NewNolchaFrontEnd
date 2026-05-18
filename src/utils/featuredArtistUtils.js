@@ -5,6 +5,7 @@ import {
   pickHeroVideoUrl,
   unwrapStrapiEntry,
 } from "@/lib/strapiMediaUrl";
+import { mapArtistSection } from "@/lib/mapArtistSection";
 
 export { resolveStrapiFileUrl } from "@/lib/strapiMediaUrl";
 
@@ -182,12 +183,6 @@ const defaultFeaturedArtistsPageVideos = [
   "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-7.mp4",
 ];
 
-const defaultFeaturedArtistsPageArtistData = {
-  title: "And +500 Other Artists",
-  description:
-    "Onchainmonkey - World Of Women - Ron English - Jeremy Cowart - Lindsay Kokoska - Nodemonkes - Kira  Bursky - Vincent D'onofrio - Latashá - Vakseen - Talia Zoref - Rob Prior - Laurence Fuller - Janedao - Izzy  Weissgerber - Gretta Kruesi - Janedao -yiyang Lu - Skye Nicolas  - Aeforia  - Arno Carstens - Mohsen  Hazrati - Ragzy X - Musketon - Tillavision - Made By Oona - Stacie Ant - Young & Sick",
-};
-
 /**
  * Transform Strapi featured-artists-page singleton (hero + artist_section) for /featured-artists
  */
@@ -197,7 +192,7 @@ export const transformFeaturedArtistsPageData = (data) => {
       heroVideo: null,
       heroFirstPart: "Featured Artists",
       heroSecondPart: "",
-      artistData: { ...defaultFeaturedArtistsPageArtistData },
+      artistData: mapArtistSection(null),
       videos: [...defaultFeaturedArtistsPageVideos],
     };
   }
@@ -208,7 +203,7 @@ export const transformFeaturedArtistsPageData = (data) => {
       heroVideo: null,
       heroFirstPart: "Featured Artists",
       heroSecondPart: "",
-      artistData: { ...defaultFeaturedArtistsPageArtistData },
+      artistData: mapArtistSection(null),
       videos: [...defaultFeaturedArtistsPageVideos],
     };
   }
@@ -217,7 +212,7 @@ export const transformFeaturedArtistsPageData = (data) => {
     heroVideo: null,
     heroFirstPart: "Featured Artists",
     heroSecondPart: "",
-    artistData: { ...defaultFeaturedArtistsPageArtistData },
+    artistData: mapArtistSection(payload.artist_section),
     videos: [...defaultFeaturedArtistsPageVideos],
   };
 
@@ -234,11 +229,7 @@ export const transformFeaturedArtistsPageData = (data) => {
 
   if (payload.artist_section) {
     const s = payload.artist_section;
-    result.artistData = {
-      ...result.artistData,
-      title: s.title || result.artistData.title,
-      description: s.description || result.artistData.description,
-    };
+    result.artistData = mapArtistSection(s);
     if (s.media && s.media.length > 0) {
       const fromMedia = s.media.map((m) => makeMediaUrl(m)).filter(Boolean);
       if (fromMedia.length) {
