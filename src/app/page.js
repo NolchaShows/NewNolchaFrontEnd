@@ -475,11 +475,6 @@ export default async function Home() {
             images={imageGallerySliderImages.length ? imageGallerySliderImages : undefined}
           />
           <LogoSlider logoSliderData={logoSliderData} loading={false} />
-          <HomeUpcomingEventsSection
-            title={homePage?.upcoming_events_section?.title || "Upcoming Events"}
-            events={upcomingEvents}
-            fallbackTweetCarousel={homeTweetCarousel}
-          />
           {homePage?.evening_recap_section ? (
             <EveningRecapSection slug="home" pageType="home" page={homePage} />
           ) : (
@@ -615,6 +610,11 @@ export default async function Home() {
       />
       <PastExperiences
         experiences={pastExperiences.length ? pastExperiences : fallbackPastExperiences}
+      />
+      <HomeUpcomingEventsSection
+        title={homePage?.upcoming_events_section?.title || "Upcoming Events"}
+        events={upcomingEvents}
+        fallbackTweetCarousel={homeTweetCarousel}
       />
       <ContactForm
         bg={"/landing/background2.jpg"}
