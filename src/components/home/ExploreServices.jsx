@@ -1,6 +1,9 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import SectionTitle from "../common/SectionTitle";
+
+const DEFAULT_VIDEO_SRC =
+  "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4";
 
 const ExploreServices = ({ title, videoSrc, caption, items }) => {
   const resolvedTitle = title || "How Brands Work With Nolcha";
@@ -30,42 +33,47 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
     return () => observer.disconnect();
   }, []);
 
-  const resolvedVideoSrc =
-    videoSrc ||
-    "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4";
+  const sectionVideoSrc = videoSrc || DEFAULT_VIDEO_SRC;
+
+  const activeVideoSrc = useMemo(() => {
+    if (expandedIndex < 0 || !resolvedItems[expandedIndex]) {
+      return sectionVideoSrc;
+    }
+    const itemVideo = resolvedItems[expandedIndex]?.videoSrc;
+    return itemVideo && String(itemVideo).trim()
+      ? String(itemVideo).trim()
+      : sectionVideoSrc;
+  }, [expandedIndex, resolvedItems, sectionVideoSrc]);
 
   const toggleItem = (index) => {
     const newIndex = expandedIndex === index ? -1 : index;
     setExpandedIndex(newIndex);
   };
 
-  // Auto-play video when expandedIndex changes or when section enters viewport
+  // Swap video when tab changes; fall back to section default when item has no video
   useEffect(() => {
-    if (!inView) return;
-    if (videoRef.current && expandedIndex >= 0) {
-      if (videoRef.current.src !== resolvedVideoSrc) {
-        videoRef.current.src = resolvedVideoSrc;
-        videoRef.current.load();
-      }
-      // Auto-play video
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsPlaying(true);
-          })
-          .catch((error) => {
-            console.log("Autoplay prevented:", error);
-            setIsPlaying(false);
-          });
-      }
-    } else {
-      if (videoRef.current) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      }
+    const video = videoRef.current;
+    if (!inView || !video) return;
+
+    if (expandedIndex < 0) {
+      video.pause();
+      setIsPlaying(false);
+      return;
     }
-  }, [expandedIndex, resolvedVideoSrc, inView]);
+
+    const currentSrc = video.getAttribute("src") || "";
+    if (currentSrc !== activeVideoSrc) {
+      video.src = activeVideoSrc;
+      video.load();
+    }
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
+    }
+  }, [expandedIndex, activeVideoSrc, inView]);
 
   const handleVideoPlay = () => {
     setIsPlaying(true);
@@ -85,7 +93,7 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
           <div className="rounded-[14px] lg:rounded-[18px] xl:rounded-[22px] 2xl:rounded-[30px] xxl:rounded-[40px] 3xl:rounded-[60px] overflow-hidden relative bg-black">
             <video
               ref={videoRef}
-              src={inView ? resolvedVideoSrc : undefined}
+              src={inView ? activeVideoSrc : undefined}
               className="w-full h-[340px] lg:h-[500px] xl:h-[570px] 2xl:h-[620px] xxl:h-[700px] 3xl:h-[1000px] object-cover"
               onPause={handleVideoPause}
               onPlay={handleVideoPlay}

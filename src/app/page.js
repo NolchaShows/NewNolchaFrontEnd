@@ -627,6 +627,7 @@ export default async function Home() {
                     text: service?.text || "",
                     description: service?.description || "",
                     work: service?.work || "",
+                    videoSrc: getMediaUrl(service?.video) || "",
                   }))
                 : fallbackExploreServices.items
             }
