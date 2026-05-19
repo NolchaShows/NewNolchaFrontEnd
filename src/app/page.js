@@ -15,12 +15,13 @@ import {
   pickSharedTweetCarouselRaw,
 } from "@/lib/strapiFlatten";
 import { pickRsvpUrl } from "@/lib/pickRsvpUrl";
+import OurClientsSection from "@/components/about/OurClientsSection";
+import { DUMMY_ABOUT_PAGE } from "@/lib/aboutPageData";
 
 // Below-fold components are code-split to keep the initial JS bundle lean
 const Artists = dynamic(() => import("@/components/landing/Artists"));
 const TextHero = dynamic(() => import("@/components/charity_partners/TextHero"));
 const ContactForm = dynamic(() => import("@/components/common/ContactForm"));
-const Partners = dynamic(() => import("@/components/home/Partners"));
 const EveningRecap = dynamic(() => import("@/components/common/EveningRecap"));
 const PastSpeakers = dynamic(() => import("@/components/common/PastSpeakers"));
 const MediaGalleryGrid = dynamic(() => import("@/components/common/MediaGalleryGrid"));
@@ -109,6 +110,24 @@ const buildPastExperiences = (featuredExperiences = []) =>
       href: experience?.slug ? `/experiences/${experience.slug}` : null,
     }))
     .filter((experience) => experience.image && experience.text);
+
+const mapHomeClientsSection = (section) => {
+  const defaults = DUMMY_ABOUT_PAGE.clients;
+  if (!section) return defaults;
+
+  const logos = (section.logos || [])
+    .map((logo) => getMediaUrl(logo))
+    .filter(Boolean);
+
+  return {
+    label: section.label || defaults.label,
+    title: section.title || defaults.title,
+    description: section.description || defaults.description,
+    ctaText: section.ctaText || defaults.ctaText,
+    ctaHref: section.ctaUrl || section.ctaHref || defaults.ctaHref,
+    logos: logos.length ? logos : defaults.logos,
+  };
+};
 
 const mapUpcomingEvents = (upcomingSection) => {
   if (!upcomingSection?.events?.length) return upcomingListEvents;
@@ -329,7 +348,6 @@ export default async function Home() {
   const serviceData = homePage?.service_section || null;
   const speakerData = homePage?.shared_speaker_section || null;
   const textHeroData = homePage?.texthero_section || null;
-  const homePartnerSection = homePage?.shared_partner_section || null;
   const featureBannerOne = getMediaUrl(homePage?.feature_banner_one);
   const nolchaExperienceData = homePage?.nolcha_experience_section || null;
   const pressMediaImage = getMediaUrl(homePage?.press_media_image);
@@ -340,6 +358,7 @@ export default async function Home() {
   );
   const pastExperiences = buildPastExperiences(homePage?.featured_experiences);
   const contactData = homePage?.contact_section || null;
+  const homeClientsSection = mapHomeClientsSection(homePage?.clients_section);
   const homeGallerySource =
     homePage?.gallery_section?.gallery ||
     homePage?.gallery_section ||
@@ -366,148 +385,6 @@ export default async function Home() {
     "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-5.mp4",
     "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-6.mp4",
     "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-7.mp4",
-  ];
-  const partners = [
-    {
-      id: 1,
-      imageWhite: "/home/partners/1w.png",
-      imageBlack: "/home/partners/1b.png",
-      altText: "Partner 1",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 2,
-      imageWhite: "/home/partners/2w.png",
-      imageBlack: "/home/partners/2b.png",
-      altText: "Partner 2",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 3,
-      imageWhite: "/home/partners/3w.png",
-      imageBlack: "/home/partners/3b.png",
-      altText: "Partner 3",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 4,
-      imageWhite: "/home/partners/4w.png",
-      imageBlack: "/home/partners/4b.png",
-      altText: "Partner 4",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 5,
-      imageWhite: "/home/partners/5w.png",
-      imageBlack: "/home/partners/5b.png",
-      altText: "Partner 5",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 6,
-      imageWhite: "/home/partners/6w.png",
-      imageBlack: "/home/partners/6b.png",
-      altText: "Partner 6",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 7,
-      imageWhite: "/home/partners/7w.png",
-      imageBlack: "/home/partners/7b.png",
-      altText: "Partner 7",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 8,
-      imageWhite: "/home/partners/8w.png",
-      imageBlack: "/home/partners/8b.png",
-      altText: "Partner 8",
-      backgroundColor: "bg-[#bdff00]",
-    },
-    {
-      id: 9,
-      imageWhite: "/home/partners/9w.png",
-      imageBlack: "/home/partners/9b.png",
-      altText: "Partner 9",
-      backgroundColor: "bg-[#bdff00]",
-    },
-    {
-      id: 10,
-      imageWhite: "/home/partners/10w.png",
-      imageBlack: "/home/partners/10b.png",
-      altText: "Partner 10",
-      backgroundColor: "bg-[#bdff00]",
-    },
-    {
-      id: 11,
-      imageWhite: "/home/partners/11w.png",
-      imageBlack: "/home/partners/11b.png",
-      altText: "Partner 11",
-      backgroundColor: "bg-[#bdff00]",
-    },
-    {
-      id: 12,
-      imageWhite: "/home/partners/12w.png",
-      imageBlack: "/home/partners/12b.png",
-      altText: "Partner 12",
-      backgroundColor: "bg-[#bdff00]",
-    },
-    {
-      id: 13,
-      imageWhite: "/home/partners/13w.png",
-      imageBlack: "/home/partners/13b.png",
-      altText: "Partner 13",
-      backgroundColor: "bg-[#bdff00]",
-    },
-    {
-      id: 14,
-      imageWhite: "/home/partners/14w.png",
-      imageBlack: "/home/partners/14b.png",
-      altText: "Partner 14",
-      backgroundColor: "bg-[#bdff00]",
-    },
-    {
-      id: 15,
-      imageWhite: "/home/partners/15w.png",
-      imageBlack: "/home/partners/15b.png",
-      altText: "Partner 15",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 16,
-      imageWhite: "/home/partners/16w.png",
-      imageBlack: "/home/partners/16b.png",
-      altText: "Partner 16",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 17,
-      imageWhite: "/home/partners/17w.png",
-      imageBlack: "/home/partners/17b.png",
-      altText: "Partner 17",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 18,
-      imageWhite: "/home/partners/18w.png",
-      imageBlack: "/home/partners/18b.png",
-      altText: "Partner 18",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 19,
-      imageWhite: "/home/partners/19w.png",
-      imageBlack: "/home/partners/19b.png",
-      altText: "Partner 19",
-      backgroundColor: "bg-black",
-    },
-    {
-      id: 20,
-      imageWhite: "/home/partners/20w.png",
-      imageBlack: "/home/partners/20b.png",
-      altText: "Partner 20",
-      backgroundColor: "bg-black",
-    },
   ];
   const fallbackPastSpeakers = [
     { id: 1, image: '/homepage/past_speakers/1.png' },
@@ -639,14 +516,13 @@ export default async function Home() {
               "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-2.mp4"
             }
           />
-          <Partners
-            partnerData={homePartnerSection}
-            loading={false}
-            title={"Trusted by Global Brands For Over 15 Years"}
-            description={
-              "From cutting-edge tech startups and rapidly expanding businesses to impactful charities"
-            }
-            partners={partners}
+          <OurClientsSection
+            hideTopRightContent
+            label={homeClientsSection.label}
+            title={homeClientsSection.title}
+            ctaText={homeClientsSection.ctaText}
+            ctaHref={homeClientsSection.ctaHref}
+            clientLogos={homeClientsSection.logos}
           />
           <NolchaExperience
             nolchaExperienceData={nolchaExperienceData}

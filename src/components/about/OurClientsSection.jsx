@@ -19,11 +19,18 @@ export default function OurClientsSection({
   ctaText = "CONTACT US",
   ctaHref = "/contact-us",
   clientLogos = defaultClientLogos,
+  hideTopRightContent = false,
 }) {
   return (
     <section className="w-full bg-[#F4F4F4] px-5 py-16 lg:px-11 lg:py-24">
       <div className="mx-auto w-full max-w-[1800px]">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-12">
+        <div
+          className={
+            hideTopRightContent
+              ? "max-w-[900px]"
+              : "grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-12"
+          }
+        >
           <div>
             <p className="text-[10px] uppercase tracking-[0.08em] text-[#3A3A3A] lg:text-[14px]">
               {label}
@@ -33,18 +40,20 @@ export default function OurClientsSection({
             </h2>
           </div>
 
-          <div className="lg:max-w-[700px]">
-            <p className="text-[14px] leading-[1.35] text-[#1D1D1D] lg:text-[16px]">
-              {description}
-            </p>
-            <Link
-              href={ctaHref}
-              className="mt-8 inline-flex items-center gap-2 text-[14px] uppercase tracking-[0.08em] text-[#1D1D1D] transition-opacity hover:opacity-70 lg:text-[16px]"
-            >
-              <span>{ctaText}</span>
-              <span aria-hidden>↗</span>
-            </Link>
-          </div>
+          {!hideTopRightContent ? (
+            <div className="lg:max-w-[700px]">
+              <p className="text-[14px] leading-[1.35] text-[#1D1D1D] lg:text-[16px]">
+                {description}
+              </p>
+              <Link
+                href={ctaHref}
+                className="mt-8 inline-flex items-center gap-2 text-[14px] uppercase tracking-[0.08em] text-[#1D1D1D] transition-opacity hover:opacity-70 lg:text-[16px]"
+              >
+                <span>{ctaText}</span>
+                <span aria-hidden>↗</span>
+              </Link>
+            </div>
+          ) : null}
         </div>
 
         <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:mt-20 lg:grid-cols-6 lg:gap-x-14 lg:gap-y-10">
