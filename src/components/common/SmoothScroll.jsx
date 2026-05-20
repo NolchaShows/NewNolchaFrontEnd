@@ -1,14 +1,22 @@
 "use client";
-import { useEffect } from "react";
+
+import { createContext, useContext, useEffect, useState } from "react";
+
+const LenisContext = createContext(null);
+
+export function useLenis() {
+  return useContext(LenisContext);
+}
 
 export default function SmoothScroll({ children }) {
+  const [lenis, setLenis] = useState(null);
+
   useEffect(() => {
-    let lenis;
+    let instance;
     let rafId;
 
-    // Defer Lenis parse+eval until after first paint to avoid main-thread blocking
     import("lenis").then(({ default: Lenis }) => {
-      lenis = new Lenis({
+      instance = new Lenis({
         duration: 1.5,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: "vertical",
@@ -19,8 +27,10 @@ export default function SmoothScroll({ children }) {
         infinite: false,
       });
 
+      setLenis(instance);
+
       function raf(time) {
-        lenis.raf(time);
+        instance.raf(time);
         rafId = requestAnimationFrame(raf);
       }
 
@@ -29,9 +39,10 @@ export default function SmoothScroll({ children }) {
 
     return () => {
       cancelAnimationFrame(rafId);
-      lenis?.destroy();
+      instance?.destroy();
+      setLenis(null);
     };
   }, []);
 
-  return <>{children}</>;
+  return <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>;
 }

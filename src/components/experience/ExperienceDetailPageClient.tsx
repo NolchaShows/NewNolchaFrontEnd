@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import SmoothScroll from "@/components/common/SmoothScroll";
+import { MattePageReveal } from "@/components/common/MattePageReveal";
 import TweetCarousel from "@/components/common/TweetCarousel";
 import VideoHeroSection from "@/components/common/VideoHeroSection";
 import MediaGalleryGrid from "@/components/common/MediaGalleryGrid";
@@ -51,7 +52,7 @@ export default function ExperienceDetailPageClient({
 
   return (
     <SmoothScroll>
-      <div className="min-h-screen bg-[#f0eee6] px-5 lg:px-11">
+      <MattePageReveal className="min-h-screen bg-[#f0eee6] px-5 lg:px-11">
         {heroMediaUrl ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -200,7 +201,7 @@ export default function ExperienceDetailPageClient({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="py-10 lg:py-16 flex justify-center"
+            className="flex justify-center py-10 lg:py-16"
           >
             <Link
               href={nextExperienceHref}
@@ -210,7 +211,7 @@ export default function ExperienceDetailPageClient({
             </Link>
           </motion.div>
         ) : null}
-      </div>
+      </MattePageReveal>
     </SmoothScroll>
   );
 }
