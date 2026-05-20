@@ -76,7 +76,7 @@ export default function PressStatementSection({
               <button
                 type="button"
                 className={`${ctaClassName} border-0 bg-transparent p-0 text-left`}
-                onClick={() => navigateToContactLikeLetsTalk(router)}
+                onClick={() => navigateToContactLikeLetsTalk()}
               >
                 {ctaInner}
               </button>

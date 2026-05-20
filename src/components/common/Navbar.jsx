@@ -454,7 +454,7 @@ function Navbar({ initialNavData = null }) {
   };
 
   const handleLetsTalk = () => {
-    navigateToContactLikeLetsTalk(router);
+    navigateToContactLikeLetsTalk();
   };
 
   useEffect(() => {

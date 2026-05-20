@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import SectionTitle from "../common/SectionTitle";
+import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 
 const DEFAULT_VIDEO_SRC =
   "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4";
@@ -236,16 +237,7 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        const el = document.getElementById("contact");
-                        if (!el) return;
-                        const nav = document.querySelector(".sticky.top-0");
-                        const navHeight = nav ? nav.getBoundingClientRect().height : 0;
-                        const y =
-                          el.getBoundingClientRect().top +
-                          window.pageYOffset -
-                          navHeight -
-                          12;
-                        window.scrollTo({ top: y, behavior: "smooth" });
+                        navigateToContactLikeLetsTalk();
                       }}
                       className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
                     >

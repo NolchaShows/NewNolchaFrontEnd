@@ -174,7 +174,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
           ) : (
             <button
               type="button"
-              onClick={() => navigateToContactLikeLetsTalk(router)}
+              onClick={() => navigateToContactLikeLetsTalk()}
               className="mt-8 lg:mt-10 mb-16 lg:mb-24 inline-flex w-fit items-center gap-1 border-0 bg-transparent p-0 text-left text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70 cursor-pointer"
             >
               <span>{ctaText}</span>

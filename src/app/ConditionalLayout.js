@@ -1,5 +1,6 @@
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
+import LetsChatModalHost from "@/components/Modals/LetsChatModalHost";
 import {
   getExperiencePages,
   getCharityPages,
@@ -31,6 +32,7 @@ export default async function ConditionalLayout({ children }) {
         {children}
       </div>
       <Footer />
+      <LetsChatModalHost />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { dispatchModalCloseEvent } from "@/lib/modalEvents";
+import { openLetsChatModal } from "@/lib/letsChatModal";
 
 /**
  * Scroll to the home contact section when `#contact` exists on the current page.
@@ -21,12 +22,9 @@ export function scrollToContactSection() {
 
 /**
  * Same behavior as the header "Lets Talk" button: close any open modals,
- * scroll to `#contact` on the current page if present, otherwise navigate to `/#contact`.
- * @param {{ push: (href: string) => void }} router - Next.js App Router from `useRouter()`
+ * then open the Let's Chat contact modal.
  */
-export function navigateToContactLikeLetsTalk(router) {
+export function navigateToContactLikeLetsTalk() {
   dispatchModalCloseEvent();
-  if (typeof window === "undefined") return;
-  if (scrollToContactSection()) return;
-  router.push("/#contact");
+  openLetsChatModal();
 }
