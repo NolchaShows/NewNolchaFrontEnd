@@ -1,4 +1,7 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 
 const defaultClientLogos = [
   "/home/logo-slider/forbes.webp",
@@ -12,6 +15,10 @@ const defaultClientLogos = [
   "/home/logo-slider/nftnow.webp",
 ];
 
+const isExternalHref = (href) =>
+  typeof href === "string" &&
+  (href.startsWith("http://") || href.startsWith("https://"));
+
 export default function OurClientsSection({
   label = "[ OUR CLIENTS ]",
   title = "CATEGORY AGNOSTIC PARTNER PORTFOLIO",
@@ -21,6 +28,18 @@ export default function OurClientsSection({
   clientLogos = defaultClientLogos,
   hideTopRightContent = false,
 }) {
+  const router = useRouter();
+  const href = ctaHref || "/contact-us";
+  const ctaClassName =
+    "mt-8 inline-flex items-center gap-2 text-[14px] uppercase tracking-[0.08em] text-[#1D1D1D] transition-opacity hover:opacity-70 lg:text-[16px] cursor-pointer";
+
+  const ctaInner = (
+    <>
+      <span>{ctaText}</span>
+      <span aria-hidden>↗</span>
+    </>
+  );
+
   return (
     <section className="w-full bg-[#F4F4F4] px-5 py-16 lg:px-11 lg:py-24">
       <div className="mx-auto w-full max-w-[1800px]">
@@ -45,13 +64,24 @@ export default function OurClientsSection({
               <p className="text-[14px] leading-[1.35] text-[#1D1D1D] lg:text-[16px]">
                 {description}
               </p>
-              <Link
-                href={ctaHref}
-                className="mt-8 inline-flex items-center gap-2 text-[14px] uppercase tracking-[0.08em] text-[#1D1D1D] transition-opacity hover:opacity-70 lg:text-[16px]"
-              >
-                <span>{ctaText}</span>
-                <span aria-hidden>↗</span>
-              </Link>
+              {isExternalHref(href) ? (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={ctaClassName}
+                >
+                  {ctaInner}
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  className={`${ctaClassName} border-0 bg-transparent p-0 text-left`}
+                  onClick={() => navigateToContactLikeLetsTalk(router)}
+                >
+                  {ctaInner}
+                </button>
+              )}
             </div>
           ) : null}
         </div>

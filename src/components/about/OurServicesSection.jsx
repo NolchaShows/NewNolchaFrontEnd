@@ -50,13 +50,13 @@ export default function OurServicesSection({
               {title}
             </h2>
 
-            <Link
+            {/* <Link
               href={ctaHref}
               className="inline-flex items-center gap-2 text-[14px] uppercase tracking-[0.08em] text-[#1D1D1D] transition-opacity hover:opacity-70 lg:text-[16px]"
             >
               <span>{ctaText}</span>
               <span aria-hidden>↗</span>
-            </Link>
+            </Link> */}
 
             <video
               className="aspect-[9/16] w-[400px] h-auto object-cover"

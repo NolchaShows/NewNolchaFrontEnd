@@ -1,14 +1,19 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 
 const defaultRightItems = [
   "WE BUILD WORLDS",
   "WE CREATE CHARACTERS",
   "WE ENTERTAIN THEM",
 ];
+
+const isExternalHref = (href) =>
+  typeof href === "string" &&
+  (href.startsWith("http://") || href.startsWith("https://"));
 
 export default function AboutStatementSection({
   label = "[ WHO WE ARE ]",
@@ -18,6 +23,20 @@ export default function AboutStatementSection({
   ctaHref = "/contact-us",
   rightItems = defaultRightItems,
 }) {
+  const router = useRouter();
+  const href = ctaHref || "/contact-us";
+  const ctaClassName =
+    "inline-flex items-center gap-2 text-[10px] lg:text-[16px] uppercase tracking-wider text-[#111111] hover:text-[#555555] transition-colors mt-auto cursor-pointer";
+
+  const ctaInner = (
+    <>
+      <span>{ctaText}</span>
+      <span aria-hidden className="inline-block">
+        ↗
+      </span>
+    </>
+  );
+
   return (
     <section className="w-full bg-[#F4F4F4] py-16 px-5 lg:py-32 lg:px-11 font-sans text-[#111111] overflow-hidden">
       <div className="mx-auto max-w-[1800px]">
@@ -61,15 +80,24 @@ export default function AboutStatementSection({
               {description}
             </p>
 
-            <Link
-              href={ctaHref}
-              className="inline-flex items-center gap-2 text-[10px] lg:text-[16px] uppercase tracking-wider text-[#111111] hover:text-[#555555] transition-colors mt-auto"
-            >
-              <span>{ctaText}</span>
-              <span aria-hidden className="inline-block">
-                ↗
-              </span>
-            </Link>
+            {isExternalHref(href) ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={ctaClassName}
+              >
+                {ctaInner}
+              </a>
+            ) : (
+              <button
+                type="button"
+                className={`${ctaClassName} border-0 bg-transparent p-0 text-left`}
+                onClick={() => navigateToContactLikeLetsTalk(router)}
+              >
+                {ctaInner}
+              </button>
+            )}
           </motion.div>
 
           {/* Right Column: Monospace List */}
