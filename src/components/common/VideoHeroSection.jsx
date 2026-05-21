@@ -23,6 +23,8 @@ const VideoHeroSection = ({
     muted = undefined,
     loop = undefined,
     showSoundToggle = true,
+    /** "fullscreen" = edge-to-edge hero; "contained" = inset video (e.g. experience detail) */
+    variant = "fullscreen",
 }) => {
     const videoRef = useRef(null);
     const [isMuted, setIsMuted] = useState(true);
@@ -71,6 +73,13 @@ const VideoHeroSection = ({
             video.play().catch(() => {});
         }
     };
+
+    const soundToggleBottomClass =
+        variant === "contained"
+            ? "bottom-[max(0.75rem,calc(0.375rem+env(safe-area-inset-bottom)))] sm:bottom-[max(1.25rem,calc(0.75rem+env(safe-area-inset-bottom)))] md:bottom-[max(1.5rem,calc(1rem+env(safe-area-inset-bottom)))] lg:bottom-[calc(5rem+env(safe-area-inset-bottom))]"
+            : showControls
+              ? "bottom-[calc(6.5rem+env(safe-area-inset-bottom))] sm:bottom-[calc(8rem+env(safe-area-inset-bottom))] md:bottom-[calc(8.5rem+env(safe-area-inset-bottom))] lg:bottom-[calc(6rem+env(safe-area-inset-bottom))]"
+              : "bottom-[max(5rem,calc(4rem+env(safe-area-inset-bottom)))] sm:bottom-24 md:bottom-28 lg:bottom-16";
 
   return (
     <div
@@ -123,9 +132,7 @@ const VideoHeroSection = ({
                             "absolute z-20 flex shrink-0 items-center justify-center",
                             "touch-manipulation transition-opacity hover:opacity-80 active:opacity-70",
                             "right-[max(2.75rem,calc(1.75rem+env(safe-area-inset-right)))] sm:right-14 md:right-16 lg:right-20",
-                            showControls
-                                ? "bottom-[calc(6.5rem+env(safe-area-inset-bottom))] sm:bottom-[calc(8rem+env(safe-area-inset-bottom))] md:bottom-[calc(8.5rem+env(safe-area-inset-bottom))] lg:bottom-[calc(6rem+env(safe-area-inset-bottom))]"
-                                : "bottom-[max(5rem,calc(4rem+env(safe-area-inset-bottom)))] sm:bottom-24 md:bottom-28 lg:bottom-16",
+                            soundToggleBottomClass,
                         ].join(" ")}
                         style={{
                             minHeight: "clamp(2.75rem, 8vw, 3.5rem)",

@@ -75,6 +75,7 @@ export default function ExperienceDetailPageClient({
               ) : (
                 <VideoHeroSection
                   videoSrc={heroMediaUrl}
+                  variant="contained"
                   firstPart=""
                   secondPart=""
                   strokeColor="#000000"

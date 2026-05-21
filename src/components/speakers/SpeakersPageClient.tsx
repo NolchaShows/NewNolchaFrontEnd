@@ -32,6 +32,7 @@ export default function SpeakersPageClient({ page }: { page: any }) {
             >
               <VideoHeroSection
                 videoSrc={heroVideo}
+                variant="contained"
                 firstPart=""
                 secondPart=""
                 strokeColor="#000000"

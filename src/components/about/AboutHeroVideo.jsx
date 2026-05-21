@@ -14,6 +14,7 @@ export default function AboutHeroVideo({ videoSrc }) {
     >
       <VideoHeroSection
         videoSrc={videoSrc}
+        variant="contained"
         firstPart=""
         secondPart=""
         strokeColor="#000000"
