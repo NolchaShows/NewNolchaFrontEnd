@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useRef, useState } from "react";
+import Image from "next/image";
 import StyledHeading from "./StyledHeading";
 
 const VideoHeroSection = ({
@@ -20,8 +21,11 @@ const VideoHeroSection = ({
     isSticky = false,
     autoPlay = undefined,
     muted = undefined,
-    loop = undefined
+    loop = undefined,
+    showSoundToggle = true,
 }) => {
+    const videoRef = useRef(null);
+    const [isMuted, setIsMuted] = useState(true);
     // Helper function to convert Google Drive link to embed URL
     const getGoogleDriveEmbedUrl = (url) => {
         // Check if it's a Google Drive link
@@ -50,8 +54,24 @@ const VideoHeroSection = ({
     
     const isGoogleDriveVideo = embedUrl.includes('drive.google.com');
     const shouldAutoPlay = typeof autoPlay === "boolean" ? autoPlay : !showControls;
-    const shouldMute = typeof muted === "boolean" ? muted : !showControls;
+    const shouldMute = showSoundToggle
+        ? isMuted
+        : typeof muted === "boolean"
+          ? muted
+          : !showControls;
     const shouldLoop = typeof loop === "boolean" ? loop : !showControls;
+
+    const toggleMute = () => {
+        const video = videoRef.current;
+        if (!video) return;
+        const nextMuted = !isMuted;
+        video.muted = nextMuted;
+        setIsMuted(nextMuted);
+        if (!nextMuted) {
+            video.play().catch(() => {});
+        }
+    };
+
   return (
     <div
       className={[
@@ -72,6 +92,7 @@ const VideoHeroSection = ({
                     ></iframe>
                 ) : (
                     <video
+                        ref={videoRef}
                         key={embedUrl}
                         className="w-full h-full object-cover"
                         src={embedUrl}
@@ -93,6 +114,28 @@ const VideoHeroSection = ({
                     className="absolute inset-0 pointer-events-none"
                     style={{ backgroundColor: `rgba(0, 0, 0, ${overlayOpacity / 100})` }}
                 ></div>
+
+                {showSoundToggle && !isGoogleDriveVideo ? (
+                    <button
+                        type="button"
+                        onClick={toggleMute}
+                        className="absolute bottom-14 right-10 z-20 transition-opacity hover:opacity-80 sm:bottom-16 sm:right-12 lg:bottom-20 lg:right-14"
+                        aria-label={isMuted ? "Unmute video" : "Mute video"}
+                    >
+                        <Image
+                            src={
+                                isMuted
+                                    ? "/icons/sound-off-icon.svg"
+                                    : "/icons/sound-on-icon.svg"
+                            }
+                            alt=""
+                            width={194}
+                            height={39}
+                            className="h-7 w-auto sm:h-8 lg:h-9"
+                            priority
+                        />
+                    </button>
+                ) : null}
             </div>
 
             {/* Content Overlay */}
