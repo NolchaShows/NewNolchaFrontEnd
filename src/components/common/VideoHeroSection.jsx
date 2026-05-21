@@ -119,7 +119,18 @@ const VideoHeroSection = ({
                     <button
                         type="button"
                         onClick={toggleMute}
-                        className="absolute bottom-14 right-10 z-20 transition-opacity hover:opacity-80 sm:bottom-16 sm:right-12 lg:bottom-20 lg:right-14"
+                        className={[
+                            "absolute z-20 flex shrink-0 items-center justify-center",
+                            "touch-manipulation transition-opacity hover:opacity-80 active:opacity-70",
+                            "right-[max(2.75rem,calc(1.75rem+env(safe-area-inset-right)))] sm:right-14 md:right-16 lg:right-20",
+                            showControls
+                                ? "bottom-[calc(6.5rem+env(safe-area-inset-bottom))] sm:bottom-[calc(8rem+env(safe-area-inset-bottom))] md:bottom-[calc(8.5rem+env(safe-area-inset-bottom))] lg:bottom-[calc(6rem+env(safe-area-inset-bottom))]"
+                                : "bottom-[max(5rem,calc(4rem+env(safe-area-inset-bottom)))] sm:bottom-24 md:bottom-28 lg:bottom-16",
+                        ].join(" ")}
+                        style={{
+                            minHeight: "clamp(2.75rem, 8vw, 3.5rem)",
+                            minWidth: "clamp(2.75rem, 8vw, 3.5rem)",
+                        }}
                         aria-label={isMuted ? "Unmute video" : "Mute video"}
                     >
                         <Image
@@ -131,7 +142,8 @@ const VideoHeroSection = ({
                             alt=""
                             width={194}
                             height={39}
-                            className="h-7 w-auto sm:h-8 lg:h-9"
+                            sizes="(max-width: 640px) 100px, (max-width: 1024px) 150px, 194px"
+                            className="h-auto w-[clamp(5rem,20vw,12.125rem)] object-contain object-right"
                             priority
                         />
                     </button>
