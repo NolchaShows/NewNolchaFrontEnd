@@ -15,6 +15,17 @@ const isExternalHref = (href) =>
   typeof href === "string" &&
   (href.startsWith("http://") || href.startsWith("https://"));
 
+/** Break headline into lines at each period (period stays on the line). */
+const splitHeadlineLines = (text) => {
+  const trimmed = String(text ?? "").trim();
+  if (!trimmed) return [];
+  if (!trimmed.includes(".")) return [trimmed];
+  return trimmed
+    .split(/(?<=\.)\s*/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+};
+
 export default function AboutStatementSection({
   label = "[ WHO WE ARE ]",
   headline = "MATTE IS A CREATIVE COMPANY FROM NEW YORK",
@@ -61,8 +72,12 @@ export default function AboutStatementSection({
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
           className="mb-10 lg:mb-20"
         >
-          <h2 className="text-[42px] sm:text-[56px] md:text-[72px] lg:text-[100px] leading-[0.95] tracking-[-0.04em] uppercase font-normal text-[#111111] m-0 p-0">
-            {headline}
+          <h2 className="text-[36px] sm:text-[48px] md:text-[60px] lg:text-[84px] leading-[0.95] tracking-[-0.04em] uppercase font-normal text-[#111111] m-0 p-0">
+            {splitHeadlineLines(headline).map((line, index) => (
+              <span key={index} className="block">
+                {line}
+              </span>
+            ))}
           </h2>
         </motion.div>
 
