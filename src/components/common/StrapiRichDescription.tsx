@@ -71,13 +71,15 @@ export function hasRenderableDescription(value: unknown): boolean {
   return isRenderableNormalized(normalizeStrapiRichText(value));
 }
 
-type Variant = "experience" | "modal";
+type Variant = "experience" | "modal" | "buildMomentum";
 
 const markdownWrap: Record<Variant, string> = {
   experience:
     "detail-row-markdown max-w-[900px] text-[14px] leading-[1.45] text-[#4a4a4a] lg:text-[16px] [&_strong]:font-semibold [&_em]:italic [&_a]:text-[#1a1a1a] [&_a]:underline [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-2 [&_blockquote]:border-[#c4c4c4] [&_blockquote]:pl-4 [&_blockquote]:italic",
   modal:
     "event-modal-markdown max-w-none text-sm sm:text-base leading-relaxed text-white [&_strong]:font-semibold [&_em]:italic [&_a]:text-primary [&_a]:underline hover:[&_a]:opacity-90 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-2 [&_blockquote]:border-white/35 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-white/90",
+  buildMomentum:
+    "max-w-none text-left text-[20px] font-normal leading-relaxed text-[#1A1A1A]/80 lg:text-[36px] [&_strong]:font-bold [&_em]:italic [&_a]:text-[#1A1A1A] [&_a]:underline [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
 };
 
 const blocksWrap: Record<Variant, string> = {
@@ -85,6 +87,8 @@ const blocksWrap: Record<Variant, string> = {
     "detail-row-rich-text max-w-[900px] text-[14px] leading-[1.45] text-[#4a4a4a] lg:text-[16px] [&_a]:text-[#1a1a1a] [&_a]:underline [&_strong]:font-semibold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
   modal:
     "event-modal-blocks max-w-none text-sm sm:text-base leading-relaxed text-white [&_a]:text-primary [&_a]:underline hover:[&_a]:opacity-90 [&_strong]:font-semibold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
+  buildMomentum:
+    "max-w-none text-left text-[20px] font-normal leading-relaxed text-[#1A1A1A]/80 lg:text-[36px] [&_a]:text-[#1A1A1A] [&_a]:underline [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
 };
 
 function markdownLinkProps(variant: Variant) {

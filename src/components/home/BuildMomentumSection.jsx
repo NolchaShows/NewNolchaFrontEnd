@@ -1,7 +1,10 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import {
+  StrapiRichDescription,
+  hasRenderableDescription,
+} from "@/components/common/StrapiRichDescription";
 import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 
 const FadeInUp = ({ index, children, className }) => {
@@ -30,7 +33,8 @@ const FadeInUp = ({ index, children, className }) => {
 };
 
 const STRAPI_BASE_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
+  process.env.NEXT_PUBLIC_STRAPI_URL ??
+  "https://new-nolcha-strapi-uiai.onrender.com";
 
 const resolveMediaUrl = (media) => {
   if (!media) return null;
@@ -47,67 +51,21 @@ const resolveMediaUrl = (media) => {
   return rawUrl.startsWith("http") ? rawUrl : `${STRAPI_BASE_URL}${rawUrl}`;
 };
 
-const renderParagraph = (paragraph, index) => {
-  if (!paragraph) return null;
+const DEFAULT_PARAGRAPHS = [
+  "For Over 15 Years, Nolcha Has Been At The Forefront Of **Technology, Culture, And Immersive Experiences** Producing High-Impact Events, Summits, And Activations For Visionary Brands And The World's Leading Blockchain, AI, And Crypto Conferences.",
+  "We Unite Communities, Spark Collaboration, And Create Business Through Creativity, Innovation, And Human Connection.",
+];
 
-  if (typeof paragraph === "string") {
-    return (
-      <p
-        key={index}
-        className="text-[16px] lg:text-[22px] xl:text-[28px] 2xl:text-[36px] xxl:text-[48px] 3xl:text-[64px] text-white leading-relaxed"
-      >
-        {paragraph}
-      </p>
-    );
-  }
-
-  const fullText = paragraph.text || "";
-  const hasHighlightedParts =
-    paragraph.text_before || paragraph.highlight || paragraph.text_after;
-
-  return (
-    <p
-      key={paragraph.id || index}
-      className="text-[16px] lg:text-[22px] xl:text-[28px] 2xl:text-[36px] xxl:text-[48px] 3xl:text-[64px] text-white leading-relaxed"
-    >
-      {hasHighlightedParts ? (
-        <>
-          {paragraph.text_before}
-          {paragraph.highlight ? (
-            <span className="font-bold">{paragraph.highlight}</span>
-          ) : null}
-          {paragraph.text_after}
-        </>
-      ) : (
-        fullText
-      )}
-    </p>
-  );
-};
+const DEFAULT_PARTNER_LOGOS = [
+  { name: "Mercedes-Benz", logo: "homepage/build_momentum_section/mercedes.png" },
+  { name: "Bullish", logo: "homepage/build_momentum_section/bullish.png" },
+  { name: "Galaxy", logo: "homepage/build_momentum_section/galaxy.png" },
+  { name: "OKX", logo: "homepage/build_momentum_section/okx.png" },
+  { name: "Coca Cola", logo: "homepage/build_momentum_section/cocacola.png" },
+  { name: "CoinDesk", logo: "homepage/build_momentum_section/coindesk.png" },
+];
 
 const BuildMomentumSection = ({ buildMomentumData }) => {
-  const router = useRouter();
-  const defaultPartnerLogos = [
-    { name: "Mercedes-Benz", logo: 'homepage/build_momentum_section/mercedes.png' },
-    { name: "Bullish", logo: 'homepage/build_momentum_section/bullish.png' },
-    { name: "Galaxy", logo: 'homepage/build_momentum_section/galaxy.png' },
-    { name: "OKX", logo: 'homepage/build_momentum_section/okx.png' },
-    { name: "Coca Cola", logo: 'homepage/build_momentum_section/cocacola.png' },
-    { name: "CoinDesk", logo: 'homepage/build_momentum_section/coindesk.png' },
-  ];
-
-  const defaultParagraphs = [
-    <>
-      For Over 15 Years, Nolcha Has Been At The Forefront Of{" "}
-      <span className="font-bold">
-        Technology, Culture, And Immersive Experiences
-      </span>{" "}
-      Producing High-Impact Events, Summits, And Activations For Visionary
-      Brands And The World's Leading Blockchain, AI, And Crypto Conferences.
-    </>,
-    "We Unite Communities, Spark Collaboration, And Create Business Through Creativity, Innovation, And Human Connection.",
-  ];
-
   const heading =
     buildMomentumData?.heading || "We Build Cultural Momentum";
 
@@ -122,42 +80,47 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
   const isExternalCta =
     ctaUrl.startsWith("http://") || ctaUrl.startsWith("https://");
 
-  const paragraphs =
-    buildMomentumData?.paragraphs?.length > 0
-      ? buildMomentumData.paragraphs
-      : defaultParagraphs;
+  const cmsParagraphs = (buildMomentumData?.paragraphs || []).filter((entry) =>
+    hasRenderableDescription(entry?.text)
+  );
 
   const partnerLogos =
     buildMomentumData?.logos?.length > 0
-      ? buildMomentumData.logos.map((logo, index) => ({
-          name:
-            logo?.name ||
-            logo?.alternativeText ||
-            logo?.caption ||
-            `Logo ${index + 1}`,
-          logo: resolveMediaUrl(logo?.image || logo),
-          status: logo?.status || "",
-        }))
-      : defaultPartnerLogos;
+      ? buildMomentumData.logos
+          .map((logo, index) => ({
+            name:
+              logo?.alternativeText ||
+              logo?.name ||
+              logo?.caption ||
+              `Logo ${index + 1}`,
+            logo: resolveMediaUrl(logo),
+          }))
+          .filter((entry) => entry.logo)
+      : DEFAULT_PARTNER_LOGOS;
 
   return (
     <section className="w-full bg-[#F3F3F3] text-[#1A1A1A] py-8 lg:py-16 lg:px-11 px-5 flex items-center">
       <div className="mx-auto w-full text-left">
-        {/* Heading */}
         <h2 className="text-[34px] lg:text-[60px] font-medium mb-5 lg:mb-10 text-left">
           {heading}
         </h2>
 
-        {/* Paragraphs */}
         <div className="flex flex-col gap-6 text-left">
-          {paragraphs.map((paragraph, index) => (
-            <p
-              key={index}
-              className="text-[20px] lg:text-[36px] text-[#1A1A1A]/80 font-normal text-left"
-            >
-              {typeof paragraph === "string" ? paragraph : (paragraph.text || paragraph)}
-            </p>
-          ))}
+          {cmsParagraphs.length > 0
+            ? cmsParagraphs.map((entry, index) => (
+                <StrapiRichDescription
+                  key={entry.id ?? index}
+                  value={entry.text}
+                  variant="buildMomentum"
+                />
+              ))
+            : DEFAULT_PARAGRAPHS.map((text, index) => (
+                <StrapiRichDescription
+                  key={index}
+                  value={text}
+                  variant="buildMomentum"
+                />
+              ))}
         </div>
 
         {ctaText ? (
@@ -183,7 +146,6 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
           )
         ) : null}
 
-        {/* Partner Logos */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between gap-10 lg:gap-8 mb-6 lg:mb-12 w-full">
           {partnerLogos.map((partner, index) => (
             <FadeInUp
@@ -204,11 +166,6 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
                   </span>
                 )}
               </div>
-              {partner.status && (
-                <span className="text-[10px] lg:text-[12px] font-medium text-[#1A1A1A]/60 uppercase text-left lg:text-center leading-tight">
-                  {partner.status}
-                </span>
-              )}
             </FadeInUp>
           ))}
         </div>
