@@ -1,9 +1,18 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import SectionTitle from './SectionTitle';
 import ArrowNavButtons from './ArrowNavButtons';
 
-const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogleDrive = false }) => {
+const EveningRecap = ({
+    year,
+    title,
+    videos = [],
+    videoUrl,
+    paddingTop,
+    isGoogleDrive = false,
+    showSoundToggle = true,
+}) => {
     // Support both single video (backward compatibility) and multiple videos
     const videoList = videos && videos.length > 0
         ? videos
@@ -11,9 +20,20 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
             ? [{ url: videoUrl, isGoogleDrive: isGoogleDrive }]
             : [];
 
+    const videoRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStartX, setTouchStartX] = useState(null);
     const [hasNavigated, setHasNavigated] = useState(false);
+    const [isMuted, setIsMuted] = useState(true);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+        video.muted = isMuted;
+        if (!isMuted) {
+            video.play().catch(() => {});
+        }
+    }, [currentIndex, isMuted]);
 
     const shouldAutoplayFirst = currentIndex === 0 && !hasNavigated;
 
@@ -97,6 +117,17 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
 
     const isGoogleDriveVideo = embedUrl.includes('drive.google.com');
 
+    const toggleMute = () => {
+        const video = videoRef.current;
+        if (!video) return;
+        const nextMuted = !isMuted;
+        video.muted = nextMuted;
+        setIsMuted(nextMuted);
+        if (!nextMuted) {
+            video.play().catch(() => {});
+        }
+    };
+
     return (
         <div className="page-container-fluid bg-black pb-10 lg:pb-16 2xl:pb-20 xxl:pb-24">
             {displayTitle ? (
@@ -129,11 +160,12 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
                     </div>
                 ) : (
                     <video
+                        ref={videoRef}
                         key={`video-${currentIndex}`}
                         src={videoUrlToUse}
                         className="w-full h-[400px] lg:h-[700px] 2xl:h-[900px] xxl:h-[1200px] 3xl:h-[1800px] object-cover animate-fadeIn"
                         autoPlay={shouldAutoplayFirst}
-                        muted={shouldAutoplayFirst}
+                        muted={isMuted}
                         controls
                         loop
                         playsInline
@@ -142,6 +174,37 @@ const EveningRecap = ({ year, title, videos = [], videoUrl, paddingTop, isGoogle
                         Your browser does not support the video tag.
                     </video>
                 )}
+
+                {showSoundToggle && !isGoogleDriveVideo ? (
+                    <button
+                        type="button"
+                        onClick={toggleMute}
+                        className={[
+                            "absolute z-20 flex shrink-0 items-center justify-center",
+                            "touch-manipulation transition-opacity hover:opacity-80 active:opacity-70",
+                            "right-[max(2.75rem,calc(1.75rem+env(safe-area-inset-right)))] sm:right-14 md:right-16 lg:right-20",
+                            "bottom-[max(0.75rem,calc(0.375rem+env(safe-area-inset-bottom)))] sm:bottom-[max(1.25rem,calc(0.75rem+env(safe-area-inset-bottom)))] md:bottom-[max(1.5rem,calc(1rem+env(safe-area-inset-bottom)))] lg:bottom-[calc(6rem+env(safe-area-inset-bottom))]",
+                        ].join(" ")}
+                        style={{
+                            minHeight: "clamp(2.75rem, 8vw, 3.5rem)",
+                            minWidth: "clamp(2.75rem, 8vw, 3.5rem)",
+                        }}
+                        aria-label={isMuted ? "Unmute video" : "Mute video"}
+                    >
+                        <Image
+                            src={
+                                isMuted
+                                    ? "/icons/sound-off-icon.svg"
+                                    : "/icons/sound-on-icon.svg"
+                            }
+                            alt=""
+                            width={194}
+                            height={39}
+                            sizes="(max-width: 640px) 100px, (max-width: 1024px) 150px, 194px"
+                            className="h-auto w-[clamp(5rem,20vw,12.125rem)] object-contain object-right"
+                        />
+                    </button>
+                ) : null}
             </div>
 
             {/* Navigation Arrows - Only show if multiple videos */}
