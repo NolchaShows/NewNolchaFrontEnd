@@ -467,6 +467,7 @@ export default async function Home() {
             overlayOpacity={40}
             isGoogleDrive={false}
             loop={true}
+            showSoundToggle={false}
           />
         )}
         <div className="relative z-10">

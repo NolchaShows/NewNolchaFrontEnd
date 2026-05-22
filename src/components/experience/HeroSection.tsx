@@ -130,6 +130,7 @@ export default async function HeroSection({
       overlayOpacity={pageType === "home" ? 40 : 20}
       className="h-screen"
       isGoogleDrive={false}
+      showSoundToggle={pageType !== "home"}
     />
   );
 }
