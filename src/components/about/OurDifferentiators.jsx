@@ -40,7 +40,7 @@ export default function AboutStatementSection({
         </p>
 
         <motion.div
-          className="flex flex-col gap-8 lg:gap-10"
+          className="flex w-full flex-col gap-8 sm:w-[80%] lg:gap-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.25 }}
