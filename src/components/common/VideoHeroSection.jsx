@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import StyledHeading from "./StyledHeading";
 
@@ -16,7 +16,6 @@ const VideoHeroSection = ({
     overlayOpacity = 20,
     className = "",
     children = null,
-    isGoogleDrive = false,
     showControls = false,
     isSticky = false,
     autoPlay = undefined,
@@ -25,43 +24,43 @@ const VideoHeroSection = ({
     showSoundToggle = true,
     /** "fullscreen" = edge-to-edge hero; "contained" = inset video (e.g. experience detail) */
     variant = "fullscreen",
+    /** Paused until user taps play; starts unmuted on play */
+    clickToPlay = false,
 }) => {
     const videoRef = useRef(null);
     const [isMuted, setIsMuted] = useState(true);
-    // Helper function to convert Google Drive link to embed URL
-    const getGoogleDriveEmbedUrl = (url) => {
-        // Check if it's a Google Drive link
-        if (url.includes('drive.google.com')) {
-            // Extract file ID from various Google Drive URL formats
-            let fileId = '';
-            
-            // Format: https://drive.google.com/file/d/FILE_ID/view
-            if (url.includes('/file/d/')) {
-                fileId = url.split('/file/d/')[1].split('/')[0];
-            }
-            // Format: https://drive.google.com/open?id=FILE_ID
-            else if (url.includes('open?id=')) {
-                fileId = url.split('open?id=')[1].split('&')[0];
-            }
-            
-            return `https://drive.google.com/file/d/${fileId}/preview`;
-        }
-        return url;
-    };
 
     const safeSrc = videoSrc || "";
-    const embedUrl = isGoogleDrive || safeSrc.includes("drive.google.com")
-        ? getGoogleDriveEmbedUrl(safeSrc)
-        : safeSrc;
-    
-    const isGoogleDriveVideo = embedUrl.includes('drive.google.com');
-    const shouldAutoPlay = typeof autoPlay === "boolean" ? autoPlay : !showControls;
+    const shouldAutoPlay = clickToPlay
+        ? false
+        : typeof autoPlay === "boolean"
+          ? autoPlay
+          : !showControls;
     const shouldMute = showSoundToggle
         ? isMuted
-        : typeof muted === "boolean"
-          ? muted
-          : !showControls;
+        : clickToPlay
+          ? typeof muted === "boolean"
+            ? muted
+            : false
+          : typeof muted === "boolean"
+            ? muted
+            : !showControls;
     const shouldLoop = typeof loop === "boolean" ? loop : !showControls;
+
+    useEffect(() => {
+        if (!clickToPlay) return;
+        const video = videoRef.current;
+        if (!video) return;
+
+        const onPlay = () => {
+            if (showSoundToggle) return;
+            video.muted = false;
+            setIsMuted(false);
+        };
+
+        video.addEventListener("play", onPlay);
+        return () => video.removeEventListener("play", onPlay);
+    }, [clickToPlay, showSoundToggle, safeSrc]);
 
     const toggleMute = () => {
         const video = videoRef.current;
@@ -91,20 +90,11 @@ const VideoHeroSection = ({
     >
             {/* Video Background */}
             <div className="absolute inset-0 z-0 bg-black">
-                {isGoogleDriveVideo ? (
-                    <iframe
-                        src={embedUrl}
-                        className="w-full h-full"
-                        style={{ minWidth: "100%", minHeight: "100%" }}
-                        allow="autoplay"
-                        allowFullScreen
-                    ></iframe>
-                ) : (
-                    <video
+                <video
                         ref={videoRef}
-                        key={embedUrl}
+                        key={safeSrc}
                         className="w-full h-full object-cover"
-                        src={embedUrl}
+                        src={safeSrc}
                         poster={poster}
                         autoPlay={shouldAutoPlay}
                         muted={shouldMute}
@@ -117,14 +107,13 @@ const VideoHeroSection = ({
                     >
                         Your browser does not support the video tag.
                     </video>
-                )}
                 {/* Dark overlay for better text readability */}
                 <div 
                     className="absolute inset-0 pointer-events-none"
                     style={{ backgroundColor: `rgba(0, 0, 0, ${overlayOpacity / 100})` }}
                 ></div>
 
-                {showSoundToggle && !isGoogleDriveVideo ? (
+                {showSoundToggle ? (
                     <button
                         type="button"
                         onClick={toggleMute}

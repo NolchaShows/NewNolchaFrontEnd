@@ -35,7 +35,6 @@ export default async function EveningRecapSection({
       return {
         url,
         title: t,
-        isGoogleDrive: url.includes("drive.google.com"),
       };
     })
     .filter(Boolean);

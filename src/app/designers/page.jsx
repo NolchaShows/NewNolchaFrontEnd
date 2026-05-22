@@ -52,7 +52,6 @@ const page = () => {
         textColor="#FFFFFF"
         size="large"
         overlayOpacity={20}
-        isGoogleDrive={false}
       />
       <div className="relative z-10">
         <Artists

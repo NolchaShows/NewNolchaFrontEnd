@@ -159,7 +159,6 @@ const EventDetailsModal = ({ isOpen, onClose, eventData }) => {
     videos: [
       {
         url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov",
-        isGoogleDrive: false
       }
     ],
     // Keep videoUrl for backward compatibility

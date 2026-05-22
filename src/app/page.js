@@ -149,8 +149,6 @@ const mapUpcomingEvents = (upcomingSection) => {
         return {
           title: slide?.title || "",
           url: rawUrl,
-          isGoogleDrive:
-            Boolean(slide?.isGoogleDrive) || rawUrl.includes("drive.google.com"),
         };
       })
       .filter(Boolean);
@@ -409,17 +407,14 @@ export default async function Home() {
       {
         title: "Recent Events: Bitcoin Nashville 2024",
         url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov",
-        isGoogleDrive: false,
       },
       {
         title: "NYFW — SHAO / OH POLLY",
         url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov",
-        isGoogleDrive: false,
       },
       {
         title: "Art Basel — Web3 & culture",
         url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-middle-video.mov",
-        isGoogleDrive: false,
       },
     ],
     // Keep videoUrl for backward compatibility
@@ -465,7 +460,6 @@ export default async function Home() {
             textColor="#FFFFFF"
             size="large"
             overlayOpacity={40}
-            isGoogleDrive={false}
             loop={true}
             showSoundToggle={false}
           />

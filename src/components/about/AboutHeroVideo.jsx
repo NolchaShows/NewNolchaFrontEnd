@@ -15,6 +15,7 @@ export default function AboutHeroVideo({ videoSrc }) {
       <VideoHeroSection
         videoSrc={videoSrc}
         variant="contained"
+        clickToPlay
         firstPart=""
         secondPart=""
         strokeColor="#000000"
@@ -23,8 +24,7 @@ export default function AboutHeroVideo({ videoSrc }) {
         size="large"
         overlayOpacity={0}
         showControls={true}
-        autoPlay={true}
-        muted={true}
+        autoPlay={false}
         loop={true}
         className="!h-full !w-full"
       />
