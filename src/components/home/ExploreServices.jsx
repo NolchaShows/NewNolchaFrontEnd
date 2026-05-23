@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import SectionTitle from "../common/SectionTitle";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 
 const DEFAULT_VIDEO_SRC =
@@ -140,16 +141,6 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
           {resolvedItems.map((item, idx) => {
             const isExpanded = expandedIndex === idx;
             const itemTitle = `${item.label}: ${item.text}`;
-            const rawDescription = item.description || "Fluent in innovation, tech, and crypto culture — we bridge creative vision with operational precision. From concept to completion, our team delivers full-scale event strategy, talent and programming, logistics, venue sourcing, art direction, and guest list curation. We handle every detail so your brand can own the moment — seamlessly merging storytelling, design, and experience.";
-            
-            // Process description to replace <br /> tags with spacing divs
-            const processDescription = (text) => {
-              if (!text) return "";
-              // Replace <br /> and <br> tags with a div that adds spacing (responsive)
-              return text.replace(/<br\s*\/?>/gi, '<div class="h-[6px] lg:h-[12px] 2xl:h-[18px]"></div>');
-            };
-            const description = processDescription(rawDescription);
-            
             const seeOurWork = item.work || "";
             const tagColors = [
               "bg-green-200 text-green-800",
@@ -213,10 +204,10 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
                   }}
                 >
                   <div>
-                    {/* Description */}
-                    <div
-                      className="text-white text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed mb-[6px] lg:mb-[10px] 2xl:mb-[14px] mt-[10px] lg:mt-[20px] 2xl:mt-[30px]"
-                      dangerouslySetInnerHTML={{ __html: description }}
+                    <StrapiRichDescription
+                      value={item.description}
+                      fallback="Fluent in innovation, tech, and crypto culture — we bridge creative vision with operational precision. From concept to completion, our team delivers full-scale event strategy, talent and programming, logistics, venue sourcing, art direction, and guest list curation. We handle every detail so your brand can own the moment — seamlessly merging storytelling, design, and experience."
+                      className="mt-[10px] mb-[6px] text-[14px] leading-relaxed text-white lg:mt-[20px] lg:mb-[10px] lg:text-[16px] 2xl:mt-[30px] 2xl:mb-[14px] 2xl:text-[20px] [&_p]:m-0"
                     />
 
                     {/* Scope of work */}

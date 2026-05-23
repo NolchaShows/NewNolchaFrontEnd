@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useFooterContent } from "@/utils/footerUtils";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 
 function FooterLink({ href, className, children }) {
   if (!href) {
@@ -90,9 +91,10 @@ function Footer() {
             <h2 className="text-[32px] lg:text-[40px] 2xl:text-[48px] font-black leading-[1.2] tracking-[-1.44px] text-white whitespace-pre-wrap">
               {stayInformed.title}
             </h2>
-            <p className="text-[16px] lg:text-[18px] 2xl:text-[20px] font-normal leading-[1.5] tracking-[-0.6px] text-white max-w-[546px]">
-              {stayInformed.description}
-            </p>
+            <StrapiRichDescription
+              value={stayInformed.description}
+              className="max-w-[546px] text-[16px] font-normal leading-[1.5] tracking-[-0.6px] text-white lg:text-[18px] 2xl:text-[20px] [&_p]:m-0"
+            />
           </div>
           <form onSubmit={handleSubmit} className="flex gap-0 items-center justify-center w-full lg:w-[427px]">
             <div className="flex flex-1 flex-col gap-[6px] items-start min-w-0 w-full">
@@ -133,9 +135,10 @@ function Footer() {
                 className="h-[47px] w-[168px] object-contain"
                 alt="Nolcha Logo"
               />
-              <p className="font-normal leading-[1.5] text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px] whitespace-pre-wrap">
-                {description}
-              </p>
+              <StrapiRichDescription
+                value={description}
+                className="text-[14px] font-normal leading-[1.5] tracking-[-0.48px] text-[rgba(253,255,231,0.7)] lg:text-[16px] [&_p]:m-0"
+              />
             </div>
 
             <div className="flex gap-[12px] items-center">

@@ -4,6 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 
 const defaultRightItems = [
   "WE BUILD WORLDS",
@@ -91,9 +92,10 @@ export default function AboutStatementSection({
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
             className="lg:col-span-7 xl:col-span-6 flex flex-col gap-4 lg:gap-8"
           >
-            <p className="text-[20px] sm:text-[22px] lg:text-[28px] leading-[1.3] font-normal text-[#1D1D1D] max-w-[850px] m-0">
-              {description}
-            </p>
+            <StrapiRichDescription
+              value={description}
+              className="max-w-[850px] text-[20px] font-normal leading-[1.3] text-[#1D1D1D] sm:text-[22px] lg:text-[28px] [&_p]:m-0"
+            />
 
             {isExternalHref(href) ? (
               <a

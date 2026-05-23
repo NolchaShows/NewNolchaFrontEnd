@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import SectionTitle from "./SectionTitle";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 
 const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => {
   const [formData, setFormData] = useState({
@@ -157,13 +158,12 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
             ))}
           </div> */}
 
-          {dynamicDescription && (
-            <div className="text-white font-medium leading-tight pr-[20px] mb-6 md:mb-8 lg:mb-12 2xl:mb-16">
-              <span className="font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] text-[20px] md:text-[20px] 2xl:text-[30px]">
-                {dynamicDescription}
-              </span>
-            </div>
-          )}
+          {dynamicDescription ? (
+            <StrapiRichDescription
+              value={dynamicDescription}
+              className="mb-6 pr-[20px] font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] text-[20px] font-medium leading-tight text-white md:mb-8 lg:mb-12 2xl:mb-16 2xl:text-[30px] [&_p]:m-0"
+            />
+          ) : null}
           
           <p className="text-white text-[16px] lg:text-[24px] 2xl:text-[30px] font-bold mb-6 lg:mb-10 2xl:mb-[70px]">You're in great company.</p>
 

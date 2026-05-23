@@ -4,6 +4,7 @@ import StyledHeading from './StyledHeading';
 import SectionTitle from './SectionTitle';
 import ArrowNavButtons from './ArrowNavButtons';
 import { resolveStrapiImageUrlBestQuality } from '@/lib/strapiMediaUrl';
+import { StrapiRichDescription } from '@/components/common/StrapiRichDescription';
 
 const resolveSpeakerImage = (image) =>
   image ? resolveStrapiImageUrlBestQuality(image) : null;
@@ -297,9 +298,13 @@ const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
                     <h3 className="text-black text-[1.4rem] font-bold uppercase mb-4 leading-tight">
                       {speaker.name || 'Speaker Name'}
                     </h3>
-                    <p className="text-black text-[0.85rem] font-semibold leading-[1.4] mb-4 flex-grow overflow-y-auto">
-                      {speaker.description || 'Speaker description goes here'}
-                    </p>
+                    <div className="mb-4 flex-grow overflow-y-auto">
+                      <StrapiRichDescription
+                        value={speaker.description}
+                        fallback="Speaker description goes here"
+                        className="text-[0.85rem] font-semibold leading-[1.4] text-black [&_p]:m-0"
+                      />
+                    </div>
                     {speaker.twitter && (
                       <div className="flex items-center gap-3 mt-auto pt-4">
                         <a
@@ -350,9 +355,13 @@ const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
                     <h3 className="text-black text-[1.2rem] xl:text-[1.4rem] 2xl:text-[1.8rem] xxl:text-[2.4rem] 3xl:text-[3.6rem] font-bold uppercase mb-4 leading-tight">
                       {speaker.name || 'Speaker Name'}
                     </h3>
-                    <p className="text-black text-[0.8rem] xl:text-[0.9rem] 2xl:text-[1.2rem] xxl:text-[1.6rem] 3xl:text-[2.2rem] font-semibold leading-[1.4] mb-4 flex-grow overflow-y-auto">
-                      {speaker.description || 'Speaker description goes here'}
-                    </p>
+                    <div className="mb-4 flex-grow overflow-y-auto">
+                      <StrapiRichDescription
+                        value={speaker.description}
+                        fallback="Speaker description goes here"
+                        className="text-[0.8rem] font-semibold leading-[1.4] text-black xl:text-[0.9rem] 2xl:text-[1.2rem] xxl:text-[1.6rem] 3xl:text-[2.2rem] [&_p]:m-0"
+                      />
+                    </div>
                     {speaker.twitter && (
                       <div className="flex items-center gap-3 mt-auto pt-4">
                         <a
@@ -398,9 +407,13 @@ const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
                     <h3 className="text-black text-[1.2rem] xl:text-[1.4rem] 2xl:text-[1.8rem] xxl:text-[2.4rem] 3xl:text-[3.6rem] font-bold uppercase mb-4 leading-tight">
                       {speaker.name || 'Speaker Name'}
                     </h3>
-                    <p className="text-black text-[0.8rem] xl:text-[0.9rem] 2xl:text-[1.2rem] xxl:text-[1.6rem] 3xl:text-[2.2rem] font-semibold leading-[1.4] mb-4 flex-grow overflow-y-auto">
-                      {speaker.description || 'Speaker description goes here'}
-                    </p>
+                    <div className="mb-4 flex-grow overflow-y-auto">
+                      <StrapiRichDescription
+                        value={speaker.description}
+                        fallback="Speaker description goes here"
+                        className="text-[0.8rem] font-semibold leading-[1.4] text-black xl:text-[0.9rem] 2xl:text-[1.2rem] xxl:text-[1.6rem] 3xl:text-[2.2rem] [&_p]:m-0"
+                      />
+                    </div>
                     {speaker.twitter && (
                       <div className="flex items-center gap-3 mt-auto pt-4">
                         <a

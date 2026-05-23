@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 
 const defaultClientLogos = [
   "/home/logo-slider/forbes.webp",
@@ -61,9 +62,10 @@ export default function OurClientsSection({
 
           {!hideTopRightContent ? (
             <div className="lg:max-w-[700px]">
-              <p className="text-[14px] leading-[1.35] text-[#1D1D1D] lg:text-[16px]">
-                {description}
-              </p>
+              <StrapiRichDescription
+                value={description}
+                className="text-[14px] leading-[1.35] text-[#1D1D1D] lg:text-[16px] [&_p]:m-0"
+              />
               {isExternalHref(href) ? (
                 <a
                   href={href}

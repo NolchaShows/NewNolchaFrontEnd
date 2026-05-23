@@ -231,10 +231,13 @@ export function StrapiRichDescription({
   value,
   fallback,
   variant = "experience",
+  className,
 }: {
   value: unknown;
   fallback?: unknown;
   variant?: Variant;
+  /** Override variant wrapper classes (applies to both markdown and blocks). */
+  className?: string;
 }) {
   const primary = normalizeStrapiRichText(value);
   const secondary = normalizeStrapiRichText(fallback);
@@ -247,9 +250,12 @@ export function StrapiRichDescription({
 
   if (!isRenderableNormalized(resolved)) return null;
 
+  const markdownClass = className ?? markdownWrap[variant];
+  const blocksClass = className ?? blocksWrap[variant];
+
   if (typeof resolved === "string") {
     return (
-      <div className={markdownWrap[variant]}>
+      <div className={markdownClass}>
         <Markdown
           components={{
             p({ children }) {
@@ -266,7 +272,7 @@ export function StrapiRichDescription({
 
   if (Array.isArray(resolved)) {
     return (
-      <div className={blocksWrap[variant]}>
+      <div className={blocksClass}>
         <BlocksRenderer
           content={resolved as BlocksContent}
           blocks={blocksForVariant(variant)}

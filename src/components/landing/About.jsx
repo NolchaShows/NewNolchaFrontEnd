@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import RoundedCtaButton from "../common/RoundedCtaButton";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 
 function About({
   title,
@@ -30,11 +31,10 @@ function About({
                 {title}
               </h2>
             )}
-            <div className="flex flex-col gap-4 xxl:gap-6 3xl:gap-10 text-[16px] sm:text-[18px] lg:text-[20px] xxl:text-[28px] 3xl:text-[40px] leading-[1.5] tracking-[-0.6px]">
-              <p>
-                {paragraphText}
-              </p>
-            </div>
+            <StrapiRichDescription
+              value={paragraphText}
+              className="text-[16px] leading-[1.5] tracking-[-0.6px] text-white sm:text-[18px] lg:text-[20px] xxl:text-[28px] 3xl:text-[40px] [&_p]:m-0"
+            />
             {link && linkText && (
               <RoundedCtaButton
                 href={link}
@@ -81,11 +81,10 @@ function About({
 
           {/* Paragraphs */}
           <div className="flex flex-col gap-[12px] sm:gap-[8px] md:gap-[4px] lg:gap-[8px] xl:gap-[16px] 2xl:gap-[20px] md:mr-10">
-            <p
-              className="font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] text-[16px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[36px] leading-[1.5] sm:leading-[1.55] md:leading-[1.6] lg:leading-[1.65] xl:leading-[1.7]"
-            >
-              {paragraphText}
-            </p>
+            <StrapiRichDescription
+              value={paragraphText}
+              className="font-['Neue_Haas_Grotesk_Text_Pro',sans-serif] text-[16px] leading-[1.5] sm:text-[16px] sm:leading-[1.55] md:text-[16px] md:leading-[1.6] lg:text-[18px] lg:leading-[1.65] xl:text-[20px] xl:leading-[1.7] 2xl:text-[36px] [&_p]:m-0"
+            />
           </div>
         </div>
 

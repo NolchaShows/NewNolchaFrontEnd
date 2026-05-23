@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import SectionTitle from "../common/SectionTitle";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 
 function VideoGridZigZag({ videos }) {
   const borderColors = ['#FF6813', '#BBD7FF', '#CAD533', '#E6C6C5'];
@@ -298,9 +299,10 @@ function Artists({
                 </SectionTitle>
               ) : null}
               {description ? (
-                <p className="font-normal text-[16px] md:text-[18px] xl:text-[20px] 2xl:text-4xl 3xl:text-5xl text-white">
-                  {description}
-                </p>
+                <StrapiRichDescription
+                  value={description}
+                  className="font-normal text-[16px] text-white md:text-[18px] xl:text-[20px] 2xl:text-4xl 3xl:text-5xl [&_p]:m-0"
+                />
               ) : null}
             </div>
           </div>

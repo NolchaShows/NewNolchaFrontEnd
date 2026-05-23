@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 
 function TextHero({ textHeroData, loading, images = [] }) {
   const toAbsoluteUrl = (url) => {
@@ -114,9 +115,10 @@ function TextHero({ textHeroData, loading, images = [] }) {
                 className="relative w-[230px] lg:w-[280px] xl:w-[340px] 2xl:w-[420px] xxl:w-[550px] 3xl:w-[800px] z-10"
               />
             </div>
-            <div className="text-white text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[24px] xxl:text-[30px] 3xl:text-[48px] font-bold">
-              {currentSlide?.description}
-            </div>
+            <StrapiRichDescription
+              value={currentSlide?.description}
+              className="text-[16px] font-bold text-white lg:text-[18px] xl:text-[20px] 2xl:text-[24px] xxl:text-[30px] 3xl:text-[48px] [&_p]:m-0"
+            />
           </div>
         </div>
       </div>

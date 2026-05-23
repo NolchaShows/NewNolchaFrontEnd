@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import NextImage from "next/image";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 
 const InViewFadeUp = ({ children, className, style, delay = 0 }) => {
   const ref = useRef(null);
@@ -162,11 +163,10 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
         </div>
         <div className="col-span-12 md:col-span-7">
           {item.description ? (
-            <p
-              className="max-w-[900px] text-[15px] text-[#4a4a4a] lg:text-[16px]"
-            >
-              {item.description}
-            </p>
+            <StrapiRichDescription
+              value={item.description}
+              variant="experience"
+            />
           ) : null}
         </div>
       </div>

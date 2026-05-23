@@ -1,5 +1,7 @@
 "use client";
 
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
+
 import Link from "next/link";
 
 export default function OurServicesSection({
@@ -78,9 +80,10 @@ export default function OurServicesSection({
                 <h3 className="text-[24px] font-medium leading-[1.1] tracking-[-0.015em] text-[#1D1D1D] lg:text-[30px]">
                   {story.title}
                 </h3>
-                <p className="mt-5 text-[18px] leading-[1.22] tracking-[-0.015em] text-[#1D1D1D] lg:text-[28px]">
-                  {story.description}
-                </p>
+                <StrapiRichDescription
+                  value={story.description}
+                  className="mt-5 text-[18px] leading-[1.22] tracking-[-0.015em] text-[#1D1D1D] lg:text-[28px] [&_p]:m-0"
+                />
               </div>
             ))}
             <div className="hidden lg:block lg:h-[60vh]" aria-hidden="true" />

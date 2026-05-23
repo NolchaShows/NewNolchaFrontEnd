@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 
 export default function AboutStatementSection({
   label = "[ OUR DIFFERENTIATORS ]",
@@ -56,13 +57,15 @@ export default function AboutStatementSection({
                 >
                   {item.title}
                 </motion.h2>
-                <motion.p
-                  className="text-[18px] text-[#1D1D1D] lg:text-[28px]"
+                <motion.div
                   variants={typeIn}
                   custom={baseDelay + 0.55}
                 >
-                  {item.description}
-                </motion.p>
+                  <StrapiRichDescription
+                    value={item.description}
+                    className="text-[18px] text-[#1D1D1D] lg:text-[28px] [&_p]:m-0"
+                  />
+                </motion.div>
               </article>
             );
           })}

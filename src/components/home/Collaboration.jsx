@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Image from "next/image";
+import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 
 const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   const fallbackSections = [
@@ -104,11 +105,14 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
             />
 
             {/* Caption text (no box overlay) */}
-            {imageCaption && (
-              <p className="absolute bottom-4 left-5 right-4 text-white text-[14px] lg:text-[16px] xl:text-[18px] xxl:text-[20px] leading-relaxed">
-                {imageCaption}
-              </p>
-            )}
+            {imageCaption ? (
+              <div className="absolute bottom-4 left-5 right-4">
+                <StrapiRichDescription
+                  value={imageCaption}
+                  className="text-[14px] leading-relaxed text-white lg:text-[16px] xl:text-[18px] xxl:text-[20px] [&_p]:m-0"
+                />
+              </div>
+            ) : null}
           </div>
         </div>
 
@@ -159,11 +163,10 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
                   {/* Expandable Content */}
                   {isExpanded && (
                     <div className="px-[16px] lg:px-[20px] xl:px-[24px] 2xl:px-[28px] xxl:px-[32px] pb-[16px] lg:pb-[18px] xl:pb-[20px] 2xl:py-[22px] xxl:pb-[24px]">
-                      <p
-                        className="text-white text-[14px] lg:text-[15px] xl:text-[16px] 2xl:text-[18px] xxl:text-[20px] leading-relaxed font-normal"
-                      >
-                        {section.content}
-                      </p>
+                      <StrapiRichDescription
+                        value={section.content}
+                        className="text-[14px] font-normal leading-relaxed text-white lg:text-[15px] xl:text-[16px] 2xl:text-[18px] xxl:text-[20px] [&_p]:m-0"
+                      />
                     </div>
                   )}
                 </div>
