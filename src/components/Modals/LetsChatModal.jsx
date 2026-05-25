@@ -4,27 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import { subscribeToModalCloseEvent } from "@/lib/modalEvents";
 import { useLenis } from "@/components/common/SmoothScroll";
 
-const ROLE_OPTIONS = [
-  "Founder / CEO",
-  "Marketing",
-  "Brand / Creative",
-  "Events",
-  "Partnerships",
-  "Other",
+const INQUIRY_TYPE_OPTIONS = [
+  "White Label",
+  "Sponsorship",
+  "Co-Hosting",
+  "Conference",
+  "Institutional Event",
+  "General Inquiry",
+  "Tiktok Brand Marketing",
 ];
 
-const INTEREST_OPTIONS = [
-  "Events",
-  "Collaboration",
-  "Partnership",
-  "Event Planning",
-  "Media Strategy",
-  "Other",
-];
+const BUDGET_RANGE_OPTIONS = ["Under $15K", "$15K–$50k", "$50K+"];
 
 const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ||
   "https://new-nolcha-strapi-uiai.onrender.com";
+
+const SELECT_CHEVRON = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`;
 
 function RequiredLabel({ children }) {
   return (
@@ -35,18 +31,34 @@ function RequiredLabel({ children }) {
   );
 }
 
+function FieldLabel({ children }) {
+  return (
+    <label className="mb-1.5 block text-[13px] text-[#1a1a1a]">{children}</label>
+  );
+}
+
 const fieldClass =
   "h-10 w-full border border-[#cfcfcf] bg-white px-3 text-[14px] text-[#1a1a1a] placeholder:text-[#9a9a9a] focus:border-[#1a1a1a] focus:outline-none";
 
+const selectClass = `${fieldClass} appearance-none bg-[length:12px] bg-[right_12px_center] bg-no-repeat pr-10`;
+
+function splitName(fullName) {
+  const trimmed = fullName.trim();
+  if (!trimmed) return { firstName: "", lastName: "" };
+  const parts = trimmed.split(/\s+/);
+  return {
+    firstName: parts[0] || "",
+    lastName: parts.slice(1).join(" ") || "—",
+  };
+}
+
 export default function LetsChatModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
-    phone: "",
-    companyName: "",
-    role: "",
-    interest: "",
+    company: "",
+    inquiryType: "",
+    budgetRange: "",
     message: "",
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -132,27 +144,30 @@ export default function LetsChatModal({ isOpen, onClose }) {
     setSubmitError("");
     setIsSuccess(false);
 
-    const messageParts = [
+    const { firstName, lastName } = splitName(formData.name);
+    const messageBody = [
       formData.message.trim(),
-      formData.phone && `Phone: ${formData.phone}`,
-      formData.companyName && `Company: ${formData.companyName}`,
-      formData.role && `Role: ${formData.role}`,
-      formData.interest && `Interest: ${formData.interest}`,
-    ].filter(Boolean);
+      formData.company.trim() && `Company: ${formData.company.trim()}`,
+      formData.inquiryType && `Inquiry Type: ${formData.inquiryType}`,
+      formData.budgetRange && `Budget Range: ${formData.budgetRange}`,
+    ]
+      .filter(Boolean)
+      .join("\n");
 
     try {
       const response = await fetch(`${STRAPI_URL}/api/contact/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          message: messageParts.join("\n"),
-          phone: formData.phone,
-          companyName: formData.companyName,
-          role: formData.role,
-          interest: formData.interest,
+          name: formData.name.trim(),
+          firstName,
+          lastName,
+          email: formData.email.trim(),
+          message: messageBody,
+          company: formData.company.trim(),
+          companyName: formData.company.trim(),
+          inquiryType: formData.inquiryType,
+          budgetRange: formData.budgetRange,
         }),
       });
 
@@ -162,13 +177,11 @@ export default function LetsChatModal({ isOpen, onClose }) {
 
       setIsSuccess(true);
       setFormData({
-        firstName: "",
-        lastName: "",
+        name: "",
         email: "",
-        phone: "",
-        companyName: "",
-        role: "",
-        interest: "",
+        company: "",
+        inquiryType: "",
+        budgetRange: "",
         message: "",
       });
     } catch {
@@ -233,150 +246,123 @@ export default function LetsChatModal({ isOpen, onClose }) {
           onWheel={handlePanelWheel}
           onTouchMove={(e) => e.stopPropagation()}
         >
-            {isSuccess ? (
-              <div className="flex min-h-[360px] flex-col justify-center py-8">
-                <p className="text-[18px] font-medium text-[#1a1a1a]">
-                  Thank you — we&apos;ll be in touch soon.
-                </p>
-                <button
-                  type="button"
-                  onClick={handleClose}
-                  className="mt-8 w-fit border border-[#cfcfcf] px-6 py-2 text-[14px] font-medium text-[#1a1a1a] hover:bg-[#f5f5f5]"
-                >
-                  Close
-                </button>
+          {isSuccess ? (
+            <div className="flex min-h-[360px] flex-col justify-center py-8">
+              <p className="text-[18px] font-medium text-[#1a1a1a]">
+                Thank you — we&apos;ll be in touch soon.
+              </p>
+              <button
+                type="button"
+                onClick={handleClose}
+                className="mt-8 w-fit border border-[#cfcfcf] px-6 py-2 text-[14px] font-medium text-[#1a1a1a] hover:bg-[#f5f5f5]"
+              >
+                Close
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <RequiredLabel>Name</RequiredLabel>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className={fieldClass}
+                  required
+                  autoComplete="name"
+                />
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <RequiredLabel>First Name</RequiredLabel>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className={fieldClass}
-                    required
-                  />
-                </div>
 
-                <div>
-                  <RequiredLabel>Last Name</RequiredLabel>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className={fieldClass}
-                    required
-                  />
-                </div>
+              <div>
+                <RequiredLabel>Email</RequiredLabel>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className={fieldClass}
+                  required
+                  autoComplete="email"
+                />
+              </div>
 
-                <div>
-                  <RequiredLabel>Email</RequiredLabel>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className={fieldClass}
-                    required
-                  />
-                </div>
+              <div>
+                <RequiredLabel>Company</RequiredLabel>
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  className={fieldClass}
+                  required
+                  autoComplete="organization"
+                />
+              </div>
 
-                <div>
-                  <RequiredLabel>Phone Number:</RequiredLabel>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="-"
-                    className={fieldClass}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <RequiredLabel>Company Name</RequiredLabel>
-                  <input
-                    type="text"
-                    name="companyName"
-                    value={formData.companyName}
-                    onChange={handleChange}
-                    className={fieldClass}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <RequiredLabel>Role:</RequiredLabel>
-                  <select
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    className={`${fieldClass} appearance-none bg-[length:12px] bg-[right_12px_center] bg-no-repeat pr-10`}
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
-                    }}
-                    required
-                  >
-                    <option value="">Select..</option>
-                    {ROLE_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <RequiredLabel>Interest</RequiredLabel>
-                  <select
-                    name="interest"
-                    value={formData.interest}
-                    onChange={handleChange}
-                    className={`${fieldClass} appearance-none bg-[length:12px] bg-[right_12px_center] bg-no-repeat pr-10`}
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
-                    }}
-                    required
-                  >
-                    <option value="">Select..</option>
-                    {INTEREST_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="mb-1.5 block text-[13px] text-[#1a1a1a]">
-                    Leave Us a Message
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={5}
-                    className="min-h-[120px] w-full resize-y border border-[#cfcfcf] bg-white px-3 py-2.5 text-[14px] text-[#1a1a1a] placeholder:text-[#9a9a9a] focus:border-[#1a1a1a] focus:outline-none"
-                  />
-                </div>
-
-                {submitError ? (
-                  <p className="text-[13px] text-[#e53935]">{submitError}</p>
-                ) : null}
-
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="border border-[#cfcfcf] px-6 py-2 text-[14px] font-medium text-[#1a1a1a] transition-colors hover:bg-[#f5f5f5] disabled:opacity-60"
+              <div>
+                <RequiredLabel>Inquiry Type</RequiredLabel>
+                <select
+                  name="inquiryType"
+                  value={formData.inquiryType}
+                  onChange={handleChange}
+                  className={selectClass}
+                  style={{ backgroundImage: SELECT_CHEVRON }}
+                  required
                 >
-                  {isLoading ? "Sending…" : "Submit"}
-                </button>
-              </form>
-            )}
+                  <option value="">Select…</option>
+                  {INQUIRY_TYPE_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <RequiredLabel>Budget Range</RequiredLabel>
+                <select
+                  name="budgetRange"
+                  value={formData.budgetRange}
+                  onChange={handleChange}
+                  className={selectClass}
+                  style={{ backgroundImage: SELECT_CHEVRON }}
+                  required
+                >
+                  <option value="">Select…</option>
+                  {BUDGET_RANGE_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <FieldLabel>Message</FieldLabel>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={5}
+                  placeholder="Tell us about your goals or project."
+                  className="min-h-[120px] w-full resize-y border border-[#cfcfcf] bg-white px-3 py-2.5 text-[14px] text-[#1a1a1a] placeholder:text-[#9a9a9a] focus:border-[#1a1a1a] focus:outline-none"
+                />
+              </div>
+
+              {submitError ? (
+                <p className="text-[13px] text-[#e53935]">{submitError}</p>
+              ) : null}
+
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="border border-[#cfcfcf] px-6 py-2 text-[14px] font-medium text-[#1a1a1a] transition-colors hover:bg-[#f5f5f5] disabled:opacity-60"
+              >
+                {isLoading ? "Sending…" : "Submit"}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>
