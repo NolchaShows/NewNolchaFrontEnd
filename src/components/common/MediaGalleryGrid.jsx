@@ -93,6 +93,35 @@ const GalleryVideo = ({ item, className }) => {
   );
 };
 
+const MobileGalleryCarousel = ({ items, renderMedia, getItemStyle }) => {
+  if (!items.length) return null;
+
+  return (
+    <div
+      className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      style={{ touchAction: "pan-x", WebkitOverflowScrolling: "touch" }}
+      aria-label="Gallery carousel"
+    >
+      {items.map((item, index) => {
+        const isFullWidth = Boolean(item.fullWidth);
+        const slideWidth = isFullWidth
+          ? "w-[min(92vw,420px)]"
+          : "w-[min(78vw,300px)]";
+
+        return (
+          <div
+            key={`${item.url || item.type}-${index}`}
+            className={`${slideWidth} shrink-0 snap-start overflow-hidden bg-white`}
+            style={getItemStyle(item)}
+          >
+            <div className="relative h-full w-full">{renderMedia(item, index)}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
   const getItemStyle = (item) => {
     if (item.fullWidth) {
@@ -173,39 +202,61 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
     </div>
   );
 
+  const contentSections = items.filter((item) => item.type === "contentSection");
+  const mediaItems = items.filter((item) => item.type !== "contentSection");
+
+  const renderGridItems = () =>
+    items.map((item, index) => {
+      if (item.type === "contentSection") {
+        return (
+          <InViewFadeUp
+            key={`${item.label || "content"}-${index}`}
+            className="md:col-span-3"
+            delay={200}
+          >
+            {renderContentSection(item)}
+          </InViewFadeUp>
+        );
+      }
+
+      const isFullWidth = Boolean(item.fullWidth);
+      const colSpan = isFullWidth ? "md:col-span-3" : "col-span-1";
+
+      return (
+        <InViewFadeUp
+          key={`${item.url}-${index}`}
+          className={`${colSpan} relative overflow-hidden bg-white`}
+          style={getItemStyle(item)}
+          delay={isFullWidth ? 0 : (index % 3) * 100}
+        >
+          {renderMedia(item, index)}
+        </InViewFadeUp>
+      );
+    });
+
   return (
-    <section
-      className="w-full pb-4 lg:pb-8"
-    >
+    <section className="w-full pb-4 lg:pb-8" style={{ background }}>
       <div className="w-full">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {items.map((item, index) => {
-            if (item.type === "contentSection") {
-              return (
-                <InViewFadeUp
-                  key={`${item.label || "content"}-${index}`}
-                  className="md:col-span-3"
-                  delay={200}
-                >
-                  {renderContentSection(item)}
-                </InViewFadeUp>
-              );
-            }
+        <div className="flex flex-col gap-8 md:hidden">
+          {contentSections.map((item, index) => (
+            <InViewFadeUp
+              key={`${item.label || "content"}-mobile-${index}`}
+              delay={200}
+            >
+              {renderContentSection(item)}
+            </InViewFadeUp>
+          ))}
+          {mediaItems.length > 0 ? (
+            <MobileGalleryCarousel
+              items={mediaItems}
+              renderMedia={renderMedia}
+              getItemStyle={getItemStyle}
+            />
+          ) : null}
+        </div>
 
-            const isFullWidth = Boolean(item.fullWidth);
-            const colSpan = isFullWidth ? "md:col-span-3" : "col-span-1";
-
-            return (
-              <InViewFadeUp
-                key={`${item.url}-${index}`}
-                className={`${colSpan} relative overflow-hidden bg-white`}
-                style={getItemStyle(item)}
-                delay={isFullWidth ? 0 : (index % 3) * 100}
-              >
-                {renderMedia(item, index)}
-              </InViewFadeUp>
-            );
-          })}
+        <div className="hidden gap-8 md:grid md:grid-cols-3">
+          {renderGridItems()}
         </div>
       </div>
     </section>
