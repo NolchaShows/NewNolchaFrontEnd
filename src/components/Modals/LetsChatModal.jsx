@@ -218,11 +218,11 @@ export default function LetsChatModal({ isOpen, onClose }) {
             id="lets-chat-title"
             className="font-serif text-[42px] italic leading-[1.1] text-[#1a1a1a] sm:text-[52px] lg:text-[58px]"
           >
-            Let&apos;s Chat
+            Partner With Nolcha
           </h2>
           <p className="mt-8 max-w-[340px] text-[14px] leading-[1.65] text-[#5a5a5a] sm:text-[15px]">
-            Big goals need big ideas. Whether you need creative direction or a
-            full-scale media strategy, we&apos;re here to make it happen.
+            Strategic partnerships, cultural moments, and high-signal
+            experiences.
           </p>
         </div>
 
