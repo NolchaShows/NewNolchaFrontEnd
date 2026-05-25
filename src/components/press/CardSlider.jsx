@@ -21,11 +21,11 @@ const CardSlider = ({ cards = [], loading }) => {
   return (
     <section className="w-full bg-[#EEEEEE] px-5 py-8 lg:px-11 lg:py-20">
       <div className="mx-auto w-full">
-        <div className="grid grid-cols-1 gap-x-0 gap-y-6 md:grid-cols-2 md:gap-y-8 xl:grid-cols-4 xl:gap-y-20">
+        <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-2 md:gap-x-0 md:gap-y-8 md:overflow-visible md:pb-0 md:snap-none xl:grid-cols-4 xl:gap-y-20">
           {cards.map((card, index) => (
             <div
               key={card.id || index}
-              className="border-r-0 md:border-r md:border-[#1D1D1D] md:[&:nth-child(2n):not(:last-child)]:border-r-0 xl:[&:nth-child(2n):not(:last-child)]:border-r xl:[&:nth-child(4n):not(:last-child)]:border-r-0 last:!border-r-0 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
+              className="w-[min(88vw,340px)] shrink-0 snap-start border-r border-[#1D1D1D] pr-4 last:border-r-0 last:pr-0 md:w-auto md:shrink md:border-r md:pr-0 md:[&:nth-child(2n):not(:last-child)]:border-r-0 xl:[&:nth-child(2n):not(:last-child)]:border-r xl:[&:nth-child(4n):not(:last-child)]:border-r-0 last:!border-r-0 hover:[&_.press-card-blur-target]:blur-[16px] focus-within:[&_.press-card-blur-target]:blur-[16px]"
             >
               <div className="group">
                 <Card
