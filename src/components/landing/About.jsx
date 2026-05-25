@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import RoundedCtaButton from "../common/RoundedCtaButton";
 import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
+import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 
 function About({
   title,
@@ -35,13 +38,13 @@ function About({
               value={paragraphText}
               className="text-[16px] leading-[1.5] tracking-[-0.6px] text-white sm:text-[18px] lg:text-[20px] xxl:text-[28px] 3xl:text-[40px] [&_p]:m-0"
             />
-            {link && linkText && (
+            {linkText ? (
               <RoundedCtaButton
-                href={link}
                 label={linkText}
+                onClick={() => navigateToContactLikeLetsTalk()}
                 className="self-start xxl:scale-125 3xl:scale-150 origin-left"
               />
-            )}
+            ) : null}
           </div>
           {image && (
             <div className="w-full lg:w-[659px] xxl:w-[850px] 3xl:w-[1200px]">

@@ -37,7 +37,7 @@ export default async function PressPage() {
         <About
           title={aboutSection.title}
           paragraphText={aboutSection.paragraphText}
-          link={aboutSection.link}
+          link=""
           linkText={aboutSection.linkText}
           image={aboutSection.image}
           imageStyle=""
