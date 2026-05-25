@@ -1,8 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
+
+const MOBILE_LOGOS_INITIAL = 4;
 
 const defaultClientLogos = [
   "/home/logo-slider/forbes.webp",
@@ -29,7 +32,7 @@ export default function OurClientsSection({
   clientLogos = defaultClientLogos,
   hideTopRightContent = false,
 }) {
-  const router = useRouter();
+  const [showAllMobileLogos, setShowAllMobileLogos] = useState(false);
   const href = ctaHref || "/contact-us";
   const ctaClassName =
     "mt-8 inline-flex items-center gap-2 text-[14px] uppercase tracking-[0.08em] text-[#1D1D1D] transition-opacity hover:opacity-70 lg:text-[16px] cursor-pointer";
@@ -39,6 +42,69 @@ export default function OurClientsSection({
       <span>{ctaText}</span>
       <span aria-hidden>↗</span>
     </>
+  );
+
+  const strapiBase =
+    process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "") ??
+    "https://new-nolcha-strapi-uiai.onrender.com";
+
+  const resolvedLogos = useMemo(() => {
+    return (clientLogos || [])
+      .map((logo) => {
+        const logoPath =
+          typeof logo === "string" ? logo : logo?.url || logo?.image?.url || "";
+        if (!logoPath) return null;
+        const fullUrl = logoPath.startsWith("http")
+          ? logoPath
+          : `${strapiBase}${logoPath.startsWith("/") ? "" : "/"}${logoPath}`;
+        return { key: fullUrl, src: fullUrl };
+      })
+      .filter(Boolean);
+  }, [clientLogos, strapiBase]);
+
+  useEffect(() => {
+    setShowAllMobileLogos(false);
+  }, [resolvedLogos.length]);
+
+  const initialMobileLogos = resolvedLogos.slice(0, MOBILE_LOGOS_INITIAL);
+  const remainingMobileLogos = resolvedLogos.slice(MOBILE_LOGOS_INITIAL);
+  const hasMoreMobileLogos = remainingMobileLogos.length > 0;
+
+  const mobileLogoGridClassName = "grid grid-cols-2 gap-x-8 gap-y-8";
+  const desktopLogoGridClassName =
+    "hidden grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid lg:grid-cols-6 lg:gap-x-14 lg:gap-y-10";
+
+  const renderLogoCell = (logo, { staggerIndex = null } = {}) => (
+    <motion.div
+      key={logo.key}
+      layout
+      initial={
+        staggerIndex !== null
+          ? { opacity: 0, y: 16, scale: 0.96 }
+          : false
+      }
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 8, scale: 0.98 }}
+      transition={
+        staggerIndex !== null
+          ? {
+              duration: 0.4,
+              delay: staggerIndex * 0.06,
+              ease: [0.22, 1, 0.36, 1],
+            }
+          : { layout: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }
+      }
+      className="flex w-full items-center justify-center"
+    >
+      <div className="relative flex h-full w-full items-center justify-center">
+        <img
+          loading="lazy"
+          src={logo.src}
+          alt="Client logo"
+          className="max-h-full w-auto max-w-full object-contain transition-all duration-300 hover:opacity-100"
+        />
+      </div>
+    </motion.div>
   );
 
   return (
@@ -88,30 +154,47 @@ export default function OurClientsSection({
           ) : null}
         </div>
 
-        <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:mt-20 lg:grid-cols-6 lg:gap-x-14 lg:gap-y-10">
-          {clientLogos.map((logo, idx) => {
-            const logoPath = typeof logo === 'string' ? logo : logo?.url || logo?.image?.url || "";
-            if (!logoPath) return null;
-            
-            const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "") ?? "https://new-nolcha-strapi-uiai.onrender.com";
-            const fullUrl = logoPath.startsWith('http') ? logoPath : `${STRAPI_URL}${logoPath.startsWith('/') ? '' : '/'}${logoPath}`;
+        <div className="mt-14 lg:mt-20">
+          <motion.div
+            layout
+            className={`${mobileLogoGridClassName} lg:hidden`}
+          >
+            {initialMobileLogos.map((logo) => renderLogoCell(logo))}
 
-            return (
-              <div
-                key={idx}
-                className="flex items-center justify-center w-full"
+            <AnimatePresence initial={false}>
+              {showAllMobileLogos
+                ? remainingMobileLogos.map((logo, index) =>
+                    renderLogoCell(logo, { staggerIndex: index })
+                  )
+                : null}
+            </AnimatePresence>
+          </motion.div>
+
+          <AnimatePresence initial={false}>
+            {hasMoreMobileLogos && !showAllMobileLogos ? (
+              <motion.div
+                key="see-more"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="mt-8 flex justify-center lg:hidden"
               >
-                <div className="relative w-full h-full flex items-center justify-center">
-                  <img
-                    loading="lazy"
-                    src={fullUrl}
-                    alt="Client logo"
-                    className="max-h-full max-w-full w-auto object-contain hover:opacity-100 transition-all duration-300"
-                  />
-                </div>
-              </div>
-            );
-          })}
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-2 border-0 bg-transparent p-0 text-[14px] uppercase tracking-[0.08em] text-[#1D1D1D] transition-opacity hover:opacity-70"
+                  onClick={() => setShowAllMobileLogos(true)}
+                >
+                  <span>See more</span>
+                  <span aria-hidden>+</span>
+                </button>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+
+          <div className={desktopLogoGridClassName}>
+            {resolvedLogos.map(renderLogoCell)}
+          </div>
         </div>
       </div>
     </section>
