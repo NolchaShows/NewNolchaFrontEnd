@@ -793,6 +793,36 @@ export async function getGalleryPageData() {
  * Fetch services page data from Strapi
  * @returns {Promise} - The services page data
  */
+/**
+ * Privacy Policy singleton from Strapi.
+ * @returns {Promise<Object|null>}
+ */
+export async function getPrivacyPolicyPageData() {
+  try {
+    const data = await fetchFromStrapi('privacy-policy-page');
+    if (!data?.data) return null;
+    return { data: { attributes: data.data?.attributes || data.data } };
+  } catch (error) {
+    console.warn('Error fetching privacy policy page from Strapi:', error);
+    return null;
+  }
+}
+
+/**
+ * Terms of Use singleton from Strapi.
+ * @returns {Promise<Object|null>}
+ */
+export async function getTermsOfUsePageData() {
+  try {
+    const data = await fetchFromStrapi('terms-of-use-page');
+    if (!data?.data) return null;
+    return { data: { attributes: data.data?.attributes || data.data } };
+  } catch (error) {
+    console.warn('Error fetching terms of use page from Strapi:', error);
+    return null;
+  }
+}
+
 export async function getServicesPageData() {
   try {
     console.log('🛠️ Fetching services page data...');

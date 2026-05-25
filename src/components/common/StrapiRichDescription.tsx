@@ -4,74 +4,15 @@ import type { ReactNode } from "react";
 import Markdown from "react-markdown";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import type { BlocksContent } from "@strapi/blocks-react-renderer";
+import {
+  hasRenderableDescription,
+  isRenderableNormalized,
+  normalizeStrapiRichText,
+} from "@/lib/strapiRichText";
 
-/**
- * Strapi Rich Text (Blocks) often arrives as an array, a `{ children }` wrapper,
- * a `{ root: { children } }` payload, or a JSON string. Normalize before Markdown / BlocksRenderer.
- */
-export function normalizeStrapiRichText(raw: unknown): unknown {
-  if (raw === null || raw === undefined) return null;
+export { hasRenderableDescription, normalizeStrapiRichText };
 
-  if (typeof raw === "string") {
-    const t = raw.trim();
-    if (!t) return null;
-    if (t.startsWith("[") || t.startsWith("{")) {
-      try {
-        return normalizeStrapiRichText(JSON.parse(t) as unknown);
-      } catch {
-        return raw;
-      }
-    }
-    return raw;
-  }
-
-  if (Array.isArray(raw)) {
-    return raw.length ? raw : null;
-  }
-
-  if (typeof raw === "object") {
-    const o = raw as Record<string, unknown>;
-
-    if (Array.isArray(o.children)) {
-      return o.children.length ? o.children : null;
-    }
-
-    const root = o.root;
-    if (root && typeof root === "object") {
-      const rc = (root as Record<string, unknown>).children;
-      if (Array.isArray(rc)) {
-        return rc.length ? rc : null;
-      }
-    }
-
-    if (Array.isArray(o.document)) {
-      return o.document.length ? o.document : null;
-    }
-
-    if (
-      typeof o.type === "string" &&
-      o.type !== "root" &&
-      o.type !== "doc"
-    ) {
-      return [raw];
-    }
-  }
-
-  return null;
-}
-
-function isRenderableNormalized(normalized: unknown): boolean {
-  if (normalized === null || normalized === undefined) return false;
-  if (typeof normalized === "string") return normalized.trim().length > 0;
-  if (Array.isArray(normalized)) return normalized.length > 0;
-  return false;
-}
-
-export function hasRenderableDescription(value: unknown): boolean {
-  return isRenderableNormalized(normalizeStrapiRichText(value));
-}
-
-type Variant = "experience" | "modal" | "buildMomentum";
+type Variant = "experience" | "modal" | "buildMomentum" | "legal";
 
 const markdownWrap: Record<Variant, string> = {
   experience:
@@ -80,6 +21,8 @@ const markdownWrap: Record<Variant, string> = {
     "event-modal-markdown max-w-none text-sm sm:text-base leading-relaxed text-white [&_strong]:font-semibold [&_em]:italic [&_a]:text-primary [&_a]:underline hover:[&_a]:opacity-90 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-2 [&_blockquote]:border-white/35 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-white/90",
   buildMomentum:
     "max-w-none text-left text-[20px] font-normal leading-relaxed text-[#1A1A1A]/80 lg:text-[36px] [&_strong]:font-bold [&_em]:italic [&_a]:text-[#1A1A1A] [&_a]:underline [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
+  legal:
+    "legal-page-markdown max-w-none text-[#000000B3] text-[20px] 2xl:text-[30px] leading-relaxed [&_h2]:text-[26px] [&_h2]:2xl:text-[40px] [&_h2]:font-medium [&_h2]:text-black [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:first:mt-0 [&_h3]:text-[20px] [&_h3]:2xl:text-[30px] [&_h3]:text-black [&_h3]:mb-2 [&_strong]:font-medium [&_em]:italic [&_a]:text-[#000000] [&_a]:underline [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2 [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-2 [&_ol]:ml-4",
 };
 
 const blocksWrap: Record<Variant, string> = {
@@ -89,6 +32,8 @@ const blocksWrap: Record<Variant, string> = {
     "event-modal-blocks max-w-none text-sm sm:text-base leading-relaxed text-white [&_a]:text-primary [&_a]:underline hover:[&_a]:opacity-90 [&_strong]:font-semibold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
   buildMomentum:
     "max-w-none text-left text-[20px] font-normal leading-relaxed text-[#1A1A1A]/80 lg:text-[36px] [&_a]:text-[#1A1A1A] [&_a]:underline [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
+  legal:
+    "legal-page-blocks max-w-none text-[#000000B3] text-[20px] 2xl:text-[30px] leading-relaxed [&_h2]:text-[26px] [&_h2]:2xl:text-[40px] [&_h2]:font-medium [&_h2]:text-black [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:first:mt-0 [&_h3]:text-[20px] [&_h3]:2xl:text-[30px] [&_h3]:text-black [&_h3]:mb-2 [&_a]:text-[#000000] [&_a]:underline [&_strong]:font-medium [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2 [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-2 [&_ol]:ml-4",
 };
 
 function markdownLinkProps(variant: Variant) {
