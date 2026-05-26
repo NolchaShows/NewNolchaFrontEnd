@@ -23,7 +23,7 @@ export const GET_PRESS_PAGE = gql`
           ...PressMediaFields
         }
       }
-      pressCards {
+      pressCards(pagination: { limit: 100 }) {
         title
         link
         newsPaperLogo {

@@ -212,10 +212,17 @@ function mapRestToPressPage(json: any): {
   return { aboutSection, cards, statementProps };
 }
 
+const PRESS_CARDS_POPULATE =
+  "populate[mediaCoverage][populate]=image" +
+  "&populate[pressCards][populate][0]=newsPaperLogo" +
+  "&populate[pressCards][populate][1]=image" +
+  "&populate[pressCards][pagination][limit]=100" +
+  "&populate[statementSection]=true";
+
 async function fetchPressPageRest(): Promise<any | null> {
   const urls = [
-    `${STRAPI_BASE}/api/press-page?populate=*`,
-    `${STRAPI_BASE}/api/press-page?populate[mediaCoverage][populate]=image&populate[pressCards][populate][0]=newsPaperLogo&populate[pressCards][populate][1]=image&populate[statementSection]=true`,
+    `${STRAPI_BASE}/api/press-page?${PRESS_CARDS_POPULATE}`,
+    `${STRAPI_BASE}/api/press-page?populate=*&populate[pressCards][pagination][limit]=100`,
   ];
 
   for (const url of urls) {
@@ -270,11 +277,13 @@ export async function getPressPageContent(): Promise<{
     pickAbout(restMapped?.aboutSection ?? null) ??
     DUMMY_ABOUT;
 
-  const cardsFromGraphql =
-    graphql && graphql.cards.length > 0 ? graphql.cards : null;
-  const cardsFromRest =
-    restMapped && restMapped.cards.length > 0 ? restMapped.cards : null;
-  const cards = cardsFromGraphql ?? cardsFromRest ?? DUMMY_CARDS;
+  const cardsFromGraphql = graphql?.cards ?? [];
+  const cardsFromRest = restMapped?.cards ?? [];
+  const mergedCards =
+    cardsFromGraphql.length >= cardsFromRest.length
+      ? cardsFromGraphql
+      : cardsFromRest;
+  const cards = mergedCards.length > 0 ? mergedCards : DUMMY_CARDS;
 
   const statementFromRest = restMapped?.statementProps ?? {};
   const statementFromGraphql = graphql?.statementProps ?? {};
