@@ -10,14 +10,14 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
 
   const eventsList = useMemo(
     () => [
-      "Consensus Hong Kong Kong",
-      "Bitcoin Conference Vegas",
+      "Private Events / White Label",
+      "Consensus Miami 2027",
+      "Bitcoin Conference 2027",
       "New York Fashion Week",
-      "Consensus Miami",
-      "Multichain Summer Series",
+      "DeFi Summer Series",
       "Art Basel Miami",
-      "Token 2049 Singapore",
-      "White Label Events",
+      "Token2049 Singapore",
+      "Strategic Introductions / BD",
     ],
     []
   );
@@ -27,19 +27,37 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
     if (!t) return null;
 
     if (t.includes("art basel")) return "Art Basel Miami";
-    if (t.includes("consensus") && (t.includes("hk") || t.includes("hong")))
-      return "Consensus Hong Kong Kong";
-    if (t.includes("consensus") && t.includes("miami")) return "Consensus Miami";
-    if (t.includes("vegas") || t.includes("btc") || (t.includes("bitcoin") && t.includes("vegas")))
-      return "Bitcoin Conference Vegas";
+    if (t.includes("consensus") && t.includes("miami")) return "Consensus Miami 2027";
+    if (
+      t.includes("vegas") ||
+      t.includes("btc") ||
+      (t.includes("bitcoin") && t.includes("conference"))
+    ) {
+      return "Bitcoin Conference 2027";
+    }
     if (t.includes("fashion") || t.includes("nyfw")) return "New York Fashion Week";
-    if (t.includes("summer")) return "Multichain Summer Series";
-    if (t.includes("token") || t.includes("2049")) return "Token 2049 Singapore";
-    if (t.includes("white label") || (t.includes("white") && t.includes("label")))
-      return "White Label Events";
+    if (t.includes("defi") || t.includes("summer") || t.includes("multichain")) {
+      return "DeFi Summer Series";
+    }
+    if (t.includes("token") || t.includes("2049")) return "Token2049 Singapore";
+    if (
+      t.includes("white label") ||
+      t.includes("private event") ||
+      (t.includes("white") && t.includes("label"))
+    ) {
+      return "Private Events / White Label";
+    }
+    if (
+      t.includes("strategic") ||
+      t.includes("introduction") ||
+      /\bbd\b/.test(t)
+    ) {
+      return "Strategic Introductions / BD";
+    }
 
-    // Fallback: if title already matches one of our labels (loose contains)
-    const direct = eventsList.find((e) => e.toLowerCase().includes(t) || t.includes(e.toLowerCase()));
+    const direct = eventsList.find(
+      (e) => e.toLowerCase().includes(t) || t.includes(e.toLowerCase())
+    );
     return direct || null;
   }, [eventsList, selectedEventTitle]);
 
@@ -48,14 +66,14 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
     email: "",
     company: "",
     events: {
-      "Consensus Hong Kong Kong": true,
-      "Bitcoin Conference Vegas": false,
+      "Private Events / White Label": false,
+      "Consensus Miami 2027": false,
+      "Bitcoin Conference 2027": false,
       "New York Fashion Week": false,
-      "Consensus Miami": false,
-      "Multichain Summer Series": false,
+      "DeFi Summer Series": false,
       "Art Basel Miami": false,
-      "Token 2049 Singapore": false,
-      "White Label Events": false,
+      "Token2049 Singapore": false,
+      "Strategic Introductions / BD": false,
     },
   });
 
@@ -141,9 +159,9 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
             lastName,
             email: formData.email,
             message: [
-              "Sponsorship Details Request",
+              "Explore Opportunities Request",
               `Company: ${formData.company}`,
-              `Selected Event(s): ${selectedEvents.length ? selectedEvents.join(", ") : "None"}`,
+              `Interested In: ${selectedEvents.length ? selectedEvents.join(", ") : "None"}`,
             ].join("\n"),
           }),
         }
@@ -246,7 +264,7 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
               className="h-5 lg:h-8 w-auto mb-1"
             />
             <h2 className="text-[18px] lg:text-[28px] font-bold text-white">
-              Request Sponsorship Details
+              Explore Opportunities:
             </h2>
           </div>
 
@@ -324,10 +342,10 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
               </div>
             </div>
 
-            {/* Event(s) of interest */}
+            {/* Interested In */}
             <div>
               <label className="block text-sm lg:text-base font-medium text-white mb-3">
-                Event(s) of interest
+                Interested In
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-[5px]">
                 {eventsList.map((eventName) => (
@@ -349,13 +367,13 @@ const SponsorshipDetailsModal = ({ isOpen, onClose, headerImageSrc, selectedEven
               </div>
             </div>
 
-            {/* Send Button */}
+            {/* Request Details Button */}
             <button
               type="submit"
               disabled={isLoading}
               className="w-full bg-primary hover:opacity-90 text-black font-medium py-4 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:outline-none"
             >
-              {isLoading ? "Sending..." : "Send"}
+              {isLoading ? "Requesting..." : "Request Details"}
             </button>
           </form>
             </>
