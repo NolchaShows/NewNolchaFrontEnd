@@ -24,8 +24,15 @@ export const mapUpcomingEventsToNavChildren = (events, getMediaUrl) => {
     ).trim();
     const hasExternalHref = /^https?:\/\//i.test(externalHref);
     let imageSrc =
-      (getMediaUrl && (getMediaUrl(event?.image) || getMediaUrl(event?.mainImage))) ||
+      (getMediaUrl &&
+        (getMediaUrl(event?.nav_image) ||
+          getMediaUrl(event?.navImage) ||
+          getMediaUrl(event?.image) ||
+          getMediaUrl(event?.mainImage))) ||
       null;
+    if (!imageSrc && typeof event?.navImage === "string") {
+      imageSrc = event.navImage;
+    }
     if (!imageSrc && typeof event?.image === "string") {
       imageSrc = event.image;
     }

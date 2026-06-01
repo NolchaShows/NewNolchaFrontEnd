@@ -156,6 +156,11 @@ const mapUpcomingEvents = (upcomingSection) => {
   return upcomingSection.events.map((event) => ({
     title: event?.title || "",
     image: getMediaUrl(event?.image) || "",
+    navImage:
+      getMediaUrl(event?.nav_image) ||
+      getMediaUrl(event?.navImage) ||
+      getMediaUrl(event?.image) ||
+      "",
     date: event?.date || "",
     externalUrl:
       event?.externalUrl ||
