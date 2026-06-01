@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
+import { hasRenderableDescription } from "@/lib/strapiRichText";
 
 const defaultRightItems = [
   "WE BUILD WORLDS",
@@ -65,7 +66,7 @@ export default function AboutStatementSection({
           </p>
         </motion.div>
 
-        {/* Huge Headline */}
+        {/* Huge Headline — rich text from Strapi (blocks / markdown) or plain string fallback */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -73,13 +74,22 @@ export default function AboutStatementSection({
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
           className="mb-10 lg:mb-20"
         >
-          <h2 className="text-[36px] sm:text-[48px] md:text-[60px] lg:text-[84px] leading-[0.95] tracking-[-0.04em] uppercase font-normal text-[#111111] m-0 p-0">
-            {splitHeadlineLines(headline).map((line, index) => (
-              <span key={index} className="block">
-                {line}
-              </span>
-            ))}
-          </h2>
+          {hasRenderableDescription(headline) ? (
+            <div className="m-0 p-0" role="heading" aria-level={2}>
+              <StrapiRichDescription
+                value={headline}
+                variant="aboutHeadline"
+              />
+            </div>
+          ) : (
+            <h2 className="m-0 p-0 text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px]">
+              {splitHeadlineLines(headline).map((line, index) => (
+                <span key={index} className="block">
+                  {line}
+                </span>
+              ))}
+            </h2>
+          )}
         </motion.div>
 
         {/* Bottom Content Grid */}

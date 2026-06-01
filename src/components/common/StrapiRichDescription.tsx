@@ -12,7 +12,7 @@ import {
 
 export { hasRenderableDescription, normalizeStrapiRichText };
 
-type Variant = "experience" | "modal" | "buildMomentum" | "legal";
+type Variant = "experience" | "modal" | "buildMomentum" | "legal" | "aboutHeadline";
 
 const markdownWrap: Record<Variant, string> = {
   experience:
@@ -23,6 +23,8 @@ const markdownWrap: Record<Variant, string> = {
     "max-w-none text-left text-[20px] font-normal leading-relaxed text-[#1A1A1A]/80 lg:text-[36px] [&_strong]:font-bold [&_em]:italic [&_a]:text-[#1A1A1A] [&_a]:underline [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
   legal:
     "legal-page-markdown max-w-none text-[#000000B3] text-[20px] 2xl:text-[30px] leading-relaxed [&_h2]:text-[26px] [&_h2]:2xl:text-[40px] [&_h2]:font-medium [&_h2]:text-black [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:first:mt-0 [&_h3]:text-[20px] [&_h3]:2xl:text-[30px] [&_h3]:text-black [&_h3]:mb-2 [&_strong]:font-medium [&_em]:italic [&_a]:text-[#000000] [&_a]:underline [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2 [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-2 [&_ol]:ml-4",
+  aboutHeadline:
+    "about-headline-markdown m-0 max-w-none p-0 text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px] [&_p]:m-0 [&_p]:block [&_strong]:font-normal [&_em]:not-italic",
 };
 
 const blocksWrap: Record<Variant, string> = {
@@ -34,6 +36,8 @@ const blocksWrap: Record<Variant, string> = {
     "max-w-none text-left text-[20px] font-normal leading-relaxed text-[#1A1A1A]/80 lg:text-[36px] [&_a]:text-[#1A1A1A] [&_a]:underline [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
   legal:
     "legal-page-blocks max-w-none text-[#000000B3] text-[20px] 2xl:text-[30px] leading-relaxed [&_h2]:text-[26px] [&_h2]:2xl:text-[40px] [&_h2]:font-medium [&_h2]:text-black [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:first:mt-0 [&_h3]:text-[20px] [&_h3]:2xl:text-[30px] [&_h3]:text-black [&_h3]:mb-2 [&_a]:text-[#000000] [&_a]:underline [&_strong]:font-medium [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2 [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-2 [&_ol]:ml-4",
+  aboutHeadline:
+    "about-headline-blocks m-0 max-w-none p-0 text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px] [&_p]:m-0 [&_p]:block [&_strong]:font-normal",
 };
 
 function markdownLinkProps(variant: Variant) {
@@ -59,11 +63,16 @@ function markdownLinkProps(variant: Variant) {
 
 function blocksForVariant(variant: Variant) {
   const strapiBase = process.env.NEXT_PUBLIC_STRAPI_URL || "";
+  const aboutHeadlineLineClass =
+    "m-0 block text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px]";
 
   return {
-    paragraph: ({ children }: { children?: ReactNode }) => (
-      <p className="mb-3 last:mb-0">{children}</p>
-    ),
+    paragraph: ({ children }: { children?: ReactNode }) =>
+      variant === "aboutHeadline" ? (
+        <p className={aboutHeadlineLineClass}>{children}</p>
+      ) : (
+        <p className="mb-3 last:mb-0">{children}</p>
+      ),
     heading: ({
       children,
       level,
@@ -71,6 +80,11 @@ function blocksForVariant(variant: Variant) {
       children?: ReactNode;
       level: number;
     }) => {
+      if (variant === "aboutHeadline") {
+        const Tag = level === 1 ? "h1" : level === 2 ? "h2" : "h3";
+        return <Tag className={aboutHeadlineLineClass}>{children}</Tag>;
+      }
+
       const base =
         "mb-2 mt-4 font-semibold uppercase tracking-tight first:mt-0";
       const className =
@@ -204,7 +218,13 @@ export function StrapiRichDescription({
         <Markdown
           components={{
             p({ children }) {
-              return <p className="mb-3 last:mb-0">{children}</p>;
+              return variant === "aboutHeadline" ? (
+                <p className="m-0 block text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px]">
+                  {children}
+                </p>
+              ) : (
+                <p className="mb-3 last:mb-0">{children}</p>
+              );
             },
             ...markdownLinkProps(variant),
           }}

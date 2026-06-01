@@ -141,7 +141,10 @@ function mapGraphql(data: any) {
     heroVideo: getMediaUrl(page.heroVideo as AboutMedia),
     statementSection: {
       label: page.statementSection?.label ?? undefined,
-      headline: page.statementSection?.headline ?? undefined,
+      headline:
+        page.statementSection?.headline ??
+        page.statementSection?.headlineRich ??
+        undefined,
       description: page.statementSection?.description ?? undefined,
       ctaText: page.statementSection?.ctaText ?? undefined,
       ctaHref: page.statementSection?.ctaUrl ?? undefined,
@@ -193,7 +196,7 @@ function mapRest(json: any) {
     heroVideo: getMediaUrl((attrs.heroVideo?.data?.attributes ?? attrs.heroVideo) as AboutMedia),
     statementSection: {
       label: statement.label,
-      headline: statement.headline,
+      headline: statement.headline ?? statement.headline_rich ?? statement.headlineRich,
       description: statement.description,
       ctaText: statement.ctaText,
       ctaHref: statement.ctaUrl,
