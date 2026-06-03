@@ -7,6 +7,7 @@ const STATIC_ROUTES = [
   { path: "/featured-artists", changeFrequency: "weekly", priority: 0.9 },
   { path: "/speakers", changeFrequency: "monthly", priority: 0.8 },
   { path: "/press", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/experiences", changeFrequency: "weekly", priority: 0.85 },
   { path: "/white-label", changeFrequency: "monthly", priority: 0.8 },
   { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3 },
   { path: "/terms-of-use", changeFrequency: "yearly", priority: 0.3 },
