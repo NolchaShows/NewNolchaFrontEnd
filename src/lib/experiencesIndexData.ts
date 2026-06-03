@@ -1,4 +1,4 @@
-import { fetchFromStrapi } from "@/lib/strapi";
+import { fetchFromStrapi, getExperiencesPageData } from "@/lib/strapi";
 import { flattenStrapiEntity } from "@/lib/strapiFlatten";
 import {
   buildStructuredGalleryItems,
@@ -10,6 +10,12 @@ export const EXPERIENCES_INDEX_DEFAULTS = {
   label: "[ EXPERIENCES ]",
   headline: "NOLCHA.",
   filterLabel: "SHOW FILTERS",
+  seo: {
+    metaTitle: "Experiences | Nolcha",
+    metaDescription:
+      "Explore Nolcha experiences — runway, events, and brand activations by category.",
+    ogImage: null as string | null,
+  },
 };
 
 export type ExperienceIndexItem = {
@@ -29,6 +35,62 @@ export type ExperienceCategoryGroup = {
 export type ExperienceCategoryFilter = {
   id: string;
   label: string;
+};
+
+export type ExperiencesIndexContent = {
+  label: string;
+  headline: string;
+  filterLabel: string;
+  categories: ExperienceCategoryGroup[];
+  filterOptions: ExperienceCategoryFilter[];
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    ogImage: string | null;
+  };
+};
+
+const pickPageAttributes = (payload: unknown) => {
+  const root = payload as { data?: { attributes?: unknown } | unknown } | null;
+  if (!root?.data) return null;
+  const data = root.data;
+  if (data && typeof data === "object" && "attributes" in data) {
+    return (data as { attributes: unknown }).attributes;
+  }
+  return data;
+};
+
+const mapPageSettings = (attrs: unknown) => {
+  const entity = flattenStrapiEntity(attrs);
+  if (!entity) return { ...EXPERIENCES_INDEX_DEFAULTS };
+
+  const seoRaw = entity.seo as
+    | { metaTitle?: string; metaDescription?: string; ogImage?: unknown }
+    | undefined;
+
+  const ogImage =
+    resolveStrapiImageUrlBestQuality(seoRaw?.ogImage) ||
+    getStructuredMediaUrl(seoRaw?.ogImage) ||
+    null;
+
+  return {
+    label:
+      String(entity.label ?? "").trim() || EXPERIENCES_INDEX_DEFAULTS.label,
+    headline:
+      String(entity.headline ?? "").trim() || EXPERIENCES_INDEX_DEFAULTS.headline,
+    filterLabel:
+      String(entity.filterLabel ?? "").trim() ||
+      EXPERIENCES_INDEX_DEFAULTS.filterLabel,
+    seo: {
+      metaTitle:
+        String(seoRaw?.metaTitle ?? "").trim() ||
+        EXPERIENCES_INDEX_DEFAULTS.seo.metaTitle,
+      metaDescription:
+        String(seoRaw?.metaDescription ?? "").trim() ||
+        EXPERIENCES_INDEX_DEFAULTS.seo.metaDescription,
+      ogImage,
+    },
+  };
 };
 
 const collectComponentTagTexts = (tags: unknown): string[] => {
@@ -134,7 +196,7 @@ const buildFilterOptions = (
   ];
 };
 
-export async function getExperiencesIndexContent() {
+async function fetchExperienceCategories() {
   const populate = [
     "populate[tags]=true",
     "populate[experience_pages][populate][listingImage]=true",
@@ -145,16 +207,25 @@ export async function getExperiencesIndexContent() {
     "pagination[pageSize]=100",
   ].join("&");
 
-  try {
-    const data = await fetchFromStrapi(`experience-categories?${populate}`);
-    const rows = Array.isArray(data?.data) ? data.data : [];
+  const data = await fetchFromStrapi(`experience-categories?${populate}`);
+  const rows = Array.isArray(data?.data) ? data.data : [];
 
-    const categories = rows
-      .map(mapCategoryEntity)
-      .filter((item): item is ExperienceCategoryGroup => Boolean(item));
+  return rows
+    .map(mapCategoryEntity)
+    .filter((item): item is ExperienceCategoryGroup => Boolean(item));
+}
+
+export async function getExperiencesIndexContent(): Promise<ExperiencesIndexContent> {
+  try {
+    const [pageRes, categories] = await Promise.all([
+      getExperiencesPageData(),
+      fetchExperienceCategories(),
+    ]);
+
+    const pageSettings = mapPageSettings(pickPageAttributes(pageRes));
 
     return {
-      ...EXPERIENCES_INDEX_DEFAULTS,
+      ...pageSettings,
       categories,
       filterOptions: buildFilterOptions(categories),
     };
@@ -162,7 +233,7 @@ export async function getExperiencesIndexContent() {
     console.error("❌ Error fetching experiences index:", error);
     return {
       ...EXPERIENCES_INDEX_DEFAULTS,
-      categories: [] as ExperienceCategoryGroup[],
+      categories: [],
       filterOptions: [{ id: "all", label: "ALL" }],
     };
   }

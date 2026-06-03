@@ -823,6 +823,23 @@ export async function getTermsOfUsePageData() {
   }
 }
 
+/**
+ * Experiences index singleton from Strapi (/experiences).
+ * @returns {Promise<Object|null>}
+ */
+export async function getExperiencesPageData() {
+  try {
+    const data = await fetchFromStrapi(
+      'experiences-page?populate[seo][populate][0]=ogImage'
+    );
+    if (!data?.data) return null;
+    return { data: { attributes: data.data?.attributes || data.data } };
+  } catch (error) {
+    console.warn('Error fetching experiences page from Strapi:', error);
+    return null;
+  }
+}
+
 export async function getServicesPageData() {
   try {
     console.log('🛠️ Fetching services page data...');
