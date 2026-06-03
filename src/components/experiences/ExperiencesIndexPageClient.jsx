@@ -3,10 +3,7 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import ExperienceListRow from "@/components/experiences/ExperienceListRow";
-import {
-  EXPERIENCES_INDEX_DEFAULTS,
-  EXPERIENCE_CATEGORY_FILTERS,
-} from "@/lib/experiencesIndexData";
+import { EXPERIENCES_INDEX_DEFAULTS } from "@/lib/experiencesIndexData";
 
 /** Break headline into lines at each period (same as AboutStatementSection). */
 const splitHeadlineLines = (text) => {
@@ -23,18 +20,16 @@ export default function ExperiencesIndexPageClient({
   label = EXPERIENCES_INDEX_DEFAULTS.label,
   headline = EXPERIENCES_INDEX_DEFAULTS.headline,
   filterLabel = EXPERIENCES_INDEX_DEFAULTS.filterLabel,
-  experiences = [],
-  filterOptions = EXPERIENCE_CATEGORY_FILTERS,
+  categories = [],
+  filterOptions = [{ id: "all", label: "ALL" }],
 }) {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
 
-  const filteredExperiences = useMemo(() => {
-    if (activeFilter === "all") return experiences;
-    return experiences.filter((experience) =>
-      (experience.categories || []).includes(activeFilter)
-    );
-  }, [activeFilter, experiences]);
+  const filteredCategories = useMemo(() => {
+    if (activeFilter === "all") return categories;
+    return categories.filter((category) => category.id === activeFilter);
+  }, [activeFilter, categories]);
 
   const headlineLines = splitHeadlineLines(headline);
 
@@ -71,52 +66,55 @@ export default function ExperiencesIndexPageClient({
               </h1>
             </motion.div>
 
-            <button
-              type="button"
-              onClick={() => setFiltersOpen((open) => !open)}
-              className="text-[10px] font-mono font-medium uppercase tracking-wider text-[#333333] transition-opacity hover:text-[#555555] lg:text-[14px]"
-              aria-expanded={filtersOpen}
-            >
-              {filterLabel} {filtersOpen ? "−" : "+"}
-            </button>
+            {filterOptions.length > 1 ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setFiltersOpen((open) => !open)}
+                  className="text-[10px] font-mono font-medium uppercase tracking-wider text-[#333333] transition-opacity hover:text-[#555555] lg:text-[14px]"
+                  aria-expanded={filtersOpen}
+                >
+                  {filterLabel} {filtersOpen ? "−" : "+"}
+                </button>
 
-            {filtersOpen ? (
-              <div className="mt-5 flex flex-wrap gap-2 lg:mt-6">
-                {filterOptions.map((option) => {
-                  const isActive = activeFilter === option.id;
-                  return (
-                    <button
-                      key={option.id}
-                      type="button"
-                      onClick={() => setActiveFilter(option.id)}
-                      className={`border border-[#111111] px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-wider transition-colors sm:text-[12px] lg:text-[13px] ${
-                        isActive
-                          ? "bg-[#111111] text-[#F4F4F4]"
-                          : "bg-transparent text-[#111111] hover:opacity-70"
-                      }`}
-                    >
-                      {option.label}
-                    </button>
-                  );
-                })}
-              </div>
+                {filtersOpen ? (
+                  <div className="mt-5 flex flex-wrap gap-2 lg:mt-6">
+                    {filterOptions.map((option) => {
+                      const isActive = activeFilter === option.id;
+                      return (
+                        <button
+                          key={option.id}
+                          type="button"
+                          onClick={() => setActiveFilter(option.id)}
+                          className={`border border-[#111111] px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-wider transition-colors sm:text-[12px] lg:text-[13px] ${
+                            isActive
+                              ? "bg-[#111111] text-[#F4F4F4]"
+                              : "bg-transparent text-[#111111] hover:opacity-70"
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : null}
+              </>
             ) : null}
           </motion.header>
 
           <div className="flex flex-col gap-12 lg:gap-16">
-            {filteredExperiences.length > 0 ? (
-              filteredExperiences.map((experience) => (
+            {filteredCategories.length > 0 ? (
+              filteredCategories.map((category) => (
                 <ExperienceListRow
-                  key={experience.id}
-                  title={experience.title}
-                  tags={experience.tags}
-                  href={experience.href}
-                  images={experience.images}
+                  key={category.id}
+                  title={category.title}
+                  tags={category.tags}
+                  experiences={category.experiences}
                 />
               ))
             ) : (
               <p className="text-[10px] font-mono font-medium uppercase tracking-wider text-[#333333] sm:text-[12px] lg:text-[13px]">
-                No experiences match this filter.
+                No experience categories match this filter.
               </p>
             )}
           </div>

@@ -12,85 +12,43 @@ export const EXPERIENCES_INDEX_DEFAULTS = {
   filterLabel: "SHOW FILTERS",
 };
 
-export const EXPERIENCE_CATEGORY_FILTERS = [
-  { id: "all", label: "ALL" },
-  { id: "fashion", label: "FASHION" },
-  { id: "luxury", label: "LUXURY" },
-  { id: "runway", label: "RUNWAY" },
-  { id: "events", label: "EVENTS" },
-  { id: "production", label: "PRODUCTION" },
-  { id: "tech", label: "TECH" },
-];
+export type ExperienceIndexItem = {
+  id: string;
+  title: string;
+  href: string;
+  image: string;
+};
 
-export type ExperienceCategoryFilter = (typeof EXPERIENCE_CATEGORY_FILTERS)[number];
-
-const KNOWN_CATEGORY_IDS = new Set(
-  EXPERIENCE_CATEGORY_FILTERS.map((f) => f.id).filter((id) => id !== "all")
-);
-
-export type ExperienceListItem = {
+export type ExperienceCategoryGroup = {
   id: string;
   title: string;
   tags: string[];
-  href: string;
-  images: string[];
-  categories: string[];
+  experiences: ExperienceIndexItem[];
 };
 
-const normalizeCategoryId = (value: string) =>
-  String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+export type ExperienceCategoryFilter = {
+  id: string;
+  label: string;
+};
 
-const collectTagTexts = (detailRows: unknown): string[] => {
-  if (!Array.isArray(detailRows)) return [];
+const collectComponentTagTexts = (tags: unknown): string[] => {
+  if (!Array.isArray(tags)) return [];
 
   const seen = new Set<string>();
-  const tags: string[] = [];
+  const result: string[] = [];
 
-  for (const row of detailRows) {
-    const rowTags = (row as { tags?: unknown })?.tags;
-    if (!Array.isArray(rowTags)) continue;
-
-    for (const tag of rowTags) {
-      const text =
-        (tag as { text?: string })?.text ||
-        (tag as { label?: string })?.label ||
-        "";
-      const trimmed = String(text).trim();
-      if (!trimmed || seen.has(trimmed)) continue;
-      seen.add(trimmed);
-      tags.push(trimmed);
-    }
+  for (const tag of tags) {
+    const text =
+      (tag as { text?: string })?.text ||
+      (tag as { label?: string })?.label ||
+      "";
+    const trimmed = String(text).trim();
+    if (!trimmed || seen.has(trimmed)) continue;
+    seen.add(trimmed);
+    result.push(trimmed.toUpperCase());
   }
 
-  return tags;
-};
-
-const extractCategories = (
-  listingCategories: unknown,
-  tagTexts: string[]
-): string[] => {
-  const fromCms: string[] = [];
-
-  if (Array.isArray(listingCategories)) {
-    for (const entry of listingCategories) {
-      const id = normalizeCategoryId(String(entry));
-      if (id && KNOWN_CATEGORY_IDS.has(id)) fromCms.push(id);
-    }
-  }
-
-  if (fromCms.length > 0) {
-    return [...new Set(fromCms)];
-  }
-
-  const fromTags = tagTexts
-    .map((tag) => normalizeCategoryId(tag))
-    .filter((id) => KNOWN_CATEGORY_IDS.has(id));
-
-  return [...new Set(fromTags)];
+  return result;
 };
 
 const extractListingImages = (
@@ -115,7 +73,7 @@ const extractListingImages = (
   return urls;
 };
 
-const mapExperienceEntity = (raw: unknown): ExperienceListItem | null => {
+const mapExperienceEntity = (raw: unknown): ExperienceIndexItem | null => {
   const entity = flattenStrapiEntity(raw);
   if (!entity) return null;
 
@@ -123,50 +81,89 @@ const mapExperienceEntity = (raw: unknown): ExperienceListItem | null => {
   const title = String(entity.title ?? "").trim();
   if (!slug || !title) return null;
 
-  const tagTexts = collectTagTexts(entity.detail_rows);
-  const categories = extractCategories(entity.listingCategories, tagTexts);
-  const images = extractListingImages(entity.gallery, entity.listingImage);
+  const images = extractListingImages(entity.gallery, entity.listingImage, 1);
+  const image = images[0];
+  if (!image) return null;
 
   return {
     id: slug,
     title,
-    tags: tagTexts.map((t) => t.toUpperCase()),
     href: `/experiences/${slug}`,
-    images,
-    categories,
+    image,
   };
+};
+
+const mapCategoryEntity = (raw: unknown): ExperienceCategoryGroup | null => {
+  const entity = flattenStrapiEntity(raw);
+  if (!entity) return null;
+
+  const slug = String(entity.slug ?? "").trim();
+  const name = String(entity.name ?? "").trim();
+  if (!slug || !name) return null;
+
+  const experiencePages = entity.experience_pages;
+  const experienceRows = Array.isArray(experiencePages)
+    ? experiencePages
+    : Array.isArray((experiencePages as { data?: unknown[] })?.data)
+      ? (experiencePages as { data: unknown[] }).data
+      : [];
+
+  const experiences = experienceRows
+    .map(mapExperienceEntity)
+    .filter((item): item is ExperienceIndexItem => Boolean(item));
+
+  if (!experiences.length) return null;
+
+  return {
+    id: slug,
+    title: name,
+    tags: collectComponentTagTexts(entity.tags),
+    experiences,
+  };
+};
+
+const buildFilterOptions = (
+  categories: ExperienceCategoryGroup[]
+): ExperienceCategoryFilter[] => {
+  return [
+    { id: "all", label: "ALL" },
+    ...categories.map((category) => ({
+      id: category.id,
+      label: category.title.toUpperCase(),
+    })),
+  ];
 };
 
 export async function getExperiencesIndexContent() {
   const populate = [
-    "populate[listingImage]=true",
-    "populate[detail_rows][populate][tags]=true",
-    "populate[gallery][populate][standard_media]=true",
-    "populate[gallery][populate][featured_media]=true",
-    "sort[0]=title:asc",
+    "populate[tags]=true",
+    "populate[experience_pages][populate][listingImage]=true",
+    "populate[experience_pages][populate][gallery][populate][standard_media]=true",
+    "populate[experience_pages][populate][gallery][populate][featured_media]=true",
+    "sort[0]=sortOrder:asc",
+    "sort[1]=name:asc",
     "pagination[pageSize]=100",
   ].join("&");
 
   try {
-    const data = await fetchFromStrapi(`experience-pages?${populate}`);
+    const data = await fetchFromStrapi(`experience-categories?${populate}`);
     const rows = Array.isArray(data?.data) ? data.data : [];
 
-    const experiences = rows
-      .map(mapExperienceEntity)
-      .filter((item): item is ExperienceListItem => Boolean(item))
-      .filter((item) => item.images.length > 0);
+    const categories = rows
+      .map(mapCategoryEntity)
+      .filter((item): item is ExperienceCategoryGroup => Boolean(item));
 
     return {
       ...EXPERIENCES_INDEX_DEFAULTS,
-      experiences,
-      filterOptions: EXPERIENCE_CATEGORY_FILTERS,
+      categories,
+      filterOptions: buildFilterOptions(categories),
     };
   } catch (error) {
     console.error("❌ Error fetching experiences index:", error);
     return {
       ...EXPERIENCES_INDEX_DEFAULTS,
-      experiences: [] as ExperienceListItem[],
-      filterOptions: EXPERIENCE_CATEGORY_FILTERS,
+      categories: [] as ExperienceCategoryGroup[],
+      filterOptions: [{ id: "all", label: "ALL" }],
     };
   }
 }

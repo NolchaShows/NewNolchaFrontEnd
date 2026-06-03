@@ -1,12 +1,15 @@
 import Link from "next/link";
 
+/** One Strapi experience category with its assigned experiences. */
 export default function ExperienceListRow({
   title,
   tags = [],
-  href = "#",
-  images = [],
+  experiences = [],
+  href,
 }) {
-  if (!images.length) return null;
+  if (!experiences.length) return null;
+
+  const categoryHref = href || experiences[0]?.href || "#";
 
   return (
     <section className="border-t border-[#1D1D1D]/15 pt-8 first:border-t-0 first:pt-0 lg:pt-10">
@@ -29,7 +32,7 @@ export default function ExperienceListRow({
         </div>
 
         <Link
-          href={href}
+          href={categoryHref}
           className="inline-flex shrink-0 items-center gap-2 text-[10px] uppercase tracking-wider text-[#111111] transition-colors hover:text-[#555555] sm:mt-1 lg:text-[16px]"
         >
           <span>VIEW EXPERIENCE</span>
@@ -38,20 +41,21 @@ export default function ExperienceListRow({
       </div>
 
       <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide sm:gap-2.5 lg:gap-3">
-        {images.map((src, index) => (
-          <div
-            key={`${src}-${index}`}
+        {experiences.map((experience) => (
+          <Link
+            key={experience.id}
+            href={experience.href}
             className="relative h-[200px] w-[min(42vw,280px)] shrink-0 overflow-hidden bg-[#d4d4d4] sm:h-[240px] sm:w-[min(32vw,320px)] lg:h-[280px] lg:w-[min(22vw,380px)] xl:h-[320px]"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={src}
-              alt=""
+              src={experience.image}
+              alt={experience.title}
               className="h-full w-full object-cover"
               loading="lazy"
               decoding="async"
             />
-          </div>
+          </Link>
         ))}
       </div>
     </section>
