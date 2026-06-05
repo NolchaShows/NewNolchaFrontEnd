@@ -25,7 +25,7 @@ export type ExperienceIndexItem = {
   id: string;
   title: string;
   href: string;
-  image: string;
+  images: string[];
 };
 
 export type ExperienceCategoryGroup = {
@@ -170,15 +170,14 @@ export const mapExperienceEntity = (
   const title = String(entity.title ?? "").trim();
   if (!slug || !title) return null;
 
-  const images = extractListingImages(entity.gallery, entity.listingImage, 1);
-  const image = images[0];
-  if (!image) return null;
+  const images = extractListingImages(entity.gallery, entity.listingImage, 6);
+  if (!images.length) return null;
 
   return {
     id: slug,
     title,
     href: `/experiences/${slug}`,
-    image,
+    images,
   };
 };
 
