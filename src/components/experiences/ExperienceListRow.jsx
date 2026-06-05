@@ -1,18 +1,26 @@
 import Link from "next/link";
+import {
+  getExperienceCategoryPageHref,
+  getExperienceCategorySectionId,
+} from "@/lib/experienceCategoryNav";
 
 /** One Strapi experience category with its assigned experiences. */
 export default function ExperienceListRow({
+  categoryId,
   title,
   tags = [],
   experiences = [],
-  href,
 }) {
-  if (!experiences.length) return null;
+  if (!experiences.length || !categoryId) return null;
 
-  const categoryHref = href || experiences[0]?.href || "#";
+  const sectionId = getExperienceCategorySectionId(categoryId);
+  const categoryHref = getExperienceCategoryPageHref(categoryId);
 
   return (
-    <section className="border-t border-[#1D1D1D]/15 pt-8 first:border-t-0 first:pt-0 lg:pt-10">
+    <section
+      id={sectionId}
+      className="scroll-mt-28 border-t border-[#1D1D1D]/15 pt-8 first:border-t-0 first:pt-0 lg:scroll-mt-36 lg:pt-10"
+    >
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between lg:mb-6">
         <div>
           <h2 className="text-[20px] font-normal uppercase leading-[1.3] tracking-[0.02em] text-[#1D1D1D] sm:text-[22px] lg:text-[28px]">

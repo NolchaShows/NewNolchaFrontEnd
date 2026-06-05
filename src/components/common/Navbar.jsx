@@ -112,29 +112,38 @@ const resolveChildHref = (parentHref = "", child = {}, parent = {}) => {
   return `/${cleanParent}/${cleanChild}`;
 };
 
+const resolveParentNavHref = (item = {}) => {
+  const key = String(item?.key || "").toLowerCase();
+  const label = String(item?.label || "").toLowerCase();
+
+  if (key === "experiences" || label === "experiences") {
+    return "/experiences";
+  }
+  if (key === "upcoming" || label === "upcoming") {
+    return "/upcoming";
+  }
+
+  const href = normalizeMenuHref(item?.href || "");
+  if (href && href !== "#") return href;
+
+  return null;
+};
+
+const getNavItemLinkHref = (item) =>
+  resolveParentNavHref(item) ||
+  (item?.href && item.href !== "#" ? item.href : null);
+
+const mapExperienceCategoriesToDropdown = (categories = []) =>
+  categories
+    .filter((cat) => cat?.label && cat?.href)
+    .map((cat) => ({
+      label: cat.label,
+      href: cat.href,
+      slug: cat.slug || "",
+    }));
+
 function buildNavbarState(initialNavData) {
-  const defaultExperiencesDropdown = [
-    {
-      label: "VV Racing with Jack Butcher",
-      href: "/experiences/vv_raching_with_jack_butcher",
-    },
-    {
-      label: "Bitcoin Conference",
-      href: "/experiences/bitcoin_conferance",
-    },
-    {
-      label: "Opening Night Consensus",
-      href: "/experiences/opening_night_consensus",
-    },
-    {
-      label: "CTRL Ordinals Collection Launch",
-      href: "/experiences/ctrl_ordinals_collection_launch",
-    },
-    {
-      label: "New York Fashion Week",
-      href: "/experiences/new_york_fashion_week",
-    },
-  ];
+  const defaultExperiencesDropdown = [];
 
   const baseUpcomingChildren = mapUpcomingEventsToNavChildren(
     upcomingListEvents,
@@ -150,8 +159,8 @@ function buildNavbarState(initialNavData) {
     };
   }
 
-  const experiencePages = Array.isArray(initialNavData?.experiencePages)
-    ? initialNavData.experiencePages
+  const experienceCategories = Array.isArray(initialNavData?.experienceCategories)
+    ? initialNavData.experienceCategories
     : [];
   const charityPages = Array.isArray(initialNavData?.charityPages)
     ? initialNavData.charityPages
@@ -160,11 +169,8 @@ function buildNavbarState(initialNavData) {
   const homePageRes = initialNavData?.homePageRes || null;
 
   const mappedExperiencesDropdown =
-    experiencePages.length > 0
-      ? experiencePages.map((page) => ({
-          label: page.title,
-          href: `/experiences/${page.slug}`,
-        }))
+    experienceCategories.length > 0
+      ? mapExperienceCategoriesToDropdown(experienceCategories)
       : defaultExperiencesDropdown;
 
   const mappedCharityDropdown =
@@ -376,19 +382,49 @@ function Navbar({ initialNavData = null }) {
   ];
 
   const visibleMenuItems = useMemo(() => {
+    const enrichItem = (item) => {
+      let next = { ...item };
+      const parentHref = resolveParentNavHref(next);
+      if (parentHref) next = { ...next, href: parentHref };
+
+      if (next.key === "experiences" && experiencesDropdown.length > 0) {
+        next = {
+          ...next,
+          href: "/experiences",
+          hasDropdown: true,
+          children: experiencesDropdown,
+        };
+      }
+
+      if (next.key === "charity" && charityDropdown.length > 0) {
+        next = {
+          ...next,
+          hasDropdown: true,
+          children: charityDropdown,
+        };
+      }
+
+      if (next.key === "upcoming") {
+        next = {
+          ...next,
+          children: upcomingDropdownChildren,
+          hasDropdown: upcomingDropdownChildren.length > 0,
+        };
+      }
+
+      return next;
+    };
+
     if (navigationItems.length) {
-      return navigationItems;
+      return navigationItems.map(enrichItem);
     }
-    return fallbackVisibleMenuItems.map((item) =>
-      item.key === "upcoming"
-        ? {
-            ...item,
-            children: upcomingDropdownChildren,
-            hasDropdown: upcomingDropdownChildren.length > 0,
-          }
-        : item
-    );
-  }, [navigationItems, upcomingDropdownChildren]);
+    return fallbackVisibleMenuItems.map(enrichItem);
+  }, [
+    navigationItems,
+    upcomingDropdownChildren,
+    experiencesDropdown,
+    charityDropdown,
+  ]);
 
   const getMegaMenuConfig = (menuKey) => {
     if (!menuKey) return null;
@@ -402,7 +438,7 @@ function Navbar({ initialNavData = null }) {
       cta: {
         title: `View ${item.label}`,
         description: "",
-        href: item.href || item.children[0]?.href || "#",
+        href: getNavItemLinkHref(item) || item.children[0]?.href || "#",
       },
       imageSrc: item.imageSrc || item.children[0]?.imageSrc || null,
     };
@@ -440,6 +476,20 @@ function Navbar({ initialNavData = null }) {
     }
     if (dropdownItem?.upcomingSlug) {
       notifyUpcomingSelection(dropdownItem.upcomingSlug);
+    }
+
+    const href = String(dropdownItem?.href || "");
+    if (
+      href.startsWith("/experiences#") &&
+      typeof window !== "undefined" &&
+      window.location.pathname === "/experiences"
+    ) {
+      const hash = href.slice(href.indexOf("#"));
+      if (window.location.hash !== hash) {
+        window.location.hash = hash;
+      } else {
+        window.dispatchEvent(new HashChangeEvent("hashchange"));
+      }
     }
 
     setActiveDesktopMegaMenu(null);
@@ -543,31 +593,31 @@ function Navbar({ initialNavData = null }) {
 
     const fetchNavigationPages = async () => {
       try {
+        const { getExperiencesNavDropdownItems } = await import(
+          "@/lib/experiencesIndexData"
+        );
         const {
-          getExperiencePages,
           getCharityPages,
           getNavigationMenu,
           getHomePageForNavigation,
         } = await import("@/lib/strapi");
-        const [exRes, chRes, navRes, homeRes] = await Promise.allSettled([
-          getExperiencePages(),
+        const [exNavRes, chRes, navRes, homeRes] = await Promise.allSettled([
+          getExperiencesNavDropdownItems(),
           getCharityPages(),
           getNavigationMenu(),
           getHomePageForNavigation(),
         ]);
-        const experiencePages = exRes.status === "fulfilled" ? exRes.value : null;
+        const experienceCategories =
+          exNavRes.status === "fulfilled" ? exNavRes.value : null;
         const charityPages = chRes.status === "fulfilled" ? chRes.value : null;
         const navigationMenu = navRes.status === "fulfilled" ? navRes.value : null;
         const homePageRes = homeRes.status === "fulfilled" ? homeRes.value : null;
 
         if (!isMounted) return;
 
-        if (Array.isArray(experiencePages) && experiencePages.length > 0) {
+        if (Array.isArray(experienceCategories) && experienceCategories.length > 0) {
           setExperiencesDropdown(
-            experiencePages.map((page) => ({
-              label: page.title,
-              href: `/experiences/${page.slug}`,
-            }))
+            mapExperienceCategoriesToDropdown(experienceCategories)
           );
         }
 
@@ -720,12 +770,36 @@ function Navbar({ initialNavData = null }) {
     }
 
     if (item.hasDropdown) {
+      const parentHref = getNavItemLinkHref(item);
+
       return (
         <div className="border-b border-white/10">
-          <RowHeader
-            showChevron={true}
-            onChevronClick={() => toggleMobileDropdown(item.key)}
-          />
+          <div className="py-4 flex items-start justify-between gap-4">
+            <button
+              type="button"
+              className="flex-1 text-left"
+              onClick={() => {
+                if (parentHref) {
+                  router.push(parentHref);
+                  setIsMobileMenuOpen(false);
+                }
+              }}
+            >
+              <div className="font-[700] text-[20px] leading-[1.1] text-white">
+                {item.label}
+              </div>
+              <div className="mt-1 text-[13px] text-white/60">{item.subtitle}</div>
+            </button>
+            <button
+              type="button"
+              aria-label={isExpanded ? "Collapse section" : "Expand section"}
+              aria-expanded={Boolean(isExpanded)}
+              onClick={() => toggleMobileDropdown(item.key)}
+              className="pt-1 w-10 h-10 -mr-2 inline-flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+            >
+              {RightChevron}
+            </button>
+          </div>
 
           <div
             className={[
@@ -1008,49 +1082,56 @@ function Navbar({ initialNavData = null }) {
                       setActiveDesktopMegaMenu(item.key);
                     }}
                   >
-                    {!item.hasDropdown && item.href && item.href !== "#" ? (
-                      <Link href={item.href} className="hover:opacity-80 transition-opacity">
-                        <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px]">
-                          {item.label}
-                          {item.hasDropdown && (
-                            <svg
-                              className="ml-2 w-[24px] h-[24px] 2xl:w-[28px] 2xl:h-[28px] xxl:w-[30px] xxl:h-[30px] text-white"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M7 10l5 5 5-5z" />
-                            </svg>
-                          )}
-                        </div>
-                        <div
-                          className="text-[14px] text-white/70 2xl:text-[16px] xxl:text-[18px]"
+                    {(() => {
+                      const linkHref = getNavItemLinkHref(item);
+
+                      if (!linkHref) {
+                        return (
+                          <div
+                            className={item.hasDropdown ? "cursor-default" : "cursor-pointer"}
+                          >
+                            <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px]">
+                              {item.label}
+                              {item.hasDropdown && (
+                                <svg
+                                  className="ml-2 w-[24px] h-[24px] 2xl:w-[28px] 2xl:h-[28px] xxl:w-[30px] xxl:h-[30px] text-white"
+                                  fill="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path d="M7 10l5 5 5-5z" />
+                                </svg>
+                              )}
+                            </div>
+                            <div className="text-[14px] text-white/70 2xl:text-[16px] xxl:text-[18px]">
+                              {item.subtitle}
+                            </div>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <Link
+                          href={linkHref}
+                          className="block hover:opacity-80 transition-opacity cursor-pointer"
                         >
-                          {item.subtitle}
-                        </div>
-                      </Link>
-                    ) : (
-                      <div
-                        className={item.hasDropdown ? "cursor-default" : "cursor-pointer"}
-                      >
-                        <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px]">
-                          {item.label}
-                          {item.hasDropdown && (
-                            <svg
-                              className="ml-2 w-[24px] h-[24px] 2xl:w-[28px] 2xl:h-[28px] xxl:w-[30px] xxl:h-[30px] text-white"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M7 10l5 5 5-5z" />
-                            </svg>
-                          )}
-                        </div>
-                        <div
-                          className="text-[14px] text-white/70 2xl:text-[16px] xxl:text-[18px]"
-                        >
-                          {item.subtitle}
-                        </div>
-                      </div>
-                    )}
+                          <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px]">
+                            {item.label}
+                            {item.hasDropdown && (
+                              <svg
+                                className="ml-2 w-[24px] h-[24px] 2xl:w-[28px] 2xl:h-[28px] xxl:w-[30px] xxl:h-[30px] text-white"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M7 10l5 5 5-5z" />
+                              </svg>
+                            )}
+                          </div>
+                          <div className="text-[14px] text-white/70 2xl:text-[16px] xxl:text-[18px]">
+                            {item.subtitle}
+                          </div>
+                        </Link>
+                      );
+                    })()}
                   </div>
                 ))}
               </div>

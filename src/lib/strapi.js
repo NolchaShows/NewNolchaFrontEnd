@@ -370,6 +370,48 @@ export async function getExperiencePageData(experiencePage) {
 }
 
 /**
+ * Experience categories for header menu (only categories with linked experiences).
+ * Links target /experiences#category-slug
+ * @returns {Promise<Array<{ label: string, slug: string, href: string }>>}
+ */
+export async function getExperienceCategoriesForNavigation() {
+  try {
+    const data = await fetchFromStrapi(
+      "experience-categories?fields[0]=name&fields[1]=slug&sort[0]=sortOrder:asc&sort[1]=name:asc&pagination[pageSize]=100&populate[experience_pages][fields][0]=slug"
+    );
+
+    if (!data?.data || !Array.isArray(data.data)) {
+      return [];
+    }
+
+    return data.data
+      .map((row) => {
+        const item = row?.attributes ? { ...row.attributes } : row;
+        const slug = String(item?.slug ?? "").trim();
+        const name = String(item?.name ?? "").trim();
+        const pages = item?.experience_pages;
+        const pageList = Array.isArray(pages)
+          ? pages
+          : Array.isArray(pages?.data)
+            ? pages.data
+            : [];
+
+        if (!slug || !name || pageList.length === 0) return null;
+
+        return {
+          label: name,
+          slug,
+          href: `/experiences#${slug}`,
+        };
+      })
+      .filter(Boolean);
+  } catch (error) {
+    console.error("❌ Error fetching experience categories for navigation:", error);
+    return [];
+  }
+}
+
+/**
  * Fetch all experience pages for navigation/dropdowns
  * @returns {Promise<Array>} - Array of experience pages
  */

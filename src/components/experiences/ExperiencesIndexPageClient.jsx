@@ -1,8 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import ExperienceListRow from "@/components/experiences/ExperienceListRow";
+import {
+  getExperienceCategorySectionId,
+  UNCATEGORIZED_CATEGORY_ID,
+} from "@/lib/experienceCategoryNav";
 import { EXPERIENCES_INDEX_DEFAULTS } from "@/lib/experiencesIndexData";
 
 /** Break headline into lines at each period (same as AboutStatementSection). */
@@ -16,22 +20,101 @@ const splitHeadlineLines = (text) => {
     .filter(Boolean);
 };
 
+const normalizeHash = (hash) =>
+  decodeURIComponent(String(hash || "").replace(/^#/, "").trim());
+
 export default function ExperiencesIndexPageClient({
   label = EXPERIENCES_INDEX_DEFAULTS.label,
   headline = EXPERIENCES_INDEX_DEFAULTS.headline,
   filterLabel = EXPERIENCES_INDEX_DEFAULTS.filterLabel,
+  uncategorizedTitle = EXPERIENCES_INDEX_DEFAULTS.uncategorizedTitle,
   categories = [],
+  uncategorizedExperiences = [],
   filterOptions = [{ id: "all", label: "ALL" }],
 }) {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
 
+  const scrollToCategory = useCallback(
+    (categorySlug, behavior = "smooth") => {
+      if (!categorySlug) return;
+      const el = document.getElementById(
+        getExperienceCategorySectionId(categorySlug)
+      );
+      if (el) {
+        el.scrollIntoView({ behavior, block: "start" });
+      }
+    },
+    []
+  );
+
+  const applyHashFromUrl = useCallback(
+    (behavior = "smooth") => {
+      if (typeof window === "undefined") return;
+      const hashSlug = normalizeHash(window.location.hash);
+      if (!hashSlug) return;
+
+      if (hashSlug === UNCATEGORIZED_CATEGORY_ID) {
+        if (!uncategorizedExperiences.length) return;
+        setActiveFilter(UNCATEGORIZED_CATEGORY_ID);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() =>
+            scrollToCategory(UNCATEGORIZED_CATEGORY_ID, behavior)
+          );
+        });
+        return;
+      }
+
+      const matched = categories.find((category) => category.id === hashSlug);
+      if (!matched) return;
+
+      setActiveFilter(hashSlug);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => scrollToCategory(hashSlug, behavior));
+      });
+    },
+    [categories, scrollToCategory, uncategorizedExperiences.length]
+  );
+
+  useEffect(() => {
+    applyHashFromUrl("auto");
+  }, [applyHashFromUrl]);
+
+  useEffect(() => {
+    const onHashChange = () => applyHashFromUrl("smooth");
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, [applyHashFromUrl]);
+
   const filteredCategories = useMemo(() => {
     if (activeFilter === "all") return categories;
+    if (activeFilter === UNCATEGORIZED_CATEGORY_ID) return [];
     return categories.filter((category) => category.id === activeFilter);
   }, [activeFilter, categories]);
 
+  const showUncategorized = useMemo(() => {
+    if (!uncategorizedExperiences.length) return false;
+    if (activeFilter === "all") return true;
+    return activeFilter === UNCATEGORIZED_CATEGORY_ID;
+  }, [activeFilter, uncategorizedExperiences.length]);
+
+  const hasVisibleContent = filteredCategories.length > 0 || showUncategorized;
+
   const headlineLines = splitHeadlineLines(headline);
+
+  const handleFilterClick = (optionId) => {
+    setActiveFilter(optionId);
+    if (optionId === "all") {
+      if (typeof window !== "undefined") {
+        window.history.replaceState(null, "", "/experiences");
+      }
+      return;
+    }
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", `/experiences#${optionId}`);
+      requestAnimationFrame(() => scrollToCategory(optionId, "smooth"));
+    }
+  };
 
   return (
     <main className="min-h-screen bg-[#F4F4F4] font-sans text-[#111111]">
@@ -85,7 +168,7 @@ export default function ExperiencesIndexPageClient({
                         <button
                           key={option.id}
                           type="button"
-                          onClick={() => setActiveFilter(option.id)}
+                          onClick={() => handleFilterClick(option.id)}
                           className={`border border-[#111111] px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-wider transition-colors sm:text-[12px] lg:text-[13px] ${
                             isActive
                               ? "bg-[#111111] text-[#F4F4F4]"
@@ -103,20 +186,30 @@ export default function ExperiencesIndexPageClient({
           </motion.header>
 
           <div className="flex flex-col gap-12 lg:gap-16">
-            {filteredCategories.length > 0 ? (
-              filteredCategories.map((category) => (
-                <ExperienceListRow
-                  key={category.id}
-                  title={category.title}
-                  tags={category.tags}
-                  experiences={category.experiences}
-                />
-              ))
-            ) : (
+            {filteredCategories.map((category) => (
+              <ExperienceListRow
+                key={category.id}
+                categoryId={category.id}
+                title={category.title}
+                tags={category.tags}
+                experiences={category.experiences}
+              />
+            ))}
+
+            {showUncategorized ? (
+              <ExperienceListRow
+                categoryId={UNCATEGORIZED_CATEGORY_ID}
+                title={uncategorizedTitle}
+                tags={[]}
+                experiences={uncategorizedExperiences}
+              />
+            ) : null}
+
+            {!hasVisibleContent ? (
               <p className="text-[10px] font-mono font-medium uppercase tracking-wider text-[#333333] sm:text-[12px] lg:text-[13px]">
-                No experience categories match this filter.
+                No experiences to display yet.
               </p>
-            )}
+            ) : null}
           </div>
         </div>
       </section>
