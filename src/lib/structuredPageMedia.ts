@@ -1,3 +1,5 @@
+import { resolveStrapiGalleryImageUrl } from "@/lib/strapiMediaUrl";
+
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
 
@@ -63,27 +65,6 @@ const getMediaPosterUrl = (media: any) => {
   return toAbsoluteMediaUrl(rawPosterUrl);
 };
 
-const getOptimizedImageUrl = (media: any, fullWidth: boolean) => {
-  if (!media) return null;
-
-  const preferred = fullWidth
-    ? [
-        media.formats?.large?.url,
-        media.formats?.medium?.url,
-        media.formats?.small?.url,
-        media.formats?.thumbnail?.url,
-      ]
-    : [
-        media.formats?.medium?.url,
-        media.formats?.small?.url,
-        media.formats?.thumbnail?.url,
-        media.formats?.large?.url,
-      ];
-
-  const rawUrl = preferred.find(Boolean) || media.url || null;
-  return toAbsoluteMediaUrl(rawUrl);
-};
-
 const normalizeMediaItem = (
   media: any,
   options: { fullWidth?: boolean } = {}
@@ -93,7 +74,7 @@ const normalizeMediaItem = (
   const fullWidth = Boolean(options.fullWidth);
   const url = isVideo
     ? getStructuredMediaUrl(media)
-    : getOptimizedImageUrl(media, fullWidth);
+    : resolveStrapiGalleryImageUrl(media, { fullWidth });
   if (!url) return null;
 
   const { width, height } = getMediaDimensions(media);

@@ -158,13 +158,12 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
     }
 
     const isFullWidth = Boolean(item.fullWidth);
-    // Skip optimization only for Render.com (Strapi) origins which can have
-    // cold-start latency. R2 CDN is fast — let Next.js serve WebP/AVIF.
+    // Skip Next optimization only for Render.com (Strapi) cold-start latency.
     const isSlowOrigin =
       typeof item.url === "string" && item.url.includes(".onrender.com");
     const sizes = isFullWidth
-      ? "100vw"
-      : "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw";
+      ? "(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
+      : "(max-width: 768px) 85vw, (max-width: 1280px) 45vw, 420px";
 
     return (
       <NextImage
@@ -173,6 +172,7 @@ const MediaGalleryGrid = ({ items = [], background = "#F3F3F3" }) => {
         fill
         className="object-cover"
         sizes={sizes}
+        quality={100}
         priority={index < 2}
         loading={index < 2 ? "eager" : "lazy"}
         unoptimized={isSlowOrigin}

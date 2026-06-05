@@ -131,6 +131,45 @@ export function resolveStrapiImageUrlBestQuality(media, depth = 0) {
 }
 
 /**
+ * Gallery tiles: featured/full-width uses best available; grid cells prefer `large`
+ * (~1000px) so sharp on retina without loading full originals on every tile.
+ */
+export function resolveStrapiGalleryImageUrl(media, options = {}) {
+  const { fullWidth = false } = options;
+  if (fullWidth) {
+    return resolveStrapiImageUrlBestQuality(media);
+  }
+
+  if (media == null) return null;
+
+  const unwrap = (entry) => {
+    if (entry == null || typeof entry !== "object") return entry;
+    if (Array.isArray(entry) && entry.length) return unwrap(entry[0]);
+    if (entry.data?.attributes) return { ...entry.data.attributes, ...entry.data };
+    if (entry.attributes) return entry.attributes;
+    return entry;
+  };
+
+  const m = unwrap(media);
+  if (!m || typeof m !== "object") {
+    return resolveStrapiImageUrlBestQuality(media);
+  }
+
+  const formats = m.formats || {};
+  const largeUrl =
+    formats.large?.url ||
+    formats.xlarge?.url ||
+    formats.large2x?.url ||
+    null;
+
+  if (largeUrl) {
+    return resolveStrapiFileUrl({ url: largeUrl });
+  }
+
+  return resolveStrapiImageUrlBestQuality(media);
+}
+
+/**
  * `experience.hero` may nest video oddly after serialization; also accept first entry if an array.
  */
 export function pickHeroVideoUrl(hero) {
