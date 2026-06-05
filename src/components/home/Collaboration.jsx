@@ -59,7 +59,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
         <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[60px] 2xl:gap-[80px] items-start">
           {/* Left side - Image skeleton */}
           <div className="relative w-full lg:w-[435px] 2xl:w-[580px] flex-shrink-0">
-            <div className="rounded-[20px] lg:rounded-[24px] 2xl:rounded-[30px] w-full h-[400px] lg:h-[570px] 2xl:h-[700px] bg-gray-300 animate-pulse"></div>
+            <div className="h-[400px] w-full animate-pulse rounded-[20px] bg-gray-300 lg:h-[570px] lg:rounded-[24px] 2xl:h-[700px] 2xl:rounded-[30px]"></div>
           </div>
           {/* Right side - Content skeleton */}
           <div className="flex-1 flex flex-col">
@@ -76,6 +76,9 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   }
 
   const imageUrl = getImageUrl();
+  const mainImage = nolchaExperienceData?.main_image;
+  const imageWidth = mainImage?.width || 513;
+  const imageHeight = mainImage?.height || 640;
   // Skip Next.js optimization only for Render.com (cold-start latency);
   // R2 and local paths are served fast and should be optimized to WebP/AVIF.
   const imageUnoptimized =
@@ -84,14 +87,15 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
   return (
     <div className="bg-secondary page-container py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] xxl:py-[140px] 3xl:py-[200px]">
       <div className="flex flex-col lg:flex-row gap-[30px] lg:gap-[40px] xl:gap-[50px] 2xl:gap-[60px] xxl:gap-[80px] 3xl:gap-[120px] items-start">
-        {/* Left side - Image with gradient overlay */}
-        <div className="relative w-full lg:w-[420px] xl:w-[513px] 2xl:w-[580px] xxl:w-[650px] 3xl:w-[900px] aspect-[4/5] lg:aspect-auto lg:h-[435px] xl:h-[531px] 2xl:h-[600px] xxl:h-[680px] 3xl:h-[950px] flex-shrink-0">
-          <div className="rounded-[12px] overflow-hidden relative w-full h-full">
+        {/* Left side - full image visible (no crop) */}
+        <div className="relative w-full lg:w-[420px] xl:w-[513px] 2xl:w-[580px] xxl:w-[650px] 3xl:w-[900px] flex-shrink-0">
+          <div className="relative w-full overflow-hidden rounded-[12px]">
             <Image
               src={imageUrl}
               alt="Nolcha Shows collaboration event"
-              fill
-              className="object-cover"
+              width={imageWidth}
+              height={imageHeight}
+              className="h-auto w-full object-contain"
               sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 420px, (max-width: 1536px) 513px, 580px"
               unoptimized={imageUnoptimized}
             />
