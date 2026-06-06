@@ -10,7 +10,6 @@ import { UNCATEGORIZED_CATEGORY_ID } from "@/lib/experienceCategoryNav";
 
 export const EXPERIENCES_INDEX_DEFAULTS = {
   label: "[ EXPERIENCES ]",
-  headline: "NOLCHA.",
   filterLabel: "",
   uncategorizedTitle: "[ OTHER EXPERIENCES ]",
   seo: {
@@ -26,12 +25,12 @@ export type ExperienceIndexItem = {
   title: string;
   href: string;
   images: string[];
+  tags: string[];
 };
 
 export type ExperienceCategoryGroup = {
   id: string;
   title: string;
-  tags: string[];
   experiences: ExperienceIndexItem[];
 };
 
@@ -42,7 +41,6 @@ export type ExperienceCategoryFilter = {
 
 export type ExperiencesIndexContent = {
   label: string;
-  headline: string;
   filterLabel: string;
   uncategorizedTitle: string;
   categories: ExperienceCategoryGroup[];
@@ -81,8 +79,6 @@ const mapPageSettings = (attrs: unknown) => {
   return {
     label:
       String(entity.label ?? "").trim() || EXPERIENCES_INDEX_DEFAULTS.label,
-    headline:
-      String(entity.headline ?? "").trim() || EXPERIENCES_INDEX_DEFAULTS.headline,
     filterLabel: String(entity.filterLabel ?? "").trim(),
     uncategorizedTitle:
       String(entity.uncategorizedTitle ?? "").trim() ||
@@ -176,6 +172,7 @@ export const mapExperienceEntity = (
     title,
     href: `/experiences/${slug}`,
     images,
+    tags: collectComponentTagTexts(entity.tags),
   };
 };
 
@@ -205,7 +202,6 @@ const parseCategoryRow = (
     category: {
       id: slug,
       title: name,
-      tags: collectComponentTagTexts(entity.tags),
       experiences,
     },
   };
@@ -235,7 +231,7 @@ const buildFilterOptions = (
 
 async function fetchExperienceCategories() {
   const populate = [
-    "populate[tags]=true",
+    "populate[experience_pages][populate][tags]=true",
     "populate[experience_pages][populate][listingImage]=true",
     "populate[experience_pages][populate][gallery][populate][standard_media]=true",
     "populate[experience_pages][populate][gallery][populate][featured_media]=true",
@@ -261,6 +257,7 @@ async function fetchExperienceCategories() {
 
 async function fetchAllExperiencePages() {
   const populate = [
+    "populate[tags]=true",
     "populate[listingImage]=true",
     "populate[gallery][populate][standard_media]=true",
     "populate[gallery][populate][featured_media]=true",

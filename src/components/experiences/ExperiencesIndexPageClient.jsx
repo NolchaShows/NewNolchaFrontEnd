@@ -9,23 +9,11 @@ import {
 } from "@/lib/experienceCategoryNav";
 import { EXPERIENCES_INDEX_DEFAULTS } from "@/lib/experiencesIndexData";
 
-/** Break headline into lines at each period (same as AboutStatementSection). */
-const splitHeadlineLines = (text) => {
-  const trimmed = String(text ?? "").trim();
-  if (!trimmed) return [];
-  if (!trimmed.includes(".")) return [trimmed];
-  return trimmed
-    .split(/(?<=\.)\s*/)
-    .map((line) => line.trim())
-    .filter(Boolean);
-};
-
 const normalizeHash = (hash) =>
   decodeURIComponent(String(hash || "").replace(/^#/, "").trim());
 
 export default function ExperiencesIndexPageClient({
   label = EXPERIENCES_INDEX_DEFAULTS.label,
-  headline = EXPERIENCES_INDEX_DEFAULTS.headline,
   filterLabel = "",
   uncategorizedTitle = EXPERIENCES_INDEX_DEFAULTS.uncategorizedTitle,
   categories = [],
@@ -100,8 +88,6 @@ export default function ExperiencesIndexPageClient({
 
   const hasVisibleContent = filteredCategories.length > 0 || showUncategorized;
 
-  const headlineLines = splitHeadlineLines(headline);
-
   const handleFilterClick = (optionId) => {
     setActiveFilter(optionId);
     if (optionId === "all") {
@@ -132,22 +118,6 @@ export default function ExperiencesIndexPageClient({
                 {label}
               </p>
             ) : null}
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
-              className="mb-6 lg:mb-10"
-            >
-              <h1 className="m-0 p-0 text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px]">
-                {headlineLines.map((line, index) => (
-                  <span key={index} className="block">
-                    {line}
-                  </span>
-                ))}
-              </h1>
-            </motion.div>
 
             {filterLabel && filterOptions.length > 1 ? (
               <>
@@ -191,7 +161,6 @@ export default function ExperiencesIndexPageClient({
                 key={category.id}
                 categoryId={category.id}
                 title={category.title}
-                tags={category.tags}
                 experiences={category.experiences}
               />
             ))}
@@ -200,7 +169,6 @@ export default function ExperiencesIndexPageClient({
               <ExperienceListRow
                 categoryId={UNCATEGORIZED_CATEGORY_ID}
                 title={uncategorizedTitle}
-                tags={[]}
                 experiences={uncategorizedExperiences}
               />
             ) : null}
