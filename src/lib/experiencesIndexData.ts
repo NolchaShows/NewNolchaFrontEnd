@@ -11,7 +11,7 @@ import { UNCATEGORIZED_CATEGORY_ID } from "@/lib/experienceCategoryNav";
 export const EXPERIENCES_INDEX_DEFAULTS = {
   label: "[ EXPERIENCES ]",
   headline: "NOLCHA.",
-  filterLabel: "SHOW FILTERS",
+  filterLabel: "",
   uncategorizedTitle: "[ OTHER EXPERIENCES ]",
   seo: {
     metaTitle: "Experiences | Nolcha",
@@ -83,9 +83,7 @@ const mapPageSettings = (attrs: unknown) => {
       String(entity.label ?? "").trim() || EXPERIENCES_INDEX_DEFAULTS.label,
     headline:
       String(entity.headline ?? "").trim() || EXPERIENCES_INDEX_DEFAULTS.headline,
-    filterLabel:
-      String(entity.filterLabel ?? "").trim() ||
-      EXPERIENCES_INDEX_DEFAULTS.filterLabel,
+    filterLabel: String(entity.filterLabel ?? "").trim(),
     uncategorizedTitle:
       String(entity.uncategorizedTitle ?? "").trim() ||
       EXPERIENCES_INDEX_DEFAULTS.uncategorizedTitle,

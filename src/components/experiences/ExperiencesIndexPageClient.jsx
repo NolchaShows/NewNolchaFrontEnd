@@ -26,7 +26,7 @@ const normalizeHash = (hash) =>
 export default function ExperiencesIndexPageClient({
   label = EXPERIENCES_INDEX_DEFAULTS.label,
   headline = EXPERIENCES_INDEX_DEFAULTS.headline,
-  filterLabel = EXPERIENCES_INDEX_DEFAULTS.filterLabel,
+  filterLabel = "",
   uncategorizedTitle = EXPERIENCES_INDEX_DEFAULTS.uncategorizedTitle,
   categories = [],
   uncategorizedExperiences = [],
@@ -149,7 +149,7 @@ export default function ExperiencesIndexPageClient({
               </h1>
             </motion.div>
 
-            {filterOptions.length > 1 ? (
+            {filterLabel && filterOptions.length > 1 ? (
               <>
                 <button
                   type="button"
