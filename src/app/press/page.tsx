@@ -32,7 +32,9 @@ export default async function PressPage() {
           <LogoSlider logoSliderData={null} loading={false} />
         </div>
 
-        <PressStatementSection {...statementProps} />
+        {statementProps ? (
+          <PressStatementSection {...statementProps} />
+        ) : null}
 
         <About
           title={aboutSection.title}

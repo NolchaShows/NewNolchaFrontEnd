@@ -59,13 +59,13 @@ export type PressStatementProps = {
   ctaHref?: string;
 };
 
-export const DUMMY_STATEMENT: PressStatementProps = {
-  label: "[ PROJECTS ]",
-  headline:
-    "NOLCHA'S PROJECTS CONNECT STRATEGY, CREATIVITY, AND PRODUCTION IN A NEW PRACTICE TO CREATE WORLDS THAT INSPIRE, ENTERTAIN, AND ENRICH.",
-  ctaText: "GET IN TOUCH",
-  ctaHref: "/contact-us",
-};
+function hasPressStatementContent(props: PressStatementProps): boolean {
+  return Boolean(
+    props.headline?.trim() ||
+      props.label?.trim() ||
+      props.ctaText?.trim()
+  );
+}
 
 export const DUMMY_ABOUT: PressAboutSection = {
   title: "Press & media",
@@ -247,7 +247,7 @@ function pickAbout(section: PressAboutSection | null): PressAboutSection | null 
 export async function getPressPageContent(): Promise<{
   aboutSection: PressAboutSection;
   cards: PressCardItem[];
-  statementProps: PressStatementProps;
+  statementProps: PressStatementProps | null;
 }> {
   let graphql: ReturnType<typeof mapGraphqlPressPage> | null = null;
 
@@ -287,11 +287,13 @@ export async function getPressPageContent(): Promise<{
 
   const statementFromRest = restMapped?.statementProps ?? {};
   const statementFromGraphql = graphql?.statementProps ?? {};
-  const statementProps: PressStatementProps = {
-    ...DUMMY_STATEMENT,
+  const mergedStatement: PressStatementProps = {
     ...statementFromGraphql,
     ...statementFromRest,
   };
+  const statementProps = hasPressStatementContent(mergedStatement)
+    ? mergedStatement
+    : null;
 
   return {
     aboutSection,
