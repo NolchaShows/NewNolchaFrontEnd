@@ -229,7 +229,7 @@ export default function LetsChatModal({ isOpen, onClose }) {
         <div className="shrink-0 px-6 pb-6 pt-12 sm:px-10 sm:pt-14 lg:w-[42%] lg:px-14 lg:py-16 lg:pr-8">
           <h2
             id="lets-chat-title"
-            className="font-serif text-[42px] italic leading-[1.1] text-[#1a1a1a] sm:text-[52px] lg:text-[58px]"
+            className="text-[42px] leading-[1.1] text-[#1a1a1a] sm:text-[52px] lg:text-[58px]"
           >
             Partner With Nolcha
           </h2>
