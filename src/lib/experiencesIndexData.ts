@@ -323,12 +323,14 @@ export async function getExperiencesNavDropdownItems() {
     label: category.title,
     slug: category.id,
     href: `/experiences#${category.id}`,
+    imageSrc: category.experiences[0]?.images?.[0] ?? null,
   }));
 
   const uncategorizedItems = uncategorizedExperiences.map((experience) => ({
     label: experience.title,
     slug: experience.id,
     href: experience.href,
+    imageSrc: experience.images[0] ?? null,
   }));
 
   return [...categoryItems, ...uncategorizedItems];

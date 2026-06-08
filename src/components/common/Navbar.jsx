@@ -140,6 +140,16 @@ const mapExperienceCategoriesToDropdown = (categories = []) =>
       label: cat.label,
       href: cat.href,
       slug: cat.slug || "",
+      imageSrc: cat.imageSrc || null,
+    }));
+
+const mapCharityPagesToDropdown = (pages = []) =>
+  pages
+    .filter((page) => page?.title && page?.slug)
+    .map((page) => ({
+      label: page.title,
+      href: `/charity/${page.slug}`,
+      imageSrc: page.imageSrc || null,
     }));
 
 function buildNavbarState(initialNavData) {
@@ -175,10 +185,7 @@ function buildNavbarState(initialNavData) {
 
   const mappedCharityDropdown =
     charityPages.length > 0
-      ? charityPages.map((page) => ({
-          label: page.title,
-          href: `/charity/${page.slug}`,
-        }))
+      ? mapCharityPagesToDropdown(charityPages)
       : [];
 
   const homeRoot = homePageRes?.data?.attributes || homePageRes?.data;
@@ -622,12 +629,7 @@ function Navbar({ initialNavData = null }) {
         }
 
         if (Array.isArray(charityPages) && charityPages.length > 0) {
-          setCharityDropdown(
-            charityPages.map((page) => ({
-              label: page.title,
-              href: `/charity/${page.slug}`,
-            }))
-          );
+          setCharityDropdown(mapCharityPagesToDropdown(charityPages));
         }
 
         const homeRoot = homePageRes?.data?.attributes || homePageRes?.data;

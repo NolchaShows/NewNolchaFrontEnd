@@ -1,6 +1,41 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
 const STRAPI_API_TOKEN = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
+const resolveStrapiMediaUrl = (media) => {
+  if (!media) return null;
+
+  const rawUrl =
+    media?.formats?.large?.url ||
+    media?.formats?.medium?.url ||
+    media?.formats?.small?.url ||
+    media?.formats?.thumbnail?.url ||
+    media?.url ||
+    null;
+
+  if (!rawUrl) return null;
+  return rawUrl.startsWith('http') ? rawUrl : `${STRAPI_URL}${rawUrl}`;
+};
+
+const pickCharityNavImage = (page) => {
+  const listingImage = resolveStrapiMediaUrl(page?.listingImage);
+  if (listingImage) return listingImage;
+
+  const hero = page?.hero;
+  if (!hero || typeof hero !== 'object') return null;
+
+  const thumbnail = hero.thumbnail;
+  const video = hero.video;
+  const videoIsImage =
+    video &&
+    typeof video === 'object' &&
+    String(video.mime || '').startsWith('image/');
+
+  return (
+    resolveStrapiMediaUrl(thumbnail) ||
+    (videoIsImage ? resolveStrapiMediaUrl(video) : null)
+  );
+};
+
 /**
  * Fetch data from Strapi API
  * @param {string} endpoint - The API endpoint to fetch from
@@ -450,10 +485,14 @@ export async function getCharityPages() {
     }
 
     return data.data
-      .map((item) => ({
-        title: item?.title || "",
-        slug: item?.slug || "",
-      }))
+      .map((item) => {
+        const page = item?.attributes ?? item;
+        return {
+          title: page?.title || "",
+          slug: page?.slug || "",
+          imageSrc: pickCharityNavImage(page),
+        };
+      })
       .filter((item) => item.title && item.slug);
   } catch (error) {
     console.error("❌ Error fetching charity pages:", error);
