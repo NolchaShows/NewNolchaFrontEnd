@@ -1,14 +1,12 @@
 import "./globals.css";
 import ConditionalLayout from "./ConditionalLayout";
-import { IBM_Plex_Sans } from "next/font/google";
+import { Schibsted_Grotesk } from "next/font/google";
 
 // next/font/google self-hosts as WOFF2 with latin subsetting at build time.
-// This replaces the local TTF files (which are ~30-40% larger) and eliminates
-// the duplicate font request (with/without ?dpl=) seen in PageSpeed.
-const ibmPlexSans = IBM_Plex_Sans({
+const schibstedGrotesk = Schibsted_Grotesk({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
-  variable: "--font-ibm-plex-sans",
+  variable: "--font-schibsted-grotesk",
   display: "swap",
 });
 
@@ -23,8 +21,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${ibmPlexSans.variable}`}>
-      <body className="font-ibm-plex-sans">
+    <html lang="en" className={`${schibstedGrotesk.variable}`}>
+      <body className="font-sans">
         <ConditionalLayout>
           {children}
         </ConditionalLayout>
