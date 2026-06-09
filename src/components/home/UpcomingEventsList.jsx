@@ -19,6 +19,7 @@ const UpcomingEventsList = ({
   openEventSlug = null,
   onOpenEventHandled,
   fallbackTweetCarousel = null,
+  tone = "dark",
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -136,9 +137,11 @@ const UpcomingEventsList = ({
     return true;
   };
 
+  const isLight = tone === "light";
+
   return (
-    <section id="upcoming-events" className="w-full bg-black page-container relative">
-      <SectionTitle className="mb-[20px] lg:mb-[30px] 2xl:mb-[50px]">{title}</SectionTitle>
+    <section id="upcoming-events" className={`w-full page-container relative ${isLight ? "bg-home-surface" : "bg-black"}`}>
+      <SectionTitle tone={tone} className="mb-[20px] lg:mb-[30px] 2xl:mb-[50px]">{title}</SectionTitle>
 
       <div className="flex flex-col gap-[6px] lg:gap-[10px] 2xl:gap-[18px]">
         {safeEvents.map((ev, idx) => {
@@ -150,8 +153,15 @@ const UpcomingEventsList = ({
           return (
             <div
               key={`${ev.title}-${idx}`}
-              className={`rounded-[8px] lg:rounded-[12px] 2xl:rounded-[20px] overflow-hidden cursor-pointer transition-shadow relative z-10 pointer-events-auto ${isOpen ? "shadow" : ""
-                }`}
+              className={`rounded-[8px] lg:rounded-[12px] 2xl:rounded-[20px] overflow-hidden cursor-pointer transition-all relative z-10 pointer-events-auto ${
+                isOpen
+                  ? isLight
+                    ? "border border-home bg-white shadow-sm"
+                    : "shadow"
+                  : isLight
+                    ? "border border-home bg-white/70 hover:bg-white"
+                    : ""
+              }`}
               onClick={() => setActiveIndex((prev) => (prev === idx ? -1 : idx))}
               role="button"
               tabIndex={0}
@@ -163,7 +173,7 @@ const UpcomingEventsList = ({
               }}
             >
               {isOpen ? (
-                <div className="bg-primary px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] flex flex-col lg:flex-row gap-6 lg:gap-[30px] 2xl:gap-[50px] items-center lg:items-center text-black">
+                <div className={`px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] flex flex-col lg:flex-row gap-6 lg:gap-[30px] 2xl:gap-[50px] items-center lg:items-center ${isLight ? "text-home" : "bg-primary text-black"}`}>
                   <div className="w-full lg:flex-1 flex flex-col sm:flex-row items-center gap-[15px] lg:gap-[30px] 2xl:gap-[50px]">
                     {/* Left */}
                     {display.image && (
@@ -177,14 +187,14 @@ const UpcomingEventsList = ({
                     )}
                     {/* Middle title */}
                     <div className="flex-1 text-center sm:text-left">
-                      <h3 className="text-[24px] lg:text-[32px] 2xl:text-[48px] text-black leading-tight">
+                      <h3 className={`text-[24px] lg:text-[32px] 2xl:text-[48px] leading-tight ${isLight ? "text-home" : "text-black"}`}>
                         {ev.title}
                       </h3>
                     </div>
                   </div>
                   {/* Right details */}
                   <div className="w-full lg:w-auto flex flex-col items-center lg:items-start gap-4 lg:gap-[10px] 2xl:gap-[20px]">
-                    <p className="text-[18px] lg:text-[28px] 2xl:text-[40px] text-black text-center lg:text-left">
+                    <p className={`text-[18px] lg:text-[28px] 2xl:text-[40px] text-center lg:text-left ${isLight ? "text-home" : "text-black"}`}>
                       <span>Date:</span> {display.date}
                     </p>
                     <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-3 lg:gap-4 2xl:gap-5">
@@ -224,7 +234,11 @@ const UpcomingEventsList = ({
                           );
                           setIsEventDetailsModalOpen(true);
                         }}
-                        className="w-full lg:w-auto px-[10px] lg:px-[18px] 2xl:px-[24px] py-[10px] lg:py-[10px] 2xl:py-[15px] bg-black text-white rounded-lg text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-gray-800 transition-colors"
+                        className={`w-full lg:w-auto px-[10px] lg:px-[18px] 2xl:px-[24px] py-[10px] lg:py-[10px] 2xl:py-[15px] rounded-lg text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium transition-colors ${
+                          isLight
+                            ? "bg-[var(--home-text)] text-white hover:opacity-90"
+                            : "bg-black text-white hover:bg-gray-800"
+                        }`}
                       >
                         Learn more
                       </button>
@@ -240,7 +254,11 @@ const UpcomingEventsList = ({
                           });
                           setIsModalOpen(true);
                         }}
-                        className="w-full lg:w-auto px-[10px] lg:px-[18px] 2xl:px-[24px] py-[10px] lg:py-[10px] 2xl:py-[15px] bg-transparent border border-black text-black rounded-lg text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium hover:bg-black hover:text-primary transition-colors"
+                        className={`w-full lg:w-auto px-[10px] lg:px-[18px] 2xl:px-[24px] py-[10px] lg:py-[10px] 2xl:py-[15px] rounded-lg text-[16px] lg:text-[18px] 2xl:text-[22px] font-medium transition-colors ${
+                          isLight
+                            ? "border border-home bg-transparent text-home hover:bg-[var(--home-text)] hover:text-white"
+                            : "bg-transparent border border-black text-black hover:bg-black hover:text-primary"
+                        }`}
                       >
                         Request details
                       </button>
@@ -248,8 +266,8 @@ const UpcomingEventsList = ({
                   </div>
                 </div>
               ) : (
-                <div className="bg-secondary hover:bg-primary px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] group">
-                  <h3 className="text-[20px] lg:text-[32px] 2xl:text-[48px] text-white group-hover:text-black transition-colors">
+                <div className={`px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] group ${isLight ? "" : "bg-secondary hover:bg-primary"}`}>
+                  <h3 className={`text-[20px] lg:text-[32px] 2xl:text-[48px] transition-colors ${isLight ? "text-home group-hover:text-home-muted" : "text-white group-hover:text-black"}`}>
                     {ev.title}
                   </h3>
                 </div>

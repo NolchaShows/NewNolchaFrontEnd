@@ -9,7 +9,7 @@ import { StrapiRichDescription } from '@/components/common/StrapiRichDescription
 const resolveSpeakerImage = (image) =>
   image ? resolveStrapiImageUrlBestQuality(image) : null;
 
-const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
+const PastSpeakers = ({ speakers = [], title = "Featured Speakers", tone = "dark" }) => {
   const carouselRef = useRef(null);
   const animationRef = useRef(null);
   const [flippedCards, setFlippedCards] = useState(new Set());
@@ -255,9 +255,9 @@ const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
   }, [row2.length]);
 
   return (
-    <div className="py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] max-w-none w-full mx-auto bg-[#000000] overflow-hidden">
+    <div className={`py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] max-w-none w-full mx-auto overflow-hidden ${tone === "light" ? "bg-home-surface" : "bg-[#000000]"}`}>
       <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] title-spacing relative flex flex-row items-center justify-between">
-        <SectionTitle disableTitleSpacing className="text-white">{title}</SectionTitle>
+        <SectionTitle disableTitleSpacing tone={tone}>{title}</SectionTitle>
 
         {/* Navigation Arrows - Desktop Only */}
         <ArrowNavButtons onLeft={handleScrollLeft} onRight={handleScrollRight} />

@@ -136,9 +136,9 @@ const PastExperiences = ({
   }
 
   return (
-    <div className="py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-secondary">
+    <div className="py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[140px] xxl:py-[180px] 3xl:py-[250px] overflow-hidden bg-home-surface">
       <div className="px-[20px] lg:px-[60px] xl:px-[140px] 2xl:px-[180px] xxl:px-[250px] 3xl:px-[400px] title-spacing flex flex-row items-center justify-between">
-        <SectionTitle disableTitleSpacing className="text-white">Past experience</SectionTitle>
+        <SectionTitle disableTitleSpacing tone="light">Past experience</SectionTitle>
 
         {/* Navigation Arrows - Desktop Only */}
         {!isMobile ? <ArrowNavButtons onLeft={prevSlide} onRight={nextSlide} /> : null}

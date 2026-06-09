@@ -11,6 +11,7 @@ const EveningRecap = ({
     videoUrl,
     paddingTop,
     showSoundToggle = true,
+    tone = "dark",
 }) => {
     const videoList = videos && videos.length > 0
         ? videos
@@ -96,12 +97,15 @@ const EveningRecap = ({
         }
     };
 
+    const isLight = tone === "light";
+
     return (
-        <div className="page-container-fluid bg-black pb-10 lg:pb-16 2xl:pb-20 xxl:pb-24">
+        <div className={`page-container-fluid pb-10 lg:pb-16 2xl:pb-20 xxl:pb-24 ${isLight ? "bg-home-surface" : "bg-black"}`}>
             {displayTitle ? (
                 <SectionTitle
                     key={`evening-title-${currentIndex}-${displayTitle}`}
-                    className="text-white px-5 lg:px-0 text-left lg:text-center"
+                    tone={tone}
+                    className="px-5 lg:px-0 text-left lg:text-center"
                 >
                     {displayTitle}
                 </SectionTitle>

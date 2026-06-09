@@ -86,8 +86,8 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
   };
 
   return (
-    <section ref={sectionRef} className="page-container bg-black py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] xxl:py-[140px] 3xl:py-[200px]">
-      <SectionTitle className="text-white text-left mb-[30px] lg:mb-[40px] xl:mb-[50px] 2xl:mb-[60px] xxl:mb-[70px] 3xl:mb-[100px]">{resolvedTitle}</SectionTitle>
+    <section ref={sectionRef} className="page-container bg-home-surface text-home py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] xxl:py-[140px] 3xl:py-[200px]">
+      <SectionTitle tone="light" className="text-left mb-[30px] lg:mb-[40px] xl:mb-[50px] 2xl:mb-[60px] xxl:mb-[70px] 3xl:mb-[100px]">{resolvedTitle}</SectionTitle>
 
       <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[24px] xl:gap-[30px] 2xl:gap-[40px] xxl:gap-[60px] 3xl:gap-[100px] items-center lg:items-start">
         {/* Left video player with play button */}
@@ -150,13 +150,13 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
             ];
 
             return (
-              <div key={idx} className="bg-secondary mb-[10px] py-4 px-6 rounded-[6px] lg:rounded-[12px] 2xl:rounded-[20px]">
+              <div key={idx} className="mb-[10px] rounded-[6px] border border-home bg-white/50 py-4 px-6 lg:rounded-[12px] 2xl:rounded-[20px]">
                 {/* Accordion Header */}
                 <button
                   onClick={() => toggleItem(idx)}
                   className="w-full flex justify-between items-center text-left transition-colors"
                 >
-                  <h3 className="text-[18px] lg:text-[22px] xl:text-[28px] 2xl:text-[32px] xxl:text-[40px] 3xl:text-[56px] text-white leading-[1.2] pr-4">
+                  <h3 className="text-[18px] lg:text-[22px] xl:text-[28px] 2xl:text-[32px] xxl:text-[40px] 3xl:text-[56px] text-home leading-[1.2] pr-4">
                     <span className="font-normal">{item.label}:</span>{" "}
                     <span className="font-normal">{item.text}</span>
                   </h3>
@@ -164,7 +164,7 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
                   <div className="flex-shrink-0">
                     {isExpanded ? (
                       <svg
-                        className="w-6 h-6 lg:w-8 lg:h-8 2xl:w-10 2xl:h-10 text-white"
+                        className="w-6 h-6 lg:w-8 lg:h-8 2xl:w-10 2xl:h-10 text-home"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -178,7 +178,7 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
                       </svg>
                     ) : (
                       <svg
-                        className="w-6 h-6 lg:w-8 lg:h-8 2xl:w-10 2xl:h-10 text-white"
+                        className="w-6 h-6 lg:w-8 lg:h-8 2xl:w-10 2xl:h-10 text-home"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -207,17 +207,17 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
                     <StrapiRichDescription
                       value={item.description}
                       fallback="Fluent in innovation, tech, and crypto culture — we bridge creative vision with operational precision. From concept to completion, our team delivers full-scale event strategy, talent and programming, logistics, venue sourcing, art direction, and guest list curation. We handle every detail so your brand can own the moment — seamlessly merging storytelling, design, and experience."
-                      className="mt-[10px] mb-[6px] text-[14px] leading-relaxed text-white lg:mt-[20px] lg:mb-[10px] lg:text-[16px] 2xl:mt-[30px] 2xl:mb-[14px] 2xl:text-[20px] [&_p]:m-0"
+                      className="mt-[10px] mb-[6px] text-[14px] leading-relaxed text-home lg:mt-[20px] lg:mb-[10px] lg:text-[16px] 2xl:mt-[30px] 2xl:mb-[14px] 2xl:text-[20px] [&_p]:m-0"
                     />
 
                     {/* Scope of work */}
                     {seeOurWork && (
                       <div className="mb-[10px] lg:mb-[20px] 2xl:mb-[30px]">
-                        <h4 className="text-white text-[14px] lg:text-[16px] 2xl:text-[18px] font-semibold mb-[12px] lg:mb-[10px] 2xl:mb-[14px]">
+                        <h4 className="text-home text-[14px] lg:text-[16px] 2xl:text-[18px] font-semibold mb-[12px] lg:mb-[10px] 2xl:mb-[14px]">
                           See our Work
                         </h4>
                         <div className="flex flex-wrap gap-[8px] lg:gap-[12px] 2xl:gap-[16px]">
-                          <p className="text-white text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed mb-[6px] lg:mb-[10px] 2xl:mb-[14px]">
+                          <p className="text-home text-[14px] lg:text-[16px] 2xl:text-[20px] leading-relaxed mb-[6px] lg:mb-[10px] 2xl:mb-[14px]">
                             {seeOurWork}
                           </p>
                         </div>

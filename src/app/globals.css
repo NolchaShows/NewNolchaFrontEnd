@@ -18,6 +18,10 @@
 :root {
   --surface-color: #E2E2E2;
   --surface-color2:#F4F4F4;
+  --home-surface: #F3F3F3;
+  --home-text: #1A1A1A;
+  --home-text-muted: rgba(26, 26, 26, 0.7);
+  --home-border: rgba(26, 26, 26, 0.15);
   --primary-color:#E7F0D3;
   --secondary-color:#EBE2D7;
   --tertiary-color:#FFFFFF;
@@ -123,6 +127,34 @@
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+html.home-theme {
+  --surface-color: var(--home-surface);
+  --surface-color2: var(--home-surface);
+  --secondary-text-color: var(--home-text);
+}
+
+html.home-theme,
+html.home-theme .home-page {
+  background-color: var(--home-surface);
+  color: var(--home-text);
+}
+
+.bg-home-surface {
+  background-color: var(--home-surface);
+}
+
+.text-home {
+  color: var(--home-text);
+}
+
+.text-home-muted {
+  color: var(--home-text-muted);
+}
+
+.border-home {
+  border-color: var(--home-border);
 }
 
 html,

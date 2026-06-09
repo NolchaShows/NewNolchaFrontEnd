@@ -234,7 +234,9 @@ function Artists({
   isSlider,
   isTextLeft,
   isDesktop = false,
+  surface = "default",
 }) {
+  const isHomeSurface = surface === "home";
   const title =
     typeof artistData?.title === "string" ? artistData.title.trim() : "";
   const description =
@@ -287,21 +289,21 @@ function Artists({
           carouselArtists={carouselArtists}
         />
       )}
-      <div className="bg-black page-container flex flex-col gap-[30px] lg:gap-[35px] xl:gap-[40px] 2xl:gap-[0] 3xl:gap-[50px]">
+      <div className={`page-container flex flex-col gap-[30px] lg:gap-[35px] xl:gap-[40px] 2xl:gap-[0] 3xl:gap-[50px] ${isHomeSurface ? "bg-home-surface" : "bg-black"}`}>
         {(title || description) && (
-          <div className="flex w-[90%] lg:w-[85%] xl:w-[80%] 3xl:w-[75%] mx-auto justify-center xl:flex-row flex-col gap-[20px] 3xl:gap-[40px] text-white">
+          <div className={`flex w-[90%] lg:w-[85%] xl:w-[80%] 3xl:w-[75%] mx-auto justify-center xl:flex-row flex-col gap-[20px] 3xl:gap-[40px] ${isHomeSurface ? "text-home" : "text-white"}`}>
             <div
               className={`flex flex-col gap-[20px] 2xl:gap-[30px] 3xl:gap-[50px] font-bold lg:items-center lg:text-center ${isTextLeft ? "text-left lg:text-center" : "text-center"}`}
             >
               {title ? (
-                <SectionTitle disableTitleSpacing={true} className="text-white">
+                <SectionTitle disableTitleSpacing={true} tone={isHomeSurface ? "light" : "dark"}>
                   {title}
                 </SectionTitle>
               ) : null}
               {description ? (
                 <StrapiRichDescription
                   value={description}
-                  className="font-normal text-[16px] text-white md:text-[18px] xl:text-[20px] 2xl:text-4xl 3xl:text-5xl [&_p]:m-0"
+                  className={`font-normal text-[16px] md:text-[18px] xl:text-[20px] 2xl:text-4xl 3xl:text-5xl [&_p]:m-0 ${isHomeSurface ? "text-home" : "text-white"}`}
                 />
               ) : null}
             </div>
@@ -314,7 +316,7 @@ function Artists({
         )}
 
         {showViewAll && (
-          <div className="bg-black flex w-full flex-col items-center pt-4 lg:pt-6 2xl:pt-8 3xl:pt-10">
+          <div className="flex w-full flex-col items-center pt-4 lg:pt-6 2xl:pt-8 3xl:pt-10">
             {isExternalViewAll ? (
               <a
                 href={viewAllUrl}

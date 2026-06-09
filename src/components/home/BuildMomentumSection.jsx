@@ -99,7 +99,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
       : DEFAULT_PARTNER_LOGOS;
 
   return (
-    <section className="w-full bg-[#F3F3F3] text-[#1A1A1A] py-8 lg:py-16 lg:px-11 px-5 flex items-center">
+    <section className="w-full bg-home-surface text-home py-8 lg:py-16 lg:px-11 px-5 flex items-center">
       <div className="mx-auto w-full text-left">
         <h2 className="text-[34px] lg:text-[60px] font-medium mb-5 lg:mb-10 text-left">
           {heading}
@@ -129,7 +129,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
               href={ctaUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 lg:mt-10 mb-16 lg:mb-24 inline-flex w-fit items-center gap-1 text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70"
+              className="mt-8 lg:mt-10 mb-16 lg:mb-24 inline-flex w-fit items-center gap-1 text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-home hover:text-home-muted"
             >
               <span>{ctaText}</span>
               <span aria-hidden>↗</span>
@@ -138,7 +138,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
             <button
               type="button"
               onClick={() => navigateToContactLikeLetsTalk()}
-              className="mt-8 lg:mt-10 mb-16 lg:mb-24 inline-flex w-fit items-center gap-1 border-0 bg-transparent p-0 text-left text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70 cursor-pointer"
+              className="mt-8 lg:mt-10 mb-16 lg:mb-24 inline-flex w-fit items-center gap-1 border-0 bg-transparent p-0 text-left text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-home hover:text-home-muted cursor-pointer"
             >
               <span>{ctaText}</span>
               <span aria-hidden>↗</span>

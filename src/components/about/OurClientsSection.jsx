@@ -31,6 +31,7 @@ export default function OurClientsSection({
   ctaHref = "/contact-us",
   clientLogos = defaultClientLogos,
   hideTopRightContent = false,
+  surface = "default",
 }) {
   const [showAllMobileLogos, setShowAllMobileLogos] = useState(false);
   const href = ctaHref || "/contact-us";
@@ -108,7 +109,7 @@ export default function OurClientsSection({
   );
 
   return (
-    <section className="w-full bg-[#F4F4F4] px-5 py-16 lg:px-11 lg:py-24">
+    <section className={`w-full px-5 py-16 lg:px-11 lg:py-24 ${surface === "home" ? "bg-home-surface text-home" : "bg-[#F4F4F4]"}`}>
       <div className="mx-auto w-full max-w-[1800px]">
         <div
           className={

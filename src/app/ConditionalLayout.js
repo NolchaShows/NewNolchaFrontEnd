@@ -1,6 +1,7 @@
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import LetsChatModalHost from "@/components/Modals/LetsChatModalHost";
+import HomeThemeProvider from "@/components/layout/HomeThemeProvider";
 import {
   getCharityPages,
   getNavigationMenu,
@@ -24,15 +25,13 @@ export default async function ConditionalLayout({ children }) {
   };
 
   return (
-    <>
+    <HomeThemeProvider>
       <div className="bg-[var(--surface-color)]">
         <Navbar initialNavData={initialNavData} />
       </div>
-      <div>
-        {children}
-      </div>
+      <div>{children}</div>
       <Footer />
       <LetsChatModalHost />
-    </>
+    </HomeThemeProvider>
   );
 }

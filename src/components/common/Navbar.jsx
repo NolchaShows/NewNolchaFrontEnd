@@ -290,6 +290,43 @@ function Navbar({ initialNavData = null }) {
     pathname?.startsWith("/designers/") ||
     pathname?.startsWith("/terms-of-use") ||
     pathname?.startsWith("/privacy-policy");
+  const shouldUseHomeLightHeader = pathname === "/";
+  const navLabelClass = shouldUseHomeLightHeader
+    ? "text-[var(--home-text)]"
+    : "text-white";
+  const navSubtitleClass = shouldUseHomeLightHeader
+    ? "text-[var(--home-text-muted)]"
+    : "text-white/70";
+  const navScrollBgClass = shouldUseHomeLightHeader
+    ? "lg:!bg-[var(--home-surface)]"
+    : "lg:!bg-black";
+  const navMegaPanelClass = shouldUseHomeLightHeader
+    ? "rounded-[20px] bg-white border border-home shadow-lg"
+    : "rounded-[20px] bg-black";
+  const navMegaSectionLabelClass = shouldUseHomeLightHeader
+    ? "text-home-muted"
+    : "text-white/70";
+  const navMegaLinkClass = shouldUseHomeLightHeader
+    ? "block text-[20px] xxl:text-[26px] leading-[1.15] text-home hover:text-primary transition-opacity"
+    : "block text-[20px] xxl:text-[26px] leading-[1.15] text-white hover:text-primary transition-opacity";
+  const navMegaPreviewWrapClass = shouldUseHomeLightHeader
+    ? "bg-home-surface border border-home rounded-[20px] p-6 xxl:p-10 shadow-sm flex flex-col w-[400px] xxl:w-[500px]"
+    : "bg-[#0E0E0E] border border-white/10 rounded-[20px] p-6 xxl:p-10 shadow-sm flex flex-col w-[400px] xxl:w-[500px]";
+  const navMegaPreviewImageBgClass = shouldUseHomeLightHeader
+    ? "bg-white"
+    : "bg-[#1A1A1A]";
+  const mobileDrawerBgClass = shouldUseHomeLightHeader
+    ? "bg-[var(--home-surface)]"
+    : "bg-black";
+  const mobileBorderClass = shouldUseHomeLightHeader
+    ? "border-home"
+    : "border-white/10";
+  const mobileSubmenuClass = shouldUseHomeLightHeader
+    ? "mt-1 bg-white rounded-[14px] border border-home p-4"
+    : "mt-1 bg-[#0E0E0E] rounded-[14px] border border-white/10 p-4";
+  const mobileSubmenuLinkClass = shouldUseHomeLightHeader
+    ? "block text-[16px] text-home hover:text-primary transition-colors"
+    : "block text-[16px] text-white/90 hover:text-primary transition-colors";
   const initialNavbarState = useMemo(
     () => buildNavbarState(initialNavData),
     [initialNavData]
@@ -570,11 +607,10 @@ function Navbar({ initialNavData = null }) {
       // Auto-open the second row (links) when scrolled down
       if (hasScrolledDown) {
         setIsDesktopSecondRowOpen(true);
-        // Force the background to black when scrolled down and open
-        desktopNavbarRef.current?.classList.add('lg:!bg-black');
+        desktopNavbarRef.current?.classList.add(navScrollBgClass);
       } else if (isAtTop) {
         setIsDesktopSecondRowOpen(false);
-        desktopNavbarRef.current?.classList.remove('lg:!bg-black');
+        desktopNavbarRef.current?.classList.remove(navScrollBgClass);
       }
     };
 
@@ -589,7 +625,7 @@ function Navbar({ initialNavData = null }) {
       if (typeof mq.removeEventListener === "function") mq.removeEventListener("change", update);
       else if (typeof mq.removeListener === "function") mq.removeListener(update);
     };
-  }, []);
+  }, [navScrollBgClass]);
 
   useEffect(() => {
     setHoveredMegaItemImage(null);
@@ -712,7 +748,7 @@ function Navbar({ initialNavData = null }) {
     const RightChevron = (
       <svg
         className={[
-          "w-5 h-5 text-white/80 transition-transform duration-200",
+          `w-5 h-5 transition-transform duration-200 ${shouldUseHomeLightHeader ? "text-home-muted" : "text-white/80"}`,
           isExpanded ? "rotate-180" : "",
         ].join(" ")}
         viewBox="0 0 20 20"
@@ -734,12 +770,10 @@ function Navbar({ initialNavData = null }) {
     const RowHeader = ({ showChevron, onChevronClick }) => (
       <div className="py-4 flex items-start justify-between gap-4">
         <div className="flex-1">
-          <div className="font-[700] text-[20px] leading-[1.1] text-white">
+          <div className={`font-[700] text-[20px] leading-[1.1] ${navLabelClass}`}>
             {item.label}
           </div>
-          <div
-            className="mt-1 text-[13px] text-white/60"
-          >
+          <div className={`mt-1 text-[13px] ${navSubtitleClass}`}>
             {item.subtitle}
           </div>
         </div>
@@ -749,7 +783,7 @@ function Navbar({ initialNavData = null }) {
             aria-label={isExpanded ? "Collapse section" : "Expand section"}
             aria-expanded={Boolean(isExpanded)}
             onClick={onChevronClick}
-            className="pt-1 w-10 h-10 -mr-2 inline-flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+            className={`pt-1 w-10 h-10 -mr-2 inline-flex items-center justify-center rounded-full transition-colors ${shouldUseHomeLightHeader ? "hover:bg-black/5" : "hover:bg-white/10"}`}
           >
             {RightChevron}
           </button>
@@ -759,7 +793,7 @@ function Navbar({ initialNavData = null }) {
 
     if (item.isModal) {
       return (
-        <div className="border-b border-white/10">
+        <div className={`border-b ${mobileBorderClass}`}>
           <button
             type="button"
             onClick={handleModalClick(item.modalType)}
@@ -775,7 +809,7 @@ function Navbar({ initialNavData = null }) {
       const parentHref = getNavItemLinkHref(item);
 
       return (
-        <div className="border-b border-white/10">
+        <div className={`border-b ${mobileBorderClass}`}>
           <div className="py-4 flex items-start justify-between gap-4">
             <button
               type="button"
@@ -787,17 +821,17 @@ function Navbar({ initialNavData = null }) {
                 }
               }}
             >
-              <div className="font-[700] text-[20px] leading-[1.1] text-white">
+              <div className={`font-[700] text-[20px] leading-[1.1] ${navLabelClass}`}>
                 {item.label}
               </div>
-              <div className="mt-1 text-[13px] text-white/60">{item.subtitle}</div>
+              <div className={`mt-1 text-[13px] ${navSubtitleClass}`}>{item.subtitle}</div>
             </button>
             <button
               type="button"
               aria-label={isExpanded ? "Collapse section" : "Expand section"}
               aria-expanded={Boolean(isExpanded)}
               onClick={() => toggleMobileDropdown(item.key)}
-              className="pt-1 w-10 h-10 -mr-2 inline-flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+              className={`pt-1 w-10 h-10 -mr-2 inline-flex items-center justify-center rounded-full transition-colors ${shouldUseHomeLightHeader ? "hover:bg-black/5" : "hover:bg-white/10"}`}
             >
               {RightChevron}
             </button>
@@ -811,7 +845,7 @@ function Navbar({ initialNavData = null }) {
           >
             <div className="overflow-hidden">
               <div className="pb-4">
-                <div className="mt-1 bg-[#0E0E0E] rounded-[14px] border border-white/10 p-4">
+                <div className={mobileSubmenuClass}>
                   <div className="space-y-3">
                     {mobileDropdownItems.map((dropdownItem, dropdownIdx) =>
                       dropdownItem.isExternal ? (
@@ -820,7 +854,7 @@ function Navbar({ initialNavData = null }) {
                           href={dropdownItem.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block text-[16px] text-white/90 hover:text-primary transition-colors"
+                          className={mobileSubmenuLinkClass}
                           onClick={() => handleDropdownLinkClick(dropdownItem)}
                         >
                           {dropdownItem.label}
@@ -829,7 +863,7 @@ function Navbar({ initialNavData = null }) {
                         <Link
                           key={dropdownIdx}
                           href={dropdownItem.href}
-                          className="block text-[16px] text-white/90 hover:text-primary transition-colors"
+                          className={mobileSubmenuLinkClass}
                           onClick={() => handleDropdownLinkClick(dropdownItem)}
                         >
                           {dropdownItem.label}
@@ -846,7 +880,7 @@ function Navbar({ initialNavData = null }) {
     }
 
     return (
-      <div className="border-b border-white/10">
+      <div className={`border-b ${mobileBorderClass}`}>
         <button
           type="button"
           className="w-full text-left"
@@ -870,10 +904,13 @@ function Navbar({ initialNavData = null }) {
         data-navbar="main"
         ref={desktopNavbarRef}
         className={[
-          "sticky top-0 left-0 right-0 w-full bg-black",
+          "sticky top-0 left-0 right-0 w-full",
+          shouldUseHomeLightHeader ? "bg-[var(--home-surface)]" : "bg-black",
           shouldUseBlackDesktopHeader
             ? "lg:fixed lg:bg-black"
-            : "lg:fixed lg:bg-transparent lg:hover:bg-black",
+            : shouldUseHomeLightHeader
+              ? "lg:fixed lg:bg-[var(--home-surface)]"
+              : "lg:fixed lg:bg-transparent lg:hover:bg-black",
           "transition-colors duration-300 z-40 group",
           "lg:transition-transform lg:duration-300 lg:ease-[cubic-bezier(0.22,1,0.36,1)]",
           isDesktopHidden ? "lg:-translate-y-full" : "lg:translate-y-0",
@@ -887,8 +924,8 @@ function Navbar({ initialNavData = null }) {
           // Only close on mouse leave if we're NOT scrolled down
           if (window.scrollY <= 100) {
             setIsDesktopSecondRowOpen(false);
-            if (!shouldUseBlackDesktopHeader) {
-              desktopNavbarRef.current?.classList.remove('lg:!bg-black');
+            if (!shouldUseBlackDesktopHeader && !shouldUseHomeLightHeader) {
+              desktopNavbarRef.current?.classList.remove(navScrollBgClass);
             }
           }
           setActiveDesktopMegaMenu(null);
@@ -901,7 +938,7 @@ function Navbar({ initialNavData = null }) {
             <Link href="/" className="flex items-center">
               <img
                 src="/navbar/logo.webp"
-                className="h-10 lg:h-12 2xl:h-14 xxl:h-16"
+                className={`h-10 lg:h-12 2xl:h-14 xxl:h-16 ${shouldUseHomeLightHeader ? "brightness-0" : ""}`}
                 alt="NOLCHA"
               />
             </Link>
@@ -911,14 +948,14 @@ function Navbar({ initialNavData = null }) {
             {/* Mobile menu icon (right of logo) */}
             <button
               type="button"
-              className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors"
+              className={`lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors ${shouldUseHomeLightHeader ? "hover:bg-black/5" : "hover:bg-white/10"}`}
               aria-label="Open menu"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M4 7H20M4 12H20M4 17H20"
-                  stroke="#FFFFFF"
+                  stroke={shouldUseHomeLightHeader ? "#1A1A1A" : "#FFFFFF"}
                   strokeWidth="2"
                   strokeLinecap="round"
                 />
@@ -1092,11 +1129,11 @@ function Navbar({ initialNavData = null }) {
                           <div
                             className={item.hasDropdown ? "cursor-default" : "cursor-pointer"}
                           >
-                            <div className="flex items-center text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px]">
+                            <div className={`flex items-center text-[18px] mb-1 2xl:text-[22px] xxl:text-[24px] ${navLabelClass}`}>
                               {item.label}
                               {item.hasDropdown && (
                                 <svg
-                                  className="ml-2 w-[24px] h-[24px] 2xl:w-[28px] 2xl:h-[28px] xxl:w-[30px] xxl:h-[30px] text-white"
+                                  className={`ml-2 w-[24px] h-[24px] 2xl:w-[28px] 2xl:h-[28px] xxl:w-[30px] xxl:h-[30px] ${navLabelClass}`}
                                   fill="currentColor"
                                   viewBox="0 0 24 24"
                                 >
@@ -1104,7 +1141,7 @@ function Navbar({ initialNavData = null }) {
                                 </svg>
                               )}
                             </div>
-                            <div className="text-[14px] text-white/70 2xl:text-[16px] xxl:text-[18px]">
+                            <div className={`text-[14px] 2xl:text-[16px] xxl:text-[18px] ${navSubtitleClass}`}>
                               {item.subtitle}
                             </div>
                           </div>
@@ -1116,11 +1153,11 @@ function Navbar({ initialNavData = null }) {
                           href={linkHref}
                           className="block hover:opacity-80 transition-opacity cursor-pointer"
                         >
-                          <div className="flex items-center text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px]">
+                          <div className={`flex items-center text-[18px] mb-1 2xl:text-[22px] xxl:text-[24px] ${navLabelClass}`}>
                             {item.label}
                             {item.hasDropdown && (
                               <svg
-                                className="ml-2 w-[24px] h-[24px] 2xl:w-[28px] 2xl:h-[28px] xxl:w-[30px] xxl:h-[30px] text-white"
+                                className={`ml-2 w-[24px] h-[24px] 2xl:w-[28px] 2xl:h-[28px] xxl:w-[30px] xxl:h-[30px] ${navLabelClass}`}
                                 fill="currentColor"
                                 viewBox="0 0 24 24"
                               >
@@ -1128,7 +1165,7 @@ function Navbar({ initialNavData = null }) {
                               </svg>
                             )}
                           </div>
-                          <div className="text-[14px] text-white/70 2xl:text-[16px] xxl:text-[18px]">
+                          <div className={`text-[14px] 2xl:text-[16px] xxl:text-[18px] ${navSubtitleClass}`}>
                             {item.subtitle}
                           </div>
                         </Link>
@@ -1166,10 +1203,10 @@ function Navbar({ initialNavData = null }) {
               hoveredMegaItemImage || cfg.items?.[0]?.imageSrc || cfg.imageSrc;
             return (
               <div className="pt-3">
-                <div className="w-[746px] xxl:w-[900px] min-h-[427px] xxl:min-h-[550px] max-h-[85vh] overflow-y-auto rounded-[20px] bg-black">
+                <div className={`w-[746px] xxl:w-[900px] min-h-[427px] xxl:min-h-[550px] max-h-[85vh] overflow-y-auto ${navMegaPanelClass}`}>
                   <div className="grid grid-cols-[1fr_400px] xxl:grid-cols-[1fr_500px] gap-6 p-6 xxl:p-10 items-start">
                     <div className="min-w-0">
-                      <div className="text-[16px] xxl:text-[20px] text-white/70 mb-4">
+                      <div className={`text-[16px] xxl:text-[20px] mb-4 ${navMegaSectionLabelClass}`}>
                         {cfg.sectionLabel}
                       </div>
                       <div className="space-y-[14px] xxl:space-y-[20px]">
@@ -1180,7 +1217,7 @@ function Navbar({ initialNavData = null }) {
                               href={it.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="block text-[20px] xxl:text-[26px] leading-[1.15] text-white hover:text-primary transition-opacity"
+                              className={navMegaLinkClass}
                               onMouseEnter={() => setHoveredMegaItemImage(it.imageSrc || null)}
                               onClick={() => handleDropdownLinkClick(it)}
                             >
@@ -1190,7 +1227,7 @@ function Navbar({ initialNavData = null }) {
                             <Link
                               key={`${it.href}-${i}`}
                               href={it.href}
-                              className="block text-[20px] xxl:text-[26px] leading-[1.15] text-white hover:text-primary transition-opacity"
+                              className={navMegaLinkClass}
                               onMouseEnter={() => setHoveredMegaItemImage(it.imageSrc || null)}
                               onClick={() => handleDropdownLinkClick(it)}
                             >
@@ -1202,8 +1239,8 @@ function Navbar({ initialNavData = null }) {
                     </div>
 
                     <div className="self-start">
-                      <div className="bg-[#0E0E0E] border border-white/10 rounded-[20px] p-6 xxl:p-10 shadow-sm flex flex-col w-[400px] xxl:w-[500px]">
-                        <div className="h-[300px] xxl:h-[380px] w-full rounded-[24px] overflow-hidden bg-[#1A1A1A] shrink-0">
+                      <div className={navMegaPreviewWrapClass}>
+                        <div className={`h-[300px] xxl:h-[380px] w-full rounded-[24px] overflow-hidden shrink-0 ${navMegaPreviewImageBgClass}`}>
                           <img
                             src={previewImageSrc}
                             alt={`${cfg.sectionLabel} preview`}
@@ -1234,20 +1271,20 @@ function Navbar({ initialNavData = null }) {
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
-          <div className="absolute right-0 top-0 h-full w-full max-w-[380px] bg-black shadow-2xl overflow-y-auto">
+          <div className={`absolute right-0 top-0 h-full w-full max-w-[380px] shadow-2xl overflow-y-auto ${mobileDrawerBgClass}`}>
             <div className="px-6 pt-5 pb-6">
               {/* Drawer Header */}
               <div className="flex items-center justify-between">
                 <img
                   src="/navbar/logo.webp"
                   alt="NOLCHA"
-                  className="h-8"
+                  className={`h-8 ${shouldUseHomeLightHeader ? "brightness-0" : ""}`}
                 />
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-label="Close menu"
-                  className="w-10 h-10 inline-flex items-center justify-center text-[28px] leading-none text-white/80 hover:text-white"
+                  className={`w-10 h-10 inline-flex items-center justify-center text-[28px] leading-none ${shouldUseHomeLightHeader ? "text-home-muted hover:text-home" : "text-white/80 hover:text-white"}`}
                 >
                   ×
                 </button>
@@ -1261,7 +1298,7 @@ function Navbar({ initialNavData = null }) {
               </nav>
 
               {/* Bottom CTA */}
-              <div className="sticky bottom-0 pt-6 pb-4 bg-black border-t border-white/10">
+              <div className={`sticky bottom-0 pt-6 pb-4 border-t ${mobileBorderClass} ${mobileDrawerBgClass}`}>
                 <div className="flex items-center gap-3">
                   <button
                     type="button"

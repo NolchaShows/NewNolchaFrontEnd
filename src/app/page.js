@@ -447,8 +447,8 @@ export default async function Home() {
   const heroVideo = "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4";
 
   return (
-    <div className="">
-      <div className="bg-[var(--surface-color2)]">
+    <div className="home-page">
+      <div className="bg-home-surface">
         {homePage?.hero?.video?.url ? (
           <HeroSection slug="home" pageType="home" page={homePage} />
         ) : (
@@ -483,6 +483,7 @@ export default async function Home() {
               title={eveningRecap.title}
               videos={eveningRecap.videos}
               videoUrl={eveningRecap.videoUrl}
+              tone="light"
             />
           )}
           <ExploreServices
@@ -513,6 +514,7 @@ export default async function Home() {
           />
           <OurClientsSection
             hideTopRightContent
+            surface="home"
             label={homeClientsSection.label}
             title={homeClientsSection.title}
             ctaText={homeClientsSection.ctaText}
@@ -526,6 +528,7 @@ export default async function Home() {
           <PastSpeakers
             title={speakerData?.title || "Featured Speakers"}
             speakers={speakerData?.speakers?.length ? speakerData.speakers : undefined}
+            tone="light"
           />
         </div>
       </div>
@@ -566,7 +569,8 @@ export default async function Home() {
       <Artists
         artistData={artistData}
         loading={false}
-        textColor={"text-[var(--tertiary-text-color)]"}
+        textColor={"text-[var(--home-text)]"}
+        surface="home"
         videos={videos}
         isDesktop={true}
       />
@@ -577,7 +581,7 @@ export default async function Home() {
           "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-3.mp4"
         }
       />
-      <div className="lg:px-11 px-5 pt-4 lg:pt-8">
+      <div className="bg-home-surface lg:px-11 px-5 pt-4 lg:pt-8">
         <MediaGalleryGrid 
           items={
             homeGalleryItems.length
@@ -605,6 +609,7 @@ export default async function Home() {
         posts={tweetsData}
         carousalData={homeTweetCarousel || undefined}
         cardVariant="light"
+        variant="light"
         padding=""
         title="Community Moments"
       />

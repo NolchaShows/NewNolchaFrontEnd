@@ -78,6 +78,7 @@ export default function HomeUpcomingEventsSection({
       openEventSlug={requestedUpcomingSlug}
       onOpenEventHandled={handleUpcomingEventHandled}
       fallbackTweetCarousel={fallbackTweetCarousel}
+      tone="light"
     />
   );
 }

@@ -46,6 +46,7 @@ export default async function EveningRecapSection({
         title={sectionTitle}
         videos={slideEntries}
         paddingTop={undefined}
+        tone={pageType === "home" ? "light" : "dark"}
       />
     );
   }
@@ -53,12 +54,13 @@ export default async function EveningRecapSection({
   const videoUrl = resolveStrapiFileUrl(block.video) || "";
   if (!videoUrl) return null;
 
-  return (
+    return (
     <EveningRecap
       year="2024"
       title={sectionTitle}
       videoUrl={videoUrl}
       paddingTop={undefined}
+      tone={pageType === "home" ? "light" : "dark"}
     />
   );
 }
