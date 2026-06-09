@@ -123,7 +123,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
         {/* Right side - Content */}
         <div className="flex-1 flex flex-col">
           {/* Main heading */}
-          <h1 className="text-[28px] lg:text-[32px] xl:text-[36px] 2xl:text-[40px] xxl:text-[48px] 3xl:text-[56px] font-bold text-white leading-tight mb-[30px] lg:mb-[35px] xl:mb-[40px] 2xl:mb-[45px] xxl:mb-[50px] 3xl:mb-[60px]">
+          <h1 className="text-[28px] lg:text-[32px] xl:text-[36px] 2xl:text-[40px] xxl:text-[48px] 3xl:text-[56px] text-white leading-tight mb-[30px] lg:mb-[35px] xl:mb-[40px] 2xl:mb-[45px] xxl:mb-[50px] 3xl:mb-[60px]">
             {heading}
           </h1>
 
@@ -141,7 +141,7 @@ const NolchaExperience = ({ nolchaExperienceData, loading }) => {
                     onClick={() => toggleSection(section.id)}
                     className="w-full flex justify-between items-center px-[16px] lg:px-[20px] xl:px-[24px] 2xl:px-[28px] xxl:px-[32px] py-[16px] lg:py-[18px] xl:py-[20px] 2xl:py-[22px] xxl:py-[24px] text-left transition-colors hover:bg-black/80"
                   >
-                    <h2 className="text-[18px] lg:text-[21px] xl:text-[24px] 2xl:text-[28px] xxl:text-[32px] 3xl:text-[40px] font-bold text-white leading-tight pr-4">
+                    <h2 className="text-[18px] lg:text-[21px] xl:text-[24px] 2xl:text-[28px] xxl:text-[32px] 3xl:text-[40px] text-white leading-tight pr-4">
                       {section.title}
                     </h2>
                     {/* Chevron Icon */}

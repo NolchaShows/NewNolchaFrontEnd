@@ -88,7 +88,7 @@ function Footer() {
       <div className="bg-black flex flex-col gap-[60px] lg:gap-[80px] items-end pb-[20px] pt-[60px] lg:pt-[80px] px-[20px] lg:px-[60px] relative rounded-[20px] w-full">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[30px] lg:gap-[100px] w-full">
           <div className="flex flex-col gap-[20px] items-start w-full lg:w-auto">
-            <h2 className="text-[32px] lg:text-[40px] 2xl:text-[48px] font-black leading-[1.2] tracking-[-1.44px] text-white whitespace-pre-wrap">
+            <h2 className="text-[32px] lg:text-[40px] 2xl:text-[48px] leading-[1.2] text-white whitespace-pre-wrap">
               {stayInformed.title}
             </h2>
             <StrapiRichDescription
@@ -184,7 +184,7 @@ function Footer() {
 
           <div className="flex flex-col lg:flex-row gap-[40px] lg:gap-[100px] items-start w-full lg:w-auto">
             <div className="flex flex-col gap-[24px] items-start">
-              <h3 className="font-bold leading-[1.6] text-[18px] lg:text-[20px] text-[#FDFFE7] tracking-[-0.6px] whitespace-nowrap">
+              <h3 className="leading-[1.6] text-[18px] lg:text-[20px] text-[#FDFFE7] whitespace-nowrap">
                 {quickLinks.title}
               </h3>
               <div className="flex flex-col gap-[12px] items-start font-normal leading-[1.5] opacity-80 text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px]">
@@ -197,7 +197,7 @@ function Footer() {
             </div>
 
             <div className="flex flex-col gap-[24px] items-start">
-              <h3 className="font-bold leading-[1.6] text-[18px] lg:text-[20px] text-[#FDFFE7] tracking-[-0.6px] whitespace-nowrap">
+              <h3 className="leading-[1.6] text-[18px] lg:text-[20px] text-[#FDFFE7] whitespace-nowrap">
                 {resources.title}
               </h3>
               <div className="flex flex-col gap-[12px] items-start font-normal leading-[1.5] opacity-80 text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px]">
@@ -210,7 +210,7 @@ function Footer() {
             </div>
 
             <div className="flex flex-col gap-[24px] items-start w-full lg:w-[273px]">
-              <h3 className="font-bold leading-[1.6] text-[18px] lg:text-[20px] text-[#FDFFE7] tracking-[-0.6px] whitespace-nowrap">
+              <h3 className="leading-[1.6] text-[18px] lg:text-[20px] text-[#FDFFE7] whitespace-nowrap">
                 {contact.title}
               </h3>
               <div className="flex flex-col gap-[12px] items-start font-normal leading-[1.5] opacity-80 text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px] w-full">

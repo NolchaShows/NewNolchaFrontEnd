@@ -1092,7 +1092,7 @@ function Navbar({ initialNavData = null }) {
                           <div
                             className={item.hasDropdown ? "cursor-default" : "cursor-pointer"}
                           >
-                            <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px]">
+                            <div className="flex items-center text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px]">
                               {item.label}
                               {item.hasDropdown && (
                                 <svg
@@ -1116,7 +1116,7 @@ function Navbar({ initialNavData = null }) {
                           href={linkHref}
                           className="block hover:opacity-80 transition-opacity cursor-pointer"
                         >
-                          <div className="flex items-center font-bold text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px]">
+                          <div className="flex items-center text-[18px] text-white mb-1 2xl:text-[22px] xxl:text-[24px]">
                             {item.label}
                             {item.hasDropdown && (
                               <svg
@@ -1180,7 +1180,7 @@ function Navbar({ initialNavData = null }) {
                               href={it.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="block text-[20px] xxl:text-[26px] leading-[1.15] font-[500] text-white hover:text-primary transition-opacity"
+                              className="block text-[20px] xxl:text-[26px] leading-[1.15] text-white hover:text-primary transition-opacity"
                               onMouseEnter={() => setHoveredMegaItemImage(it.imageSrc || null)}
                               onClick={() => handleDropdownLinkClick(it)}
                             >
@@ -1190,7 +1190,7 @@ function Navbar({ initialNavData = null }) {
                             <Link
                               key={`${it.href}-${i}`}
                               href={it.href}
-                              className="block text-[20px] xxl:text-[26px] leading-[1.15] font-[500] text-white hover:text-primary transition-opacity"
+                              className="block text-[20px] xxl:text-[26px] leading-[1.15] text-white hover:text-primary transition-opacity"
                               onMouseEnter={() => setHoveredMegaItemImage(it.imageSrc || null)}
                               onClick={() => handleDropdownLinkClick(it)}
                             >

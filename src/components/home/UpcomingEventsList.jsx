@@ -177,7 +177,7 @@ const UpcomingEventsList = ({
                     )}
                     {/* Middle title */}
                     <div className="flex-1 text-center sm:text-left">
-                      <h3 className="text-[24px] lg:text-[32px] 2xl:text-[48px] font-bold text-black leading-tight">
+                      <h3 className="text-[24px] lg:text-[32px] 2xl:text-[48px] text-black leading-tight">
                         {ev.title}
                       </h3>
                     </div>
@@ -185,7 +185,7 @@ const UpcomingEventsList = ({
                   {/* Right details */}
                   <div className="w-full lg:w-auto flex flex-col items-center lg:items-start gap-4 lg:gap-[10px] 2xl:gap-[20px]">
                     <p className="text-[18px] lg:text-[28px] 2xl:text-[40px] text-black text-center lg:text-left">
-                      <span className="font-bold">Date:</span> {display.date}
+                      <span>Date:</span> {display.date}
                     </p>
                     <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-3 lg:gap-4 2xl:gap-5">
                       <button
@@ -249,7 +249,7 @@ const UpcomingEventsList = ({
                 </div>
               ) : (
                 <div className="bg-secondary hover:bg-primary px-[16px] py-[18px] lg:px-[24px] lg:py-[28px] 2xl:px-[50px] 2xl:py-[50px] group">
-                  <h3 className="text-[20px] lg:text-[32px] 2xl:text-[48px] font-bold text-white group-hover:text-black transition-colors">
+                  <h3 className="text-[20px] lg:text-[32px] 2xl:text-[48px] text-white group-hover:text-black transition-colors">
                     {ev.title}
                   </h3>
                 </div>

@@ -165,7 +165,7 @@ const ContactForm = ({ bg, heading, desc, isButton, contactData, videoSrc }) => 
             />
           ) : null}
           
-          <p className="text-white text-[16px] lg:text-[24px] 2xl:text-[30px] font-bold mb-6 lg:mb-10 2xl:mb-[70px]">You're in great company.</p>
+          <p className="text-white text-[16px] lg:text-[24px] 2xl:text-[30px] mb-6 lg:mb-10 2xl:mb-[70px]">You're in great company.</p>
 
           <div className="flex justify-center lg:justify-start">
             {!isButton ? (
