@@ -101,7 +101,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
   return (
     <section className="w-full bg-[#F3F3F3] text-[#1A1A1A] py-8 lg:py-16 lg:px-11 px-5 flex items-center">
       <div className="mx-auto w-full text-left">
-        <h2 className="text-[34px] lg:text-[60px] font-medium mb-5 lg:mb-10 text-left">
+        <h2 className="text-[34px] lg:text-[60px] font-medium mb-5 lg:mb-10 text-left uppercase">
           {heading}
         </h2>
 
