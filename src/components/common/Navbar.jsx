@@ -18,6 +18,8 @@ import {
   navigateToContactLikeLetsTalk,
   scrollToContactSection,
 } from "@/lib/letsTalkNavigation";
+import HeaderSocialLink from "@/components/common/HeaderSocialLink";
+import { useFooterContent } from "@/utils/footerUtils";
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
@@ -270,11 +272,9 @@ function Navbar({ initialNavData = null }) {
     FORCE_DESKTOP_MEGA_OPEN ? FORCED_DESKTOP_MEGA_KEY : null
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const shareRef = useRef(null);
-  const mobileShareRef = useRef(null);
   const desktopNavbarRef = useRef(null);
-  const [isShareDropdownOpen, setIsShareDropdownOpen] = useState(false);
   const prevBodyOverflowRef = useRef("");
+  const { content: footerContent } = useFooterContent();
   const [isDesktopHidden, setIsDesktopHidden] = useState(false);
   const [megaDropdownLeft, setMegaDropdownLeft] = useState(null);
   const [hoveredMegaItemImage, setHoveredMegaItemImage] = useState(null);
@@ -309,10 +309,10 @@ function Navbar({ initialNavData = null }) {
   // Mobile dropdown states
   const [mobileDropdowns, setMobileDropdowns] = useState({});
 
-  // Share functions
-  const handleTwitterShare = () => {
-    window.open('https://x.com/nolchashows', '_blank');
-  };
+  const xSocialLink = useMemo(() => {
+    const links = footerContent?.socialLinks || [];
+    return links.find((item) => item.platform === "x") || null;
+  }, [footerContent?.socialLinks]);
 
   const fallbackVisibleMenuItems = [
     {
@@ -907,8 +907,8 @@ function Navbar({ initialNavData = null }) {
             </Link>
           </div>
 
-          <div className="flex items-center gap-4">
-            {/* Mobile menu icon (right of logo) */}
+          <div className="flex items-center gap-3 lg:gap-4">
+            {/* Mobile menu icon */}
             <button
               type="button"
               className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors"
@@ -978,8 +978,24 @@ function Navbar({ initialNavData = null }) {
               </div> */}
             {/* </div> */}
 
-            {/* Right Side - Buttons and Social Icons */}
-            <div className="flex items-center gap-[30px] 2xl:gap-[34px] xxl:gap-[40px]">
+            {/* Right Side - Social + CTA */}
+            <div className="flex items-center gap-4 2xl:gap-5 xxl:gap-6">
+              {xSocialLink?.url ? (
+                <>
+                  <HeaderSocialLink
+                    href={xSocialLink.url}
+                    platform="x"
+                    label={xSocialLink.label || "Follow on X"}
+                    size="md"
+                    className="hidden lg:inline-flex"
+                  />
+                  <span
+                    className="hidden lg:block h-8 w-px bg-white/15"
+                    aria-hidden
+                  />
+                </>
+              ) : null}
+
               <div className="flex items-center group relative">
                 {/* Lets Talk Button */}
                 <button
@@ -1293,6 +1309,17 @@ function Navbar({ initialNavData = null }) {
                     </svg>
                   </button>
                 </div>
+
+                {xSocialLink?.url ? (
+                  <div className="mt-3 flex justify-center">
+                    <HeaderSocialLink
+                      href={xSocialLink.url}
+                      platform="x"
+                      label={xSocialLink.label || "Follow on X"}
+                      size="sm"
+                    />
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
