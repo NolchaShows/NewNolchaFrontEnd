@@ -20,12 +20,15 @@ export const DEFAULT_FOOTER_CONTENT = {
   logoUrl: "/footer/logo.png",
   description:
     "Nolcha has been at the forefront of technology, culture, and immersive experiences producing high-impact events, summits, and activations for visionary brands and the world's leading blockchain, AI, and crypto conferences..",
-  social: {
-    linkedin:
-      "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.nolcha.com%2Fcontent-for-swiper-with-popup%2Fart-basel-2025-xw6ct",
-    instagram: "https://www.instagram.com/nolchashows",
-    x: "https://x.com/nolchashows",
-  },
+  socialLinks: [
+    {
+      platform: "linkedin",
+      label: "LinkedIn",
+      url: "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.nolcha.com%2Fcontent-for-swiper-with-popup%2Fart-basel-2025-xw6ct",
+    },
+    { platform: "instagram", label: "Instagram", url: "https://www.instagram.com/nolchashows" },
+    { platform: "x", label: "X", url: "https://x.com/nolchashows" },
+  ],
   quickLinks: {
     title: "Quick Links:",
     links: [
@@ -56,6 +59,35 @@ export const DEFAULT_FOOTER_CONTENT = {
  * @param {unknown} data - Strapi `data` payload (or full response body)
  * @returns {typeof DEFAULT_FOOTER_CONTENT}
  */
+const normSocialLinks = (links) => {
+  if (!Array.isArray(links)) return [];
+  return links
+    .map((item) => {
+      const raw = unwrapStrapiEntry(item) || item;
+      const platform = String(raw?.platform || "other").toLowerCase();
+      const url = String(raw?.url || "").trim();
+      const label =
+        String(raw?.label || "").trim() ||
+        (platform === "x" ? "X" : platform.charAt(0).toUpperCase() + platform.slice(1));
+      return { platform, label, url };
+    })
+    .filter((item) => item.url);
+};
+
+const legacySocialLinks = (f) => {
+  const entries = [
+    { platform: "linkedin", label: "LinkedIn", url: f?.social_linkedin },
+    { platform: "instagram", label: "Instagram", url: f?.social_instagram },
+    { platform: "x", label: "X", url: f?.social_x },
+  ];
+  return entries
+    .map((item) => ({
+      ...item,
+      url: String(item.url || "").trim(),
+    }))
+    .filter((item) => item.url);
+};
+
 export function mapStrapiDataToFooterContent(data) {
   const raw = data?.data != null ? data.data : data;
   const f = unwrapStrapiEntry(raw) || raw;
@@ -72,6 +104,13 @@ export function mapStrapiDataToFooterContent(data) {
   const quickList = normLinks(quick);
   const resTitle = (res?.title || DEFAULT_FOOTER_CONTENT.resources.title).trim();
   const resList = normLinks(res);
+  const socialFromCms = normSocialLinks(f.social_links);
+  const socialLinks =
+    socialFromCms.length > 0
+      ? socialFromCms
+      : legacySocialLinks(f).length > 0
+        ? legacySocialLinks(f)
+        : DEFAULT_FOOTER_CONTENT.socialLinks;
 
   return {
     stayInformed: {
@@ -84,11 +123,7 @@ export function mapStrapiDataToFooterContent(data) {
     },
     logoUrl: logoFromStrapi || DEFAULT_FOOTER_CONTENT.logoUrl,
     description: (f.description && String(f.description).trim()) || DEFAULT_FOOTER_CONTENT.description,
-    social: {
-      linkedin: (f.social_linkedin && f.social_linkedin.trim()) || DEFAULT_FOOTER_CONTENT.social.linkedin,
-      instagram: (f.social_instagram && f.social_instagram.trim()) || DEFAULT_FOOTER_CONTENT.social.instagram,
-      x: (f.social_x && f.social_x.trim()) || DEFAULT_FOOTER_CONTENT.social.x,
-    },
+    socialLinks,
     quickLinks: {
       title: quickTitle,
       links: quickList.length > 0 ? quickList : DEFAULT_FOOTER_CONTENT.quickLinks.links,

@@ -128,7 +128,14 @@ export async function getHomePageForNavigation() {
  */
 export async function getFooterData() {
   try {
-    return await fetchFromStrapi("footer");
+    const populate = [
+      "populate[logo]=true",
+      "populate[quick_links][populate][links]=true",
+      "populate[resources][populate][links]=true",
+      "populate[contact]=true",
+      "populate[social_links]=true",
+    ].join("&");
+    return await fetchFromStrapi(`footer?${populate}`);
   } catch (error) {
     console.warn("Error fetching footer from Strapi:", error);
     return null;
