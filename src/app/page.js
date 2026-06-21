@@ -389,21 +389,6 @@ export default async function Home() {
     "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-6.mp4",
     "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-7.mp4",
   ];
-  const fallbackPastSpeakers = [
-    { id: 1, image: '/homepage/past_speakers/1.png' },
-    { id: 2, image: '/homepage/past_speakers/2.png' },
-    { id: 3, image: '/homepage/past_speakers/3.png' },
-    { id: 4, image: '/homepage/past_speakers/4.png' },
-    { id: 5, image: '/homepage/past_speakers/5.png' },
-    { id: 6, image: '/homepage/past_speakers/6.png' },
-    { id: 7, image: '/homepage/past_speakers/7.png' },
-    { id: 8, image: '/homepage/past_speakers/8.png' },
-    { id: 9, image: '/homepage/past_speakers/9.png' },
-    { id: 10, image: '/homepage/past_speakers/10.png' },
-    { id: 11, image: '/homepage/past_speakers/11.png' },
-    { id: 12, image: '/homepage/past_speakers/12.png' },
-    { id: 13, image: '/homepage/past_speakers/13.png' },
-  ]
 
   const eveningRecap = {
     year: "2024",
@@ -534,16 +519,6 @@ export default async function Home() {
         loading={false}
         images={slideData}
       />
-      {/* <div className="bg-[var(--secondary-color)]">
-        <RecentEvents recentEventsData={recentEventsData} loading={loading} />
-      </div> */}
-      {/* <Partners
-        partnerData={partnerSection2Data}
-        loading={loading}
-        title={"Press and Media Recognition"}
-        partners={press}
-        bg={"bg-white"}
-      /> */}
       {pressMediaImage ? (
         <Image
           src={pressMediaImage}

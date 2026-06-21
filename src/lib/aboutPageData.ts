@@ -89,7 +89,7 @@ export const DUMMY_ABOUT_PAGE = {
       "At MATTE, our diverse client portfolio spans various industries, enabling us to approach each project uniquely. Working across diverse industries provides us with cross-industry insights, allowing us to create impactful work that influences culture and identify unique partnership opportunities.",
     ctaText: "CONTACT US",
     ctaHref: "/contact-us",
-    logos: [
+      logos: [
       "/home/logo-slider/forbes.webp",
       "/landing/forbes.svg",
       "/home/logo-slider/vogue.webp",
@@ -100,12 +100,6 @@ export const DUMMY_ABOUT_PAGE = {
       "/home/logo-slider/cointale.webp",
       "/home/logo-slider/nftnow.webp",
     ],
-  },
-  press: {
-    label: "[ PRESS ]",
-    title: "MATTE MOVES PEOPLE TO MAKE CULTURE, TOGETHER",
-    viewMoreText: "VIEW MORE",
-    viewMoreHref: "/press",
   },
 };
 
@@ -172,12 +166,6 @@ function mapGraphql(data: any) {
         .map((logo: any) => getMediaUrl(logo as AboutMedia))
         .filter(Boolean),
     },
-    press: {
-      label: page.pressSection?.label ?? undefined,
-      title: page.pressSection?.title ?? undefined,
-      viewMoreText: page.pressSection?.viewMoreText ?? undefined,
-      viewMoreHref: page.pressSection?.viewMoreUrl ?? undefined,
-    },
   };
 }
 
@@ -190,7 +178,6 @@ function mapRest(json: any) {
   const differentiators = getComp("differentiatorsSection", "differentiators_section") || {};
   const services = getComp("servicesSection", "services_section") || {};
   const clients = getComp("clientsSection", "clients_section") || {};
-  const press = getComp("pressSection", "press_section") || {};
 
   return {
     heroVideo: getMediaUrl((attrs.heroVideo?.data?.attributes ?? attrs.heroVideo) as AboutMedia),
@@ -224,19 +211,13 @@ function mapRest(json: any) {
         .map((logo: any) => getMediaUrl((logo?.attributes ?? logo) as AboutMedia))
         .filter(Boolean),
     },
-    press: {
-      label: press.label,
-      title: press.title,
-      viewMoreText: press.viewMoreText,
-      viewMoreHref: press.viewMoreUrl,
-    },
   };
 }
 
 async function fetchAboutPageRest() {
   const urls = [
     `${STRAPI_BASE}/api/about-page?populate=*`,
-    `${STRAPI_BASE}/api/about-page?populate[heroVideo]=true&populate[statementSection][populate]=rightItems&populate[differentiatorsSection][populate][items]=true&populate[servicesSection][populate][0]=stories&populate[servicesSection][populate][1]=video&populate[clientsSection][populate][logos][pagination][limit]=100&populate[pressSection]=true`,
+    `${STRAPI_BASE}/api/about-page?populate[heroVideo]=true&populate[statementSection][populate]=rightItems&populate[differentiatorsSection][populate][items]=true&populate[servicesSection][populate][0]=stories&populate[servicesSection][populate][1]=video&populate[clientsSection][populate][logos][pagination][limit]=100`,
   ];
 
   for (const url of urls) {
@@ -284,7 +265,6 @@ function mergeDeep(base: any, incoming: any) {
       ...pickDefined(incoming.clients),
       logos: incoming.clients?.logos?.length > 0 ? incoming.clients.logos : base.clients.logos,
     },
-    press: { ...base.press, ...pickDefined(incoming.press) },
   };
 }
 

@@ -74,20 +74,6 @@ const normSocialLinks = (links) => {
     .filter((item) => item.url);
 };
 
-const legacySocialLinks = (f) => {
-  const entries = [
-    { platform: "linkedin", label: "LinkedIn", url: f?.social_linkedin },
-    { platform: "instagram", label: "Instagram", url: f?.social_instagram },
-    { platform: "x", label: "X", url: f?.social_x },
-  ];
-  return entries
-    .map((item) => ({
-      ...item,
-      url: String(item.url || "").trim(),
-    }))
-    .filter((item) => item.url);
-};
-
 export function mapStrapiDataToFooterContent(data) {
   const raw = data?.data != null ? data.data : data;
   const f = unwrapStrapiEntry(raw) || raw;
@@ -106,11 +92,7 @@ export function mapStrapiDataToFooterContent(data) {
   const resList = normLinks(res);
   const socialFromCms = normSocialLinks(f.social_links);
   const socialLinks =
-    socialFromCms.length > 0
-      ? socialFromCms
-      : legacySocialLinks(f).length > 0
-        ? legacySocialLinks(f)
-        : DEFAULT_FOOTER_CONTENT.socialLinks;
+    socialFromCms.length > 0 ? socialFromCms : DEFAULT_FOOTER_CONTENT.socialLinks;
 
   return {
     stayInformed: {

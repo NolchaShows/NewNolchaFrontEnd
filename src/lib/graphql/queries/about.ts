@@ -57,12 +57,6 @@ export const GET_ABOUT_PAGE = gql`
           ...AboutMediaFields
         }
       }
-      pressSection {
-        label
-        title
-        viewMoreText
-        viewMoreUrl
-      }
     }
   }
 
