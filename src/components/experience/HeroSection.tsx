@@ -108,7 +108,7 @@ export default async function HeroSection({
               strokeColor="#000000"
               fillColor="#FFFFFF"
               textColor="#FFFFFF"
-              size="large"
+              size={pageType === "home" ? "home" : "large"}
             />
           </div>
         </div>
@@ -126,7 +126,7 @@ export default async function HeroSection({
       strokeColor="#000000"
       fillColor="#FFFFFF"
       textColor="#FFFFFF"
-      size="large"
+      size={pageType === "home" ? "home" : "large"}
       overlayOpacity={pageType === "home" ? 40 : 20}
       className="h-screen"
       showSoundToggle={pageType !== "home"}
