@@ -114,6 +114,12 @@ const resolveChildHref = (parentHref = "", child = {}, parent = {}) => {
   return `/${cleanParent}/${cleanChild}`;
 };
 
+const isExperiencesNavItem = (item = {}) => {
+  const key = String(item?.key || "").toLowerCase();
+  const label = String(item?.label || "").toLowerCase();
+  return key === "experiences" || label === "experiences";
+};
+
 const resolveParentNavHref = (item = {}) => {
   const key = String(item?.key || "").toLowerCase();
   const label = String(item?.label || "").toLowerCase();
@@ -131,9 +137,16 @@ const resolveParentNavHref = (item = {}) => {
   return null;
 };
 
-const getNavItemLinkHref = (item) =>
-  resolveParentNavHref(item) ||
-  (item?.href && item.href !== "#" ? item.href : null);
+const getNavItemLinkHref = (item) => {
+  if (item?.hasDropdown && !isExperiencesNavItem(item)) {
+    return null;
+  }
+
+  return (
+    resolveParentNavHref(item) ||
+    (item?.href && item.href !== "#" ? item.href : null)
+  );
+};
 
 const mapExperienceCategoriesToDropdown = (categories = []) =>
   categories
@@ -773,25 +786,33 @@ function Navbar({ initialNavData = null }) {
 
     if (item.hasDropdown) {
       const parentHref = getNavItemLinkHref(item);
+      const parentIsClickable = Boolean(parentHref);
 
       return (
         <div className="border-b border-white/10">
           <div className="py-4 flex items-start justify-between gap-4">
-            <button
-              type="button"
-              className="flex-1 text-left"
-              onClick={() => {
-                if (parentHref) {
+            {parentIsClickable ? (
+              <button
+                type="button"
+                className="flex-1 text-left"
+                onClick={() => {
                   router.push(parentHref);
                   setIsMobileMenuOpen(false);
-                }
-              }}
-            >
-              <div className="font-[700] text-[20px] leading-[1.1] text-white">
-                {item.label}
+                }}
+              >
+                <div className="font-[700] text-[20px] leading-[1.1] text-white">
+                  {item.label}
+                </div>
+                <div className="mt-1 text-[13px] text-white/60">{item.subtitle}</div>
+              </button>
+            ) : (
+              <div className="flex-1 text-left">
+                <div className="font-[700] text-[20px] leading-[1.1] text-white">
+                  {item.label}
+                </div>
+                <div className="mt-1 text-[13px] text-white/60">{item.subtitle}</div>
               </div>
-              <div className="mt-1 text-[13px] text-white/60">{item.subtitle}</div>
-            </button>
+            )}
             <button
               type="button"
               aria-label={isExpanded ? "Collapse section" : "Expand section"}
