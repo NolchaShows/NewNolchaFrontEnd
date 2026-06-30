@@ -99,7 +99,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
       : DEFAULT_PARTNER_LOGOS;
 
   return (
-    <section className="w-full bg-[#F3F3F3] text-[#1A1A1A] py-8 lg:py-16 lg:px-11 px-5 flex items-center">
+    <section className="w-full bg-[#F7F5EC] text-[#1A1A1A] py-8 lg:py-16 lg:px-11 px-5 flex items-center">
       <div className="mx-auto w-full text-left">
         <h2 className="text-[34px] lg:text-[60px] font-medium mb-5 lg:mb-10 text-left">
           {heading}
@@ -146,19 +146,20 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
           )
         ) : null}
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between gap-10 lg:gap-8 mb-6 lg:mb-12 w-full">
+        <div className="border-t border-[#1A1A1A]/15 pt-8 lg:pt-12 mb-6 lg:mb-12 w-full">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between gap-10 lg:gap-8 w-full">
           {partnerLogos.map((partner, index) => (
             <FadeInUp
               key={index}
               index={index}
               className="flex flex-col items-start lg:items-center gap-2 sm:gap-3 lg:gap-4 min-w-0 lg:flex-1 lg:min-w-[200px]"
             >
-              <div className="h-20 lg:h-24 2xl:h-36 flex items-center justify-start lg:justify-center w-full">
+              <div className="h-16 lg:h-20 2xl:h-28 flex items-center justify-start lg:justify-center w-full">
                 {partner.logo ? (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-full w-auto max-w-[220px] 2xl:max-w-[340px] object-contain filter grayscale brightness-0 opacity-80"
+                    className="h-full w-auto max-w-[180px] 2xl:max-w-[280px] object-contain filter grayscale brightness-0 opacity-80"
                   />
                 ) : (
                   <span className="text-[10px] sm:text-[11px] lg:text-[14px] font-bold uppercase tracking-wider text-left lg:text-center leading-tight">
@@ -168,6 +169,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
               </div>
             </FadeInUp>
           ))}
+          </div>
         </div>
       </div>
     </section>
