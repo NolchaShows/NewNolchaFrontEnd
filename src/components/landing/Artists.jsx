@@ -316,14 +316,12 @@ function Artists({
         {showViewAll && (
           <div className="bg-black flex w-full flex-col items-center pt-4 lg:pt-6 2xl:pt-8 3xl:pt-10">
             {isExternalViewAll ? (
-              <a
+              <Link
                 href={viewAllUrl}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
               >
                 <span>{viewAllLabel}</span>
-              </a>
+              </Link>
             ) : (
               <Link
                 href={viewAllUrl}
