@@ -118,7 +118,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
           {heading}
         </h2>
 
-        <div className="flex flex-col gap-6 text-left">
+        <div className="flex w-full flex-col gap-6 text-left lg:w-[80%] lg:max-w-[80%]">
           {cmsParagraphs.length > 0
             ? cmsParagraphs.map((entry, index) => (
                 <StrapiRichDescription
