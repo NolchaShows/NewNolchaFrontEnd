@@ -66,6 +66,10 @@ const DEFAULT_PARTNER_LOGOS = [
 ];
 
 const BuildMomentumSection = ({ buildMomentumData }) => {
+  const eyebrow =
+    buildMomentumData?.eyebrow?.trim() ||
+    buildMomentumData?.label?.trim() ||
+    "";
   const heading =
     buildMomentumData?.heading || "We Build Cultural Momentum";
 
@@ -101,7 +105,16 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
   return (
     <section className="w-full bg-[#F7F5EC] text-[#1A1A1A] py-8 lg:py-16 lg:px-11 px-5 flex items-center">
       <div className="mx-auto w-full text-left">
-        <h2 className="text-[34px] lg:text-[60px] font-medium mb-5 lg:mb-10 text-left">
+        {eyebrow ? (
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#3A3A3A] lg:text-[14px]">
+            {eyebrow}
+          </p>
+        ) : null}
+        <h2
+          className={`text-[36px] uppercase leading-[0.95] tracking-[-0.02em] text-[#1A1A1A] lg:text-[50px] mb-5 lg:mb-10 text-left ${
+            eyebrow ? "mt-3" : ""
+          }`}
+        >
           {heading}
         </h2>
 
@@ -129,7 +142,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
               href={ctaUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 lg:mt-10 mb-16 lg:mb-24 inline-flex w-fit items-center gap-1 text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70"
+              className="mt-8 lg:mt-10 mb-8 lg:mb-12 inline-flex w-fit items-center gap-1 text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70"
             >
               <span>{ctaText}</span>
               <span aria-hidden>↗</span>
@@ -138,7 +151,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
             <button
               type="button"
               onClick={() => navigateToContactLikeLetsTalk()}
-              className="mt-8 lg:mt-10 mb-16 lg:mb-24 inline-flex w-fit items-center gap-1 border-0 bg-transparent p-0 text-left text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70 cursor-pointer"
+              className="mt-8 lg:mt-10 mb-8 lg:mb-12 inline-flex w-fit items-center gap-1 border-0 bg-transparent p-0 text-left text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70 cursor-pointer"
             >
               <span>{ctaText}</span>
               <span aria-hidden>↗</span>
