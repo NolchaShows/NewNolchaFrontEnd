@@ -18,7 +18,6 @@ export const GET_PRESS_PAGE = gql`
         title
         paragraphText
         linkText
-        linkUrl
         image {
           ...PressMediaFields
         }

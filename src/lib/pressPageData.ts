@@ -1,5 +1,6 @@
 import client from "@/lib/graphql/apollo-client";
 import { GET_PRESS_PAGE } from "@/lib/graphql/queries/press";
+import { flattenStrapiEntity } from "@/lib/strapiFlatten";
 
 type GetPressPageQuery = {
   pressPage?: any | null;
@@ -103,7 +104,7 @@ function mapGraphqlPressPage(pressPage: NonNullable<GetPressPageQuery["pressPage
     ? {
         title: mediaCoverage.title ?? "",
         paragraphText: mediaCoverage.paragraphText ?? "",
-        link: mediaCoverage.linkUrl ?? "",
+        link: "",
         linkText: mediaCoverage.linkText ?? "",
         image: getMediaUrl(mediaCoverage.image as PressMedia) ?? "",
       }
@@ -143,7 +144,7 @@ function mapGraphqlPressPage(pressPage: NonNullable<GetPressPageQuery["pressPage
 }
 
 function pickAttributes(payload: any) {
-  return payload?.data?.attributes ?? payload?.data ?? null;
+  return flattenStrapiEntity(payload?.data ?? payload);
 }
 
 function mapRestToPressPage(json: any): {
@@ -216,13 +217,12 @@ const PRESS_CARDS_POPULATE =
   "populate[mediaCoverage][populate]=image" +
   "&populate[pressCards][populate][0]=newsPaperLogo" +
   "&populate[pressCards][populate][1]=image" +
-  "&populate[pressCards][pagination][limit]=100" +
   "&populate[statementSection]=true";
 
 async function fetchPressPageRest(): Promise<any | null> {
   const urls = [
     `${STRAPI_BASE}/api/press-page?${PRESS_CARDS_POPULATE}`,
-    `${STRAPI_BASE}/api/press-page?populate=*&populate[pressCards][pagination][limit]=100`,
+    `${STRAPI_BASE}/api/press-page`,
   ];
 
   for (const url of urls) {
@@ -254,6 +254,7 @@ export async function getPressPageContent(): Promise<{
   try {
     const { data } = await client().query<GetPressPageQuery>({
       query: GET_PRESS_PAGE,
+      fetchPolicy: "no-cache",
     });
     if (data?.pressPage) {
       graphql = mapGraphqlPressPage(data.pressPage);
