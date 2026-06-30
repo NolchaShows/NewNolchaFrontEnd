@@ -147,6 +147,11 @@ function pickAttributes(payload: any) {
   return flattenStrapiEntity(payload?.data ?? payload);
 }
 
+function asStrapiRecord(value: unknown): Record<string, any> | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  return value as Record<string, any>;
+}
+
 function mapRestToPressPage(json: any): {
   aboutSection: PressAboutSection | null;
   cards: PressCardItem[];
@@ -157,9 +162,9 @@ function mapRestToPressPage(json: any): {
     return { aboutSection: null, cards: [], statementProps: {} };
   }
 
-  const mc = attrs.mediaCoverage ?? attrs.media_coverage;
+  const mc = asStrapiRecord(attrs.mediaCoverage ?? attrs.media_coverage);
   let aboutSection: PressAboutSection | null = null;
-  if (mc && typeof mc === "object") {
+  if (mc) {
     const img = mc.image?.data?.attributes ?? mc.image;
     aboutSection = {
       title: mc.title ?? "",
@@ -174,10 +179,11 @@ function mapRestToPressPage(json: any): {
   }
 
   const rawCards = attrs.pressCards ?? attrs.press_cards ?? [];
+  const rawCardsRecord = asStrapiRecord(rawCards);
   const list = Array.isArray(rawCards)
     ? rawCards
-    : Array.isArray(rawCards?.data)
-      ? rawCards.data
+    : Array.isArray(rawCardsRecord?.data)
+      ? rawCardsRecord.data
       : [];
 
   const cards: PressCardItem[] = [];
@@ -199,9 +205,9 @@ function mapRestToPressPage(json: any): {
     });
   });
 
-  const st = attrs.statementSection ?? attrs.statement_section;
+  const st = asStrapiRecord(attrs.statementSection ?? attrs.statement_section);
   let statementProps: PressStatementProps = {};
-  if (st && typeof st === "object") {
+  if (st) {
     statementProps = {
       label: typeof st.label === "string" ? st.label : undefined,
       headline: typeof st.headline === "string" ? st.headline : undefined,
