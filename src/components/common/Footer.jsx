@@ -191,17 +191,35 @@ function Footer() {
               <h3 className="font-bold leading-[1.6] text-[18px] lg:text-[20px] text-white tracking-[-0.6px] whitespace-nowrap">
                 {contact.title}
               </h3>
-              <div className="flex flex-col gap-[12px] items-start font-normal leading-[1.5] opacity-80 text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px] w-full">
-                {contact.company ? <p>{contact.company}</p> : null}
-                {contact.address ? (
-                  <p className="whitespace-pre-wrap">{contact.address}</p>
+              <p className="m-0 w-full font-normal leading-[1.5] opacity-80 text-[14px] lg:text-[16px] text-[rgba(253,255,231,0.7)] tracking-[-0.48px]">
+                {contact.company ? <span>{contact.company}</span> : null}
+                {contact.company && contact.address ? (
+                  <>
+                    <br />
+                    <span className="whitespace-pre-wrap">{contact.address}</span>
+                  </>
+                ) : contact.address ? (
+                  <span className="whitespace-pre-wrap">{contact.address}</span>
                 ) : null}
-                {contact.email ? (
-                  <a href={`mailto:${contact.email}`} className="hover:text-white transition-colors">
+                {(contact.company || contact.address) && contact.email ? (
+                  <>
+                    <br />
+                    <a
+                      href={`mailto:${contact.email}`}
+                      className="hover:text-white transition-colors"
+                    >
+                      {contact.email}
+                    </a>
+                  </>
+                ) : contact.email ? (
+                  <a
+                    href={`mailto:${contact.email}`}
+                    className="hover:text-white transition-colors"
+                  >
                     {contact.email}
                   </a>
                 ) : null}
-              </div>
+              </p>
             </div>
           </div>
         </div>
