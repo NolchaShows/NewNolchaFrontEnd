@@ -448,7 +448,7 @@ export default async function Home() {
             strokeColor="#000000"
             fillColor="#FEF991"
             textColor="#FFFFFF"
-            size="home"
+            size="medium"
             overlayOpacity={40}
             loop={true}
             showSoundToggle={false}

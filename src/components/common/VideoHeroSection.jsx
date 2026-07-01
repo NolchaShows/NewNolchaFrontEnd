@@ -148,7 +148,7 @@ const VideoHeroSection = ({
 
             {/* Content Overlay */}
             <div className="relative z-10 flex items-center justify-center h-full page-container pointer-events-none">
-                <div className="text-center text-white pointer-events-auto">
+                <div className="text-center text-white pointer-events-auto w-full md:px-8 md:max-w-3xl lg:px-0 lg:max-w-none mx-auto">
                     {/* Main Heading */}
                     <StyledHeading
                         firstPart={firstPart}

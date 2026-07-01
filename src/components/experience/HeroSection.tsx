@@ -101,14 +101,14 @@ export default async function HeroSection({
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative z-10 flex items-center justify-center h-full page-container">
-          <div className="text-center text-white">
+          <div className="text-center text-white w-full md:px-8 md:max-w-3xl lg:px-0 lg:max-w-none mx-auto">
             <StyledHeading
               firstPart={first}
               secondPart={second}
               strokeColor="#000000"
               fillColor="#FFFFFF"
               textColor="#FFFFFF"
-              size={pageType === "home" ? "home" : "large"}
+              size={pageType === "home" ? "medium" : "large"}
             />
           </div>
         </div>
@@ -126,7 +126,7 @@ export default async function HeroSection({
       strokeColor="#000000"
       fillColor="#FFFFFF"
       textColor="#FFFFFF"
-      size={pageType === "home" ? "home" : "large"}
+      size={pageType === "home" ? "medium" : "large"}
       overlayOpacity={pageType === "home" ? 40 : 20}
       className="h-screen"
       showSoundToggle={pageType !== "home"}
