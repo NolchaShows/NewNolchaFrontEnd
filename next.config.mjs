@@ -4,6 +4,15 @@ const nextConfig = {
     // Tree-shake icon/animation packages at module-level (avoids barrel-file bloat)
     optimizePackageImports: ["lucide-react", "react-icons", "@react-spring/web"],
   },
+  async redirects() {
+    return [
+      {
+        source: "/about",
+        destination: "/white-label",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       // Cloudflare R2 buckets used for Nolcha media

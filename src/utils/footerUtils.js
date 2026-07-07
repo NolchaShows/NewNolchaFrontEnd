@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { resolveStrapiFileUrl, unwrapStrapiEntry } from "@/lib/strapiMediaUrl";
 
 const normLinks = (column) => {
@@ -122,34 +121,4 @@ export function mapStrapiDataToFooterContent(data) {
     },
     copyright: (f.copyright && String(f.copyright).trim()) || DEFAULT_FOOTER_CONTENT.copyright,
   };
-}
-
-/**
- * @returns {{ content: object, loading: boolean }}
- */
-export function useFooterContent() {
-  const [content, setContent] = useState(() => ({ ...DEFAULT_FOOTER_CONTENT }));
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const { getFooterData } = await import("@/lib/strapi");
-        const res = await getFooterData();
-        if (!cancelled) {
-          setContent(res ? mapStrapiDataToFooterContent(res) : { ...DEFAULT_FOOTER_CONTENT });
-        }
-      } catch {
-        if (!cancelled) setContent({ ...DEFAULT_FOOTER_CONTENT });
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  return { content, loading };
 }

@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { useFooterContent } from "@/utils/footerUtils";
 import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 import FooterSocialIcon from "@/components/common/FooterSocialIcon";
+import { DEFAULT_FOOTER_CONTENT } from "@/utils/footerUtils";
 
 function FooterLink({ href, className, children }) {
   if (!href) {
@@ -29,10 +29,9 @@ function FooterLink({ href, className, children }) {
   );
 }
 
-function Footer() {
-  const { content } = useFooterContent();
+function Footer({ initialContent = null }) {
   const { stayInformed, logoUrl, description, socialLinks, quickLinks, resources, contact, copyright } =
-    content;
+    initialContent || DEFAULT_FOOTER_CONTENT;
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");

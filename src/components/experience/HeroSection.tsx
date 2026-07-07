@@ -95,9 +95,7 @@ export default async function HeroSection({
           className="object-cover"
           sizes="100vw"
           priority
-          unoptimized={
-            typeof videoSrc === "string" && videoSrc.startsWith("http")
-          }
+          quality={90}
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative z-10 flex items-center justify-center h-full page-container">

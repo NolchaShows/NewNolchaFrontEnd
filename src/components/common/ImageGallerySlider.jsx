@@ -72,7 +72,7 @@ const ImageGallerySlider = ({ images }) => {
           sizes="100vw"
           draggable={false}
           priority={index === 0}
-          unoptimized={typeof items[index] === "string" && items[index].startsWith("http")}
+          quality={90}
         />
 
         {items.length > 1 && (

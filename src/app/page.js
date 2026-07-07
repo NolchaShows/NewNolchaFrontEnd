@@ -18,6 +18,8 @@ import { pickRsvpUrl } from "@/lib/pickRsvpUrl";
 import OurClientsSection from "@/components/about/OurClientsSection";
 import { DUMMY_ABOUT_PAGE } from "@/lib/aboutPageData";
 
+export const revalidate = 60;
+
 // Below-fold components are code-split to keep the initial JS bundle lean
 const Artists = dynamic(() => import("@/components/landing/Artists"));
 const TextHero = dynamic(() => import("@/components/charity_partners/TextHero"));

@@ -303,7 +303,7 @@ export const getExperiencesIndexContent = cache(
         filterOptions: buildFilterOptions(categories, uncategorizedExperiences),
       };
     } catch (error) {
-      console.error("❌ Error fetching experiences index:", error);
+      console.error("Error fetching experiences index:", error);
       return {
         ...EXPERIENCES_INDEX_DEFAULTS,
         categories: [],
@@ -314,24 +314,47 @@ export const getExperiencesIndexContent = cache(
   }
 );
 
-/** Header mega menu: categories (hash links) + uncategorized experiences (detail links). */
-export async function getExperiencesNavDropdownItems() {
-  const { categories, uncategorizedExperiences } =
-    await getExperiencesIndexContent();
+type NavDropdownItem = {
+  label: string;
+  slug: string;
+  href: string;
+  imageSrc: string | null;
+};
 
-  const categoryItems = categories.map((category) => ({
-    label: category.title,
-    slug: category.id,
-    href: `/experiences#${category.id}`,
-    imageSrc: category.experiences[0]?.images?.[0] ?? null,
-  }));
+/** Lightweight nav payload from Strapi `/experience-categories/navigation`. */
+export async function getExperiencesNavDropdownItems(): Promise<NavDropdownItem[]> {
+  try {
+    const data = await fetchFromStrapi("experience-categories/navigation");
+    const rows = Array.isArray(data?.data) ? data.data : [];
 
-  const uncategorizedItems = uncategorizedExperiences.map((experience) => ({
-    label: experience.title,
-    slug: experience.id,
-    href: experience.href,
-    imageSrc: experience.images[0] ?? null,
-  }));
+    return rows
+      .map((item: NavDropdownItem) => ({
+        label: String(item?.label || "").trim(),
+        slug: String(item?.slug || "").trim(),
+        href: String(item?.href || "").trim(),
+        imageSrc: item?.imageSrc || null,
+      }))
+      .filter((item) => item.label && item.href);
+  } catch (error) {
+    console.error("Error fetching experiences nav dropdown:", error);
 
-  return [...categoryItems, ...uncategorizedItems];
+    const { categories, uncategorizedExperiences } =
+      await getExperiencesIndexContent();
+
+    const categoryItems = categories.map((category) => ({
+      label: category.title,
+      slug: category.id,
+      href: `/experiences#${category.id}`,
+      imageSrc: category.experiences[0]?.images?.[0] ?? null,
+    }));
+
+    const uncategorizedItems = uncategorizedExperiences.map((experience) => ({
+      label: experience.title,
+      slug: experience.id,
+      href: experience.href,
+      imageSrc: experience.images[0] ?? null,
+    }));
+
+    return [...categoryItems, ...uncategorizedItems];
+  }
 }

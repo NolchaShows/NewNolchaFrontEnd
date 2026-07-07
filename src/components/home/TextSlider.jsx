@@ -116,7 +116,7 @@ export default function LogoSlider({ logoSliderData, loading }) {
                         className="object-contain relative z-10"
                         sizes="(max-width: 768px) 180px, 350px"
                         loading={index < logos.length ? "eager" : "lazy"}
-                        unoptimized={logo.url.startsWith("http")}
+                        quality={90}
                       />
                     ) : (
                       <span className="relative z-10 text-lg font-semibold text-gray-600">

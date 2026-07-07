@@ -1,5 +1,4 @@
 // Utility functions for designer page
-import { useState, useEffect } from 'react';
 import {
   resolveStrapiFileUrl,
   pickHeroVideoUrl,
@@ -253,61 +252,6 @@ export const getDefaultDesignerData = () => {
   };
 };
 
-/**
- * Custom hook for fetching designer page data
- * @returns {Object} - { designerData, loading, error }
- */
-export const useDesignerPageData = () => {
-  const [designerData, setDesignerData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log('🎨 useDesignerPageData fetching...');
-        const { getDesignerPageData } = await import('@/lib/strapi');
-        const data = await getDesignerPageData();
-        
-        console.log('📦 Received designer data in hook:', data);
-        
-        if (data?.data?.attributes) {
-          console.log('✅ Transforming designer page data...');
-          const transformedData = transformDesignerData(data.data.attributes);
-          console.log('🔄 Transformed designer data:', transformedData);
-          setDesignerData(transformedData);
-        } else if (data?.data) {
-          console.log('✅ Using direct designer data (no attributes wrapper)...');
-          const transformedData = transformDesignerData(data.data);
-          console.log('🔄 Transformed designer data:', transformedData);
-          setDesignerData(transformedData);
-        } else {
-          console.log('⚠️ No valid designer data received, using fallback');
-          console.log('📋 Full data object:', JSON.stringify(data, null, 2));
-          // Return default data structure
-          const defaultData = getDefaultDesignerData();
-          setDesignerData(defaultData);
-        }
-        
-        setError(null);
-      } catch (err) {
-        console.error('❌ Error fetching designer data:', err);
-        console.error('📊 Error details:', err);
-        setError(err.message);
-        // Set default data on error
-        const defaultData = getDefaultDesignerData();
-        setDesignerData(defaultData);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { designerData, loading, error };
-};
-
 // ============================================
 // DESIGNERS COLLECTION (List + Detail Pages)
 // ============================================
@@ -465,96 +409,4 @@ export const getDefaultDesignerDetailData = () => {
       }
     ]
   };
-};
-
-/**
- * Custom hook for fetching designers list (for DynamicGallery)
- * @returns {Object} - { designers, loading, error }
- */
-export const useDesignersList = () => {
-  const [designers, setDesigners] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log('👗 useDesignersList fetching...');
-        const { getDesigners } = await import('@/lib/strapi');
-        const data = await getDesigners();
-
-        console.log('📦 Received designers list in hook:', data);
-
-        if (data?.data && Array.isArray(data.data)) {
-          const transformedData = transformDesignersListData(data.data);
-          setDesigners(transformedData);
-        } else {
-          console.log('⚠️ No valid designers list received, using empty array');
-          setDesigners([]);
-        }
-
-        setError(null);
-      } catch (err) {
-        console.error('❌ Error fetching designers list:', err);
-        setError(err.message);
-        setDesigners([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { designers, loading, error };
-};
-
-/**
- * Custom hook for fetching single designer by slug (for detail page)
- * @param {string} slug - The designer's slug
- * @returns {Object} - { designerDetail, loading, error }
- */
-export const useDesignerDetail = (slug) => {
-  const [designerDetail, setDesignerDetail] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!slug) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        console.log(`👗 useDesignerDetail fetching for slug: ${slug}`);
-        const { getDesignerBySlug } = await import('@/lib/strapi');
-        const data = await getDesignerBySlug(slug);
-
-        console.log('📦 Received designer detail in hook:', data);
-
-        if (data?.data) {
-          const transformedData = transformDesignerDetailData(data.data);
-          setDesignerDetail(transformedData);
-        } else {
-          console.log('⚠️ No valid designer detail received, using fallback');
-          const defaultData = getDefaultDesignerDetailData();
-          setDesignerDetail(defaultData);
-        }
-
-        setError(null);
-      } catch (err) {
-        console.error(`❌ Error fetching designer detail for ${slug}:`, err);
-        setError(err.message);
-        const defaultData = getDefaultDesignerDetailData();
-        setDesignerDetail(defaultData);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [slug]);
-
-  return { designerDetail, loading, error };
 };

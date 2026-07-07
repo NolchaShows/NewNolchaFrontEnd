@@ -19,7 +19,7 @@ import {
   scrollToContactSection,
 } from "@/lib/letsTalkNavigation";
 import HeaderSocialLink from "@/components/common/HeaderSocialLink";
-import { useFooterContent } from "@/utils/footerUtils";
+import { DEFAULT_FOOTER_CONTENT } from "@/utils/footerUtils";
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
@@ -272,7 +272,7 @@ function buildNavbarState(initialNavData) {
   };
 }
 
-function Navbar({ initialNavData = null }) {
+function Navbar({ initialNavData = null, footerContent = null }) {
   // Testing helper: keep one mega dropdown open
   const FORCE_DESKTOP_MEGA_OPEN = false;
   const FORCED_DESKTOP_MEGA_KEY = "upcoming";
@@ -287,7 +287,7 @@ function Navbar({ initialNavData = null }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const desktopNavbarRef = useRef(null);
   const prevBodyOverflowRef = useRef("");
-  const { content: footerContent } = useFooterContent();
+  const resolvedFooterContent = footerContent || DEFAULT_FOOTER_CONTENT;
   const [isDesktopHidden, setIsDesktopHidden] = useState(false);
   const [megaDropdownLeft, setMegaDropdownLeft] = useState(null);
   const [hoveredMegaItemImage, setHoveredMegaItemImage] = useState(null);
@@ -307,30 +307,22 @@ function Navbar({ initialNavData = null }) {
     () => buildNavbarState(initialNavData),
     [initialNavData]
   );
-  const [experiencesDropdown, setExperiencesDropdown] = useState(
-    initialNavbarState.experiencesDropdown
-  );
-  const [charityDropdown, setCharityDropdown] = useState(
-    initialNavbarState.charityDropdown
-  );
-  const [navigationItems, setNavigationItems] = useState(
-    initialNavbarState.navigationItems
-  );
-  const [upcomingDropdownChildren, setUpcomingDropdownChildren] = useState(
-    initialNavbarState.upcomingDropdownChildren
-  );
+  const experiencesDropdown = initialNavbarState.experiencesDropdown;
+  const charityDropdown = initialNavbarState.charityDropdown;
+  const navigationItems = initialNavbarState.navigationItems;
+  const upcomingDropdownChildren = initialNavbarState.upcomingDropdownChildren;
   // Mobile dropdown states
   const [mobileDropdowns, setMobileDropdowns] = useState({});
 
   const xSocialLink = useMemo(() => {
-    const links = footerContent?.socialLinks || [];
+    const links = resolvedFooterContent?.socialLinks || [];
     return links.find((item) => item.platform === "x") || null;
-  }, [footerContent?.socialLinks]);
+  }, [resolvedFooterContent?.socialLinks]);
 
   const fallbackVisibleMenuItems = [
     {
       label: "White Label",
-      href: "/about",
+      href: "/white-label",
       subtitle: "Your Brand + Infrastructure",
       key: "whiteLabel",
       hasDropdown: false,
@@ -607,117 +599,6 @@ function Navbar({ initialNavData = null }) {
   useEffect(() => {
     setHoveredMegaItemImage(null);
   }, [activeDesktopMegaMenu, isDesktopSecondRowOpen]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchNavigationPages = async () => {
-      try {
-        const { getExperiencesNavDropdownItems } = await import(
-          "@/lib/experiencesIndexData"
-        );
-        const {
-          getCharityPages,
-          getNavigationMenu,
-          getHomePageForNavigation,
-        } = await import("@/lib/strapi");
-        const [exNavRes, chRes, navRes, homeRes] = await Promise.allSettled([
-          getExperiencesNavDropdownItems(),
-          getCharityPages(),
-          getNavigationMenu(),
-          getHomePageForNavigation(),
-        ]);
-        const experienceCategories =
-          exNavRes.status === "fulfilled" ? exNavRes.value : null;
-        const charityPages = chRes.status === "fulfilled" ? chRes.value : null;
-        const navigationMenu = navRes.status === "fulfilled" ? navRes.value : null;
-        const homePageRes = homeRes.status === "fulfilled" ? homeRes.value : null;
-
-        if (!isMounted) return;
-
-        if (Array.isArray(experienceCategories) && experienceCategories.length > 0) {
-          setExperiencesDropdown(
-            mapExperienceCategoriesToDropdown(experienceCategories)
-          );
-        }
-
-        if (Array.isArray(charityPages) && charityPages.length > 0) {
-          setCharityDropdown(mapCharityPagesToDropdown(charityPages));
-        }
-
-        const homeRoot = homePageRes?.data?.attributes || homePageRes?.data;
-        const rawHomeEvents = extractUpcomingEventsFromHome(homeRoot);
-        const fromHome =
-          rawHomeEvents.length > 0
-            ? mapUpcomingEventsToNavChildren(rawHomeEvents, getMediaUrl)
-            : mapUpcomingEventsToNavChildren(upcomingListEvents, getMediaUrl);
-
-        const navigationItemsFromStrapi =
-          navigationMenu?.data?.attributes?.items || navigationMenu?.data?.items || [];
-
-        const strapiUpcoming = Array.isArray(navigationItemsFromStrapi)
-          ? navigationItemsFromStrapi.find(isStrapiUpcomingItem)
-          : null;
-        const externalFromStrapi = mapExternalNavChildren(
-          strapiUpcoming?.children || [],
-          getMediaUrl
-        );
-        const mergedUpcomingChildren = [...fromHome, ...externalFromStrapi];
-        setUpcomingDropdownChildren(mergedUpcomingChildren);
-
-        if (Array.isArray(navigationItemsFromStrapi) && navigationItemsFromStrapi.length > 0) {
-          const mapped = navigationItemsFromStrapi.map((item, index) => {
-            const base = {
-              label: item?.label || "",
-              href: normalizeMenuHref(item?.href),
-              subtitle: item?.subtitle || "‎",
-              key: buildMenuKey(item, index),
-              hasDropdown: Array.isArray(item?.children) && item.children.length > 0,
-              imageSrc: getMediaUrl(item?.image),
-              children: (item?.children || []).map((child) => {
-                const ext = (child?.externalUrl || "").trim();
-                if (ext && /^https?:\/\//i.test(ext)) {
-                  return {
-                    label: child?.label || "",
-                    href: ext,
-                    slug: child?.slug || "",
-                    isExternal: true,
-                    imageSrc: getMediaUrl(child?.image),
-                  };
-                }
-                return {
-                  label: child?.label || "",
-                  href: resolveChildHref(item?.href || "", child, item),
-                  slug: child?.slug || "",
-                  isExternal: false,
-                  imageSrc: getMediaUrl(child?.image),
-                };
-              }),
-            };
-            if (isStrapiUpcomingItem(item)) {
-              return {
-                ...base,
-                hasDropdown: mergedUpcomingChildren.length > 0,
-                children: mergedUpcomingChildren,
-              };
-            }
-            return base;
-          });
-          setNavigationItems(mapped);
-        } else {
-          setNavigationItems([]);
-        }
-      } catch (error) {
-        console.error("Failed to fetch navbar pages from Strapi:", error);
-      }
-    };
-
-    fetchNavigationPages();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   const renderMobileMenuItem = (item, idx) => {
     const isExpanded = item.key && mobileDropdowns[item.key];

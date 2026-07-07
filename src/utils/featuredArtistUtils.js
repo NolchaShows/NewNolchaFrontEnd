@@ -1,5 +1,4 @@
 // Utility functions for featured artist pages
-import { useState, useEffect } from "react";
 import {
   resolveStrapiFileUrl,
   pickHeroVideoUrl,
@@ -134,48 +133,6 @@ export const getDefaultFeaturedArtistDetailData = () => {
   };
 };
 
-/**
- * Custom hook for fetching featured artists list (for DynamicGallery)
- * @returns {Object} - { featuredArtists, loading, error }
- */
-export const useFeaturedArtistsList = () => {
-  const [featuredArtists, setFeaturedArtists] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log('🎨 useFeaturedArtistsList fetching...');
-        const { getFeaturedArtists } = await import('@/lib/strapi');
-        const data = await getFeaturedArtists();
-
-        console.log('📦 Received featured artists list in hook:', data);
-
-        if (data?.data && Array.isArray(data.data)) {
-          const transformedData = transformFeaturedArtistsListData(data.data);
-          setFeaturedArtists(transformedData);
-        } else {
-          console.log('⚠️ No valid featured artists list received, using empty array');
-          setFeaturedArtists([]);
-        }
-
-        setError(null);
-      } catch (err) {
-        console.error('❌ Error fetching featured artists list:', err);
-        setError(err.message);
-        setFeaturedArtists([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { featuredArtists, loading, error };
-};
-
 const defaultFeaturedArtistsPageVideos = [
   "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-4.mp4",
   "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/homepage-5.mp4",
@@ -239,88 +196,4 @@ export const transformFeaturedArtistsPageData = (data) => {
   }
 
   return result;
-};
-
-/**
- * @returns {{ page: object, loading: boolean, error: string | null }}
- */
-export const useFeaturedArtistsPageData = () => {
-  const [page, setPage] = useState(() => transformFeaturedArtistsPageData(null));
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const run = async () => {
-      try {
-        const { getFeaturedArtistsPageData } = await import("@/lib/strapi");
-        const res = await getFeaturedArtistsPageData();
-        if (res?.data?.attributes) {
-          setPage(transformFeaturedArtistsPageData(res.data.attributes));
-        } else if (res?.data) {
-          setPage(transformFeaturedArtistsPageData(res.data));
-        } else {
-          setPage(transformFeaturedArtistsPageData(null));
-        }
-        setError(null);
-      } catch (e) {
-        setError(e?.message);
-        setPage(transformFeaturedArtistsPageData(null));
-      } finally {
-        setLoading(false);
-      }
-    };
-    run();
-  }, []);
-
-  return { page, loading, error };
-};
-
-/**
- * Custom hook for fetching single featured artist by slug (for detail page)
- * @param {string} slug - The featured artist's slug
- * @returns {Object} - { featuredArtistDetail, loading, error }
- */
-export const useFeaturedArtistDetail = (slug) => {
-  const [featuredArtistDetail, setFeaturedArtistDetail] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!slug) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        console.log(`🎨 useFeaturedArtistDetail fetching for slug: ${slug}`);
-        const { getFeaturedArtistBySlug } = await import('@/lib/strapi');
-        const data = await getFeaturedArtistBySlug(slug);
-
-        console.log('📦 Received featured artist detail in hook:', data);
-
-        if (data?.data) {
-          const transformedData = transformFeaturedArtistDetailData(data.data);
-          setFeaturedArtistDetail(transformedData);
-        } else {
-          console.log('⚠️ No valid featured artist detail received, using fallback');
-          const defaultData = getDefaultFeaturedArtistDetailData();
-          setFeaturedArtistDetail(defaultData);
-        }
-
-        setError(null);
-      } catch (err) {
-        console.error(`❌ Error fetching featured artist detail for ${slug}:`, err);
-        setError(err.message);
-        const defaultData = getDefaultFeaturedArtistDetailData();
-        setFeaturedArtistDetail(defaultData);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [slug]);
-
-  return { featuredArtistDetail, loading, error };
 };
