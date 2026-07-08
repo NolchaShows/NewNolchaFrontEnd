@@ -5,9 +5,12 @@ import Markdown from "react-markdown";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import type { BlocksContent } from "@strapi/blocks-react-renderer";
 import {
+  ABOUT_HEADLINE_TEXT_CLASS,
+  ABOUT_HEADLINE_WRAP_CLASS,
   hasRenderableDescription,
   isRenderableNormalized,
   normalizeStrapiRichText,
+  splitAboutHeadlineLines,
 } from "@/lib/strapiRichText";
 
 export { hasRenderableDescription, normalizeStrapiRichText };
@@ -23,8 +26,7 @@ const markdownWrap: Record<Variant, string> = {
     "max-w-none text-left text-[18px] font-normal leading-[1.45] text-[#1A1A1A]/80 lg:text-[28px] [&_strong]:font-bold [&_em]:italic [&_a]:text-[#1A1A1A] [&_a]:underline [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
   legal:
     "legal-page-markdown max-w-none text-[#000000B3] text-[20px] 2xl:text-[30px] leading-relaxed [&_h2]:text-[26px] [&_h2]:2xl:text-[40px] [&_h2]:font-medium [&_h2]:text-black [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:first:mt-0 [&_h3]:text-[20px] [&_h3]:2xl:text-[30px] [&_h3]:text-black [&_h3]:mb-2 [&_strong]:font-medium [&_em]:italic [&_a]:text-[#000000] [&_a]:underline [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2 [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-2 [&_ol]:ml-4",
-  aboutHeadline:
-    "about-headline-markdown m-0 max-w-none p-0 text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px] [&_p]:m-0 [&_p]:block [&_strong]:font-normal [&_em]:not-italic",
+  aboutHeadline: `about-headline-markdown ${ABOUT_HEADLINE_WRAP_CLASS}`,
 };
 
 const blocksWrap: Record<Variant, string> = {
@@ -36,8 +38,7 @@ const blocksWrap: Record<Variant, string> = {
     "max-w-none text-left text-[18px] font-normal leading-[1.45] text-[#1A1A1A]/80 lg:text-[28px] [&_a]:text-[#1A1A1A] [&_a]:underline [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
   legal:
     "legal-page-blocks max-w-none text-[#000000B3] text-[20px] 2xl:text-[30px] leading-relaxed [&_h2]:text-[26px] [&_h2]:2xl:text-[40px] [&_h2]:font-medium [&_h2]:text-black [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:first:mt-0 [&_h3]:text-[20px] [&_h3]:2xl:text-[30px] [&_h3]:text-black [&_h3]:mb-2 [&_a]:text-[#000000] [&_a]:underline [&_strong]:font-medium [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2 [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-2 [&_ol]:ml-4",
-  aboutHeadline:
-    "about-headline-blocks m-0 max-w-none p-0 text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px] [&_p]:m-0 [&_p]:block [&_strong]:font-normal",
+  aboutHeadline: `about-headline-blocks ${ABOUT_HEADLINE_WRAP_CLASS}`,
 };
 
 function markdownLinkProps(variant: Variant) {
@@ -63,8 +64,7 @@ function markdownLinkProps(variant: Variant) {
 
 function blocksForVariant(variant: Variant) {
   const strapiBase = process.env.NEXT_PUBLIC_STRAPI_URL || "";
-  const aboutHeadlineLineClass =
-    "m-0 block text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px]";
+  const aboutHeadlineLineClass = `${ABOUT_HEADLINE_TEXT_CLASS} block`;
 
   return {
     paragraph: ({ children }: { children?: ReactNode }) =>
@@ -186,6 +186,55 @@ function blocksForVariant(variant: Variant) {
   };
 }
 
+const aboutHeadlineLineClass = `${ABOUT_HEADLINE_TEXT_CLASS} block`;
+
+function renderAboutHeadlineLines(lines: string[], wrapperClass: string) {
+  return (
+    <div className={wrapperClass}>
+      {lines.map((line, index) => (
+        <p key={index} className={aboutHeadlineLineClass}>
+          {line}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+function expandAboutHeadlineBlocks(blocks: BlocksContent): BlocksContent {
+  const expanded: BlocksContent = [];
+
+  for (const block of blocks) {
+    if (block.type !== "paragraph" || !Array.isArray(block.children)) {
+      expanded.push(block);
+      continue;
+    }
+
+    const text = block.children
+      .map((child) => {
+        if (child && typeof child === "object" && "text" in child) {
+          return String((child as { text?: string }).text ?? "");
+        }
+        return "";
+      })
+      .join("");
+
+    const lines = splitAboutHeadlineLines(text);
+    if (lines.length <= 1) {
+      expanded.push(block);
+      continue;
+    }
+
+    for (const line of lines) {
+      expanded.push({
+        type: "paragraph",
+        children: [{ type: "text", text: line }],
+      });
+    }
+  }
+
+  return expanded;
+}
+
 export function StrapiRichDescription({
   value,
   fallback,
@@ -213,15 +262,20 @@ export function StrapiRichDescription({
   const blocksClass = className ?? blocksWrap[variant];
 
   if (typeof resolved === "string") {
+    if (variant === "aboutHeadline") {
+      const lines = splitAboutHeadlineLines(resolved);
+      if (lines.length > 1) {
+        return renderAboutHeadlineLines(lines, markdownClass);
+      }
+    }
+
     return (
       <div className={markdownClass}>
         <Markdown
           components={{
             p({ children }) {
               return variant === "aboutHeadline" ? (
-                <p className="m-0 block text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px]">
-                  {children}
-                </p>
+                <p className={aboutHeadlineLineClass}>{children}</p>
               ) : (
                 <p className="mb-3 last:mb-0">{children}</p>
               );
@@ -236,10 +290,15 @@ export function StrapiRichDescription({
   }
 
   if (Array.isArray(resolved)) {
+    const blocks =
+      variant === "aboutHeadline"
+        ? expandAboutHeadlineBlocks(resolved as BlocksContent)
+        : (resolved as BlocksContent);
+
     return (
       <div className={blocksClass}>
         <BlocksRenderer
-          content={resolved as BlocksContent}
+          content={blocks}
           blocks={blocksForVariant(variant)}
         />
       </div>

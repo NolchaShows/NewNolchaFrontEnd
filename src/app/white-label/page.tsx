@@ -20,7 +20,7 @@ export default async function AboutPage() {
   const heroVideo = aboutPage?.heroVideo || defaultHeroVideo;
 
   return (
-    <main className="min-h-screen bg-[#F4F4F4]">
+    <main className="min-h-screen bg-[#F4F4F4] lg:pt-[64px] xl:pt-[96px] 2xl:pt-[144px]">
       <AboutStatementSection {...aboutPage.statementSection} />
       <AboutHeroVideo videoSrc={heroVideo} />
       <OurDifferentiators

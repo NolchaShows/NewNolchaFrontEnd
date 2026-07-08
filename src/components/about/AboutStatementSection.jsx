@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
-import { hasRenderableDescription } from "@/lib/strapiRichText";
+import { hasRenderableDescription, splitAboutHeadlineLines, ABOUT_HEADLINE_TEXT_CLASS } from "@/lib/strapiRichText";
 
 const defaultRightItems = [
   "WE BUILD WORLDS",
@@ -17,16 +17,8 @@ const isExternalHref = (href) =>
   typeof href === "string" &&
   (href.startsWith("http://") || href.startsWith("https://"));
 
-/** Break headline into lines at each period (period stays on the line). */
-const splitHeadlineLines = (text) => {
-  const trimmed = String(text ?? "").trim();
-  if (!trimmed) return [];
-  if (!trimmed.includes(".")) return [trimmed];
-  return trimmed
-    .split(/(?<=\.)\s*/)
-    .map((line) => line.trim())
-    .filter(Boolean);
-};
+/** Break headline into lines (newlines, <br>, or legacy period breaks). */
+const splitHeadlineLines = (text) => splitAboutHeadlineLines(text);
 
 export default function AboutStatementSection({
   label = "[ WHO WE ARE ]",
@@ -72,7 +64,7 @@ export default function AboutStatementSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
-          className="mb-10 lg:mb-20"
+          className="mb-8 lg:mb-17"
         >
           {hasRenderableDescription(headline) ? (
             <div className="m-0 p-0" role="heading" aria-level={2}>
@@ -82,7 +74,7 @@ export default function AboutStatementSection({
               />
             </div>
           ) : (
-            <h2 className="m-0 p-0 text-[36px] font-normal uppercase leading-[0.95] tracking-[-0.04em] text-[#111111] sm:text-[48px] md:text-[60px] lg:text-[84px]">
+            <h2 className={ABOUT_HEADLINE_TEXT_CLASS}>
               {splitHeadlineLines(headline).map((line, index) => (
                 <span key={index} className="block">
                   {line}
@@ -104,7 +96,7 @@ export default function AboutStatementSection({
           >
             <StrapiRichDescription
               value={description}
-              className="max-w-[850px] text-[20px] font-normal leading-[1.3] text-[#1D1D1D] sm:text-[22px] lg:text-[28px] [&_p]:m-0"
+              className="max-w-[850px] text-[16px] font-normal leading-[1.28] text-[#1D1D1D] sm:text-[18px] sm:leading-[1.32] lg:text-[22px] lg:leading-[1.4] [&_p]:m-0"
             />
 
             {isExternalHref(href) ? (
