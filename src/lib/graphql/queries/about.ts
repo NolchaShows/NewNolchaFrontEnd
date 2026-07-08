@@ -27,13 +27,6 @@ export const GET_ABOUT_PAGE = gql`
           text
         }
       }
-      differentiatorsSection {
-        label
-        items {
-          title
-          description
-        }
-      }
       servicesSection {
         label
         title

@@ -1,6 +1,5 @@
 import AboutStatementSection from "@/components/about/AboutStatementSection";
 import AboutHeroVideo from "@/components/about/AboutHeroVideo.jsx";
-import OurDifferentiators from "@/components/about/OurDifferentiators";
 import OurServicesSection from "@/components/about/OurServicesSection";
 import OurClientsSection from "@/components/about/OurClientsSection";
 import { getAboutPageContent } from "@/lib/aboutPageData";
@@ -23,11 +22,6 @@ export default async function AboutPage() {
     <main className="min-h-screen bg-[#F4F4F4] lg:pt-[64px] xl:pt-[96px] 2xl:pt-[144px]">
       <AboutStatementSection {...aboutPage.statementSection} />
       <AboutHeroVideo videoSrc={heroVideo} />
-      <OurDifferentiators
-        label={aboutPage.differentiators.label}
-        differentiators={aboutPage.differentiators.items}
-      />
-      <hr className="w-full border-t border-[#1D1D1D] my-4" />
       <OurServicesSection
         label={aboutPage.services.label}
         title={aboutPage.services.title}
