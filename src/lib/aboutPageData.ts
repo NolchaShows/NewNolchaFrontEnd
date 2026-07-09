@@ -65,7 +65,7 @@ export const DUMMY_ABOUT_PAGE = {
   },
   services: {
     label: "[ OUR SERVICES ]",
-    title: "MATTE HAS A MULTIDISCIPLINARY STUDIO THAT WORKS WITH TALENT AND BRANDS",
+    title: "EXPERIENCES THAT\nMOVE PEOPLE,\nBRANDS &\nCOMMUNITIES.",
     ctaText: "SEE ALL PROJECTS",
     ctaHref: "/projects",
     videoSrc: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4",

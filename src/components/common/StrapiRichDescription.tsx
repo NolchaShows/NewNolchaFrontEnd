@@ -10,12 +10,21 @@ import {
   hasRenderableDescription,
   isRenderableNormalized,
   normalizeStrapiRichText,
+  SERVICES_TITLE_TEXT_CLASS,
+  SERVICES_TITLE_WRAP_CLASS,
   splitAboutHeadlineLines,
+  splitRichTitleLines,
 } from "@/lib/strapiRichText";
 
 export { hasRenderableDescription, normalizeStrapiRichText };
 
-type Variant = "experience" | "modal" | "buildMomentum" | "legal" | "aboutHeadline";
+type Variant =
+  | "experience"
+  | "modal"
+  | "buildMomentum"
+  | "legal"
+  | "aboutHeadline"
+  | "servicesTitle";
 
 const markdownWrap: Record<Variant, string> = {
   experience:
@@ -27,6 +36,7 @@ const markdownWrap: Record<Variant, string> = {
   legal:
     "legal-page-markdown max-w-none text-[#000000B3] text-[20px] 2xl:text-[30px] leading-relaxed [&_h2]:text-[26px] [&_h2]:2xl:text-[40px] [&_h2]:font-medium [&_h2]:text-black [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:first:mt-0 [&_h3]:text-[20px] [&_h3]:2xl:text-[30px] [&_h3]:text-black [&_h3]:mb-2 [&_strong]:font-medium [&_em]:italic [&_a]:text-[#000000] [&_a]:underline [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2 [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-2 [&_ol]:ml-4",
   aboutHeadline: `about-headline-markdown ${ABOUT_HEADLINE_WRAP_CLASS}`,
+  servicesTitle: `services-title-markdown ${SERVICES_TITLE_WRAP_CLASS}`,
 };
 
 const blocksWrap: Record<Variant, string> = {
@@ -39,7 +49,22 @@ const blocksWrap: Record<Variant, string> = {
   legal:
     "legal-page-blocks max-w-none text-[#000000B3] text-[20px] 2xl:text-[30px] leading-relaxed [&_h2]:text-[26px] [&_h2]:2xl:text-[40px] [&_h2]:font-medium [&_h2]:text-black [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:first:mt-0 [&_h3]:text-[20px] [&_h3]:2xl:text-[30px] [&_h3]:text-black [&_h3]:mb-2 [&_a]:text-[#000000] [&_a]:underline [&_strong]:font-medium [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2 [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-2 [&_ol]:ml-4",
   aboutHeadline: `about-headline-blocks ${ABOUT_HEADLINE_WRAP_CLASS}`,
+  servicesTitle: `services-title-blocks ${SERVICES_TITLE_WRAP_CLASS}`,
 };
+
+function isLineBreakTitleVariant(variant: Variant) {
+  return variant === "aboutHeadline" || variant === "servicesTitle";
+}
+
+function titleLineClassForVariant(variant: Variant) {
+  if (variant === "servicesTitle") return `${SERVICES_TITLE_TEXT_CLASS} block`;
+  return `${ABOUT_HEADLINE_TEXT_CLASS} block`;
+}
+
+function splitLinesForVariant(variant: Variant, text: unknown) {
+  if (variant === "servicesTitle") return splitRichTitleLines(text);
+  return splitAboutHeadlineLines(text);
+}
 
 function markdownLinkProps(variant: Variant) {
   if (variant !== "modal") return {};
@@ -64,12 +89,12 @@ function markdownLinkProps(variant: Variant) {
 
 function blocksForVariant(variant: Variant) {
   const strapiBase = process.env.NEXT_PUBLIC_STRAPI_URL || "";
-  const aboutHeadlineLineClass = `${ABOUT_HEADLINE_TEXT_CLASS} block`;
+  const titleLineClass = titleLineClassForVariant(variant);
 
   return {
     paragraph: ({ children }: { children?: ReactNode }) =>
-      variant === "aboutHeadline" ? (
-        <p className={aboutHeadlineLineClass}>{children}</p>
+      isLineBreakTitleVariant(variant) ? (
+        <p className={titleLineClass}>{children}</p>
       ) : (
         <p className="mb-3 last:mb-0">{children}</p>
       ),
@@ -80,9 +105,9 @@ function blocksForVariant(variant: Variant) {
       children?: ReactNode;
       level: number;
     }) => {
-      if (variant === "aboutHeadline") {
+      if (isLineBreakTitleVariant(variant)) {
         const Tag = level === 1 ? "h1" : level === 2 ? "h2" : "h3";
-        return <Tag className={aboutHeadlineLineClass}>{children}</Tag>;
+        return <Tag className={titleLineClass}>{children}</Tag>;
       }
 
       const base =
@@ -186,13 +211,15 @@ function blocksForVariant(variant: Variant) {
   };
 }
 
-const aboutHeadlineLineClass = `${ABOUT_HEADLINE_TEXT_CLASS} block`;
-
-function renderAboutHeadlineLines(lines: string[], wrapperClass: string) {
+function renderTitleLines(
+  lines: string[],
+  wrapperClass: string,
+  lineClass: string
+) {
   return (
     <div className={wrapperClass}>
       {lines.map((line, index) => (
-        <p key={index} className={aboutHeadlineLineClass}>
+        <p key={index} className={lineClass}>
           {line}
         </p>
       ))}
@@ -200,7 +227,10 @@ function renderAboutHeadlineLines(lines: string[], wrapperClass: string) {
   );
 }
 
-function expandAboutHeadlineBlocks(blocks: BlocksContent): BlocksContent {
+function expandTitleBlocks(
+  blocks: BlocksContent,
+  variant: Variant
+): BlocksContent {
   const expanded: BlocksContent = [];
 
   for (const block of blocks) {
@@ -218,7 +248,7 @@ function expandAboutHeadlineBlocks(blocks: BlocksContent): BlocksContent {
       })
       .join("");
 
-    const lines = splitAboutHeadlineLines(text);
+    const lines = splitLinesForVariant(variant, text);
     if (lines.length <= 1) {
       expanded.push(block);
       continue;
@@ -262,10 +292,14 @@ export function StrapiRichDescription({
   const blocksClass = className ?? blocksWrap[variant];
 
   if (typeof resolved === "string") {
-    if (variant === "aboutHeadline") {
-      const lines = splitAboutHeadlineLines(resolved);
+    if (isLineBreakTitleVariant(variant)) {
+      const lines = splitLinesForVariant(variant, resolved);
       if (lines.length > 1) {
-        return renderAboutHeadlineLines(lines, markdownClass);
+        return renderTitleLines(
+          lines,
+          markdownClass,
+          titleLineClassForVariant(variant)
+        );
       }
     }
 
@@ -274,8 +308,8 @@ export function StrapiRichDescription({
         <Markdown
           components={{
             p({ children }) {
-              return variant === "aboutHeadline" ? (
-                <p className={aboutHeadlineLineClass}>{children}</p>
+              return isLineBreakTitleVariant(variant) ? (
+                <p className={titleLineClassForVariant(variant)}>{children}</p>
               ) : (
                 <p className="mb-3 last:mb-0">{children}</p>
               );
@@ -290,10 +324,9 @@ export function StrapiRichDescription({
   }
 
   if (Array.isArray(resolved)) {
-    const blocks =
-      variant === "aboutHeadline"
-        ? expandAboutHeadlineBlocks(resolved as BlocksContent)
-        : (resolved as BlocksContent);
+    const blocks = isLineBreakTitleVariant(variant)
+      ? expandTitleBlocks(resolved as BlocksContent, variant)
+      : (resolved as BlocksContent);
 
     return (
       <div className={blocksClass}>

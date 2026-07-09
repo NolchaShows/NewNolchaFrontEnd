@@ -1,12 +1,24 @@
 "use client";
 
-import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
+import {
+  hasRenderableDescription,
+  StrapiRichDescription,
+} from "@/components/common/StrapiRichDescription";
+import {
+  SERVICES_TITLE_TEXT_CLASS,
+  splitRichTitleLines,
+} from "@/lib/strapiRichText";
 
-import Link from "next/link";
+const DEFAULT_TITLE =
+  "EXPERIENCES THAT\nMOVE PEOPLE,\nBRANDS &\nCOMMUNITIES.";
+
+// Clears expanded desktop navbar (logo row + second nav row) on white-label pages.
+const STICKY_SIDEBAR_TOP =
+  "lg:top-[176px] 2xl:top-[208px] xxl:top-[236px]";
 
 export default function OurServicesSection({
   label = "[ OUR SERVICES ]",
-  title = "MATTE HAS A MULTIDISCIPLINARY STUDIO THAT WORKS WITH TALENT AND BRANDS",
+  title = DEFAULT_TITLE,
   ctaText = "SEE ALL PROJECTS",
   ctaHref = "/projects",
   videoSrc = "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4",
@@ -35,22 +47,35 @@ export default function OurServicesSection({
       title: "Content Studio",
       description:
         "Where creativity meets efficiency. We produce high-quality content quickly and effectively, adaptable to any media. Our compelling visuals and narratives tell your brand's story across platforms.",
-    }
+    },
   ],
 }) {
-
   return (
-    <section className="relative w-full bg-[#F4F4F4] px-5 py-16 lg:px-11 lg:py-32 text-[#1D1D1D]">
+    <section className="relative z-0 w-full bg-[#F4F4F4] px-5 py-16 lg:px-11 lg:py-32 text-[#1D1D1D]">
       <div className="mx-auto w-full">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(280px,500px)_1fr] lg:gap-10">
-          <div className="relative z-0 space-y-6 lg:sticky lg:top-[140px] lg:self-start">
-            <p className="text-[10px] uppercase tracking-[0.08em] lg:text-[14px] text-[#1D1D1D]">
-              {label}
-            </p>
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(280px,500px)_1fr] lg:items-start lg:gap-10">
+          <div
+            className={`relative flex flex-col gap-6 lg:sticky ${STICKY_SIDEBAR_TOP} lg:self-start`}
+          >
+            <div className="shrink-0 space-y-6">
+              <p className="mt-4 text-[10px] uppercase tracking-[0.08em] lg:mt-6 lg:text-[14px] text-[#1D1D1D]">
+                {label}
+              </p>
 
-            <h2 className="max-w-[650px] text-[42px] leading-[1] tracking-[-0.02em] uppercase text-[#1D1D1D] lg:text-[50px]">
-              {title}
-            </h2>
+              {hasRenderableDescription(title) ? (
+                <div className="mb-2" role="heading" aria-level={2}>
+                  <StrapiRichDescription value={title} variant="servicesTitle" />
+                </div>
+              ) : (
+                <h2 className={`${SERVICES_TITLE_TEXT_CLASS} mb-2`}>
+                  {splitRichTitleLines(title).map((line, index) => (
+                    <span key={index} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </h2>
+              )}
+            </div>
 
             {/* <Link
               href={ctaHref}
@@ -60,17 +85,19 @@ export default function OurServicesSection({
               <span aria-hidden>↗</span>
             </Link> */}
 
-            <video
-              className="aspect-[9/16] w-[400px] h-auto object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              controls
-            >
-              <source src={videoSrc} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <div className="shrink-0">
+              <video
+                className="block aspect-[9/16] w-[400px] max-w-full h-auto object-contain"
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              >
+                <source src={videoSrc} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
 
           <div className="space-y-10 lg:space-y-20">
@@ -86,7 +113,7 @@ export default function OurServicesSection({
                 />
               </div>
             ))}
-            <div className="hidden lg:block lg:h-[60vh]" aria-hidden="true" />
+            <div className="hidden lg:block lg:h-[100vh]" aria-hidden="true" />
           </div>
         </div>
       </div>

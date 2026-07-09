@@ -108,7 +108,7 @@ export default function OurClientsSection({
   );
 
   return (
-    <section className="w-full bg-[#F4F4F4] px-5 py-16 lg:px-11 lg:py-24">
+    <section className="relative z-20 w-full bg-[#F4F4F4] px-5 py-16 lg:px-11 lg:py-24">
       <div className="mx-auto w-full max-w-[1800px]">
         <div
           className={

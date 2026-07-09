@@ -88,3 +88,20 @@ export const ABOUT_HEADLINE_TEXT_CLASS =
   "m-0 p-0 text-[35px] font-normal uppercase leading-[0.9] tracking-[-0.04em] text-[#111111] sm:text-[47px] md:text-[59px] lg:text-[82px]";
 
 export const ABOUT_HEADLINE_WRAP_CLASS = `${ABOUT_HEADLINE_TEXT_CLASS} max-w-none [&_p]:m-0 [&_p]:block [&_strong]:font-normal [&_em]:not-italic`;
+
+/** Split title lines from explicit breaks only (newlines / <br>), not periods. */
+export function splitRichTitleLines(text: unknown): string[] {
+  const trimmed = String(text ?? "").trim();
+  if (!trimmed) return [];
+
+  return trimmed
+    .split(/<br\s*\/?>|\r?\n+/gi)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+/** Services section title typography (white-label). */
+export const SERVICES_TITLE_TEXT_CLASS =
+  "max-w-[650px] text-[42px] font-normal uppercase leading-[1] tracking-[-0.02em] text-[#1D1D1D] lg:text-[50px]";
+
+export const SERVICES_TITLE_WRAP_CLASS = `${SERVICES_TITLE_TEXT_CLASS} [&_p]:m-0 [&_p]:block [&_strong]:font-normal [&_em]:not-italic`;
