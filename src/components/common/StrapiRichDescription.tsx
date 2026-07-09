@@ -32,7 +32,7 @@ const markdownWrap: Record<Variant, string> = {
   modal:
     "event-modal-markdown max-w-none text-sm sm:text-base leading-relaxed text-white [&_strong]:font-semibold [&_em]:italic [&_a]:text-primary [&_a]:underline hover:[&_a]:opacity-90 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-2 [&_blockquote]:border-white/35 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-white/90",
   buildMomentum:
-    "max-w-none text-left text-[18px] font-normal leading-[1.45] text-[#1A1A1A]/80 lg:text-[28px] [&_strong]:font-bold [&_em]:italic [&_a]:text-[#1A1A1A] [&_a]:underline [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
+    "max-w-none text-left text-[20px] font-normal leading-[1.45] text-[#1A1A1A]/80 sm:text-[24px] lg:text-[26px] 2xl:text-[28px] [&_strong]:font-bold [&_em]:italic [&_a]:text-[#1A1A1A] [&_a]:underline [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
   legal:
     "legal-page-markdown max-w-none text-[#000000B3] text-[20px] 2xl:text-[30px] leading-relaxed [&_h2]:text-[26px] [&_h2]:2xl:text-[40px] [&_h2]:font-medium [&_h2]:text-black [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:first:mt-0 [&_h3]:text-[20px] [&_h3]:2xl:text-[30px] [&_h3]:text-black [&_h3]:mb-2 [&_strong]:font-medium [&_em]:italic [&_a]:text-[#000000] [&_a]:underline [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2 [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-2 [&_ol]:ml-4",
   aboutHeadline: `about-headline-markdown ${ABOUT_HEADLINE_WRAP_CLASS}`,
@@ -45,7 +45,7 @@ const blocksWrap: Record<Variant, string> = {
   modal:
     "event-modal-blocks max-w-none text-sm sm:text-base leading-relaxed text-white [&_a]:text-primary [&_a]:underline hover:[&_a]:opacity-90 [&_strong]:font-semibold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
   buildMomentum:
-    "max-w-none text-left text-[18px] font-normal leading-[1.45] text-[#1A1A1A]/80 lg:text-[28px] [&_a]:text-[#1A1A1A] [&_a]:underline [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
+    "max-w-none text-left text-[20px] font-normal leading-[1.45] text-[#1A1A1A]/80 sm:text-[24px] lg:text-[26px] 2xl:text-[28px] [&_a]:text-[#1A1A1A] [&_a]:underline [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5",
   legal:
     "legal-page-blocks max-w-none text-[#000000B3] text-[20px] 2xl:text-[30px] leading-relaxed [&_h2]:text-[26px] [&_h2]:2xl:text-[40px] [&_h2]:font-medium [&_h2]:text-black [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:first:mt-0 [&_h3]:text-[20px] [&_h3]:2xl:text-[30px] [&_h3]:text-black [&_h3]:mb-2 [&_a]:text-[#000000] [&_a]:underline [&_strong]:font-medium [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-2 [&_ul]:ml-4 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-2 [&_ol]:ml-4",
   aboutHeadline: `about-headline-blocks ${ABOUT_HEADLINE_WRAP_CLASS}`,

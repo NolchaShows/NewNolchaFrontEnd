@@ -102,6 +102,9 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
           .filter((entry) => entry.logo)
       : DEFAULT_PARTNER_LOGOS;
 
+  const ctaClassName =
+    "mt-8 lg:mt-10 mb-8 lg:mb-12 inline-flex w-fit items-center gap-1 text-[11px] sm:text-[12px] lg:text-[14px] font-normal uppercase tracking-[0.15em] text-[#1A1A1A] hover:text-[#1A1A1A]/70";
+
   return (
     <section className="w-full bg-[#F7F5EC] text-[#1A1A1A] py-8 lg:py-16 lg:px-11 px-5 flex items-center">
       <div className="mx-auto w-full text-left">
@@ -111,7 +114,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
           </p>
         ) : null}
         <h2
-          className={`text-[36px] uppercase leading-[0.95] tracking-[-0.02em] text-[#1A1A1A] lg:text-[50px] mb-5 lg:mb-10 text-left ${
+          className={`text-[36px] uppercase leading-[0.95] tracking-[-0.02em] text-[#1A1A1A] sm:text-[42px] lg:text-[58px] mb-5 lg:mb-10 text-left ${
             eyebrow ? "mt-3" : ""
           }`}
         >
@@ -142,7 +145,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
               href={ctaUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 lg:mt-10 mb-8 lg:mb-12 inline-flex w-fit items-center gap-1 text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70"
+              className={ctaClassName}
             >
               <span>{ctaText}</span>
               <span aria-hidden>↗</span>
@@ -151,7 +154,7 @@ const BuildMomentumSection = ({ buildMomentumData }) => {
             <button
               type="button"
               onClick={() => navigateToContactLikeLetsTalk()}
-              className="mt-8 lg:mt-10 mb-8 lg:mb-12 inline-flex w-fit items-center gap-1 border-0 bg-transparent p-0 text-left text-[10px] lg:text-[16px] font-normal uppercase tracking-[0.12em] text-[#1A1A1A] hover:text-[#1A1A1A]/70 cursor-pointer"
+              className={`${ctaClassName} border-0 bg-transparent p-0 text-left cursor-pointer`}
             >
               <span>{ctaText}</span>
               <span aria-hidden>↗</span>
