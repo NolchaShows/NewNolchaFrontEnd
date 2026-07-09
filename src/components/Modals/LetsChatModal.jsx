@@ -231,11 +231,11 @@ export default function LetsChatModal({ isOpen, onClose }) {
             id="lets-chat-title"
             className="text-[42px] leading-[1.1] text-[#1a1a1a] sm:text-[52px] lg:text-[58px]"
           >
-            Partner With Nolcha
+            To Let's Talk
           </h2>
           <p className="mt-8 max-w-[340px] text-[14px] leading-[1.65] text-[#5a5a5a] sm:text-[15px]">
-            Strategic partnerships, cultural moments, and high-signal
-            experiences.
+          Creating custom experiences through strategy, production, partnerships, and execution.
+
           </p>
         </div>
 
