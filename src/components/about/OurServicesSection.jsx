@@ -109,7 +109,7 @@ export default function OurServicesSection({
                 </h3>
                 <StrapiRichDescription
                   value={story.description}
-                  className="mt-2 text-[15px] leading-[1.28] tracking-[-0.015em] text-[#1D1D1D] sm:mt-2.5 sm:text-[17px] lg:mt-3 lg:text-[20px] lg:leading-[1.3] 2xl:text-[22px] [&_p]:m-0"
+                  className="mt-2 text-[15px] leading-[1.28] tracking-[-0.015em] text-[#1D1D1D] sm:mt-2.5 sm:text-[17px] lg:mt-3 lg:text-[20px] lg:leading-[1.3] [&_p]:m-0"
                 />
               </div>
             ))}
