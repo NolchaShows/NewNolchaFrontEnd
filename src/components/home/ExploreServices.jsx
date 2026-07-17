@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import Image from "next/image";
-import SectionTitle from "../common/SectionTitle";
 import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 
@@ -146,7 +145,9 @@ const ExploreServices = ({ title, videoSrc, media, caption, items }) => {
 
   return (
     <section ref={sectionRef} className="page-container bg-black py-[60px] lg:py-[80px] xl:py-[100px] 2xl:py-[120px] xxl:py-[140px] 3xl:py-[200px]">
-      <SectionTitle className="text-white text-left mb-[30px] lg:mb-[40px] xl:mb-[50px] 2xl:mb-[60px] xxl:mb-[70px] 3xl:mb-[100px]">{resolvedTitle}</SectionTitle>
+      <h2 className="mb-5 text-left text-[36px] uppercase leading-[0.95] tracking-[-0.02em] text-white sm:text-[42px] lg:mb-10 lg:text-[58px]">
+        {resolvedTitle}
+      </h2>
 
       <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[24px] xl:gap-[30px] 2xl:gap-[40px] xxl:gap-[60px] 3xl:gap-[100px] items-center lg:items-start">
         {/* Left media — same width/layout as NolchaExperience */}
@@ -303,7 +304,7 @@ const ExploreServices = ({ title, videoSrc, media, caption, items }) => {
                       }}
                       className="group flex items-center gap-2 px-[16px] lg:px-[24px] 2xl:px-[32px] py-[10px] lg:py-[12px] 2xl:py-[14px] bg-primary hover:bg-primary/80 text-black font-medium rounded-lg text-[14px] lg:text-[16px] 2xl:text-[18px] transition-all duration-300"
                     >
-                      <span>Lets Talk</span>
+                      <span>Let's Talk</span>
                     </button>
                   </div>
                 </div>
