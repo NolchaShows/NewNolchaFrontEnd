@@ -474,9 +474,11 @@ export default async function Home() {
           )}
           <ExploreServices
             title={serviceData?.title || fallbackExploreServices.title}
-            videoSrc={
-              getMediaUrl(serviceData?.video || serviceData?.image) ||
-              "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4"
+            media={
+              normalizeMediaItem(serviceData?.video || serviceData?.image) || {
+                type: "video",
+                url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4",
+              }
             }
             caption={serviceData?.caption || fallbackExploreServices.caption}
             items={
@@ -486,7 +488,10 @@ export default async function Home() {
                     text: service?.text || "",
                     description: service?.description || "",
                     work: service?.work || "",
-                    videoSrc: getMediaUrl(service?.video) || "",
+                    media:
+                      normalizeMediaItem(service?.video || service?.image) ||
+                      null,
+                    videoSrc: getMediaUrl(service?.video || service?.image) || "",
                   }))
                 : fallbackExploreServices.items
             }

@@ -1,13 +1,47 @@
 "use client";
 import React, { useState, useRef, useEffect, useMemo } from "react";
+import Image from "next/image";
 import SectionTitle from "../common/SectionTitle";
 import { StrapiRichDescription } from "@/components/common/StrapiRichDescription";
 import { navigateToContactLikeLetsTalk } from "@/lib/letsTalkNavigation";
 
-const DEFAULT_VIDEO_SRC =
-  "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4";
+const DEFAULT_MEDIA = {
+  type: "video",
+  url: "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/homepage/How%20Brands%20Work%201.mp4",
+};
 
-const ExploreServices = ({ title, videoSrc, caption, items }) => {
+const LEFT_MEDIA_WIDTH_CLASS =
+  "relative w-full lg:w-[420px] xl:w-[513px] 2xl:w-[580px] xxl:w-[650px] 3xl:w-[900px] flex-shrink-0";
+
+const VIDEO_FRAME_CLASS =
+  "w-full h-[400px] lg:h-[570px] 2xl:h-[700px] object-cover";
+
+const isVideoType = (media) => {
+  if (!media) return false;
+  if (media.type === "video") return true;
+  if (media.type === "image") return false;
+
+  const mime = String(media.mime || "");
+  const url = String(media.url || media.src || "");
+  return (
+    mime.startsWith("video/") ||
+    /\.(mp4|mov|webm)(\?|$)/i.test(url)
+  );
+};
+
+const normalizeActiveMedia = (media, fallbackUrl = "") => {
+  const url = String(media?.url || fallbackUrl || "").trim();
+  if (!url) return null;
+
+  return {
+    type: isVideoType(media || { url }) ? "video" : "image",
+    url,
+    width: media?.width || 513,
+    height: media?.height || 640,
+  };
+};
+
+const ExploreServices = ({ title, videoSrc, media, caption, items }) => {
   const resolvedTitle = title || "How Brands Work With Nolcha";
   const resolvedItems =
     items && items.length > 0
@@ -35,27 +69,52 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
     return () => observer.disconnect();
   }, []);
 
-  const sectionVideoSrc = videoSrc || DEFAULT_VIDEO_SRC;
-
-  const activeVideoSrc = useMemo(() => {
-    if (expandedIndex < 0 || !resolvedItems[expandedIndex]) {
-      return sectionVideoSrc;
+  const sectionMedia = useMemo(() => {
+    if (media?.url) {
+      return normalizeActiveMedia(media);
     }
-    const itemVideo = resolvedItems[expandedIndex]?.videoSrc;
-    return itemVideo && String(itemVideo).trim()
-      ? String(itemVideo).trim()
-      : sectionVideoSrc;
-  }, [expandedIndex, resolvedItems, sectionVideoSrc]);
+
+    if (videoSrc) {
+      return normalizeActiveMedia({ url: videoSrc });
+    }
+
+    return DEFAULT_MEDIA;
+  }, [media, videoSrc]);
+
+  const activeMedia = useMemo(() => {
+    if (expandedIndex < 0 || !resolvedItems[expandedIndex]) {
+      return sectionMedia;
+    }
+
+    const item = resolvedItems[expandedIndex];
+    const itemMedia = item?.media || null;
+    const itemUrl =
+      itemMedia?.url ||
+      item?.videoSrc ||
+      item?.imageSrc ||
+      "";
+
+    const resolvedItemMedia = normalizeActiveMedia(itemMedia, itemUrl);
+    return resolvedItemMedia || sectionMedia;
+  }, [expandedIndex, resolvedItems, sectionMedia]);
+
+  const activeIsVideo = activeMedia.type === "video";
+  const imageUnoptimized =
+    activeMedia.url?.startsWith("http") &&
+    activeMedia.url.includes(".onrender.com");
 
   const toggleItem = (index) => {
     const newIndex = expandedIndex === index ? -1 : index;
     setExpandedIndex(newIndex);
   };
 
-  // Swap video when tab changes; fall back to section default when item has no video
+  // Swap video when tab changes; fall back to section default when item has no media
   useEffect(() => {
     const video = videoRef.current;
-    if (!inView || !video) return;
+    if (!inView || !video || !activeIsVideo) {
+      setIsPlaying(false);
+      return;
+    }
 
     if (expandedIndex < 0) {
       video.pause();
@@ -64,8 +123,8 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
     }
 
     const currentSrc = video.getAttribute("src") || "";
-    if (currentSrc !== activeVideoSrc) {
-      video.src = activeVideoSrc;
+    if (currentSrc !== activeMedia.url) {
+      video.src = activeMedia.url;
       video.load();
     }
 
@@ -75,7 +134,7 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
         .then(() => setIsPlaying(true))
         .catch(() => setIsPlaying(false));
     }
-  }, [expandedIndex, activeVideoSrc, inView]);
+  }, [expandedIndex, activeMedia.url, activeIsVideo, inView]);
 
   const handleVideoPlay = () => {
     setIsPlaying(true);
@@ -90,48 +149,67 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
       <SectionTitle className="text-white text-left mb-[30px] lg:mb-[40px] xl:mb-[50px] 2xl:mb-[60px] xxl:mb-[70px] 3xl:mb-[100px]">{resolvedTitle}</SectionTitle>
 
       <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[24px] xl:gap-[30px] 2xl:gap-[40px] xxl:gap-[60px] 3xl:gap-[100px] items-center lg:items-start">
-        {/* Left video player with play button */}
-        <div className="relative w-[300px] lg:w-[380px] xl:w-[435px] 2xl:w-[500px] xxl:w-[580px] 3xl:w-[800px]">
-          <div className="rounded-[14px] lg:rounded-[18px] xl:rounded-[22px] 2xl:rounded-[30px] xxl:rounded-[40px] 3xl:rounded-[60px] overflow-hidden relative bg-black">
-            <video
-              ref={videoRef}
-              src={inView ? activeVideoSrc : undefined}
-              className="w-full h-[340px] lg:h-[500px] xl:h-[570px] 2xl:h-[620px] xxl:h-[700px] 3xl:h-[1000px] object-cover"
-              onPause={handleVideoPause}
-              onPlay={handleVideoPlay}
-              onEnded={() => {
-                if (videoRef.current) {
-                  videoRef.current.currentTime = 0;
-                  videoRef.current.play();
-                }
-              }}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="none"
-            />
-            {/* Play button overlay - only show if video failed to autoplay */}
-            {!isPlaying && expandedIndex >= 0 && (
-              <div
-                className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer transition-opacity hover:bg-black/40"
-                onClick={() => {
-                  if (videoRef.current) {
-                    videoRef.current.play();
-                    setIsPlaying(true);
-                  }
-                }}
-              >
-                <div className="w-[60px] h-[60px] lg:w-[70px] xl:w-[80px] 2xl:w-[100px] lg:h-[70px] xl:h-[80px] 2xl:h-[100px] bg-white/90 rounded-lg flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-                  <svg
-                    className="w-[30px] h-[30px] lg:w-[35px] xl:w-[40px] 2xl:w-[50px] lg:h-[35px] xl:h-[40px] 2xl:h-[50px] text-black ml-1"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
+        {/* Left media — same width/layout as NolchaExperience */}
+        <div className={LEFT_MEDIA_WIDTH_CLASS}>
+          <div className="relative w-full overflow-hidden rounded-[12px] bg-black">
+            {activeIsVideo ? (
+              <>
+                <video
+                  ref={videoRef}
+                  src={inView ? activeMedia.url : undefined}
+                  className={VIDEO_FRAME_CLASS}
+                  onPause={handleVideoPause}
+                  onPlay={handleVideoPlay}
+                  onEnded={() => {
+                    if (videoRef.current) {
+                      videoRef.current.currentTime = 0;
+                      videoRef.current.play();
+                    }
+                  }}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                />
+                {!isPlaying && expandedIndex >= 0 && (
+                  <div
+                    className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer transition-opacity hover:bg-black/40"
+                    onClick={() => {
+                      if (videoRef.current) {
+                        videoRef.current.play();
+                        setIsPlaying(true);
+                      }
+                    }}
                   >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-              </div>
+                    <div className="w-[60px] h-[60px] lg:w-[70px] xl:w-[80px] 2xl:w-[100px] lg:h-[70px] xl:h-[80px] 2xl:h-[100px] bg-white/90 rounded-lg flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                      <svg
+                        className="w-[30px] h-[30px] lg:w-[35px] xl:w-[40px] 2xl:w-[50px] lg:h-[35px] xl:h-[40px] 2xl:h-[50px] text-black ml-1"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {inView ? (
+                  <Image
+                    src={activeMedia.url}
+                    alt={resolvedTitle}
+                    width={activeMedia.width || 513}
+                    height={activeMedia.height || 640}
+                    className="h-auto w-full object-contain"
+                    sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 420px, (max-width: 1536px) 513px, 580px"
+                    unoptimized={imageUnoptimized}
+                  />
+                ) : (
+                  <div className="aspect-[513/640] w-full bg-black" aria-hidden />
+                )}
+              </>
             )}
           </div>
         </div>
@@ -140,14 +218,7 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
         <div className="flex-1 flex flex-col">
           {resolvedItems.map((item, idx) => {
             const isExpanded = expandedIndex === idx;
-            const itemTitle = `${item.label}: ${item.text}`;
             const seeOurWork = item.work || "";
-            const tagColors = [
-              "bg-green-200 text-green-800",
-              "bg-blue-200 text-blue-800",
-              "bg-yellow-200 text-yellow-800",
-              "bg-pink-200 text-pink-800"
-            ];
 
             return (
               <div key={idx} className="bg-secondary mb-[10px] py-4 px-6 rounded-[6px] lg:rounded-[12px] 2xl:rounded-[20px]">
@@ -246,5 +317,3 @@ const ExploreServices = ({ title, videoSrc, caption, items }) => {
 };
 
 export default ExploreServices;
-
-
