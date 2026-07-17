@@ -228,7 +228,7 @@ const ExploreServices = ({ title, videoSrc, media, caption, items }) => {
                   onClick={() => toggleItem(idx)}
                   className="w-full flex justify-between items-center text-left transition-colors"
                 >
-                  <h3 className="text-[18px] lg:text-[22px] xl:text-[28px] 2xl:text-[32px] xxl:text-[40px] 3xl:text-[56px] text-white leading-[1.2] pr-4">
+                  <h3 className="text-[16px] lg:text-[20px] xl:text-[24px] 2xl:text-[28px] xxl:text-[34px] 3xl:text-[48px] text-white leading-[1.2] pr-4">
                     <span className="font-bold">{item.label}:</span>{" "}
                     <span className="font-normal">{item.text}</span>
                   </h3>
