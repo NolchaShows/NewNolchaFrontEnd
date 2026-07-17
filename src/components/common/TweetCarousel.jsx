@@ -26,12 +26,15 @@ const TweetCarousel = ({
   const [dragDeltaX, setDragDeltaX] = useState(0);
   const carouselRootRef = useRef(null);
 
-  // Use dynamic data from Strapi if available, otherwise fallback to posts prop
+  // Prefer Strapi carousel items; fall back to static posts only when CMS has none
   const carouselTitle = carousalData?.title || title;
-  const carouselItems =
+  const cmsItems =
     carousalData?.items ||
     carousalData?.carousal_item ||
     carousalData?.carousalItem ||
+    null;
+  const carouselItems =
+    (Array.isArray(cmsItems) && cmsItems.length > 0 ? cmsItems : null) ||
     posts ||
     [];
 

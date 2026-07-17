@@ -7,7 +7,10 @@ import LogoSlider from "@/components/home/TextSlider";
 import HomeUpcomingEventsSection from "@/components/home/HomeUpcomingEventsSection";
 import HeroSection from "@/components/experience/HeroSection";
 import { fetchHomePage } from "@/lib/graphql/fetchHomePage";
-import { fetchBelowFoldHomePage } from "@/lib/fetchStructuredPageBySlug";
+import {
+  fetchBelowFoldHomePage,
+  fetchSharedTweetCarouselByKey,
+} from "@/lib/fetchStructuredPageBySlug";
 import { tweetsData } from "@/data/tweetsData";
 import { upcomingListEvents } from "@/data/upcomingEvents";
 import {
@@ -29,7 +32,6 @@ const PastSpeakers = dynamic(() => import("@/components/common/PastSpeakers"));
 const MediaGalleryGrid = dynamic(() => import("@/components/common/MediaGalleryGrid"));
 const ExploreServices = dynamic(() => import("@/components/home/ExploreServices"));
 const TweetCarousel = dynamic(() => import("@/components/common/TweetCarousel"));
-const PastExperiences = dynamic(() => import("@/components/common/PastExperiences"));
 const HomeWideVideoBanner = dynamic(() => import("@/components/home/HomeWideVideoBanner"));
 const EveningRecapSection = dynamic(() => import("@/components/experience/EveningRecapSection"));
 
@@ -80,37 +82,6 @@ const pickFirstImageUrl = (...mediaItems) => {
 
   return null;
 };
-
-const getExperienceCardImage = (experience) => {
-  if (!experience) return null;
-
-  const listingImage = pickFirstImageUrl(experience?.listingImage);
-  if (listingImage) return listingImage;
-
-  const galleryImage = pickFirstImageUrl(
-    experience?.gallery?.standard_media?.[0],
-    experience?.gallery?.featured_media?.[0]
-  );
-
-  if (galleryImage) return galleryImage;
-
-  const featuredContentSectionImage = pickFirstImageUrl(
-    ...(experience?.gallery?.featured_content_sections || []).map(
-      (section) => section?.image
-    )
-  );
-
-  return featuredContentSectionImage || null;
-};
-
-const buildPastExperiences = (featuredExperiences = []) =>
-  (featuredExperiences || [])
-    .map((experience) => ({
-      image: getExperienceCardImage(experience),
-      text: experience?.title || "",
-      href: experience?.slug ? `/experiences/${experience.slug}` : null,
-    }))
-    .filter((experience) => experience.image && experience.text);
 
 const mapHomeClientsSection = (section) => {
   const defaults = DUMMY_ABOUT_PAGE.clients;
@@ -356,10 +327,12 @@ export default async function Home() {
   const pressMediaImage = getMediaUrl(homePage?.press_media_image);
   const artistData = homePage?.artist_section || null;
   const featureBannerTwo = getMediaUrl(homePage?.feature_banner_two);
-  const homeTweetCarousel = parseSharedTweetCarousel(
-    pickSharedTweetCarouselRaw(homePage)
-  );
-  const pastExperiences = buildPastExperiences(homePage?.featured_experiences);
+  const homeTweetCarousel =
+    parseSharedTweetCarousel(pickSharedTweetCarouselRaw(homePage)) ||
+    parseSharedTweetCarousel(await fetchSharedTweetCarouselByKey("homepage")) ||
+    parseSharedTweetCarousel(
+      await fetchSharedTweetCarouselByKey("community-moments")
+    );
   const contactData = homePage?.contact_section || null;
   const homeClientsSection = mapHomeClientsSection(homePage?.clients_section);
   const homeGallerySource =
@@ -422,12 +395,6 @@ export default async function Home() {
       { label: "Agentic AI Solutions", text: "Biz Dev And Fundraising", description: "From large-scale projection mapping to multi sensory installations and interactive environments, we produce immersive creative that enhances live events. <br /> Every activation supports the narrative of the event while delivering visually striking, technically precise experiences designed for both audience engagement and brand impact.", work: "Bitcoin Conference Nashville, Bitcoin Conference Vegas, Fvkrender, SHAO New York." },
     ],
   }
-
-  const fallbackPastExperiences = [
-    { image: "homepage/past_experiences/event-1.png", text: "Bitcoin Conference" },
-    { image: "homepage/past_experiences/event-2.png", text: "Opening Night Consensus" },
-    { image: "homepage/past_experiences/event-3.png", text: "NYFW Immersive" },
-  ]
 
   const heroVideo = "https://pub-7c963537a4c84ccc92f79577a2d14fb7.r2.dev/shao-nyfw-hero-video.mp4";
 
@@ -578,14 +545,11 @@ export default async function Home() {
         />
       </div>
       <TweetCarousel
-        posts={tweetsData}
+        posts={homeTweetCarousel?.items?.length ? undefined : tweetsData}
         carousalData={homeTweetCarousel || undefined}
         cardVariant="light"
         padding=""
-        title="Community Moments"
-      />
-      <PastExperiences
-        experiences={pastExperiences.length ? pastExperiences : fallbackPastExperiences}
+        title={homeTweetCarousel?.title || "Community Moments"}
       />
       <HomeUpcomingEventsSection
         title={homePage?.upcoming_events_section?.title || "Upcoming Events"}

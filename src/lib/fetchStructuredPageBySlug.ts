@@ -79,6 +79,32 @@ export async function fetchBelowFoldHomePage(): Promise<Record<string, unknown> 
   }
 }
 
+/** Load a Shared Tweet Carousel by its `key` (e.g. homepage). */
+export async function fetchSharedTweetCarouselByKey(
+  key: string
+): Promise<Record<string, unknown> | null> {
+  const q = new URLSearchParams();
+  q.set("filters[key][$eq]", key);
+  q.set("populate", "*");
+  q.set("pagination[pageSize]", "1");
+
+  try {
+    const response = await fetch(
+      `${STRAPI_BASE_URL}/api/shared-tweet-carousels?${q.toString()}`,
+      { next: { revalidate: 60 }, signal: AbortSignal.timeout(STRAPI_TIMEOUT_MS) }
+    );
+
+    if (!response.ok) return null;
+
+    const json = (await response.json()) as { data?: unknown[] };
+    const first = json?.data?.[0];
+    return flattenStrapiEntity(first);
+  } catch (err) {
+    console.error(`fetchSharedTweetCarouselByKey(${key}) error:`, err);
+    return null;
+  }
+}
+
 export async function fetchStructuredPageBySlug(
   pageType: StructuredPageType,
   slug: string

@@ -124,14 +124,15 @@ export function parseSharedTweetCarousel(raw: unknown): {
     if (typeof row === "string" || typeof row === "number") {
       const idStr = String(row).trim();
       const tweetId =
-        parseTweetIdentifier(idStr) || (/^\d+$/.test(idStr) ? idStr : "");
+        parseTweetIdentifier(idStr) || (/^\d{8,}$/.test(idStr) ? idStr : "");
       if (tweetId) items.push({ tweetId });
       continue;
     }
 
     const flatRow = flattenStrapiEntity(unwrapNode(row));
     const r = (flatRow || row) as Record<string, unknown>;
-    const rawId = r.tweetId ?? r.tweet_id ?? r.id;
+    // Prefer explicit tweet fields — do not use component row `id` (short DB ids).
+    const rawId = r.tweetId ?? r.tweet_id ?? r.url ?? r.link;
     if (
       rawId == null ||
       (typeof rawId !== "string" && typeof rawId !== "number")
@@ -141,7 +142,7 @@ export function parseSharedTweetCarousel(raw: unknown): {
     const idStr = String(rawId).trim();
     const tweetId =
       parseTweetIdentifier(idStr) ||
-      (/^\d+$/.test(idStr) ? idStr : "");
+      (/^\d{8,}$/.test(idStr) ? idStr : "");
     if (!tweetId) continue;
     items.push({ tweetId });
   }
