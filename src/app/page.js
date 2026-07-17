@@ -30,7 +30,6 @@ const MediaGalleryGrid = dynamic(() => import("@/components/common/MediaGalleryG
 const ExploreServices = dynamic(() => import("@/components/home/ExploreServices"));
 const TweetCarousel = dynamic(() => import("@/components/common/TweetCarousel"));
 const PastExperiences = dynamic(() => import("@/components/common/PastExperiences"));
-const NolchaExperience = dynamic(() => import("@/components/home/Collaboration"));
 const HomeWideVideoBanner = dynamic(() => import("@/components/home/HomeWideVideoBanner"));
 const EveningRecapSection = dynamic(() => import("@/components/experience/EveningRecapSection"));
 
@@ -354,7 +353,6 @@ export default async function Home() {
   const speakerData = homePage?.shared_speaker_section || null;
   const textHeroData = homePage?.texthero_section || null;
   const featureBannerOne = getMediaUrl(homePage?.feature_banner_one);
-  const nolchaExperienceData = homePage?.nolcha_experience_section || null;
   const pressMediaImage = getMediaUrl(homePage?.press_media_image);
   const artistData = homePage?.artist_section || null;
   const featureBannerTwo = getMediaUrl(homePage?.feature_banner_two);
@@ -510,10 +508,6 @@ export default async function Home() {
             ctaText={homeClientsSection.ctaText}
             ctaHref={homeClientsSection.ctaHref}
             clientLogos={homeClientsSection.logos}
-          />
-          <NolchaExperience
-            nolchaExperienceData={nolchaExperienceData}
-            loading={false}
           />
           <PastSpeakers
             title={speakerData?.title || "Featured Speakers"}
