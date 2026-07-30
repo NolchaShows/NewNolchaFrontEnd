@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import InnerCircleModal from "../Modals/InnerCircleModal";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   getUpcomingEventHref,
   slugifyUpcomingEventTitle,
@@ -292,8 +292,22 @@ function Navbar({ initialNavData = null, footerContent = null }) {
   const [megaDropdownLeft, setMegaDropdownLeft] = useState(null);
   const [hoveredMegaItemImage, setHoveredMegaItemImage] = useState(null);
 
-  const router = useRouter();
   const pathname = usePathname();
+
+  // Close the drawer after the route changes (don't unmount Link mid-click).
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setMobileDropdowns({});
+  }, [pathname]);
+
+  const closeMobileMenuSoon = () => {
+    // Defer unmount so Next.js soft navigation from <Link> can start first.
+    // Closing synchronously during click often cancels routing on mobile while loading.
+    window.setTimeout(() => {
+      setIsMobileMenuOpen(false);
+    }, 50);
+  };
+
   const shouldUseBlackDesktopHeader =
     pathname?.startsWith("/white-label") ||
     pathname?.startsWith("/charity") ||
@@ -461,7 +475,7 @@ function Navbar({ initialNavData = null, footerContent = null }) {
     if (modalType === "innerCircle") {
       setIsInnerCircleModalOpen(true);
     }
-    setIsMobileMenuOpen(false);
+    closeMobileMenuSoon();
   };
 
   const notifyUpcomingSelection = (slug) => {
@@ -483,7 +497,7 @@ function Navbar({ initialNavData = null, footerContent = null }) {
   const handleDropdownLinkClick = (dropdownItem) => {
     if (dropdownItem?.isExternal) {
       setActiveDesktopMegaMenu(null);
-      setIsMobileMenuOpen(false);
+      closeMobileMenuSoon();
       return;
     }
     if (dropdownItem?.upcomingSlug) {
@@ -505,7 +519,7 @@ function Navbar({ initialNavData = null, footerContent = null }) {
     }
 
     setActiveDesktopMegaMenu(null);
-    setIsMobileMenuOpen(false);
+    closeMobileMenuSoon();
   };
 
   const toggleMobileDropdown = (key) => {
@@ -673,19 +687,16 @@ function Navbar({ initialNavData = null, footerContent = null }) {
         <div className="border-b border-white/10">
           <div className="py-4 flex items-start justify-between gap-4">
             {parentIsClickable ? (
-              <button
-                type="button"
+              <Link
+                href={parentHref}
                 className="flex-1 text-left"
-                onClick={() => {
-                  router.push(parentHref);
-                  setIsMobileMenuOpen(false);
-                }}
+                onClick={closeMobileMenuSoon}
               >
                 <div className="font-[700] text-[20px] leading-[1.1] text-white">
                   {item.label}
                 </div>
                 <div className="mt-1 text-[13px] text-white/60">{item.subtitle}</div>
-              </button>
+              </Link>
             ) : (
               <div className="flex-1 text-left">
                 <div className="font-[700] text-[20px] leading-[1.1] text-white">
@@ -730,7 +741,7 @@ function Navbar({ initialNavData = null, footerContent = null }) {
                       ) : (
                         <Link
                           key={dropdownIdx}
-                          href={dropdownItem.href}
+                          href={dropdownItem.href || "#"}
                           className="block text-[16px] text-white/90 hover:text-primary transition-colors"
                           onClick={() => handleDropdownLinkClick(dropdownItem)}
                         >
@@ -747,20 +758,19 @@ function Navbar({ initialNavData = null, footerContent = null }) {
       );
     }
 
+    const href = item.href && item.href !== "#" ? item.href : null;
+
     return (
       <div className="border-b border-white/10">
-        <button
-          type="button"
-          className="w-full text-left"
-          onClick={() => {
-            if (item.href && item.href !== "#") {
-              router.push(item.href);
-              setIsMobileMenuOpen(false);
-            }
-          }}
-        >
-          <RowHeader showChevron={false} />
-        </button>
+        {href ? (
+          <Link href={href} className="block w-full text-left" onClick={closeMobileMenuSoon}>
+            <RowHeader showChevron={false} />
+          </Link>
+        ) : (
+          <div className="w-full text-left">
+            <RowHeader showChevron={false} />
+          </div>
+        )}
       </div>
     );
   };
