@@ -26,12 +26,11 @@ const PastSpeakers = ({ speakers = [], title = "Featured Speakers" }) => {
 
   const defaultSpeakersRow2 = [
     { id: 7, image: '/homepage/past_speakers/7.png', name: 'Casey Rodarmor', description: 'Casey Rodarmor is a prominent Bitcoin developer, creator of Ordinals and, most recently, Runes Protocol.', twitter: 'https://x.com/rodarmor' },
-    { id: 8, image: '/homepage/past_speakers/8.png', name: 'Violetta Zironi', description: 'Violetta Zironi, Italian singer-songwriter and actress with a decade-long career in traditional music, has birthed five studio albums and multiple world tours. In film, she has starred in three movies, including a Netflix Original production.', twitter: 'https://x.com/ZironiVioletta/' },
-    { id: 9, image: '/homepage/past_speakers/9.png', name: 'BOOTOSHI', description: 'BOOTOSHI is a Digital Creator & teaches AI Development.', twitter: 'https://x.com/KingBootoshi' },
-    { id: 10, image: '/homepage/past_speakers/10.png', name: 'Amanda Terry', description: "Amanda is the Co-Founder & COO OnChainMonkey, Bitcoin's 1st 10K Ordinals Collection and @osura_com Co-Founder & GP @ACTAIVentures", twitter: 'https://x.com/amandaterry' },
-    { id: 11, image: '/homepage/past_speakers/11.png', name: 'Danny Yang', description: 'Builder of 3 x Bitcoin ventures since 2013. Creator of @OnChainMonkey', twitter: 'https://x.com/huuep' },
-    { id: 12, image: '/homepage/past_speakers/12.png', name: 'Cara Ponzini', description: 'CEO of PolyBeam building infrastructure to unlock the untapped potential of Bitcoin-native assets.', twitter: 'https://x.com/ponzini' },
-    { id: 13, image: '/homepage/past_speakers/13.png', name: 'Jack Butcher', description: 'Jack Butcher is a pioneering digital artist and entrepreneur at the forefront of the NFT revolution. As the founder of Visualize Value, Butcher has established himself as a master of minimalist design, translating complex philosophical and economic concepts into striking visual metaphors.', twitter: 'https://x.com/jackbutcher' },
+    { id: 8, image: '/homepage/past_speakers/9.png', name: 'Violetta Zironi', description: 'Violetta Zironi, Italian singer-songwriter and actress with a decade-long career in traditional music, has birthed five studio albums and multiple world tours. In film, she has starred in three movies, including a Netflix Original production.', twitter: 'https://x.com/ZironiVioletta/' },
+    { id: 9, image: '/homepage/past_speakers/10.png', name: 'BOOTOSHI', description: 'BOOTOSHI is a Digital Creator & teaches AI Development.', twitter: 'https://x.com/KingBootoshi' },
+    { id: 10, image: '/homepage/past_speakers/11.png', name: 'Amanda Terry', description: "Amanda is the Co-Founder & COO OnChainMonkey, Bitcoin's 1st 10K Ordinals Collection and @osura_com Co-Founder & GP @ACTAIVentures", twitter: 'https://x.com/amandaterry' },
+    { id: 11, image: '/homepage/past_speakers/12.png', name: 'Danny Yang', description: 'Builder of 3 x Bitcoin ventures since 2013. Creator of @OnChainMonkey', twitter: 'https://x.com/huuep' },
+    { id: 12, image: '/homepage/past_speakers/13.png', name: 'Jack Butcher', description: 'Jack Butcher is a pioneering digital artist and entrepreneur at the forefront of the NFT revolution. As the founder of Visualize Value, Butcher has established himself as a master of minimalist design, translating complex philosophical and economic concepts into striking visual metaphors.', twitter: 'https://x.com/jackbutcher' },
   ];
 
   const defaultSpeakers = [...defaultSpeakersRow1, ...defaultSpeakersRow2];
