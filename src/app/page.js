@@ -10,6 +10,7 @@ import { fetchHomePage } from "@/lib/graphql/fetchHomePage";
 import {
   fetchBelowFoldHomePage,
   fetchSharedTweetCarouselByKey,
+  fetchSharedSpeakerSection,
 } from "@/lib/fetchStructuredPageBySlug";
 import { tweetsData } from "@/data/tweetsData";
 import { upcomingListEvents } from "@/data/upcomingEvents";
@@ -321,7 +322,12 @@ export default async function Home() {
   const logoSliderData = homePage?.logo_slider || null;
   const upcomingEvents = mapUpcomingEvents(homePage?.upcoming_events_section);
   const serviceData = homePage?.service_section || null;
-  const speakerData = homePage?.shared_speaker_section || null;
+  const speakerData =
+    homePage?.shared_speaker_section?.speakers?.length
+      ? homePage.shared_speaker_section
+      : (await fetchSharedSpeakerSection()) ||
+        homePage?.shared_speaker_section ||
+        null;
   const textHeroData = homePage?.texthero_section || null;
   const featureBannerOne = getMediaUrl(homePage?.feature_banner_one);
   const pressMediaImage = getMediaUrl(homePage?.press_media_image);

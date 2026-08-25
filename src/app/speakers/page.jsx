@@ -1,5 +1,6 @@
 import { fetchHomePage } from "@/lib/graphql/fetchHomePage";
 import { fetchSpeakersPage } from "@/lib/fetchSpeakersPage";
+import { fetchSharedSpeakerSection } from "@/lib/fetchStructuredPageBySlug";
 import SpeakersPageClient from "@/components/speakers/SpeakersPageClient";
 
 const FALLBACK_HERO_VIDEO =
@@ -20,19 +21,29 @@ const FALLBACK_GALLERY_MEDIA = [
 export const revalidate = 60;
 
 async function SpeakersPage() {
-  const [speakersPage, homePage] = await Promise.all([
+  const [speakersPage, homePage, fallbackSpeakerSection] = await Promise.all([
     fetchSpeakersPage("speakers"),
     fetchHomePage(),
+    fetchSharedSpeakerSection(),
   ]);
   const homeSpeakerSection = homePage?.shared_speaker_section || null;
+
+  const sharedSpeakerSection =
+    (speakersPage?.shared_speaker_section?.speakers?.length
+      ? speakersPage.shared_speaker_section
+      : null) ||
+    (homeSpeakerSection?.speakers?.length ? homeSpeakerSection : null) ||
+    fallbackSpeakerSection ||
+    speakersPage?.shared_speaker_section ||
+    homeSpeakerSection ||
+    null;
 
   const page = {
     title: speakersPage?.title || "Speakers",
     hero: speakersPage?.hero || {
       video: { url: FALLBACK_HERO_VIDEO },
     },
-    shared_speaker_section:
-      speakersPage?.shared_speaker_section || homeSpeakerSection,
+    shared_speaker_section: sharedSpeakerSection,
     gallery: speakersPage?.gallery || {
       standard_media: FALLBACK_GALLERY_MEDIA,
       featured_media: [],

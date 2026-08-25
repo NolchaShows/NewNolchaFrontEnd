@@ -105,6 +105,51 @@ export async function fetchSharedTweetCarouselByKey(
   }
 }
 
+/**
+ * Load Shared Speaker Section when home/speakers-page relations are missing.
+ * Tries preferred keys, then the latest published section with speakers.
+ */
+export async function fetchSharedSpeakerSection(
+  preferredKeys: string[] = ["homepage", "speakers"]
+): Promise<Record<string, unknown> | null> {
+  const populateParams = new URLSearchParams();
+  populateParams.set("populate[speakers][populate]", "image");
+  populateParams.set("pagination[pageSize]", "1");
+  populateParams.set("sort", "updatedAt:desc");
+
+  const tryFetch = async (extra: URLSearchParams) => {
+    const q = new URLSearchParams(populateParams);
+    extra.forEach((value, key) => q.set(key, value));
+
+    const response = await fetch(
+      `${STRAPI_BASE_URL}/api/shared-speaker-sections?${q.toString()}`,
+      { next: { revalidate: 60 }, signal: AbortSignal.timeout(STRAPI_TIMEOUT_MS) }
+    );
+    if (!response.ok) return null;
+
+    const json = (await response.json()) as { data?: unknown[] };
+    const first = json?.data?.[0];
+    const flat = flattenStrapiEntity(first);
+    const speakers = flat?.speakers;
+    if (Array.isArray(speakers) && speakers.length > 0) return flat;
+    return null;
+  };
+
+  try {
+    for (const key of preferredKeys) {
+      const byKey = await tryFetch(
+        new URLSearchParams({ "filters[key][$eq]": key })
+      );
+      if (byKey) return byKey;
+    }
+
+    return await tryFetch(new URLSearchParams());
+  } catch (err) {
+    console.error("fetchSharedSpeakerSection error:", err);
+    return null;
+  }
+}
+
 export async function fetchStructuredPageBySlug(
   pageType: StructuredPageType,
   slug: string
