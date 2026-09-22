@@ -1,3 +1,5 @@
+import { withSentryConfig } from "@sentry/nextjs";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -48,4 +50,20 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+
+  // Only print source-map upload logs in CI
+  silent: !process.env.CI,
+
+  // Wider client upload = clearer production stack traces
+  widenClientFileUpload: true,
+
+  // Route browser events through Next.js to reduce ad-blocker drops
+  tunnelRoute: "/monitoring",
+
+  // Tree-shake Sentry logger statements in production builds
+  disableLogger: true,
+});
