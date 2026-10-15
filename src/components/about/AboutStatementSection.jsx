@@ -96,7 +96,7 @@ export default function AboutStatementSection({
           >
             <StrapiRichDescription
               value={description}
-              className="max-w-[850px] text-[16px] font-normal leading-[1.28] text-[#1D1D1D] sm:text-[18px] sm:leading-[1.32] lg:text-[22px] lg:leading-[1.4] [&_p]:m-0"
+              className="max-w-[850px] text-[16px] font-normal leading-[1.28] text-[#1D1D1D] sm:text-[18px] sm:leading-[1.32] lg:text-[22px] lg:leading-[1.4] [&_p]:m-0 [&_p:not(:last-child)]:mb-4 sm:[&_p:not(:last-child)]:mb-5 lg:[&_p:not(:last-child)]:mb-6"
             />
 
             {isExternalHref(href) ? (
