@@ -272,7 +272,9 @@ const TweetCarousel = ({
                           data-theme={tweetTheme}
                           data-chrome="noheader nofooter noborders transparent"
                         >
-                          <a href={`https://twitter.com/x/status/${tweetId}`} />
+                          <a href={`https://twitter.com/x/status/${tweetId}`}>
+                            View post on X
+                          </a>
                         </blockquote>
                       </div>
                     </div>
@@ -345,7 +347,9 @@ const TweetCarousel = ({
                             data-theme={tweetTheme}
                             data-chrome="noheader nofooter noborders transparent"
                           >
-                            <a href={`https://twitter.com/x/status/${tweetId}`} />
+                            <a href={`https://twitter.com/x/status/${tweetId}`}>
+                              View post on X
+                            </a>
                           </blockquote>
                         </div>
                       </div>
