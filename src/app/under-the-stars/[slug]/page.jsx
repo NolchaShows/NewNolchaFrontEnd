@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import UnderTheStarsSection from "@/components/home/UnderTheStarsSection";
+import ArtistProfileTemplate from "@/components/under-the-stars/ArtistProfileTemplate";
 import { underTheStarsData } from "@/data/underTheStarsData";
 
 export async function generateStaticParams() {
@@ -21,6 +21,16 @@ export async function generateMetadata({ params }) {
   return {
     title: `${artist.name} | Under The Stars · Nolcha Shows`,
     description: artist.shortDescription || artist.bio,
+    openGraph: {
+      title: `${artist.name} | Under The Stars · Nolcha Shows`,
+      description: artist.shortDescription || artist.bio,
+      images: [
+        {
+          url: artist.featuredArtwork?.image || artist.portrait,
+          alt: artist.name,
+        },
+      ],
+    },
   };
 }
 
@@ -34,7 +44,7 @@ export default async function ArtistProfilePage({ params }) {
 
   return (
     <main className="min-h-screen bg-white">
-      <UnderTheStarsSection initialArtistSlug={artist.id} />
+      <ArtistProfileTemplate artist={artist} />
     </main>
   );
 }
