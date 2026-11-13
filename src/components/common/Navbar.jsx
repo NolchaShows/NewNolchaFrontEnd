@@ -930,21 +930,23 @@ function Navbar({ initialNavData = null, footerContent = null }) {
 
                 {/* Arrow Button */}
                 <button
+                  type="button"
                   onClick={handleLetsTalk}
+                  aria-label="Lets Talk"
                   className="hidden lg:flex w-11 h-11 2xl:w-[64px] 2xl:h-[64px] xxl:w-14 xxl:h-14 bg-primary rounded-lg items-center justify-center ml-2"
                 >
-                  <div className="2xl:hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                  <div className="2xl:hidden" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" aria-hidden="true">
                       <path d="M4.99662 5.55025L4.99662 7.29504L11.9077 7.30123L4.3779 14.831L5.61534 16.0685L13.1451 8.53866L13.1513 15.4497L14.8961 15.4497V5.55025H4.99662Z" fill="#000" />
                     </svg>
                   </div>
-                  <div className="hidden 2xl:block xxl:hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <div className="hidden 2xl:block xxl:hidden" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
                       <path d="M7.075 7.332V9.744L16.631 9.753L6.22 20.164L7.931 21.875L18.342 11.464L18.351 21.02V21.02H20.763V7.332H7.075Z" fill="#000" />
                     </svg>
                   </div>
-                  <div className="hidden xxl:block">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                  <div className="hidden xxl:block" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
                       <path d="M9.09643 9.42701V12.5289L21.3828 12.5399L7.99648 25.9262L10.1964 28.1261L23.5827 14.7397L23.5937 27.0261L26.6955 27.0261V9.42701H9.09643Z" fill="#000" />
                     </svg>
                   </div>
@@ -1210,7 +1212,7 @@ function Navbar({ initialNavData = null, footerContent = null }) {
                     aria-label="Lets Talk"
                     className="w-[52px] h-[52px] rounded-lg bg-primary inline-flex items-center justify-center hover:opacity-95 transition-opacity"
                   >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path
                         d="M7 17L17 7M17 7H9M17 7V15"
                         stroke="black"

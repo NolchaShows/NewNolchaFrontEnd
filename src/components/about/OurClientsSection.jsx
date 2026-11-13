@@ -130,7 +130,7 @@ export default function OurClientsSection({
             <div className="lg:max-w-[700px]">
               <StrapiRichDescription
                 value={description}
-                className="text-[14px] leading-[1.35] text-[#1D1D1D] lg:text-[16px] [&_p]:m-0"
+                className="text-[14px] leading-[1.35] text-[#1D1D1D] lg:text-[16px] [&_p]:m-0 [&_p:not(:last-child)]:mb-3 lg:[&_p:not(:last-child)]:mb-4"
               />
               {isExternalHref(href) ? (
                 <a
