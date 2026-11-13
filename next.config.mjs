@@ -43,6 +43,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'inscopeart.com',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
   },

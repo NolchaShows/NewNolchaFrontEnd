@@ -35,6 +35,7 @@ const ExploreServices = dynamic(() => import("@/components/home/ExploreServices"
 const TweetCarousel = dynamic(() => import("@/components/common/TweetCarousel"));
 const HomeWideVideoBanner = dynamic(() => import("@/components/home/HomeWideVideoBanner"));
 const EveningRecapSection = dynamic(() => import("@/components/experience/EveningRecapSection"));
+const FeatureProjectsSection = dynamic(() => import("@/components/home/FeatureProjectsSection"));
 
 const STRAPI_BASE_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "https://new-nolcha-strapi-uiai.onrender.com";
@@ -512,6 +513,12 @@ export default async function Home() {
           className="w-full h-auto"
         />
       )}
+      <FeatureProjectsSection
+        label={homePage?.feature_projects_section?.label}
+        title={homePage?.feature_projects_section?.title}
+        description={homePage?.feature_projects_section?.description}
+        projects={homePage?.feature_projects_section?.projects}
+      />
       <Artists
         artistData={artistData}
         loading={false}
